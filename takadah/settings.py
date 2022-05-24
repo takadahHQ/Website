@@ -49,7 +49,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    "django_unicorn",
+  #  "django_unicorn",
     'tailwind',
     'owliver',
     'django_browser_reload',
@@ -186,7 +186,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 #    os.path.join(BASE_DIR, "resources/static"),
 #    ]  
 # MEDIA_URL = '/media/'
-# MEDIA_ROOT = '/home/takalqei/takadah-app/media/'
+# MEDIA_ROOT = '/home/takalqeidah-/takaapp/media/'
 
 
 # Default primary key field type
