@@ -1,0 +1,301 @@
+{% load static tailwind_tags %}
+{% load unicorn %}
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		{% unicorn_scripts %}
+		
+    	<title>{% block title %}{{ settings.name }}{% endblock %}</title>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <script src="https://cdn.tailwindcss.com"></script>
+		<script src="https://cdn.skypack.dev/pin/@hotwired/turbo@v7.1.0-V83RMQBlYCPK9CvTqQoL/mode=imports,min/optimized/@hotwired/turbo.js"></script>
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'css/dist/font.css' %}">
+        <link href="https://cdn.jsdelivr.net/npm/daisyui@2.13.6/dist/full.css" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+        <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
+  
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+
+    <link rel="stylesheet" href="{% static '/css/datatable.min.css' %}" />
+    <script src="{% static '/js/datatable.min.js' %}"></script>
+        <!-- Our project just needs Font Awesome Free's Solid + Brand files -->
+    <link href="{% static 'fontawesomefree/css/fontawesome.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'fontawesomefree/css/brands.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'fontawesomefree/css/solid.css' %}" rel="stylesheet" type="text/css">
+		{% tailwind_css %}
+        <style type="text/tailwindcss">
+            @layer utilities {
+              h1, .h2, .h3 {
+            color: #334fd2;
+            font-family: 'Yeseva One', cursive;
+        }
+        h1:hover, .h2:hover, .h3:hover{
+            color: #334fd2;
+            font-family: 'Yeseva One', cursive;
+        }
+        
+        .card{
+            border-color: #334fd2;
+            @apply bg-gray-300;
+            font-family: 'Josefin Sans', sans-serif;
+        }
+        .text-neutral-content {
+            color: #334fd2;
+            font-family: 'Josefin Sans', sans-serif;
+        }
+        
+        .btn-primary {
+            background-color: #334fd2;
+        }
+        
+        .badge-outline {
+            border-color: #334fd2;
+            color: #334fd2;
+        
+        }
+        
+        .logo {
+            color: #334fd2;
+        }
+        
+        .facebook{
+            color: #1877F2;
+            background-color: transparent;
+        }
+        
+        .twitter{
+            color: #1DA1F2;
+            background-color: transparent;
+        }
+        
+        .youtube{
+            color: #FF0000;
+            background-color: transparent;
+        }
+        
+        .discord{
+            color: #5865F2;
+            background-color: transparent;
+        }
+        
+        .telegram{
+            color: #26A5E4;
+            background-color: transparent;
+        }
+        
+        .nav-base{
+            background-color: #334fd2;
+            color: white;
+            font-family: 'Yeseva One', cursive;
+        }
+        
+        .nav-base>a:hover{
+            background-color: whitesmoke;
+            color: #334fd2;
+            padding: 10rem;
+        };
+        .grid.grid-flow-col.p-2>a{
+            background-color: transparent;
+            color: black;
+        }
+        
+        .grid.grid-flow-col.p-2>a:hover{
+            background-color: #334fd2;
+            color: white;
+            font-size: 1.25rem;
+            line-height: 1.75rem;
+        }
+        
+        .link-hover{
+            text-decoration: none;
+        }
+        
+        .link-hover:hover{
+            color: #334fd2;
+            text-decoration: none;
+            font-size: 1.25rem;
+            line-height: 1.75rem;
+        }
+        
+        .social{
+            text-decoration: none;
+        }
+        .social:hover{
+            color: #334fd2;
+            text-decoration: none;
+            font-size: large;
+            line-height: 1.75rem;
+        }
+        
+            }
+          </style>
+	</head>
+
+	<body class="min-h-screen bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-300 font-serif leading-normal tracking-normal">
+        <div class="w-full">
+            <div class="flex justify-between bg-white dark:bg-gray-700">
+                <div class="flex justify-start text-gray-800 dark:text-gray-300 place-content-center pre-nav">
+                    <!-- Logo -->
+                        <div class="grid grid-flow-col p-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                              </svg><a href="tel:{{ settings.phone }}">{{ settings.phone }}</a>
+                        </div>
+                        <div class="grid grid-flow-col p-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" />
+                              </svg> <a href="mailto:{{ settings.email }}">{{ settings.email }} </a>
+                        </div>
+                </div>
+                <!-- Social Links -->
+                <div class="grid justify-end md:flex">
+                    <div class="grid grid-flow-col gap-1">
+                        {% for social in socials %}
+                        <a class="btn btn-ghost btn-sm rounded-btn social" href="{{ social.link }}">
+                            {% if social.icon %}
+                            {{ social.icon| safe }}
+                            {% elif social.image %}
+                            <img src="{{ social.image| safe }}" alt="{{ social.name }}">
+                            {% else %}
+                            <i class="fa-brands fa-{{ social.name | lower }} fa-lg {{ social.name | lower }}"></i>
+                            {% endif %}
+                        </a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="mb-2 navbar nav-base text-neutral-content">
+                <div class="flex-1 px-2 mx-2">
+                    <span class="text-2xl font-bold">
+                        {{ settings.name }}
+                    </span>
+                </div>
+                <div class="hidden px-2 mx-2 navbar-center lg:flex">
+                    <div class="flex items-stretch">
+                        <a class="btn btn-ghost btn-sm rounded-btn">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                class="inline-block w-5 mr-2 stroke-current">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z">
+                                </path>
+                            </svg>
+                            Likes
+        
+                        </a>
+                        <a class="btn btn-ghost btn-sm rounded-btn">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                class="inline-block w-5 mr-2 stroke-current">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9">
+                                </path>
+                            </svg>
+                            Notifications
+        
+                        </a>
+                        <a class="btn btn-ghost btn-sm rounded-btn">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                class="inline-block w-5 mr-2 stroke-current">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"></path>
+                            </svg>
+                            Files
+        
+                        </a>
+                        <a class="btn btn-ghost btn-sm rounded-btn" href="{% url 'author:dashboard' %}">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                class="inline-block w-5 mr-2 stroke-current">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
+                            </svg>
+                            Author
+        
+                        </a>
+                    </div>
+                </div>
+                <div class="navbar-end">
+                <div class="flex-none space-x-2">
+                    {% if user.is_authenticated %}
+                    <a class="btn btn-ghost btn-sm rounded-btn" href="{% url 'core:bookmark' %}">
+                        <svg class="inline-block w-5 mr-2 stroke-current" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 4v12l-4-2-4 2V4M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg> Bookmark
+                    </a>
+                    <a class="btn btn-ghost btn-sm rounded-btn" href="{% url 'core:history' %}">
+                        <svg class="inline-block w-5 mr-2 stroke-current" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg> History
+                    </a>
+                    
+                    <a class="btn btn-ghost btn-sm rounded-btn" href="{% url 'admin:index' %}">
+                        <svg class="inline-block w-5 mr-2 stroke-current" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg> Admin Dashboard
+                    </a>
+                    <a class="btn btn-ghost btn-sm rounded-btn" href="{% url 'logout' %}">
+                        <svg class="inline-block w-5 mr-2 stroke-current" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>   Logout
+                    </a>
+                    {% else %}
+                    <a class="btn btn-ghost btn-sm rounded-btn" href="{% url 'core:register' %}">
+                        <svg class="inline-block w-5 mr-2 stroke-current" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16v2a2 2 0 01-2 2H5a2 2 0 01-2-2v-7a2 2 0 012-2h2m3-4H9a2 2 0 00-2 2v7a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-1m-1 4l-3 3m0 0l-3-3m3 3V3"></path></svg>  REGISTER
+                    </a>
+                    
+                    <a class="btn btn-ghost btn-sm rounded-btn" href="{% url 'login' %}">
+                        <svg class="inline-block w-5 mr-2 stroke-current" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path></svg> LOGIN
+                    </a>
+                    {% endif %}
+                </div>
+                </div><!-- navbar-end -->
+            </div>
+        </div>
+        
+		{% csrf_token %}
+		<div class="container mx-auto">
+			<main class="p-2 md:p-8">
+                <h1 class="text-5xl flex items-center justify-center">{% block page-title %}{% endblock %}</h1><br/>
+		   		<section class="content">
+                       <!-- Breadcrumbs -->
+                    <div class="text-sm breadcrumbs">
+                        <ul>
+                        {%block breadcrumbs %}
+                          <li><a href="{% url 'core:index' %}">Home</a></li> 
+                        {% endblock %}
+                        </ul>
+                      </div>
+                      <!-- end breadcrumbs-->
+                    
+                    {% block content %}
+                       Body content
+                    {% endblock %}
+		   		</section>
+			</main>
+		</div>
+		<footer class="px-10 py-4 footer bg-base-200 dark:bg-gray-700 dark:text-gray-200 text-base-content">
+			<div class="items-center grid-flow-col">
+			  <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd" class="fill-current">
+				<path d="M22.672 15.226l-2.432.811.841 2.515c.33 1.019-.209 2.127-1.23 2.456-1.15.325-2.148-.321-2.463-1.226l-.84-2.518-5.013 1.677.84 2.517c.391 1.203-.434 2.542-1.831 2.542-.88 0-1.601-.564-1.86-1.314l-.842-2.516-2.431.809c-1.135.328-2.145-.317-2.463-1.229-.329-1.018.211-2.127 1.231-2.456l2.432-.809-1.621-4.823-2.432.808c-1.355.384-2.558-.59-2.558-1.839 0-.817.509-1.582 1.327-1.846l2.433-.809-.842-2.515c-.33-1.02.211-2.129 1.232-2.458 1.02-.329 2.13.209 2.461 1.229l.842 2.515 5.011-1.677-.839-2.517c-.403-1.238.484-2.553 1.843-2.553.819 0 1.585.509 1.85 1.326l.841 2.517 2.431-.81c1.02-.33 2.131.211 2.461 1.229.332 1.018-.21 2.126-1.23 2.456l-2.433.809 1.622 4.823 2.433-.809c1.242-.401 2.557.484 2.557 1.838 0 .819-.51 1.583-1.328 1.847m-8.992-6.428l-5.01 1.675 1.619 4.828 5.011-1.674-1.62-4.829z"></path>
+			  </svg>
+			  <p class="opacity-1 text-sm">
+                  <span class="text-2xl">{{ settings.name }}</span>
+                  <br/>{{ settings.tagline | safe }}
+              </p>
+			</div>
+			<div class="md:place-self-center md:justify-self-end">
+			  <div class="grid grid-flow-col gap-4">
+            {% for social in socials %}
+            <a class="social" href="{{ social.link }}">
+                {% if social.icon %}
+                {{ social.icon| safe }}
+                {% elif social.image %}
+                <img src="{{ social.image| safe }}" alt="{{ social.name }}">
+                {% else %}
+                <i class="fa-brands fa-{{ social.name | lower }} fa-2xl {{ social.name | lower }}"></i>
+                {% endif %}
+            </a>
+            {% endfor %}
+			  </div>
+
+			</div>
+            <script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
+            <script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
+            <script src="{% static 'js/site.js' %}"></script>
+	</body>
+</html>

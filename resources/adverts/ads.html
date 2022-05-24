@@ -1,0 +1,95 @@
+<style type="text/css">
+    ad-group{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+    }
+    ad-banner{
+        background: linear-gradient(-55deg, #5A5CD6 29%, #1C005E 29.1%, #1C005E 68%, #5A5CD6 68.1% );
+        backdrop-filter: grayscale(50%) opacity(80%) blur(50px);
+        border-radius: 5px;
+        margin: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        box-shadow: 0 5px 10px #000500;
+    }
+    ad-image{
+        flex: 1 1 250px;
+        padding: 15px;
+        text-align: center;
+    }
+    ad-image img{
+        width: 80% ;
+    }
+    ad-text{
+        flex: 1 1 250px;
+        padding: 10px;
+        text-align: center;
+        text-transform: uppercase;
+    }
+    ad-text span{
+        color: #FFF;
+        font-size: 25px;
+    }
+    ad-text h3{
+        color:#fff;
+        font-size: 40px;
+    }
+    ad-text p{
+        color: #eee;
+        font-size: 20px;
+        padding: 10px 0;
+    }
+    ad-text .btn{
+        display: block;
+        height: 40px;
+        width: 150px;
+        line-height: 40px;
+        background: #fff;
+        color: #d63031;
+        margin: 5px auto;
+        text-decoration: none;
+        border-color: transparent;
+    }
+    ad-alt-image{
+        flex: 1 1 250px;
+        padding: 10px;
+        text-align: center;
+    }
+    ad-alt-image img{
+        width: 80% ;
+    }
+    ad-powered{
+        float: right; 
+        font-size: x-small;
+        font-weight: bold;
+        padding: 4px;
+        background-color: #000500;
+        color: #eee;
+    }
+    @media screen and (max-width:768px){
+        ad-alt-image img{
+            display: none;
+        }
+    }
+</style>
+{% load static %}
+    <ad-group>
+        <ad-banner>
+            <ad-image>
+                <img src="http://127.0.0.1:8000/uploads/2022/04/04/shoe.png" alt="Primry Advert Image">
+            </ad-image>
+            <ad-text>
+                <span>Upto</span>
+                <h3>50% Off</h3>
+                <p>Offer ends after 5 days.</p>
+                <a href="#" class="btn" >View Offer</a>
+            </ad-text>
+            <ad-alt-image>
+               <img src="http://127.0.0.1:8000/uploads/2022/04/04/women.png" alt="Secondary Advert Image">
+            </ad-alt-image>
+        </ad-banner>
+    </ad-group>

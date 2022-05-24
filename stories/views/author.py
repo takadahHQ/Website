@@ -1,0 +1,72 @@
+from django.urls import reverse_lazy
+from django.views.generic import CreateView, UpdateView, DetailView, ListView, TemplateView, DeleteView
+from django.contrib.auth.mixins import LoginRequiredMixin
+# from django.views import View
+# from django.db.models import Count
+from stories.forms import StoryForm, ChapterForm
+from stories.models import Chapters, Stories, Characters
+from extra_views import CreateWithInlinesView, UpdateWithInlinesView, InlineFormSetFactory
+
+
+class CharacterInline(InlineFormSetFactory):
+    model = Characters
+    fields = ['name']
+
+class storyDashboard(LoginRequiredMixin, TemplateView):
+    template_name = 'stories/dashboard.html'
+    model = Stories
+
+class storyList(LoginRequiredMixin, ListView):
+    template_name = 'stories/list_stories.html'
+    model = Stories
+    context_object_name = 'stories'
+  #  form_class = StoryForm
+  #  success_url = reverse_lazy('story:addchapter')
+
+class createStory(LoginRequiredMixin, CreateWithInlinesView):
+    template_name = 'stories/create_story.html'
+    model = Stories
+    inlines = [CharacterInline]
+    form_class = StoryForm
+    success_url = reverse_lazy('author:list')
+
+    def form_valid(self, form):
+        form.instance.authors = self.request.user
+        return super().form_valid(form)
+
+class updateStory(LoginRequiredMixin, UpdateWithInlinesView):
+    template_name = "stories/edit_story.html"
+    model = Stories
+    inlines = [CharacterInline]
+    form_class = StoryForm
+  #  success_url = reverse_lazy('dashboard')
+
+class deleteStory(LoginRequiredMixin, DeleteView):
+    #template_name = 'stories/create_story.html'
+    model = Stories
+    success_url = reverse_lazy('author:list')
+
+class createChapter(LoginRequiredMixin,CreateView):
+    model = Chapters
+    form_class = ChapterForm
+   # success_url = reverse_lazy('login')
+    template_name = "stories/create_chapter.html"
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
+class updateChapter(LoginRequiredMixin, UpdateView):
+    template_name = "stories/edit_chapter.html"
+    model = Chapters
+    form_class = ChapterForm
+
+    def form_valid(self, form):
+        form.instance.edited_by = self.request.user
+        return super().form_valid(form)
+  #  success_url = reverse_lazy('dashboard')
+
+class deleteChapter(LoginRequiredMixin, DeleteView):
+    #template_name = 'stories/create_story.html'
+    model = Stories
+    success_url = reverse_lazy('author:list')

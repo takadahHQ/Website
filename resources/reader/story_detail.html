@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+{% load advert_tags %}
+{% load tailwind_filters %}
+
+{% block title %}
+{{ story.title | title }}
+{% endblock title %}
+{% block breadcrumbs %}
+<li><a href="{% url 'core:index' %}">Home</a></li>
+<li><a href="{{ story.story_type.get_absolute_url}}">{{ story.story_type.name }}</a></li> 
+<li><a>{{ story.title }}</a></li> 
+{% endblock %}
+{% block content %}
+<!-- Story Detials -->
+<section class="w-full">
+    <div class="columns-3 hover:columns-4">
+        <div class="full">
+            <!--class="shadow-lg rounded max-w-full h-auto align-middle border-none" <img class="w-full aspect-square hover:scale-110 transition duration-300 ease-in-out" src="https://img.webnovel.com/bookcover/6831850602000905/150/150.jpg?coverUpdateTime=1600167042546&imageMogr2/quality/80"/> -->
+            <img class="aspect-square hover:scale-110 transition duration-300 ease-in-out shadow-lg rounded max-w-full h-auto align-middle border-none" src="{{ story.get_cover }}"/>
+        </div>
+        <div>
+            <div class="flex justify-evenly">
+                <h1 class="">{{ story.title | title }}</h1>
+                <span class="badge p-4 bg-black">{{ story.abbreviation }}</span>
+            </div>
+            <!-- genre status chapter views-->
+            <div class="flex justify-evenly">
+                <div class="">
+                    {{ story.genre.name }}
+                </div>
+                <div class="">
+                    {{ story.status | title }}
+                </div>
+                <div class="">
+                    {{ story.chapter_count  }} Chapter{{ story.chapter_count |pluralize }}
+                </div>
+                <div class="">
+                    123M Views
+                </div>
+            </div>
+            <div class="flex justify-evenly">
+                <div class="">
+                    Author{{ story.authors_count |pluralize }}: {{ story.authors.first.name | default:"Ghost" }}
+                </div>
+                <div class="">
+                    Editor{{ story.editors_count |pluralize }}: {{ story.editor.name | default:"Ghost" }}
+                </div>
+            </div>
+            <div class="w-full">
+                <a href="{{ story.chapters_set.first.get_absolute_url }}" class="btn btn-primary rounded-full">Read</a>
+
+                <a href="{{ story.chapters_set.last.get_absolute_url }}" class="btn bg-blue-300 rounded-full text-blue-800">Add to Library</a>
+            </div>
+        </div>
+        <div>
+
+        </div>
+    </div>
+</section>
+<div class="bg-white rounded shadow-blue-400 p-2 lg:p-8">
+    <div x-data="{
+		tabs: [ 'About', 'Table of Content'],
+		activeTabIndex: 0
+	}">
+		<div class="tabs my-6">
+			<template x-for="(tab, index) in tabs" :key="index">
+				<a class="tab tab-bordered" 
+					:class="{'tab-active': activeTabIndex == index}"
+					x-on:click="activeTabIndex = index"
+					x-text=tab
+				></a>
+			</template>
+		</div>
+		<div class="my-6 p-6">
+			<div x-show="activeTabIndex == 0">
+                <div class="text-2xl">Synopsis</div>
+            <div class="text-gray-500">
+                {{ story.summary | safe }}
+            </div>
+            </div>
+			<div x-show="activeTabIndex == 1">
+                Latest Release： Chapter {{ story.chapters_set.last.position  }}: <a href="{{ story.chapters_set.last.get_absolute_url }}">{{ story.chapters_set.last.title | title }}</a> {{ story.chapters_set.last.created_at | timesince }}<hr class="mt-5">
+                <div class="columns-2">
+                {% for chapter in story.chapters_set.all %}
+                <div class="p-4">
+                {{ chapter.position }} <a href="{{ chapter.get_absolute_url }}">{{ chapter.title | title }}</a> <br>
+                <p class="text-xs text-green-blue-400"> {{ chapter.created_at | timesince }} </p>
+                </div>
+                {% endfor %}
+            </div>
+            </div>
+			<div x-show="activeTabIndex == 2">content 3</div>
+		</div>
+	</div>
+
+    <section>
+        <div class="text-2xl">Tags</div>
+        {% for tag in story.tags.all %}
+        <div class="badge bg-orange-300 border-none p-4">
+        <a href="{{ tag.get_absolute_url }}">{{ tag.name | title }}</a>
+        </div>
+        {% endfor %}
+    </section>
+    <section>
+        <div class="text-2xl">Recommendation</div>
+        Recommendation
+    </section>
+</div>
+{% endblock content %}
