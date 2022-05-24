@@ -1,4 +1,3 @@
-from turtle import pos, position
 from django.db import models
 from django.conf import settings
 from ckeditor.fields import RichTextField
