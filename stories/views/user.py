@@ -17,7 +17,7 @@ class ShowStory(DetailView):
     def get_queryset(self):
         return Stories.objects.filter(slug=self.kwargs['slug']).exclude(status='pending').annotate(chapter_count=Count('chapters'))
 
-class ShowChapter(DetailView):
+class ShowChapter(HistoryMixin, DetailView):
     model = Chapters
     template_name = 'reader/read.html'
     context_object_name = 'story'
