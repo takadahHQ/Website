@@ -11,8 +11,9 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 def index(request):
     #return HttpResponse("Hello, to the stories application")
+    exclude = ['draft', 'prerelease']
     weekly = Stories.objects.filter(featured=True).filter(status='active')[:12]
-    fresh = Stories.objects.order_by('created_at').filter(status='active')[:12]
+    fresh = Stories.objects.order_by('created_at').exclude(status__in=exclude)[:12]
     completed = Stories.objects.filter(status='completed')[:12]
     return render(request, 'stories/index.html', {'weekly': weekly, 'fresh': fresh, 'completed': completed})
 
