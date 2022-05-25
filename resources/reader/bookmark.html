@@ -35,8 +35,8 @@ Bookmarks
                 </p>
             </header>
             <footer class="flex items-center justify-between leading-none p-2 md:p-4">
-                <a class="flex items-center no-underline hover:text-blue-400 text-black" href="{{ bookmark.story.chapters_set.last.get_absolute_url }}">
-                    <p class="text-sm text-grey-300">Progress 0 of {{ bookmark.story.chapters_set.count }}</p>
+                <a class="flex items-center no-underline hover:text-blue-400 text-black" href="{{ bookmark.get_read }}">
+                    <p class="text-sm text-grey-300">Progress {{ bookmark.get_read_position }} of {{ bookmark.story.chapters_set.count }}</p>
                 </a>
             </footer>
 

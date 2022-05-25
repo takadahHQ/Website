@@ -91,6 +91,14 @@ class Bookmarks(models.Model):
     def __str__(self):
         return self.story.title
 
+    def get_read_position(self):
+        story = History.objects.get(story=self.story, user=self.user)
+        return story.chapter.position
+
+    def get_read(self):
+        story = History.objects.get(story=self.story, user=self.user)
+        return story.chapter.get_absolute_url()
+
     class Meta:
         verbose_name_plural = 'bookmarks'
 
