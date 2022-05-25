@@ -36,7 +36,7 @@ NPM_BIN_PATH = r"C:\laragon\bin\nodejs\node-v14\npm.cmd"
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['takadah.com']
+ALLOWED_HOSTS = ['takadah.com', '127.0.0.1']
 
 
 # Application definition
@@ -392,3 +392,10 @@ CKEDITOR_CONFIGS = {
         ]),
     }
 }
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'takadah.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'mail'
+EMAIL_HOST_PASSWORD = 'EmailProvider'

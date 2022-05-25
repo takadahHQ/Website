@@ -25,9 +25,17 @@ class DateTimeLocalField(forms.DateTimeField):
 class StoryForm(forms.ModelForm):
     released_at = DateTimeLocalField()
 
+    # def clean_authors(self):
+    #     email = self.cleaned_data.get('authors')
+    #     current_user_email = User.email
+    #     if User.objects.filter(email__iexact=author).exclude(email__iexact=current_user_email).count() > 0:
+    #         raise forms.ValidationError('This email address is already in use.'
+    #                                     'Please supply a different email address.')
+    # return email
+
     class Meta:
         model = Stories
-        fields = ('title','abbreviation', 'summary', 'cover', 'story_type', 'tags', 'language','genre','rating', 'released_at','status',)
+        fields = ('title','abbreviation', 'summary', 'authors', 'cover', 'story_type', 'tags', 'language','genre','rating', 'released_at','status',)
 
 
 

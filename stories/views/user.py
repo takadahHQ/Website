@@ -8,6 +8,7 @@ from django.db.models import Count
 from stories.forms import StoryForm, ChapterForm
 
 from stories.models import Chapters, Stories, Tag
+from stories.views.mixins import HistoryMixin
 
 class ShowStory(DetailView):
     template_name = 'reader/story_detail.html'
