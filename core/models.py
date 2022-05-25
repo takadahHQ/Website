@@ -199,6 +199,9 @@ class Users(AbstractUser):
     location = models.CharField(max_length=30, blank=True)
     birth_date = models.DateField(null=True, blank=True)
     profile_photo = models.ImageField(max_length=2048, blank=True, null=True)
+    following = models.ManyToManyField(
+        "self", blank=True, related_name="followers", symmetrical=False
+    )
     # created_at = models.DateTimeField(auto_now_add=True)
     # updated_at = models.DateTimeField(auto_now=True)
     kyc_verified_at = models.DateTimeField(blank=True, null=True)
@@ -208,6 +211,11 @@ class Users(AbstractUser):
 
     objects = CustomUserManager()
 
+    def following_count(self):
+        return self.following.count()
+    def followers_count(self):
+        return self.followers.count()
+        
     def name(self):
         if self.pseudonym:
             return self.pseudonym

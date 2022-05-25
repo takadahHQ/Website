@@ -216,6 +216,11 @@ class Stories(models.Model):
     cover = models.ImageField(max_length=255, blank=True, null=True)
     story_type = models.ForeignKey('Types', on_delete=models.CASCADE)
     tags = models.ManyToManyField('Tag',blank=True)
+    following = models.ManyToManyField(
+        settings.AUTH_USER_MODEL, blank=True, related_name="story_followers", symmetrical=False
+    )
+    likes = models.ManyToManyField(settings.AUTH_USER_MODEL,  blank=True, related_name='story_likes')
+    dislikes = models.ManyToManyField(settings.AUTH_USER_MODEL,blank=True, related_name='story_dislike')
     authors = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True)
     language = models.ForeignKey('Languages', on_delete=models.CASCADE)
     genre = models.ManyToManyField('Genres', blank=True)
@@ -229,17 +234,23 @@ class Stories(models.Model):
 
     def __str__(self):
         return self.title
+
+    def following_count(self):
+        return self.following.count()
+    def followers_count(self):
+        return self.followers.count()
+
+    def likes_count(self):
+        return self.likes.count()
+    def dislikes_count(self):
+        return self.dislikes.count()
+
         
     def create_cover(self):
-        bg = img.background()
         name = self.authors.first().name()
-        cover = img.author(bg, name)
-        title = img.title(cover, self.title)
-        cover_image= img.save(title, self.slug)
-        name = self.slug + '.png'
-        file = open(cover_image, 'rb')
-        self.cover.save(name, File(file), save=True)
-        #title.show()
+        file = img.make(name, self.title, self.slug)
+        filename = self.slug + '.png'
+        self.cover.save(filename, File(file), save=True)
         return cover_image
 
 

@@ -1,8 +1,19 @@
 from PIL import Image, ImageEnhance, ImageDraw, ImageFont
+from django.core.files import File
 
 from . import tupleFunctions as tf
 import glob, os, math
 from takadah.settings import MEDIA_ROOT
+
+def make(img_author, img_title, img_slug):
+    bg = background()
+    name = img_author
+    cover = author(bg, name)
+    title = title(cover, img_title)
+    cover_image= save(title, img_slug)
+    name = img_slug + '.png'
+    file = open(cover_image, 'rb')
+    return file    
 
 def background():
     startColor = (66, 138, 255)
