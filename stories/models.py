@@ -214,6 +214,8 @@ class Stories(models.Model):
         ('haitus', 'Haitus'),
         ('prerelease', 'Pre-Released'),
         ('published', 'Published'),
+        ('oneshot', 'One Shot'),
+        ('ongoing', 'Ongoing'),
         ('draft', 'Draft'), 
         )
     id = models.BigAutoField(primary_key=True)
@@ -252,6 +254,15 @@ class Stories(models.Model):
         return self.likes.count()
     def dislikes_count(self):
         return self.dislikes.count()
+
+    def get_read_guest(self):
+        return self.chapters_set.first.get_absolute_url()
+
+    def get_read_user(self):
+        story = History.objects.get(story=self.story, user=self.user)
+        return story.chapter.get_absolute_url()
+
+
 
         
     def create_cover(self):
