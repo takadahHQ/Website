@@ -44,7 +44,9 @@ Story
                       <tr class="{% cycle 'bg-gray-100' 'bg-white' %} border-b">
                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"> {{forloop.counter0}} </td>
                         <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                            <a href="{% url 'author:show' story.id %}">
                           {{ story.title }}
+                      </a>
                         </td>
                         <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                             {{ story.chapters_set.count }}
