@@ -57,6 +57,7 @@ class Chapters(models.Model):
         if not self.slug:
             self.slug = slugify(self.story.abbreviation + "-" + self.position)
             self.words = self.text.count()
+        self.words = self.text.count()
         super(Chapters, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
@@ -258,8 +259,8 @@ class Stories(models.Model):
     def get_read_guest(self):
         return self.chapters_set.first.get_absolute_url()
 
-    def get_read_user(self):
-        story = History.objects.filter(user=self.user).get(story=self.story)
+    def get_read_user(self, request):
+        story = History.objects.filter(user=request.user).get(story=self.story)
         return story.chapter.get_absolute_url()
 
 

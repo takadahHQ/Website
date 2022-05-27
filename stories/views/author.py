@@ -10,10 +10,14 @@ from extra_views import CreateWithInlinesView, UpdateWithInlinesView, InlineForm
 
 class CharacterInline(InlineFormSetFactory):
     model = Characters
-    fields = ['name']
+    fields = ['name', 'category']
 
 class storyDashboard(LoginRequiredMixin, TemplateView):
     template_name = 'stories/dashboard.html'
+    model = Stories
+
+class viewStory(LoginRequiredMixin, DetailView):
+    template_name = 'stories/show_story.html'
     model = Stories
 
 class storyList(LoginRequiredMixin, ListView):
