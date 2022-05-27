@@ -18,6 +18,7 @@ class storyDashboard(LoginRequiredMixin, TemplateView):
 
 class viewStory(LoginRequiredMixin, DetailView):
     template_name = 'stories/show_story.html'
+    context_object_name = 'story'
     model = Stories
 
 class storyList(LoginRequiredMixin, ListView):
