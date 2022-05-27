@@ -104,8 +104,8 @@
                 <div class="columns-2">
                 {% for chapter in story.chapters_set.all %}
                 <div class="p-4">
-                {{ chapter.position }} <a href="{{ chapter.get_absolute_url }}">{{ chapter.title | title }}</a> <br>
-                <p class="text-xs text-green-blue-400"> {{ chapter.created_at | timesince }} </p>
+                {{ chapter.position }} <a class="text-blue-800" href="{{ chapter.get_absolute_url }}">{{ chapter.title | title }}</a> <br>
+                <p class="text-xs text-green-blue-400"> {{ chapter.created_at | timesince }} ago</p>
                 </div>
                 {% endfor %}
             </div>
