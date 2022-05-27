@@ -68,7 +68,7 @@
             </div>
             <div class="w-full">
                 {% if user.is_authenticated %}
-                <a href="{{ story.chapters_set.first.get_absolute_url }}" class="btn btn-primary rounded-full">Read Change me</a>
+                <a href="{{ story.get_read_user }}" class="btn btn-primary rounded-full">Read Change</a>
                 {% else %}
                 <a href="{{ story.get_read_guest }}" class="btn btn-primary rounded-full">Read</a>
                 {% endif %}

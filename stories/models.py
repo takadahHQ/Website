@@ -259,7 +259,7 @@ class Stories(models.Model):
         return self.chapters_set.first.get_absolute_url()
 
     def get_read_user(self):
-        story = History.objects.get(story=self.story, user=self.user)
+        story = History.objects.filter(user=self.user).get(story=self.story)
         return story.chapter.get_absolute_url()
 
 
