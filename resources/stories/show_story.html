@@ -12,14 +12,12 @@
 <li><a>Update</a></li> 
 {% endblock %}
 {% block content %}
-<!-- Story Detials -->
-<section class="w-full">
-    <div class="columns-3 hover:columns-2">
-        <div class="full">
-            <img class="aspect-square hover:scale-110 transition duration-300 ease-in-out shadow-lg rounded max-w-50 h-auto align-middle border-none" src="{{ story.get_cover }}"/>
-        </div>
-        <div class="w-full">
-            <div class="flex justify-evenly">
+<story class="flex w-full space-x-2 space-y-2">
+    <story-image class="w-full md:w-1/3">
+        <img class="aspect-square hover:scale-110 transition duration-300 ease-in-out shadow-lg rounded max-w-50 h-auto align-middle border-none" src="{{ story.get_cover }}"/>
+    </story-image>
+    <story-details class="flex-grow w-full md:w-2/3 p-2">
+        <div class="">
                 <h1 class="">{{ story.title | title }}</h1>
                 <span class="badge p-4 bg-black">{{ story.abbreviation }}</span>
             </div>
@@ -76,7 +74,6 @@
 
                 <a href="{{ story.chapters_set.last.get_absolute_url }}" class="btn bg-blue-300 rounded-full text-blue-800">Add to Library</a>
             </div>
-        </div>
-    </div>
-</section>
+    </story-details>
+</story>
 {% endblock content %}
