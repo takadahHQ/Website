@@ -117,23 +117,23 @@ WSGI_APPLICATION = 'takadah.wsgi.application'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
 # #Local
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-#Production
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'takalqei_django',
-        'USER': 'takalqei_django',
-        'PASSWORD': 'Z!nox2018',
-        'HOST': 'localhost',
-        'PORT': '3306',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+#Production
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'takalqei_django',
+#         'USER': 'takalqei_django',
+#         'PASSWORD': 'Z!nox2018',
+#         'HOST': 'localhost',
+#         'PORT': '3306',
+#     }
+# }
 
 
 # Password validation
