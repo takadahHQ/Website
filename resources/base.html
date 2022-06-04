@@ -1,4 +1,5 @@
 {% load static tailwind_tags %}
+{% load tailwind_tags %}
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -6,131 +7,25 @@
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <script src="https://cdn.tailwindcss.com"></script>
-		<script src="https://cdn.skypack.dev/pin/@hotwired/turbo@v7.1.0-V83RMQBlYCPK9CvTqQoL/mode=imports,min/optimized/@hotwired/turbo.js"></script>
         {% load static %}
+        <link rel="stylesheet" href="{% url 'core:stylesheet' %}">
+        {% tailwind_preload_css %}
+        {% tailwind_css %}
         <link rel="stylesheet" href="{% static 'css/dist/font.css' %}">
-        <link href="https://cdn.jsdelivr.net/npm/daisyui@2.13.6/dist/full.css" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" href="{% url 'core:stylesheet' %}">
+        <link rel="stylesheet" href="{% static 'css/daisyui.css' %}">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-        <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
-        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
-  
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
 
     <link rel="stylesheet" href="{% static '/css/datatable.min.css' %}" />
-    <script src="{% static '/js/datatable.min.js' %}"></script>
+    <script src="{% static '/js/datatable.min.js' %}" defer ></script>
+    <script src="{% static '/js/alpine.min.js' %}" defer ></script>
+    <script src="{% static '/js/htmx.min.js' %}" defer ></script>
         <!-- Our project just needs Font Awesome Free's Solid + Brand files -->
     <link href="{% static 'fontawesomefree/css/fontawesome.css' %}" rel="stylesheet" type="text/css">
     <link href="{% static 'fontawesomefree/css/brands.css' %}" rel="stylesheet" type="text/css">
     <link href="{% static 'fontawesomefree/css/solid.css' %}" rel="stylesheet" type="text/css">
-		{% tailwind_css %}
-        <style type="text/tailwindcss">
-            @layer utilities {
-              h1, .h2, .h3 {
-            color: #334fd2;
-            font-family: 'Yeseva One', cursive;
-        }
-        h1:hover, .h2:hover, .h3:hover{
-            color: #334fd2;
-            font-family: 'Yeseva One', cursive;
-        }
         
-        .card{
-            border-color: #334fd2;
-            @apply bg-gray-300;
-            font-family: 'Josefin Sans', sans-serif;
-        }
-        .text-neutral-content {
-            color: #334fd2;
-            font-family: 'Josefin Sans', sans-serif;
-        }
-        
-        .btn-primary {
-            background-color: #334fd2;
-        }
-        
-        .badge-outline {
-            border-color: #334fd2;
-            color: #334fd2;
-        
-        }
-        
-        .logo {
-            color: #334fd2;
-        }
-        
-        .facebook{
-            color: #1877F2;
-            background-color: transparent;
-        }
-        
-        .twitter{
-            color: #1DA1F2;
-            background-color: transparent;
-        }
-        
-        .youtube{
-            color: #FF0000;
-            background-color: transparent;
-        }
-        
-        .discord{
-            color: #5865F2;
-            background-color: transparent;
-        }
-        
-        .telegram{
-            color: #26A5E4;
-            background-color: transparent;
-        }
-        
-        .nav-base{
-            background-color: #334fd2;
-            color: white;
-            font-family: 'Yeseva One', cursive;
-        }
-        
-        .nav-base>a:hover{
-            background-color: whitesmoke;
-            color: #334fd2;
-            padding: 10rem;
-        };
-        .grid.grid-flow-col.p-2>a{
-            background-color: transparent;
-            color: black;
-        }
-        
-        .grid.grid-flow-col.p-2>a:hover{
-            background-color: #334fd2;
-            color: white;
-            font-size: 1.25rem;
-            line-height: 1.75rem;
-        }
-        
-        .link-hover{
-            text-decoration: none;
-        }
-        
-        .link-hover:hover{
-            color: #334fd2;
-            text-decoration: none;
-            font-size: 1.25rem;
-            line-height: 1.75rem;
-        }
-        
-        .social{
-            text-decoration: none;
-        }
-        .social:hover{
-            color: #334fd2;
-            text-decoration: none;
-            font-size: large;
-            line-height: 1.75rem;
-        }
-        
-            }
-          </style>
 	</head>
 
 	<body class="min-h-screen bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-300 font-serif leading-normal tracking-normal">

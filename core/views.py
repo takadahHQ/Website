@@ -17,6 +17,12 @@ def index(request):
     completed = Stories.objects.filter(status='completed')[:12]
     return render(request, 'stories/index.html', {'weekly': weekly, 'fresh': fresh, 'completed': completed})
 
+def generatedCss(request):
+    reply = render(request, 'css.html')
+    reply['type'] = 'text/css'
+    return reply
+
+
 class SignUpView(CreateView):
     model = Users
     form_class = SignUpForm
