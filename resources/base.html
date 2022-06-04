@@ -8,17 +8,16 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta http-equiv="X-UA-Compatible" content="ie=edge">
         {% load static %}
-        <link rel="stylesheet" href="{% url 'core:stylesheet' %}">
         {% tailwind_preload_css %}
         {% tailwind_css %}
         <link rel="stylesheet" href="{% static 'css/dist/font.css' %}">
-        <link rel="stylesheet" href="{% url 'core:stylesheet' %}">
-        <link rel="stylesheet" href="{% static 'css/daisyui.css' %}">
+        <link rel="stylesheet" href="{% url 'core:stylesheet' %}" defer>
+<!--         <link rel="stylesheet" href="{% static 'css/daisyui.css' %}">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
     <link rel="stylesheet" href="{% static '/css/datatable.min.css' %}" />
-    <script src="{% static '/js/datatable.min.js' %}" defer ></script>
+    <script src="{% static '/js/datatable.min.js' %}" defer ></script> -->
     <script src="{% static '/js/alpine.min.js' %}" defer ></script>
     <script src="{% static '/js/htmx.min.js' %}" defer ></script>
         <!-- Our project just needs Font Awesome Free's Solid + Brand files -->

@@ -2,6 +2,7 @@ from typing_extensions import Self
 from django.db import models
 from django.contrib.auth.models import AbstractUser, UserManager
 from django.conf import settings
+from django.forms.widgets import TextInput
 from ckeditor.fields import RichTextField
 from ckeditor_uploader.fields import RichTextUploadingField
 

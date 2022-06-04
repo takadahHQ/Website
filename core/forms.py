@@ -1,7 +1,9 @@
 from dataclasses import fields
 from django import forms
+from django.forms import ModelForm
+from django.forms.widgets import TextInput
 from django.contrib.auth.forms import UserCreationForm
-from .models import Users
+from .models import Users, Settings
 
 from stories.models import Languages
 
@@ -11,6 +13,21 @@ class ColorInput(forms.TextInput):
 class ColorField(forms.Field):
     widget = ColorInput(attrs={'class': 'textinput bg-white px-4 rounded-lg py-2 block border w-full text-gray-700 leading-normal focus:outline-none appearance-none border-gray-300'})
     
+class SettingsForm(ModelForm):
+    class Meta:
+        model = Settings
+        fields = "__all__"
+        widgets = {
+            "color": TextInput(attrs={"type": "color"}),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if self.instance:
+            self.fields["color"].widget = TextInput(
+                attrs={"type": "color", "title": self.instance.color}
+            )
+
 
 class SignUpForm(UserCreationForm):
     # username = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-input px-4 m-2 py-3 rounded'})),

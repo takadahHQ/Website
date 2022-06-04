@@ -18,8 +18,9 @@ def index(request):
     return render(request, 'stories/index.html', {'weekly': weekly, 'fresh': fresh, 'completed': completed})
 
 def generatedCss(request):
-    reply = render(request, 'css.html')
+    reply = render(request, 'css.html', content_type='text/css')
     reply['type'] = 'text/css'
+    reply['mimetype'] = 'text/css'
     return reply
 
 
