@@ -257,15 +257,12 @@ class Stories(models.Model):
         return self.dislikes.count()
 
     def get_read_guest(self):
-        return self.chapters_set.first.get_absolute_url()
+        return self.chapters_set.first().get_absolute_url()
 
     def get_read_user(self, request):
         story = History.objects.filter(user=request.user).get(story=self.story)
         return story.chapter.get_absolute_url()
-
-
-
-        
+   
     def create_cover(self):
         name = self.authors.first().name()
         file = img.make(name, self.title, self.slug)
@@ -291,7 +288,6 @@ class Stories(models.Model):
         return reverse("story:show", kwargs={"type": self.story_type.name, "slug": self.slug})
        # return reverse("model_detail", kwargs={"pk": self.pk})
     
-
     class Meta:
         verbose_name_plural = 'stories'
 
