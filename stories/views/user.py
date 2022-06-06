@@ -7,43 +7,59 @@ from django.views import View
 from django.db.models import Count
 from stories.forms import StoryForm, ChapterForm
 
-from stories.models import Chapters, Stories, Tag
+from stories.models import Chapters, Stories, Tag, Bookmarks
 from stories.views.mixins import HistoryMixin
 
 
-def StoryLike(request, pk):
-    story = get_object_or_404(Stories, id=request.POST.get('blogpost_id'))
+def StoryLike(request, id):
+    story = get_object_or_404(Stories, id=id)
     if story.likes.filter(id=request.user.id).exists():
         story.likes.remove(request.user)
+        story.save()
     else:
         story.likes.add(request.user)
+        story.save()
 
-    return HttpResponseRedirect(reverse('blogpost-detail', args=[str(pk)]))
+    return render(request, 'stories/partials/like.html', {'story': story})
 
-def StoryDisLike(request, pk):
-    story = get_object_or_404(Stories, id=request.POST.get('blogpost_id'))
+def StoryDisLike(request, id):
+    #use together with htmx
+    story = get_object_or_404(Stories, id=id)
     if story.dislikes.filter(id=request.user.id).exists():
         story.dislikes.remove(request.user)
+        story.save()
     else:
         story.dislikes.add(request.user)
+        story.save()
 
-    return HttpResponseRedirect(reverse('blogpost-detail', args=[str(pk)]))
+    return render(request, 'stories/partials/dislike.html', {'story': story})
 
-def StoryFollow(request, pk):
-    story = get_object_or_404(Stories, id=request.POST.get('blogpost_id'))
+def StoryBookmark(request, id):
+    story = get_object_or_404(Stories, id=id)
+    bookmark = Bookmarks.objects.update_or_create(story=story, user=request.user, defaults={'story': story, 'user':request.user,})
+    bookmark.save()
+    bookmarks = Bookmarks.objects.get(story=id)
+    #save the story, user, url(!optional) and status
+    return render(request, 'stories/partials/bookmark.html', {'bookmark': bookmarks})
+
+
+def StoryFollow(request, id):
+    story = get_object_or_404(Stories, id=id)
     if story.following.filter(id=request.user.id).exists():
         story.following.remove(request.user)
+        story.save()
     else:
         story.following.add(request.user)
+        story.save()
 
-    return HttpResponseRedirect(reverse('blogpost-detail', args=[str(pk)]))
+    return render(request, 'stories/partials/following.html', {'story': story})
 
 class ShowStory(DetailView):
     template_name = 'reader/story_detail.html'
     context_object_name = 'story'
 
     def get_queryset(self):
-        return Stories.objects.filter(slug=self.kwargs['slug']).exclude(status='pending').annotate(chapter_count=Count('chapters'))
+        return Stories.objects.select_related('story_type', 'language','rating').filter(slug=self.kwargs['slug']).exclude(status='pending').annotate(chapter_count=Count('chapters'))
 
 class ShowChapter(HistoryMixin, DetailView):
     model = Chapters
@@ -56,6 +72,9 @@ class ShowTag(TemplateView):
     context_object_name = 'story'
 
     def get_queryset(self):
-        return Tag.objects.filter(name=self.request.user).order_by('-created_at')[:5]
+        #first call the tag 
+        #then filter the result 
+        #before egarloading the variable
+        return Tag.objects.filter(pk=self.request.pk)#.exclude(status='pending').order_by('-created_at')[:5]
 
 
