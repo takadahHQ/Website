@@ -1,5 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,400;0,500;1,700&family=Yeseva+One&display=swap');
 
+@font-face {
+  font-family: "Josefin Sans";
+  src: url("/static/font/JosefinSansBold.ttf") format("truetype");
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: "Yeseva One";
+  src: url("/static/font/YesevaOne.ttf") format("truetype");
+  font-weight: 700;
+}
+
 h1, h2, h3, h4, h5, h6{
     font-family: 'Yeseva One', cursive;
 }
