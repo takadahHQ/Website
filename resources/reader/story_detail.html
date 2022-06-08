@@ -15,15 +15,15 @@
 <section class="w-screen">
     <div class="flex hover:flex-auto">
         <div class="md:w-1/6 w-full">
-            <img class="aspect-square hover:scale-110 transition duration-300 ease-in-out shadow-lg rounded max-w-50 h-auto align-middle border-none" src="{{ story.get_cover }}"/>
+            <img class="aspect-square hover:saturate-200 transition duration-300 ease-in-out shadow-lg rounded max-w-50 h-auto align-middle border-none" src="{{ story.get_cover }}"/>
         </div>
-        <div class="w-full md:5/6 p-2">
-            <div class="flex justify-evenly flex-wrap">
+        <div class="w-full md:5/6 p-2 mx-auto">
+            <div class="flex space-x-2 flex-wrap">
                 <h1 class="text-2xl md:text-5xl">{{ story.title | title }}</h1>
                 <span class="badge p-4 bg-black">{{ story.abbreviation }}</span>
             </div>
             <!-- genre status chapter views-->
-            <div class="flex justify-evenly flex-wrap">
+            <div class="flex space-x-2 flex-wrap">
                 <div class="p-2">
                     {{ story.genre.first.name }}
                 </div>
@@ -37,7 +37,7 @@
                     123M Views
                 </div>
             </div>
-            <div class="flex justify-start flex-wrap">
+            <div class="flex space-x-2 flex-wrap">
                 <div class="">
                     Author{{ story.authors_count |pluralize }}: 
                     {% for author in story.authors.all %}
@@ -54,12 +54,12 @@
                     Editor{{ story.editors_count |pluralize }}: {{ story.editor.name | default:"Ghost" }}
                 </div>
             </div>
-            <div class="flex justify-evenly flex-wrap">
+            <div class="flex space-x-2 flex-wrap">
                 {% include "stories/partials/following.html" %}
                 {% include "stories/partials/like.html" %}
                 {% include "stories/partials/dislike.html" %}
             </div>
-            <div class="w-full flex flex-start flex-wrap">
+            <div class="w-full flex flex-wrap space-x-2">
                 {% if user.is_authenticated %}
                 <a href="{{ story.get_read_user }}" class="btn btn-primary rounded-full">Read Change</a>
                 {% else %}
