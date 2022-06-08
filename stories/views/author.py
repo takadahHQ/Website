@@ -25,6 +25,10 @@ class storyList(LoginRequiredMixin, ListView):
     template_name = 'stories/list_stories.html'
     model = Stories
     context_object_name = 'stories'
+
+    def get_queryset(self):
+        return Stories.objects.filter(authors=self.request.user)
+
   #  form_class = StoryForm
   #  success_url = reverse_lazy('story:addchapter')
 
