@@ -3,22 +3,24 @@ from django.core.files import File
 
 from . import tupleFunctions as tf
 import glob, os, math
+import random
+from urllib.request import urlopen
 from takadah.settings import MEDIA_ROOT, BASE_DIR
 
 def make(img_author, img_title, img_slug):
     bg = background()
     name = img_author
     cover = author(bg, name)
-    title = title(cover, img_title)
-    cover_image= save(title, img_slug)
+    titles = title(cover, img_title)
+    cover_image= save(titles, img_slug)
     name = img_slug + '.png'
     file = open(cover_image, 'rb')
     return file    
 
 def background():
-    startColor = (66, 138, 255)
-    endColorX = (65, 255, 217)
-    endColorY = (118, 65, 255)
+    startColor = (random.randrange(60, 66), random.randrange(100, 138), random.randrange(1, 255))
+    endColorX = (random.randrange(60, 65), random.randrange(200, 255), random.randrange(217, 255))
+    endColorY = (random.randrange(100, 118), random.randrange(60, 65), random.randrange(1, 255))
     size = (300, 500)
 
     im = Image.new("RGB", size, 'black')
@@ -90,10 +92,12 @@ def author(image, name):
    # image = Image.open(image)
     draw = ImageDraw.Draw(image)
     font_file_path = BASE_DIR.__str__() +'/static/fonts/YesevaOne.ttf'
-    #ont_file_path = BASE_DIR.__str__() +'/static/fonts/JosefinSans-SemiBold.ttf'
+    #font_file_path = BASE_DIR.__str__() +'/static/fonts/JosefinSans-SemiBold.ttf'
     #font_file_path = 'static/fonts/YesevaOne.ttf'
     #font = ImageFont.truetype(font_file_path, size=30, encoding="utf-8")
-    font = ImageFont.truetype(font_file_path, size=30)
+    #font = ImageFont.truetype(font_file_path, size=30)
+    truetype_url = 'https://github.com/googlefonts/josefinsans/blob/master/fonts/ttf/JosefinSans-Bold.ttf?raw=true'
+    font = ImageFont.truetype(urlopen(truetype_url), size=30)
     (x, y) = (150, 480)
     color = 'rgb(255, 055,05)' # white color
     draw.text((x, y), name, fill=color, font=font, anchor="md")
@@ -103,9 +107,11 @@ def title(image,title):
    # image = Image.open(image)
     draw = ImageDraw.Draw(image)
     # create the ImageFont instance
-    font_file_path = 'static/fonts/FiraCode-SemiBold.ttf'
+    truetype_url = 'https://github.com/googlefonts/Fira/blob/main/ttf/FiraSans-Bold.ttf?raw=true'
+    font = ImageFont.truetype(urlopen(truetype_url), size=25)
+    #font_file_path = 'static/fonts/FiraCode-SemiBold.ttf'
+    #font = ImageFont.truetype(font_file_path, size=25)
     color = 'rgb(255, 255, 255)' # white color
-    font = ImageFont.truetype(font_file_path, size=25)
     image_size = image.size
     lines = text_wrap(title, font, image_size[0]-10)
     line_height = font.getsize('hg')[1]
