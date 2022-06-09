@@ -16,10 +16,22 @@ class storyDashboard(LoginRequiredMixin, TemplateView):
     template_name = 'stories/dashboard.html'
     model = Stories
 
+    def total_likes(self):
+        liked = Stories.objects.filter(authors=self.request.user).annotate(total_likes=Sum(likes))
+        return liked
+
 class viewStory(LoginRequiredMixin, DetailView):
     template_name = 'stories/show_story.html'
     context_object_name = 'story'
     model = Stories
+
+class storyList(LoginRequiredMixin, ListView):
+    template_name = 'stories/list_stories.html'
+    model = Stories
+    context_object_name = 'stories'
+
+    def get_queryset(self):
+        return Stories.objects.filter(authors=self.request.user)#.annotate(word_count)
 
 class storyList(LoginRequiredMixin, ListView):
     template_name = 'stories/list_stories.html'
@@ -40,7 +52,8 @@ class createStory(LoginRequiredMixin, CreateWithInlinesView):
     success_url = reverse_lazy('author:list')
 
     def form_valid(self, form):
-        form.instance.authors = self.request.user
+        form.instance.save()
+        form.instance.authors.add(self.request.user)
         return super().form_valid(form)
 
 class updateStory(LoginRequiredMixin, UpdateWithInlinesView):

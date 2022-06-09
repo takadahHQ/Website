@@ -3,7 +3,7 @@ from django.core.files import File
 
 from . import tupleFunctions as tf
 import glob, os, math
-from takadah.settings import MEDIA_ROOT
+from takadah.settings import MEDIA_ROOT, BASE_DIR
 
 def make(img_author, img_title, img_slug):
     bg = background()
@@ -89,7 +89,7 @@ def text_wrap(text, font, max_width):
 def author(image, name):
    # image = Image.open(image)
     draw = ImageDraw.Draw(image)
-    font_file_path = 'static/fonts/FiraCode-SemiBold.ttf'
+    font_file_path = BASE_DIR.__str__() +'/static/fonts/YesevaOne.ttf'
     #ont_file_path = BASE_DIR.__str__() +'/static/fonts/JosefinSans-SemiBold.ttf'
     #font_file_path = 'static/fonts/YesevaOne.ttf'
     #font = ImageFont.truetype(font_file_path, size=30, encoding="utf-8")
