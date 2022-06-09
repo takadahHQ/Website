@@ -21,7 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-%$)wg^oewabdu(@&ai^v793brks2q20ehlu(sjn#(x+3+^$*tq'
+SECRET_KEY = 'Takadah-%$)wg^oewabdu(@&ai^v793brks30Retehlu(sjn#(x+3+^$*tq'
 
 AUTH_USER_MODEL = 'core.Users'
 LOGIN_REDIRECT_URL = "core:index"
@@ -34,7 +34,7 @@ CRISPY_TEMPLATE_PACK = "tailwind"
 NPM_BIN_PATH = r"C:\laragon\bin\nodejs\node-v14\npm.cmd"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['takadah.com', '127.0.0.1']
 
@@ -116,24 +116,16 @@ WSGI_APPLICATION = 'takadah.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-# #Local
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'takalqei_django',
+        'USER': 'takalqei_django',
+        'PASSWORD': 'Z!nox2018',
+        'HOST': 'localhost',
+        'PORT': '3306',
     }
 }
-#Production
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'takalqei_django',
-#         'USER': 'takalqei_django',
-#         'PASSWORD': 'Z!nox2018',
-#         'HOST': 'localhost',
-#         'PORT': '3306',
-#     }
-# }
 
 
 # Password validation
@@ -170,23 +162,15 @@ TAILWIND_APP_NAME = 'owliver'
 
 
 # Static files (CSS, JavaScript, Images)
-#Local 
+
+#Production
 STATIC_URL = 'static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = '/home/takalqei/takadah-app/static/'
 STATICFILES_DIRS = [
    os.path.join(BASE_DIR, "resources/static"),
    ]  
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
-#Production
-# STATIC_URL = 'static/'
-# STATIC_ROOT = '/home/takalqei/takadah-app/static/'
-# STATICFILES_DIRS = [
-#    os.path.join(BASE_DIR, "resources/static"),
-#    ]  
-# MEDIA_URL = '/media/'
-# MEDIA_ROOT = '/home/takalqeidah-/takaapp/media/'
+MEDIA_ROOT = '/home/takalqeidah-/takaapp/media/'
 
 
 # Default primary key field type
