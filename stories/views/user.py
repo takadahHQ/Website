@@ -7,7 +7,7 @@ from django.views import View
 from django.db.models import Count
 from stories.forms import StoryForm, ChapterForm
 
-from stories.models import Chapters, Stories, Tag, Bookmarks
+from stories.models import Chapters, Stories, Tag, Bookmarks, Languages, Genres, Ratings,Types, Universes
 from stories.views.mixins import HistoryMixin
 
 
@@ -66,9 +66,9 @@ class ShowChapter(HistoryMixin, DetailView):
     template_name = 'reader/read.html'
     context_object_name = 'story'
 
-class ShowTag(TemplateView):
+class ShowTag(DetailView):
     model = Tag
-    template_name = 'reader/read.html'
+    template_name = 'stories/tags.html'
     context_object_name = 'story'
 
     def get_queryset(self):
@@ -76,5 +76,49 @@ class ShowTag(TemplateView):
         #then filter the result 
         #before egarloading the variable
         return Tag.objects.filter(pk=self.request.pk)#.exclude(status='pending').order_by('-created_at')[:5]
+
+class ShowGenre(DetailView):
+    model = Genres
+    template_name = 'stories/genres.html'
+    context_object_name = 'genres'
+
+    def get_queryset(self):
+        return Genres.objects.filter(story__genre=self.kwargs.get('pk')).exclude(story__status='pending').order_by('-created_at')[:15]
+
+class ShowRating(ListView):
+    model = Ratings
+    template_name = 'stories/ratings.html'
+    context_object_name = 'story'
+
+    def get_queryset(self):
+        #first call the tag 
+        #then filter the result 
+        #before egarloading the variable
+        return Tag.objects.filter(pk=self.request.pk)#.exclude(status='pending').order_by('-created_at')[:5]
+
+class ShowType(ListView):
+    model = Types
+    template_name = 'stories/type.html'
+    context_object_name = 'story'
+
+    def get_queryset(self):
+        #first call the tag 
+        #then filter the result 
+        #before egarloading the variable
+        return Tag.objects.filter(pk=self.request.pk)#.exclude(status='pending').order_by('-created_at')[:5]
+
+class ShowLanguage(ListView):
+    model = Languages
+    template_name = 'stories/language.html'
+    context_object_name = 'story'
+
+    def get_queryset(self):
+        #first call the tag 
+        #then filter the result 
+        #before egarloading the variable
+        return Tag.objects.filter(pk=self.request.pk)#.exclude(status='pending').order_by('-created_at')[:5]
+
+
+
 
 

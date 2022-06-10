@@ -268,7 +268,7 @@ class Stories(models.Model):
         file = img.make(name, self.title, self.slug)
         filename = self.slug + '.png'
         self.cover.save(filename, File(file), save=True)
-        return cover_image
+        return self.cover.url
 
 
     def save(self, *args, **kwargs):
