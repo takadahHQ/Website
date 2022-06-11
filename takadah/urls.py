@@ -15,6 +15,7 @@ urlpatterns = [
     path('__debug__/', include('debug_toolbar.urls')),
     path('ckeditor/', include('ckeditor_uploader.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
+    path('cookies/', include('cookie_consent.urls')),
     path('blog/', include('blog.urls')),
     path('read/', include('stories.urls')),
     path('author/', include('stories.authors')),
