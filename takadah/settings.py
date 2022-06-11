@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
   #  "django_unicorn",
     'tailwind',
+    'analytical',
     'owliver',
     'django_browser_reload',
     'debug_toolbar',
@@ -399,3 +400,11 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'mail'
 EMAIL_HOST_PASSWORD = 'EmailProvider'
+
+#CLICKMAP_TRACKER_ID = 'XXXXXXXX'
+#CRAZY_EGG_ACCOUNT_NUMBER = '12345678'
+MIXPANEL_API_TOKEN = 'dc4537f245806621832017184b5f7d0c'
+MATOMO_DOMAIN_PATH = 'matomo.takadah.com'
+MATOMO_SITE_ID = '123'
+ANALYTICAL_INTERNAL_IPS = ['192.168.1.45', '192.168.1.57']
+ANALYTICAL_AUTO_IDENTIFY = True

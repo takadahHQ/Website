@@ -1,8 +1,10 @@
 {% load static tailwind_tags %}
 {% load tailwind_tags %}
+{% load analytical %}%}
 <!DOCTYPE html>
 <html lang="en">
 	<head>
+        {% analytical_head_top %}
     	<title>{% block title %}{{ settings.name }}{% endblock %}</title>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,10 +24,11 @@
     <link href="{% static 'fontawesomefree/css/fontawesome.css' %}" rel="stylesheet" type="text/css">
     <link href="{% static 'fontawesomefree/css/brands.css' %}" rel="stylesheet" type="text/css">
     <link href="{% static 'fontawesomefree/css/solid.css' %}" rel="stylesheet" type="text/css">
-        
+    {% analytical_head_bottom %} 
 	</head>
 
 	<body class="min-h-screen bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-300 font-serif leading-normal tracking-normal" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+        {% analytical_body_top %}
         <div class="w-full">
             <div class="flex justify-between bg-white dark:bg-gray-700">
                 <div class="flex justify-start text-gray-800 dark:text-gray-300 place-content-center pre-nav">
@@ -187,5 +190,6 @@
             <script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
             <script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
             <script src="{% static 'js/site.js' %}"></script>
+        {% analytical_body_bottom %}
 	</body>
 </html>
