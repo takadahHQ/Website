@@ -3,6 +3,7 @@ from django.urls import include, path
 from .api import api
 from django.conf import settings
 from django.conf.urls.static import static
+from two_factor.urls import urlpatterns as tf_urls
 
 
 urlpatterns = [
@@ -21,4 +22,5 @@ urlpatterns = [
     path('author/', include('stories.authors')),
     path('pages/', include('pages.urls')),
     path('', include('core.urls')),
+    path('', include(tf_urls)),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

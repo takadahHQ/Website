@@ -24,7 +24,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-%$)wg^oewabdu(@&ai^v793brks2q20ehlu(sjn#(x+3+^$*tq'
 
 AUTH_USER_MODEL = 'core.Users'
-LOGIN_REDIRECT_URL = "core:index"
+LOGIN_URL = 'two_factor:login'
+
+# this one is optional
+LOGIN_REDIRECT_URL = 'two_factor:profile'
+#LOGIN_REDIRECT_URL = "core:index"
 LOGOUT_REDIRECT_URL = "core:index"
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "tailwind"
