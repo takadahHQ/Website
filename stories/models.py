@@ -160,7 +160,7 @@ class Genres(models.Model):
     
     def get_absolute_url(self):
         slug = slugify(self.name)
-        return reverse("story:genre", kwargs={"slug": slug, "id": self.id})
+        return reverse("story:genre", kwargs={"slug": slug, "pk": self.id})
 
 class Languages(models.Model):
     status_choices = (

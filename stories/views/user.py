@@ -77,13 +77,14 @@ class ShowTag(DetailView):
         #before egarloading the variable
         return Tag.objects.filter(pk=self.request.pk)#.exclude(status='pending').order_by('-created_at')[:5]
 
-class ShowGenre(DetailView):
-    model = Genres
+class ShowGenre(ListView):
+    model = Stories
     template_name = 'stories/genres.html'
     context_object_name = 'genres'
 
     def get_queryset(self):
-        return Genres.objects.filter(story__genre=self.kwargs.get('pk')).exclude(story__status='pending').order_by('-created_at')[:15]
+        #Stories.objects.filter(stories__genre=self.kwargs.get('pk')).exclude(stories__status='pending')#.order_by('-created_at')[:15]
+        return Stories.objects.exclude(status='pending').exclude(status='draft').filter(genre=self.kwargs.get('pk'))
 
 class ShowRating(ListView):
     model = Ratings
