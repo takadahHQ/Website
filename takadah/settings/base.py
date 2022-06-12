@@ -65,7 +65,6 @@ INSTALLED_APPS = [
     'two_factor',
     #'two_factor.plugins.phonenumber',  # <- if you want phone number capability.
     'two_factor.plugins.email',
-    'tailwind',
     'owliver',
     'django_browser_reload',
     'debug_toolbar',
