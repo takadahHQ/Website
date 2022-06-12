@@ -5,7 +5,7 @@ from . import tupleFunctions as tf
 import glob, os, math
 import random
 from urllib.request import urlopen
-from takadah.settings import MEDIA_ROOT, BASE_DIR
+from takadah.settings.base import MEDIA_ROOT, BASE_DIR
 
 def make(img_author, img_title, img_slug):
     bg = background()
