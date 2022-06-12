@@ -14,7 +14,7 @@ import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 
 # Quick-start development settings - unsuitable for production
@@ -33,6 +33,8 @@ CRISPY_TEMPLATE_PACK = "tailwind"
 
 NPM_BIN_PATH = r"C:\laragon\bin\nodejs\node-v14\npm.cmd"
 
+SITE_ID = 1
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
@@ -49,14 +51,18 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
   #  "django_unicorn",
     'tailwind',
     'owliver',
+    'django_browser_reload',
+    'debug_toolbar',
     "crispy_forms",
     "crispy_tailwind",
     'extra_views',
     'braces',
     'fontawesomefree',
+    #'django_fastdev',
     'auditlog',
     'ckeditor',
     'ckeditor_uploader',
@@ -67,22 +73,7 @@ INSTALLED_APPS = [
     'adverts',
     #'reports',
     #'subscriptions',
-
-    "django.contrib.sites",
-  #  "invitations",
-  #  "django_unicorn",
-    'flags',
-    'tailwind',
-    'analytical',
-    'cookie_consent',
-    'django_otp',
-    'django_otp.plugins.otp_static',
-    'django_otp.plugins.otp_totp',
-    'django_otp.plugins.otp_email',
-    'two_factor',
-    #'two_factor.plugins.phonenumber',  # <- if you want phone number capability.
-    'two_factor.plugins.email',
-    ]
+]
 
 INTERNAL_IPS = [
     '127.0.0.1',
