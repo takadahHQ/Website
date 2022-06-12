@@ -52,14 +52,11 @@ INSTALLED_APPS = [
   #  "django_unicorn",
     'tailwind',
     'owliver',
-    'django_browser_reload',
-    'debug_toolbar',
     "crispy_forms",
     "crispy_tailwind",
     'extra_views',
     'braces',
     'fontawesomefree',
-    #'django_fastdev',
     'auditlog',
     'ckeditor',
     'ckeditor_uploader',
@@ -70,7 +67,22 @@ INSTALLED_APPS = [
     'adverts',
     #'reports',
     #'subscriptions',
-]
+
+    "django.contrib.sites",
+  #  "invitations",
+  #  "django_unicorn",
+    'flags',
+    'tailwind',
+    'analytical',
+    'cookie_consent',
+    'django_otp',
+    'django_otp.plugins.otp_static',
+    'django_otp.plugins.otp_totp',
+    'django_otp.plugins.otp_email',
+    'two_factor',
+    #'two_factor.plugins.phonenumber',  # <- if you want phone number capability.
+    'two_factor.plugins.email',
+    ]
 
 INTERNAL_IPS = [
     '127.0.0.1',
