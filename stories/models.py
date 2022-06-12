@@ -160,7 +160,7 @@ class Genres(models.Model):
     
     def get_absolute_url(self):
         slug = slugify(self.name)
-        return reverse("story:genre", kwargs={"slug": slug, "id": self.id})
+        return reverse("story:genre", kwargs={"slug": slug, "pk": self.id})
 
 class Languages(models.Model):
     status_choices = (
@@ -268,7 +268,7 @@ class Stories(models.Model):
         file = img.make(name, self.title, self.slug)
         filename = self.slug + '.png'
         self.cover.save(filename, File(file), save=True)
-        return cover_image
+        return self.cover.url
 
 
     def save(self, *args, **kwargs):

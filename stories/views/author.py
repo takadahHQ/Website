@@ -3,6 +3,7 @@ from django.views.generic import CreateView, UpdateView, DetailView, ListView, T
 from django.contrib.auth.mixins import LoginRequiredMixin
 # from django.views import View
 # from django.db.models import Count
+from django.db.models import Avg, Count
 from stories.forms import StoryForm, ChapterForm
 from stories.models import Chapters, Stories, Characters
 from extra_views import CreateWithInlinesView, UpdateWithInlinesView, InlineFormSetFactory
@@ -16,9 +17,21 @@ class storyDashboard(LoginRequiredMixin, TemplateView):
     template_name = 'stories/dashboard.html'
     model = Stories
 
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context['total_likes'] = self.total_likes()
+        context['published'] = self.storylist()
+
     def total_likes(self):
-        liked = Stories.objects.filter(authors=self.request.user).annotate(total_likes=Sum(likes))
-        return liked
+        #liked = Stories.objects.filter(authors=self.request.user).annotate(total_likes=Sum(likes))
+        likes = Stories.objects.filter(authors=self.request.user).aggregate(total_likes=Count('likes'))['total_likes']
+        #all_stories = self.request.user.authors.all()
+        #stotal_likes_received = all_stories.aggregate(total_likes=Count('likes'))['total_likes']
+        return likes
+
+    def storylist(self):
+       story =  Stories.objects.filter(authors=self.request.user)
+       return story
 
 class viewStory(LoginRequiredMixin, DetailView):
     template_name = 'stories/show_story.html'
