@@ -14,7 +14,6 @@ History
 <li><a>History</a></li> 
 {% endblock %}
 {% block content %}
-<span class="flex justify-end">{{ page.updated_at | timesince}}</span>
 <div class="rounded shadow-blue-400 p-2 lg:p-8  space-y-4">
     {% for history in histories %}
     <div class="flex flex-col hover:scale-105 transition duration-300 ease-in-out">
