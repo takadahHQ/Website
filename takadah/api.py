@@ -1,6 +1,6 @@
 from ninja import NinjaAPI
 
-api = NinjaAPI()
+api = NinjaAPI(version='0.0.1')
 
 
 @api.get("/add")
