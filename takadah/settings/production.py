@@ -44,7 +44,7 @@ STATICFILES_DIRS = [
    os.path.join(BASE_DIR, "resources/static"),
    ]  
 MEDIA_URL = '/media/'
-MEDIA_ROOT = '/home/takalqeidah-/takaapp/media/'
+MEDIA_ROOT = '/home/takalqei/takadah-app/media/'
 
 #CLICKMAP_TRACKER_ID = 'XXXXXXXX'
 #CRAZY_EGG_ACCOUNT_NUMBER = '12345678'
