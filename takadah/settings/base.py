@@ -175,17 +175,6 @@ USE_TZ = True
 TAILWIND_APP_NAME = 'owliver'
 
 
-# Static files (CSS, JavaScript, Images)
-
-#Production
-STATIC_URL = 'static/'
-STATIC_ROOT = '/home/takalqei/takadah-app/static/'
-STATICFILES_DIRS = [
-   os.path.join(BASE_DIR, "resources/static"),
-   ]  
-MEDIA_URL = '/media/'
-MEDIA_ROOT = '/home/takalqeidah-/takaapp/media/'
-
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
