@@ -39,7 +39,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 STATIC_URL = 'static/'
-STATIC_ROOT = '/home/takalqei/takadah-app/static/'
+STATIC_ROOT = '/home/takalqei/takadah-app/resources/static'
 STATICFILES_DIRS = [
    os.path.join(BASE_DIR, "resources/static"),
    ]  
