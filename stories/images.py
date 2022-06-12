@@ -5,8 +5,7 @@ from . import tupleFunctions as tf
 import glob, os, math
 import random
 from urllib.request import urlopen
-from takadah.settings.base import MEDIA_ROOT, BASE_DIR
-
+from django.conf import settings 
 def make(img_author, img_title, img_slug):
     bg = background()
     name = img_author
@@ -91,7 +90,7 @@ def text_wrap(text, font, max_width):
 def author(image, name):
    # image = Image.open(image)
     draw = ImageDraw.Draw(image)
-    font_file_path = BASE_DIR.__str__() +'/static/fonts/YesevaOne.ttf'
+    font_file_path = settings.BASE_DIR.__str__() +'/static/fonts/YesevaOne.ttf'
     #font_file_path = BASE_DIR.__str__() +'/static/fonts/JosefinSans-SemiBold.ttf'
     #font_file_path = 'static/fonts/YesevaOne.ttf'
     #font = ImageFont.truetype(font_file_path, size=30, encoding="utf-8")
@@ -129,7 +128,7 @@ def title(image,title):
     return image
 
 def save(image, title):
-    path = MEDIA_ROOT+'/generated/'+ title +'.png'
+    path = settings.MEDIA_ROOT+'/generated/'+ title +'.png'
     image.save(path, 'PNG')
     return path
 

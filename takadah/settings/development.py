@@ -40,18 +40,15 @@ AUTH_PASSWORD_VALIDATORS = [
     ]
 
 #Local 
-STATIC_URL = 'static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-STATICFILES_DIRS = [
-   os.path.join(BASE_DIR, "resources/static"),
-   ]  
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')  
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 #CLICKMAP_TRACKER_ID = 'XXXXXXXX'
 #CRAZY_EGG_ACCOUNT_NUMBER = '12345678'
 MIXPANEL_API_TOKEN = 'dc4537f245806621832017184b5f7d0c'
-MATOMO_DOMAIN_PATH = 'matomo.takadah.com'
+MATOMO_DOMAIN_PATH = 'mamoto.takadah.com'
 MATOMO_SITE_ID = '1'
 ANALYTICAL_INTERNAL_IPS = ['192.168.1.45', '192.168.1.57']
 ANALYTICAL_AUTO_IDENTIFY = True

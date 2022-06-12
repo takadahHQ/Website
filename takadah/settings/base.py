@@ -88,7 +88,6 @@ INTERNAL_IPS = [
 ]
 
 MIDDLEWARE = [
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -96,7 +95,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django_browser_reload.middleware.BrowserReloadMiddleware',
    # 'auditlog.middleware.AuditlogMiddleware',
 ]
 
@@ -170,10 +168,13 @@ USE_I18N = True
 USE_TZ = True
 
 TAILWIND_APP_NAME = 'owliver'
-MEDIA_URL = '/media/'
-STATIC_URL = '/static/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+# MEDIA_URL = '/media/'
+# STATIC_URL = '/static/'
+# MEDIA_ROOT = os.path.join(BASE_DIR, '/media/')
+# STATIC_ROOT = os.path.join(BASE_DIR, '/resources/static/')
+STATICFILES_DIRS = [
+   os.path.join(BASE_DIR, "resources/static"),
+   ]  
 
 
 # Default primary key field type
