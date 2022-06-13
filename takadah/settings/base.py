@@ -38,7 +38,7 @@ SITE_ID = 1
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['takadah.com', '127.0.0.1']
+ALLOWED_HOSTS = ['takadah.com', '127.0.0.1', 'localhost']
 
 
 # Application definition
@@ -204,7 +204,7 @@ MEDIA_ROOT = BASE_DIR/ "media"
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CKEDITOR_UPLOAD_PATH = "uploads/"
+CKEDITOR_UPLOAD_PATH = "media/uploads"
 
 JAZZMIN_SETTINGS = {
     # title of the window (Will default to current_admin_site.site_title if absent or None)
@@ -409,3 +409,11 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'mail'
 EMAIL_HOST_PASSWORD = 'EmailProvider'
+
+#CLICKMAP_TRACKER_ID = 'XXXXXXXX'
+#CRAZY_EGG_ACCOUNT_NUMBER = '12345678'
+MIXPANEL_API_TOKEN = 'dc4537f245806621832017184b5f7d0c'
+MATOMO_DOMAIN_PATH = 'mamoto.takadah.com'
+MATOMO_SITE_ID = '1'
+#ANALYTICAL_INTERNAL_IPS = ['192.168.1.45', '192.168.1.57']
+ANALYTICAL_AUTO_IDENTIFY = True
