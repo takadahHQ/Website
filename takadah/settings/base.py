@@ -111,6 +111,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.media',
                 'core.context_processor.settings',
                 'core.context_processor.socials',
                 'core.context_processor.menus',
@@ -125,16 +126,16 @@ WSGI_APPLICATION = 'takadah.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'takalqei_django',
-        'USER': 'takalqei_django',
-        'PASSWORD': 'Z!nox2018',
-        'HOST': 'localhost',
-        'PORT': '3306',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'takalqei_django',
+#         'USER': 'takalqei_django',
+#         'PASSWORD': 'Z!nox2018',
+#         'HOST': 'localhost',
+#         'PORT': '3306',
+#     }
+# }
 
 
 # Password validation
@@ -172,10 +173,31 @@ TAILWIND_APP_NAME = 'owliver'
 # STATIC_URL = '/static/'
 # MEDIA_ROOT = os.path.join(BASE_DIR, '/media/')
 # STATIC_ROOT = os.path.join(BASE_DIR, '/resources/static/')
+# STATICFILES_DIRS = [
+#    os.path.join(BASE_DIR, "resources/static"),
+#    ]  
+
+# ==============================================================================
+# STATIC FILES SETTINGS
+# ==============================================================================
+
+STATIC_ROOT = BASE_DIR / "static"
 STATICFILES_DIRS = [
    os.path.join(BASE_DIR, "resources/static"),
-   ]  
+   BASE_DIR / "resources/static",
+   ]
 
+STATICFILES_FINDERS = (
+    "django.contrib.staticfiles.finders.FileSystemFinder",
+    "django.contrib.staticfiles.finders.AppDirectoriesFinder",
+)
+
+
+# ==============================================================================
+# MEDIA FILES SETTINGS
+# ==============================================================================
+
+MEDIA_ROOT = BASE_DIR/ "media"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field

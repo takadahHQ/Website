@@ -3,7 +3,7 @@ from .base import *
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'takadah-dev-%$)wg^oewabdu(@&ai^v793brks2q20ehlu(sjn#(x+3+^$*tq'
 
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['takadah.com', '127.0.0.1']
 
@@ -40,10 +40,10 @@ AUTH_PASSWORD_VALIDATORS = [
     ]
 
 #Local 
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')  
+STATIC_URL = 'template/'
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static')  
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 #CLICKMAP_TRACKER_ID = 'XXXXXXXX'
 #CRAZY_EGG_ACCOUNT_NUMBER = '12345678'

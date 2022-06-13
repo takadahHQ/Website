@@ -12,22 +12,22 @@ INTERNAL_IPS = [
     '127.0.0.1',
 ]
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'takalqei_django',
-        'USER': 'takalqei_django',
-        'PASSWORD': 'Z!nox2018',
-        'HOST': 'localhost',
-        'PORT': '3306',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'takalqei_django',
+#         'USER': 'takalqei_django',
+#         'PASSWORD': 'Z!nox2018',
+#         'HOST': 'localhost',
+#         'PORT': '3306',
+#     }
+# }
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -45,10 +45,10 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 STATIC_URL = '/assets/'
-STATIC_ROOT = '/home/takalqei/takadah-app/static/'
+# STATIC_ROOT = '/home/takalqei/takadah-app/static/'
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = '/home/takalqei/takadah-app/media/'
+# MEDIA_ROOT = '/home/takalqei/takadah-app/media/'
 
 #CLICKMAP_TRACKER_ID = 'XXXXXXXX'
 #CRAZY_EGG_ACCOUNT_NUMBER = '12345678'
