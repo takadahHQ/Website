@@ -3,20 +3,20 @@
 {% load tailwind_filters %}
 
 {% block title %}
-Genre
+Publication Type
 {% endblock title %}
 
 {% block page-title %}
-Genre {{ genres.first.genre.name }}
+Publication Type: {{ story.first.story_type.name }}
 {% endblock page-title %}
 {% block breadcrumbs %}
 <li><a href="{% url 'core:index' %}">Home</a></li>
 
-<li><a>Genre</a></li> 
+<li><a>Type</a></li> 
 {% endblock %}
 {% block content %}
 <div class="rounded shadow-blue-400 p-2 lg:p-8  space-y-4">
-    {% for history in genres %}
+    {% for history in story %}
     <div class="flex flex-col hover:scale-105 transition duration-300 ease-in-out">
         <div class="bg-white shadow-md  rounded-3xl p-4">
             <div class="flex-none lg:flex">

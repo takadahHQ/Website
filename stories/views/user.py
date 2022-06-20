@@ -72,10 +72,7 @@ class ShowTag(DetailView):
     context_object_name = 'story'
 
     def get_queryset(self):
-        #first call the tag 
-        #then filter the result 
-        #before egarloading the variable
-        return Tag.objects.filter(pk=self.request.pk)#.exclude(status='pending').order_by('-created_at')[:5]
+        return Stories.objects.exclude(status='pending').exclude(status='draft').filter(tags=self.kwargs.get('pk'))
 
 class ShowGenre(ListView):
     model = Stories
@@ -92,10 +89,7 @@ class ShowRating(ListView):
     context_object_name = 'story'
 
     def get_queryset(self):
-        #first call the tag 
-        #then filter the result 
-        #before egarloading the variable
-        return Tag.objects.filter(pk=self.request.pk)#.exclude(status='pending').order_by('-created_at')[:5]
+        return Ratings.objects.exclude(status='pending').exclude(status='draft').filter(rating=self.kwargs.get('pk'))
 
 class ShowType(ListView):
     model = Types
@@ -103,10 +97,7 @@ class ShowType(ListView):
     context_object_name = 'story'
 
     def get_queryset(self):
-        #first call the tag 
-        #then filter the result 
-        #before egarloading the variable
-        return Tag.objects.filter(pk=self.request.pk)#.exclude(status='pending').order_by('-created_at')[:5]
+        return Stories.objects.exclude(status='pending').exclude(status='draft').filter(story_type=self.kwargs.get('pk'))
 
 class ShowLanguage(ListView):
     model = Languages
@@ -114,10 +105,7 @@ class ShowLanguage(ListView):
     context_object_name = 'story'
 
     def get_queryset(self):
-        #first call the tag 
-        #then filter the result 
-        #before egarloading the variable
-        return Tag.objects.filter(pk=self.request.pk)#.exclude(status='pending').order_by('-created_at')[:5]
+        return Languages.objects.exclude(status='pending').exclude(status='draft').filter(language=self.kwargs.get('pk'))
 
 
 
