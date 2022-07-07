@@ -128,7 +128,7 @@ def title(image,title):
     return image
 
 def save(image, title):
-    path = settings.MEDIA_ROOT+'/generated/'+ title +'.png'
+    path = str(settings.MEDIA_ROOT)+'/generated/'+ title +'.png'
     image.save(path, 'PNG')
     return path
 
