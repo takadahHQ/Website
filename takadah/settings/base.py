@@ -25,16 +25,25 @@ DEBUG = False
 
 ALLOWED_HOSTS = ['takadah.com', '127.0.0.1', 'localhost']
 
+HIJACK_ALLOW_GET_REQUESTS = True
+HIJACK_PERMISSION_CHECK = "hijack.permissions.superusers_and_staff"
+
+X_FRAME_OPTIONS = "SAMEORIGIN"
+SILENCED_SYSTEM_CHECKS = ["security.W019"]
 
 # Application definition
 
 INSTALLED_APPS = [
     'jazzmin',
+    'admin_interface',
+    'colorfield',
+    #'hijack.contrib.admin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'django.contrib.humanize',
     'django.contrib.staticfiles',
     "django.contrib.sites",
   #  "invitations",
@@ -64,6 +73,8 @@ INSTALLED_APPS = [
     'blog',
     'stories',
     'adverts',
+    'hijack',
+    'import_export',
     #'reports',
     #'subscriptions',
 ]
@@ -74,12 +85,14 @@ INTERNAL_IPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'hijack.middleware.HijackUserMiddleware',
    # 'auditlog.middleware.AuditlogMiddleware',
 ]
 
@@ -177,6 +190,7 @@ STATICFILES_FINDERS = (
     "django.contrib.staticfiles.finders.AppDirectoriesFinder",
 )
 
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # ==============================================================================
 # MEDIA FILES SETTINGS
@@ -230,10 +244,10 @@ JAZZMIN_SETTINGS = {
     "topmenu_links": [
 
         # Url that gets reversed (Permissions can be added)
-        {"name": "Home",  "url": "admin:index", "permissions": ["auth.view_user"]},
+        {"name": "Home",  "url": "core:index"},
 
         # external url that opens in a new window (Permissions can be added)
-       # {"name": "Support", "url": "https://github.com/farridav/django-jazzmin/issues", "new_window": True},
+       # {"name": "Admin Home", "url": "admin:index", "permissions": ["auth.view_user"]},
 
         # model admin to link to (Permissions checked against model)
         {"model": "auth.User"},
@@ -263,7 +277,7 @@ JAZZMIN_SETTINGS = {
     "navigation_expanded": False,
 
     # Hide these apps when generating side menu e.g (auth)
-    "hide_apps": [],
+    "hide_apps": ['auth'],
 
     # Hide these models when generating side menu (e.g auth.user)
     "hide_models": [],
@@ -305,7 +319,7 @@ JAZZMIN_SETTINGS = {
     "custom_css": None,
     "custom_js": None,
     # Whether to show the UI customizer on the sidebar
-    "show_ui_builder": True,
+    "show_ui_builder": False,
 
     ###############
     # Change view #
@@ -316,7 +330,7 @@ JAZZMIN_SETTINGS = {
     # - vertical_tabs
     # - collapsible
     # - carousel
-    "changeform_format": "single",
+    "changeform_format": "horizontal_tabs",
     # override change forms on a per modeladmin basis
     "changeform_format_overrides": {"auth.user": "collapsible", "auth.group": "vertical_tabs"},
     # Add a language dropdown into the admin

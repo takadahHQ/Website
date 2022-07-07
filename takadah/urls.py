@@ -12,6 +12,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     #path("api/", api.urls),
     # path("unicorn/", include("django_unicorn.urls")),
+    path('hijack/', include('hijack.urls')),
     path("__reload__/", include("django_browser_reload.urls")),
     path('__debug__/', include('debug_toolbar.urls')),
     path('ckeditor/', include('ckeditor_uploader.urls')),

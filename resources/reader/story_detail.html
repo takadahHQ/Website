@@ -1,7 +1,4 @@
 {% extends 'base.html' %}
-{% load advert_tags %}
-{% load tailwind_filters %}
-
 {% block title %}
 {{ story.title | title }}
 {% endblock title %}
@@ -12,7 +9,7 @@
 {% endblock %}
 {% block content %}
 <!-- Story Detials -->
-<section class="w-screen">
+<section class="w-full">
     <div class="flex hover:flex-auto">
         <div class="md:w-1/6 w-full">
             <img class="aspect-square hover:saturate-200 transition duration-300 ease-in-out shadow-lg rounded max-w-50 h-auto align-middle border-none" src="{{ story.get_cover }}"/>
@@ -72,27 +69,28 @@
     </div>
 </section>
 <div class="bg-white rounded shadow-blue-400 p-2 lg:p-8 mt-2">
+    <section>
     <div x-data="{
-		tabs: [ 'About', 'Table of Content', 'Reviews'],
-		activeTabIndex: 0
-	}">
-		<div class="tabs my-6">
-			<template x-for="(tab, index) in tabs" :key="index">
-				<a class="tab tab-bordered" 
-					:class="{'tab-active': activeTabIndex == index}"
-					x-on:click="activeTabIndex = index"
-					x-text=tab
-				></a>
-			</template>
-		</div>
-		<div class="my-6 p-6">
-			<div x-show="activeTabIndex == 0">
+        tabs: [ 'About', 'Table of Content', 'Reviews'],
+        activeTabIndex: 0
+    }">
+        <div class="tabs my-6">
+            <template x-for="(tab, index) in tabs" :key="index">
+                <a class="tab tab-bordered" 
+                    :class="{'tab-active': activeTabIndex == index}"
+                    x-on:click="activeTabIndex = index"
+                    x-text=tab
+                ></a>
+            </template>
+        </div>
+        <div class="my-6 p-6">
+            <div x-show="activeTabIndex == 0">
                 <div class="text-2xl">Synopsis</div>
             <div class="text-gray-500">
                 {{ story.summary | safe }}
             </div>
             </div>
-			<div x-show="activeTabIndex == 1">
+            <div x-show="activeTabIndex == 1">
                 Latest Release： Chapter {{ story.chapters_set.last.position  }}: <a href="{{ story.chapters_set.last.get_absolute_url }}">{{ story.chapters_set.last.title | title }}</a> {{ story.chapters_set.last.created_at | timesince }}<hr class="mt-5">
                 <div class="columns-2">
                 {% for chapter in story.chapters_set.all %}
@@ -103,9 +101,10 @@
                 {% endfor %}
             </div>
             </div>
-			<div x-show="activeTabIndex == 2">Reviews<br>Coming Soon</div>
-		</div>
-	</div>
+            <div x-show="activeTabIndex == 2">Reviews<br>Coming Soon</div>
+        </div>
+    </div>
+</section>
 
     <section>
         <div class="text-2xl">Tags</div>
@@ -119,5 +118,6 @@
         <div class="text-2xl">Recommendation</div>
         Recommendation
     </section>
+</div>
 </div>
 {% endblock content %}

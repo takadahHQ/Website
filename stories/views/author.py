@@ -20,7 +20,9 @@ class storyDashboard(LoginRequiredMixin, TemplateView):
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
         context['total_likes'] = self.total_likes()
-        context['published'] = self.storylist()
+        context['published'] = self.story_list()
+        context['stats'] = self.story_stats()
+        return context
 
     def total_likes(self):
         #liked = Stories.objects.filter(authors=self.request.user).annotate(total_likes=Sum(likes))
@@ -29,9 +31,13 @@ class storyDashboard(LoginRequiredMixin, TemplateView):
         #stotal_likes_received = all_stories.aggregate(total_likes=Count('likes'))['total_likes']
         return likes
 
-    def storylist(self):
-       story =  Stories.objects.filter(authors=self.request.user)
+    def story_list(self):
+       story =  Stories.objects.exclude(status='pending').exclude(status='draft').filter(authors=self.request.user)
        return story
+
+    def story_stats(self):
+        stats = {'views': {'result': 1234, 'updated': '2 hours ago'}, 'likes': {'result': 63689, 'updated': '2 minutes ago'}, 'dislikes': {'result': 1234, 'updated': '21 days ago'}, 'reviews': {'result': 44748534, 'updated': '2 seconds ago'}}
+        return stats
 
 class viewStory(LoginRequiredMixin, DetailView):
     template_name = 'stories/show_story.html'

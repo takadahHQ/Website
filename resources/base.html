@@ -3,6 +3,9 @@
 {% load analytical %}
 {% load cookie_consent_tags %}
 {% load static %}
+{% load i18n %}
+{% load hijack %}
+{% load humanize %}
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -70,9 +73,11 @@
             </div>
             <div class="mb-2 navbar nav-base text-neutral-content">
                 <div class="flex-1 px-2 mx-2">
+                    <a href="{% url 'core:index' %}">
                     <span class="text-2xl font-bold">
                         {{ settings.name }}
                     </span>
+                </a>
                 </div>
                 <div class="hidden px-2 mx-2 navbar-center lg:flex">
                     <div class="flex items-stretch">
@@ -144,14 +149,21 @@
                 </div><!-- navbar-end -->
             </div>
         </div>
-        
+        {% if request.user|can_hijack:another_user %}
+<form action="{% url 'hijack:acquire' %}" method="POST">
+  {% csrf_token %}
+  <input type="hidden" name="user_pk" value="{{ another_user.pk }}">
+  <button type="submit">hijack {{ another_user }}</button>
+  <input type="hidden" name="next" value="{{ request.path }}">
+</form>
+{% endif %}
 		{% csrf_token %}
 		<div class="container mx-auto">
 			<main class="p-2 md:p-8">
                 <h1 class="text-5xl flex items-center justify-center">{% block page-title %}{% endblock %}</h1><br/>
 		   		<section class="content">
-                       <!-- Breadcrumbs -->
-                    <div class="text-sm breadcrumbs">
+                    {% if request.path != "/" %}
+                      <div class="text-sm breadcrumbs">
                         <ul>
                         {%block breadcrumbs %}
                           <li><a href="{% url 'core:index' %}">Home</a></li> 
@@ -159,6 +171,9 @@
                         </ul>
                       </div>
                       <!-- end breadcrumbs-->
+                    {% endif %}
+                       <!-- Breadcrumbs -->
+
                     
                     {% block content %}
                        Body content

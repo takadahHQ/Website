@@ -27,9 +27,13 @@ Genre {{ genres.first.genre.name }}
                 <div class="flex-auto ml-3 justify-evenly py-2">
                     <a href="{{ history.get_absolute_url}}">
                         <div class="flex flex-wrap ">
+                            
                             <div class="w-full flex-none text-xs text-blue-700 font-medium ">
+                                <a href="{{ history.story_type.get_absolute_url }}">
                                 {{ history.story_type.name }}
+                                </a>
                             </div>
+                        
                             <h2 class="flex-auto text-lg font-medium">{{ history.title }}</h2>
                         </div>
                         <p class="mt-3"></p>
@@ -47,7 +51,7 @@ Genre {{ genres.first.genre.name }}
                         <div class="flex-auto flex space-x-3">
                         </div>
                         <button class="mb-2 md:mb-0 bg-white px-4 py-2 shadow-sm tracking-wider border text-gray-600 rounded-full hover:bg-gray-100 inline-flex items-center space-x-2 " type="button" aria-label="like">
-                            <a href="{{ history.chapters_set.first.get_absolute_url }}" >Continue Reading</a>
+                            <a href="{{ history.get_absolute_url }}" >Continue Reading</a>
                         </button>
                     </div>
                 </div>
