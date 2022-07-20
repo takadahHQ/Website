@@ -36,7 +36,7 @@ SILENCED_SYSTEM_CHECKS = ["security.W019"]
 INSTALLED_APPS = [
     'jazzmin',
     # 'admin_interface',
-    'colorfield',
+    # 'colorfield',
     #'hijack.contrib.admin',
     'django.contrib.admin',
     'django.contrib.auth',
