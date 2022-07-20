@@ -7,7 +7,7 @@ from django.views import View
 from django.db.models import Count
 from stories.forms import StoryForm, ChapterForm
 
-from stories.models import Chapters, Stories, Tag, Bookmarks, Languages, Genres, Ratings,Types, Universes
+from stories.models import Chapter, Stories, Tag, Bookmark, Language, Genre, Rating,Type, Universe
 from stories.views.mixins import HistoryMixin
 
 
@@ -36,9 +36,9 @@ def StoryDisLike(request, id):
 
 def StoryBookmark(request, id):
     story = get_object_or_404(Stories, id=id)
-    bookmark = Bookmarks.objects.update_or_create(story=story, user=request.user, defaults={'story': story, 'user':request.user,})
+    bookmark = Bookmark.objects.update_or_create(story=story, user=request.user, defaults={'story': story, 'user':request.user,})
     bookmark.save()
-    bookmarks = Bookmarks.objects.get(story=id)
+    bookmarks = Bookmark.objects.get(story=id)
     #save the story, user, url(!optional) and status
     return render(request, 'stories/partials/bookmark.html', {'bookmark': bookmarks})
 
@@ -62,7 +62,7 @@ class ShowStory(DetailView):
         return Stories.objects.select_related('story_type', 'language','rating').filter(slug=self.kwargs['slug']).exclude(status='pending').annotate(chapter_count=Count('chapters'))
 
 class ShowChapter(HistoryMixin, DetailView):
-    model = Chapters
+    model = Chapter
     template_name = 'reader/read.html'
     context_object_name = 'story'
 
@@ -84,15 +84,15 @@ class ShowGenre(ListView):
         return Stories.objects.exclude(status='pending').exclude(status='draft').filter(genre=self.kwargs.get('pk'))
 
 class ShowRating(ListView):
-    model = Ratings
+    model = Rating
     template_name = 'stories/ratings.html'
     context_object_name = 'story'
 
     def get_queryset(self):
-        return Ratings.objects.exclude(status='pending').exclude(status='draft').filter(rating=self.kwargs.get('pk'))
+        return Rating.objects.exclude(status='pending').exclude(status='draft').filter(rating=self.kwargs.get('pk'))
 
 class ShowType(ListView):
-    model = Types
+    model = Stories
     template_name = 'stories/type.html'
     context_object_name = 'story'
 
@@ -100,12 +100,12 @@ class ShowType(ListView):
         return Stories.objects.exclude(status='pending').exclude(status='draft').filter(story_type=self.kwargs.get('pk'))
 
 class ShowLanguage(ListView):
-    model = Languages
+    model = Language
     template_name = 'stories/language.html'
     context_object_name = 'story'
 
     def get_queryset(self):
-        return Languages.objects.exclude(status='pending').exclude(status='draft').filter(language=self.kwargs.get('pk'))
+        return Language.objects.exclude(status='pending').exclude(status='draft').filter(language=self.kwargs.get('pk'))
 
 
 

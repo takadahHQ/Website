@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from requests import request
 
-from stories.models import Bookmarks, History, Stories
+from stories.models import Bookmark, History, Stories
 from .forms import SignUpForm, ProfileForm
 from .models import Users
 from django.urls import reverse_lazy
@@ -42,7 +42,7 @@ class ShowBookmark(LoginRequiredMixin, ListView):
     paginate_at = 10
 
     def get_queryset(self):
-        return Bookmarks.objects.filter(user=self.request.user).order_by('-created_at')
+        return Bookmark.objects.filter(user=self.request.user).order_by('-created_at')
 
 class ShowHistory(LoginRequiredMixin, ListView):
     template_name = 'reader/history.html'
@@ -56,8 +56,8 @@ class DeleteHistory(LoginRequiredMixin, DeleteView):
     context_object_name = 'histories'
     sucess_url = reverse_lazy('core:history')
 
-class ShowStory(DetailView):
-    template_name = 'reader/story_detail.html'
+# class ShowStory(DetailView):
+#     template_name = 'reader/story_detail.html'
 
-class ShowChapter(DetailView):
-    template_name = 'reader/read.html'
+# class ShowChapter(DetailView):
+#     template_name = 'reader/read.html'

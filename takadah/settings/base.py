@@ -45,7 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.humanize',
     'django.contrib.staticfiles',
-    "django.contrib.sites",
+    'django.contrib.sites',
   #  "invitations",
   #  "django_unicorn",
     'flags',
@@ -71,11 +71,18 @@ INSTALLED_APPS = [
     'core',
     'pages',
     'blog',
+    #'stallionaire_pages',
+    #'stallionaire_blog',
     'stories',
     'adverts',
     'hijack',
-    'import_export',
+    'import_export', 
+    'flag',
+    'watson',
+    'reversion'
+    #'helpdesk',  # This is us!
     #'reports',
+    #make a supports app
     #'subscriptions',
 ]
 

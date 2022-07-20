@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load advert_tags %}
+{% load tailwind_filters %}
+
+{% block title %}
+Publish Story
+{% endblock title %}
+{% block breadcrumbs %}
+<li><a href="{% url 'core:index' %}">Home</a></li>
+<li><a href="{% url 'author:dashboard' %}">Author</a></li> 
+<li><a>Publish Story</a></li> 
+{% endblock %}
+{% block content %}
+<!-- Add Story -->
+<section class="w-full">
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <!-- {% for formset in inlines %}
+        {{ formset|crispy }}
+      {% endfor %} -->
+        <button type="submit" class="btn border-none bg-green-500 text-gray-50">Publish</button>
+    </form>
+</section>
+{% endblock content %}

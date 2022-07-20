@@ -1,8 +1,9 @@
 from dataclasses import fields
 from platform import release
 from django import forms
-from stories.models import Chapters, Stories, Tag, Characters
+from stories.models import Author, Chapter, Stories, Tag, Character, Editor, Author
 from django.forms.widgets import NumberInput
+from django.conf import settings
 
 
 # class Inline(InlineFormSetFactory):
@@ -37,12 +38,31 @@ class StoryForm(forms.ModelForm):
         model = Stories
         fields = ('title','abbreviation', 'summary', 'authors', 'cover', 'story_type', 'tags', 'language','genre','rating', 'released_at','status',)
 
-
+# AuthorSet = inlineformset_factory(
+#     Story,
+#     settings.AUTH_USER_MODEL,
+#     StoryForm,)
 
 class ChapterForm(forms.ModelForm):
     #released_at = forms.DateTimeField(widget=NumberInput(attrs={'type': 'datetime-local'}), input_formats=['%d/%m/%Y %H:%M'])
     released_at = DateTimeLocalField()
 
     class Meta:
-        model = Chapters
+        model = Chapter
         fields = ('title','position', 'text', 'authors_note', 'status', 'released_at', )
+
+
+class AuthorForm(forms.ModelForm):
+    class Meta:
+        model = Author
+        fields = ('story', 'user')
+
+class CharacterForm(forms.ModelForm):
+    class Meta:
+        model = Character
+        fields = ('name', 'category')
+
+class EditorForm(forms.ModelForm):
+    class Meta:
+        model = Editor
+        fields = ('story', 'user')

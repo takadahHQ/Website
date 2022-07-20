@@ -1,17 +1,28 @@
+from django.http import HttpResponse
+from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView, DetailView, ListView, TemplateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
 # from django.views import View
 # from django.db.models import Count
 from django.db.models import Avg, Count
-from stories.forms import StoryForm, ChapterForm
-from stories.models import Chapters, Stories, Characters
+from stories.forms import AuthorForm, EditorForm, StoryForm, ChapterForm, CharacterForm
+from stories.models import Chapter, Stories, Character, Author, Editor
 from extra_views import CreateWithInlinesView, UpdateWithInlinesView, InlineFormSetFactory
-
+from django.conf import settings
 
 class CharacterInline(InlineFormSetFactory):
-    model = Characters
+    model = Character
     fields = ['name', 'category']
+
+class AuthorInline(InlineFormSetFactory):
+    model = Author
+    fields = ['story', 'user']
+    extra = 1
+
+class EditorInline(InlineFormSetFactory):
+    model = Editor
+    fields = ['story', 'user']
 
 class storyDashboard(LoginRequiredMixin, TemplateView):
     template_name = 'stories/dashboard.html'
@@ -63,24 +74,148 @@ class storyList(LoginRequiredMixin, ListView):
   #  form_class = StoryForm
   #  success_url = reverse_lazy('story:addchapter')
 
+def add_author(request):
+    context = {
+        "aform": AuthorForm(),
+    }
+    return render(request, "stories/partials/add_author.html", context)
+
+def update_author(request, pk):
+    author = Author.objects.get(pk=pk)
+    context = {
+        "aform": AuthorForm(),
+        "author": author,
+    }
+    return render(request, "stories/partials/author_form.html", context)
+
+def delete_author(request, pk):
+    author = Author.objects.get(pk=pk)
+    author.delete()
+    return HttpResponse('')
+
+def save_author(request, pk):
+    story = Stories.objects.get(id=pk)
+    authors = Author.objects.filter(story=story)
+
+    form = AuthorForm(request.POST or None)
+
+    if request.method == "POST":
+        if form.is_valid():
+            author = form.save(commit=False)
+            author.story = story
+            author.save()
+            return HttpResponse("success")
+        else:
+            return render(request, "stories/partials/add_author.html", context={"aform": form})
+    else:
+        return render(request, "stories/partials/add_author.html", context={"aform": form})
+
+def add_editor(request):
+    # story = Stories.objects.get(id=pk)
+    # form = EditorForm()
+
+    # if request.method == "POST":
+    #     if form.is_valid():
+    #         editor = form.save(commit=False)
+    #         editor.story = story
+    #         editor.save()
+    #         return HttpResponse("success")
+    #     else:
+    #         return render(request, "partials/editor_form.html", context={"editorform": form})
+
+    context = {
+        "eform": EditorForm(),
+    }
+
+    return render(request, "stories/partials/add_editor.html", context)
+
+def add_character(request):
+    #story = Stories.objects.get(id=pk)
+    #characters = Character.objects.filter(story=story)
+
+    form = CharacterForm()
+
+    # if request.method == "POST":
+    #     if form.is_valid():
+    #         character = form.save(commit=False)
+    #         character.story = story
+    #         character.save()
+    #         return HttpResponse("success")
+    #     else:
+    #         return render(request, "partials/author_form.html", context={ "cform": CharacterForm()})
+
+    context = {
+        "cform": CharacterForm()
+    }
+
+    return render(request, "stories/partials/add_character.html", context={ "cform": form})
+
+
+
+
+# def add_character(request, pk):
+#     story = Stories.objects.get(id=pk)
+#     characters = Character.objects.filter(story=story)
+
+#     form = AuthorForm(request.POST or None)
+
+#     if request.method == "POST":
+#         if form.is_valid():
+#             character = form.save(commit=False)
+#             character.story = story
+#             character.save()
+#             return HttpResponse("success")
+#         else:
+#             return render(request, "partials/author_form.html", context={"authorform": form})
+
+#     context = {
+#         "cform": form,
+#         "story": story,
+#         "characters": characters
+#     }
+
+#     return render(request, "add_author.html", context)
+# #create a formset page with functions
+# def newStory(request):
+#     form = StoryForm(request.Post or None)
+#     characterset = 
+#     authorset = 
+# if request.method == 'POST':
+#     if formset.is_valid():
+#         formset.instance = story
+#         formset.save()
+#         return redirect("author:show", pk=story.id)
+
+#     context = {
+#         "characterset": characterset
+#     }
+
+#     return render(request, 'stories/create_story.html', context)
+
 class createStory(LoginRequiredMixin, CreateWithInlinesView):
-    template_name = 'stories/create_story.html'
+    template_name = 'stories/authors/create_story.html'
     model = Stories
-    inlines = [CharacterInline]
+    inlines = [CharacterInline, AuthorInline]
     form_class = StoryForm
-    success_url = reverse_lazy('author:list')
+
+    def get_success_url(self):
+        return reverse_lazy('author:update', kwargs={'pk': self.object.pk})
 
     def form_valid(self, form):
         form.instance.save()
         form.instance.authors.add(self.request.user)
+        form.instance.authors.save()
         return super().form_valid(form)
 
 class updateStory(LoginRequiredMixin, UpdateWithInlinesView):
-    template_name = "stories/edit_story.html"
+    template_name = "stories/authors/edit_story.html"
     model = Stories
     inlines = [CharacterInline]
     form_class = StoryForm
-  #  success_url = reverse_lazy('dashboard')
+
+    def get_success_url(self):
+        return reverse_lazy('author:show', kwargs={'pk': self.object.pk})
+
 
 class deleteStory(LoginRequiredMixin, DeleteView):
     #template_name = 'stories/create_story.html'
@@ -88,7 +223,7 @@ class deleteStory(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy('author:list')
 
 class createChapter(LoginRequiredMixin,CreateView):
-    model = Chapters
+    model = Chapter
     form_class = ChapterForm
    # success_url = reverse_lazy('login')
     template_name = "stories/create_chapter.html"
@@ -99,7 +234,7 @@ class createChapter(LoginRequiredMixin,CreateView):
 
 class updateChapter(LoginRequiredMixin, UpdateView):
     template_name = "stories/edit_chapter.html"
-    model = Chapters
+    model = Chapter
     form_class = ChapterForm
 
     def form_valid(self, form):
@@ -109,5 +244,5 @@ class updateChapter(LoginRequiredMixin, UpdateView):
 
 class deleteChapter(LoginRequiredMixin, DeleteView):
     #template_name = 'stories/create_story.html'
-    model = Stories
+    model = Chapter
     success_url = reverse_lazy('author:list')

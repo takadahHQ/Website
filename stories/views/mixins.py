@@ -1,4 +1,4 @@
-from stories.models import Stories, Chapters, History, Bookmarks
+from stories.models import Stories, Chapter, History
 from django.http import HttpResponse 
 import logging
 
@@ -7,7 +7,7 @@ class HistoryMixin(object):
 
     def dispatch(self, request, *args, **kwargs):
         if  request.user.is_authenticated:
-            chapter = Chapters.objects.get(slug=self.kwargs['slug'])
+            chapter = Chapter.objects.get(slug=self.kwargs['slug'])
             History.objects.update_or_create(
                 story=chapter.story,
                 user= request.user,

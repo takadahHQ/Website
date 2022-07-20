@@ -1,6 +1,10 @@
 {% load static %}
 {% load i18n %}
-<form action="/hijack/{{ user.id }}/" method="post">
+<link rel="stylesheet" type="text/css" href="{% static 'hijack/hijack.min.css' %}" media="screen">
+<div class="djhj" id="djhj">
+    <form action="/hijack/{{ user.id }}/" method="post">
     {% csrf_token %}
     <button type="submit">Hijack {{ user.username }}</button>
 </form>
+  </div>
+</div>

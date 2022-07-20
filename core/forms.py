@@ -5,7 +5,7 @@ from django.forms.widgets import TextInput
 from django.contrib.auth.forms import UserCreationForm
 from .models import Users, Settings
 
-from stories.models import Languages
+from stories.models import Language
 
 class ColorInput(forms.TextInput):
     input_type = "color"
@@ -57,7 +57,7 @@ class ProfileForm(UserCreationForm):
     # created_at = forms.DateTimeField(auto_now_add=True)
     # updated_at = forms.DateTimeField(auto_now=True)
     kyc_verified_at = forms.DateTimeField(required=False, help_text='Optional.', )
-    language_id = forms.ModelChoiceField(queryset=Languages.objects.all(), empty_label="(Nothing)", help_text='Optional.')
+    language_id = forms.ModelChoiceField(queryset=Language.objects.all(), empty_label="(Nothing)", help_text='Optional.')
 
     class Meta:
         model = Users

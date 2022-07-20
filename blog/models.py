@@ -54,7 +54,7 @@ class Post(models.Model):
         )
     id = models.BigAutoField(primary_key=True)
     title = models.CharField(max_length=255, null=True)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True, blank=True)
+    category = models.ForeignKey('Category', on_delete=models.CASCADE, null=True, blank=True)
     # parent = models.ForeignKey("self", on_delete=models.CASCADE, null=True, blank=True, help_text="Don't  have more than one level nested parenting")
     slug = models.CharField(max_length=255,auto_created=True, blank=True, null=True)
     content = RichTextUploadingField(blank=True, null=True)

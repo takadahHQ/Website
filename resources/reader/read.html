@@ -55,6 +55,7 @@
         </div>
         
         <div class="w-full p-8 align-center flex justify-evenly">
+          {% render_flag_form story user request %}
             {% if story.get_next %}
         <a class="btn btn-outline  w-1/3 dark:invert" href="{{ story.get_next.get_absolute_url }}">Next</a>
         {% else %}

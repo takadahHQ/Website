@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ blog.title | title | truncatewords:2 }}
+{% endblock title %}
+
+{% block page-title %}
+{{ blog.title | title }}
+{% endblock page-title %}
+{% block breadcrumbs %}
+<li><a href="{% url 'core:index' %}">Home</a></li>
+<li><a href="{% url 'blog:list' %}">Blog</a></li>  
+<li><a>{{ blog.title }}</a></li> 
+{% endblock %}
+
+{% block content %}
+{% if blog.updated_at %}
+<span class="flex justify-end">Last Updated: {{ blog.updated_at | timesince}}</span>
+{% endif %}
+<div class="p-8 rounded bg-gray-50 shadow-blue-400">
+    <article class="post">
+        <p class="indent-4 hover:indent-8">{{ blog.content |safe }}</p>
+    </article>
+</div>
+{% endblock content %}
