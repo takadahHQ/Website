@@ -69,7 +69,7 @@ class storyList(LoginRequiredMixin, ListView):
     context_object_name = 'stories'
 
     def get_queryset(self):
-        return Stories.objects.filter(author=self.request.user)
+        return Stories.objects.filter(author__user=self.request.user)
 
 def add_author(request):
     context = {

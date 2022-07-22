@@ -11,7 +11,6 @@ Login
 {% endblock page-title %}
 
 {% block content %}
-<span class="flex justify-end">{{ page.updated_at | timesince}}</span>
 <div class="bg-white rounded shadow-blue-400 p-2 lg:p-8 max-w-md space-y-4">
     <form method="post">
         {% csrf_token %}

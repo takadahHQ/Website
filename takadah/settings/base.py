@@ -21,7 +21,7 @@ NPM_BIN_PATH = r"C:\laragon\bin\nodejs\node-v14\npm.cmd"
 SITE_ID = 1
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+#DEBUG = True
 
 ALLOWED_HOSTS = ['takadah.com', '127.0.0.1', 'localhost']
 
@@ -35,9 +35,6 @@ SILENCED_SYSTEM_CHECKS = ["security.W019"]
 
 INSTALLED_APPS = [
     'jazzmin',
-    # 'admin_interface',
-    # 'colorfield',
-    #'hijack.contrib.admin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -46,8 +43,6 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'django.contrib.staticfiles',
     'django.contrib.sites',
-  #  "invitations",
-  #  "django_unicorn",
     'flags',
     'tailwind',
     'analytical',
@@ -71,6 +66,7 @@ INSTALLED_APPS = [
     'core',
     'pages',
     'blog',
+    'debug_toolbar',
     #'stallionaire_pages',
     #'stallionaire_blog',
     'stories',
@@ -91,6 +87,7 @@ INTERNAL_IPS = [
 ]
 
 MIDDLEWARE = [
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
