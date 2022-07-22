@@ -59,7 +59,7 @@ class ShowStory(DetailView):
     context_object_name = 'story'
 
     def get_queryset(self):
-        return Stories.objects.select_related('story_type', 'language','rating').filter(slug=self.kwargs['slug']).exclude(status='pending').annotate(chapter_count=Count('chapters'))
+        return Stories.objects.select_related('story_type', 'language','rating').filter(slug=self.kwargs['slug']).exclude(status='pending').annotate(chapter_count=Count('chapter'))
 
 class ShowChapter(HistoryMixin, DetailView):
     model = Chapter

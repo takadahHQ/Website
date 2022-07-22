@@ -16,10 +16,7 @@ Publish Story
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form|crispy }}
-        <!-- {% for formset in inlines %}
-        {{ formset|crispy }}
-      {% endfor %} -->
-        <button type="submit" class="btn border-none bg-green-500 text-gray-50">Publish</button>
+        <button type ="submit" class="btn border-none bg-green-500 text-gray-50 dark:bg-green-200 dark:text-gray-500">Publish</button>
     </form>
 </section>
 {% endblock content %}

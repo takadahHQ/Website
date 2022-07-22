@@ -1,3 +1,4 @@
+
 from ninja import NinjaAPI
 
 api = NinjaAPI(version='0.0.1')

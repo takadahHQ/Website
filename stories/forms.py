@@ -1,42 +1,33 @@
-from dataclasses import fields
-from platform import release
+import datetime
 from django import forms
 from stories.models import Author, Chapter, Stories, Tag, Character, Editor, Author
 from django.forms.widgets import NumberInput
 from django.conf import settings
-
-
-# class Inline(InlineFormSetFactory):
-#     model = Contact
-#    fields = ['name', 'email']
-
 
 class DateTimeLocalInput(forms.DateTimeInput):
     input_type = "datetime-local"
  
 class DateTimeLocalField(forms.DateTimeField):
      
-    input_formats = [
-        "%Y-%m-%dT%H:%M:%S", 
-        "%Y-%m-%dT%H:%M:%S.%f", 
-        "%Y-%m-%dT%H:%M"
-    ]
+    # input_formats = [
+    #     '%Y-%m-%d %H:%M:%S',    # '2006-10-25 14:30:59'
+    #     '%Y-%m-%d %H:%M',       # '2006-10-25 14:30'
+    #     '%Y-%m-%d',             # '2006-10-25'
+    #     '%m/%d/%Y %H:%M:%S',    # '10/25/2006 14:30:59'
+    #     '%m/%d/%Y %H:%M',       # '10/25/2006 14:30'
+    #     '%m/%d/%Y',             # '10/25/2006'
+    #     '%m/%d/%y %H:%M:%S',    # '10/25/06 14:30:59'
+    #     '%m/%d/%y %H:%M',       # '10/25/06 14:30'
+    #     '%m/%d/%y'
+    # ]
     widget = DateTimeLocalInput(format="%Y-%m-%dT%H:%M", attrs={'class': 'textinput bg-white px-4 rounded-lg py-2 block border w-full text-gray-700 leading-normal focus:outline-none appearance-none border-gray-300'})
 
 class StoryForm(forms.ModelForm):
-    released_at = DateTimeLocalField()
-
-    # def clean_authors(self):
-    #     email = self.cleaned_data.get('authors')
-    #     current_user_email = User.email
-    #     if User.objects.filter(email__iexact=author).exclude(email__iexact=current_user_email).count() > 0:
-    #         raise forms.ValidationError('This email address is already in use.'
-    #                                     'Please supply a different email address.')
-    # return email
+    released_at = DateTimeLocalField(initial = datetime.date.today)
 
     class Meta:
         model = Stories
-        fields = ('title','abbreviation', 'summary', 'authors', 'cover', 'story_type', 'tags', 'language','genre','rating', 'released_at','status',)
+        fields = ('title','abbreviation', 'summary', 'author', 'cover', 'story_type', 'tags', 'language','genre','rating', 'released_at','status',)
 
 # AuthorSet = inlineformset_factory(
 #     Story,
@@ -44,8 +35,8 @@ class StoryForm(forms.ModelForm):
 #     StoryForm,)
 
 class ChapterForm(forms.ModelForm):
-    #released_at = forms.DateTimeField(widget=NumberInput(attrs={'type': 'datetime-local'}), input_formats=['%d/%m/%Y %H:%M'])
-    released_at = DateTimeLocalField()
+    # released_at = forms.DateTimeField(widgets = {'request_date': DateTimeInput(attrs={'type': 'datetime-local'}),})
+    released_at = DateTimeLocalField(initial = datetime.date.today)
 
     class Meta:
         model = Chapter

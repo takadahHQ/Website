@@ -176,7 +176,7 @@ class Author(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return "{} Written by {}".fomart(self.story.title, self.user.name())
+        return "{} Written by {}".format(self.story.title, self.user.name())
 
     class Meta:
         verbose_name_plural = 'authors'
@@ -275,7 +275,7 @@ class Stories(models.Model):
     )
     likes = models.ManyToManyField(settings.AUTH_USER_MODEL,  blank=True, related_name='story_likes')
     dislikes = models.ManyToManyField(settings.AUTH_USER_MODEL,blank=True, related_name='story_dislike')
-    authors = models.ManyToManyField(settings.AUTH_USER_MODEL, through='Author',  blank=True)
+    author = models.ManyToManyField('Author', related_name='authors', blank=True)
     editor = models.ManyToManyField('Editor', related_name='editors', blank=True)
     language = models.ForeignKey('Language',  on_delete=models.CASCADE)
     genre = models.ManyToManyField('Genre', blank=True)

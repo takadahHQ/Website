@@ -222,7 +222,7 @@ class Users(AbstractUser):
     def name(self):
         if self.pseudonym:
             return self.pseudonym
-        elif self.get_full_name:
+        elif self.get_full_name():
             return self.get_full_name()
         else:
             return self.get_username()      

@@ -37,7 +37,7 @@ class storyDashboard(LoginRequiredMixin, TemplateView):
 
     def total_likes(self):
         #liked = Stories.objects.filter(authors=self.request.user).annotate(total_likes=Sum(likes))
-        likes = Stories.objects.filter(authors=self.request.user).aggregate(total_likes=Count('likes'))['total_likes']
+        likes = Stories.objects.filter(author=self.request.user).aggregate(total_likes=Count('likes'))['total_likes']
         #all_stories = self.request.user.authors.all()
         #stotal_likes_received = all_stories.aggregate(total_likes=Count('likes'))['total_likes']
         return likes
@@ -61,7 +61,7 @@ class storyList(LoginRequiredMixin, ListView):
     context_object_name = 'stories'
 
     def get_queryset(self):
-        return Stories.objects.filter(authors=self.request.user)#.annotate(word_count)
+        return Stories.objects.filter(author=self.request.user)#.annotate(word_count)
 
 class storyList(LoginRequiredMixin, ListView):
     template_name = 'stories/list_stories.html'
@@ -69,10 +69,7 @@ class storyList(LoginRequiredMixin, ListView):
     context_object_name = 'stories'
 
     def get_queryset(self):
-        return Stories.objects.filter(authors=self.request.user)
-
-  #  form_class = StoryForm
-  #  success_url = reverse_lazy('story:addchapter')
+        return Stories.objects.filter(author=self.request.user)
 
 def add_author(request):
     context = {
@@ -192,10 +189,10 @@ def add_character(request):
 
 #     return render(request, 'stories/create_story.html', context)
 
-class createStory(LoginRequiredMixin, CreateWithInlinesView):
+class createStory(LoginRequiredMixin, CreateView):
     template_name = 'stories/authors/create_story.html'
     model = Stories
-    inlines = [CharacterInline, AuthorInline]
+    # inlines = [CharacterInline, AuthorInline]
     form_class = StoryForm
 
     def get_success_url(self):
@@ -207,10 +204,10 @@ class createStory(LoginRequiredMixin, CreateWithInlinesView):
         form.instance.authors.save()
         return super().form_valid(form)
 
-class updateStory(LoginRequiredMixin, UpdateWithInlinesView):
+class updateStory(LoginRequiredMixin, UpdateView):
     template_name = "stories/authors/edit_story.html"
     model = Stories
-    inlines = [CharacterInline]
+    # inlines = [CharacterInline]
     form_class = StoryForm
 
     def get_success_url(self):
