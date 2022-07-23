@@ -18,12 +18,6 @@
         {% tailwind_css %}
         <link rel="stylesheet" href="{% static 'css/dist/font.css' %}">
         <link rel="stylesheet" href="{% url 'core:stylesheet' %}" defer>
-<!--         <link rel="stylesheet" href="{% static 'css/daisyui.css' %}">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-
-    <link rel="stylesheet" href="{% static '/css/datatable.min.css' %}" />
-    <script src="{% static '/js/datatable.min.js' %}" defer ></script> -->
         <!-- Our project just needs Font Awesome Free's Solid + Brand files -->
     <link href="{% static 'fontawesomefree/css/fontawesome.css' %}" rel="stylesheet" type="text/css">
     <link href="{% static 'fontawesomefree/css/brands.css' %}" rel="stylesheet" type="text/css">
@@ -36,9 +30,6 @@
 
 	<body class="min-h-screen bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-300 font-serif leading-normal tracking-normal" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
         {% analytical_body_top %}
-        <!-- Matomo Image Tracker-->
-<img referrerpolicy="no-referrer-when-downgrade" src="https://mamoto.takadah.com/matomo.php?idsite=1&amp;rec=1" style="border:0" alt="" />
-<!-- End Matomo -->
         <div class="w-full">
             <div class="flex justify-between bg-white dark:bg-gray-700 flex-wrap">
                 <div class="flex justify-start text-gray-800 dark:text-gray-300 place-content-center pre-nav flex-wrap">

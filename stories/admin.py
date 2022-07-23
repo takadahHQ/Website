@@ -1,6 +1,6 @@
 import imp
 from django.contrib import admin
-from .models import Stories, Categories, Chapter, Character, Bookmark, Genre, Language, Rating, Universe, Tag, Type, Author
+from .models import Stories, Categories, Chapter, Character, Bookmark, Genre, Language, Rating, Universe, Tag, Type, Author, Editor
 
 from import_export import resources
 # Register your models here.
@@ -10,6 +10,10 @@ class StoriesResource(resources.ModelResource):
 
     class Meta:
         model = Stories
+class EditorInline(admin.StackedInline):
+    model = Editor
+    max_num = 3
+
 
 class AuthorInline(admin.StackedInline):
     model = Author
@@ -18,7 +22,7 @@ class AuthorInline(admin.StackedInline):
 class StoriesAdmin(admin.ModelAdmin):
     list_display = ('title', 'cover', 'summary', 'status','released_at', 'created_at', 'updated_at')
     inlines = [
-        AuthorInline
+        AuthorInline, EditorInline
     ]
     resource_class = StoriesResource
 

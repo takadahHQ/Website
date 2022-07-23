@@ -275,7 +275,7 @@ class Stories(models.Model):
     )
     likes = models.ManyToManyField(settings.AUTH_USER_MODEL,  blank=True, related_name='story_likes')
     dislikes = models.ManyToManyField(settings.AUTH_USER_MODEL,blank=True, related_name='story_dislike')
-    author = models.ManyToManyField('Author', related_name='authors', blank=True)
+    author = models.ManyToManyField(settings.AUTH_USER_MODEL, through='Author', related_name='authors', blank=True)
     editor = models.ManyToManyField('Editor', related_name='editors', blank=True)
     language = models.ForeignKey('Language',  on_delete=models.CASCADE)
     genre = models.ManyToManyField('Genre', blank=True)
@@ -312,7 +312,7 @@ class Stories(models.Model):
         return story.chapter.get_absolute_url()
    
     def create_cover(self):
-        name = self.authors.first().name()
+        name = self.author.first().name()
         file = img.make(name, self.title, self.slug)
         filename = self.slug + '.png'
         self.cover.save(filename, File(file), save=True)
@@ -328,6 +328,7 @@ class Stories(models.Model):
     def get_cover(self):
         if not self.cover:
             self.cover = self.create_cover()
+            return self.cover.url
         else:
             return self.cover.url
 

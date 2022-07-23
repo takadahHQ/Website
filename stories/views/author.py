@@ -43,7 +43,7 @@ class storyDashboard(LoginRequiredMixin, TemplateView):
         return likes
 
     def story_list(self):
-       story =  Stories.objects.exclude(status='pending').exclude(status='draft').filter(authors=self.request.user)
+       story =  Stories.objects.exclude(status='pending').exclude(status='draft').filter(author=self.request.user)
        return story
 
     def story_stats(self):
@@ -51,25 +51,25 @@ class storyDashboard(LoginRequiredMixin, TemplateView):
         return stats
 
 class viewStory(LoginRequiredMixin, DetailView):
-    template_name = 'stories/show_story.html'
+    template_name = 'stories/authors/story_detail.html'
     context_object_name = 'story'
     model = Stories
 
+# class storyList(LoginRequiredMixin, ListView):
+#     template_name = 'stories/list_stories.html'
+#     model = Stories
+#     context_object_name = 'stories'
+
+#     def get_queryset(self):
+#         return Stories.objects.filter(author =self.request.user)#.annotate(word_count)
+
 class storyList(LoginRequiredMixin, ListView):
-    template_name = 'stories/list_stories.html'
+    template_name = 'stories/authors/list_stories.html'
     model = Stories
     context_object_name = 'stories'
 
     def get_queryset(self):
-        return Stories.objects.filter(author=self.request.user)#.annotate(word_count)
-
-class storyList(LoginRequiredMixin, ListView):
-    template_name = 'stories/list_stories.html'
-    model = Stories
-    context_object_name = 'stories'
-
-    def get_queryset(self):
-        return Stories.objects.filter(author__user=self.request.user)
+        return Stories.objects.filter(author =self.request.user)
 
 def add_author(request):
     context = {
@@ -192,7 +192,6 @@ def add_character(request):
 class createStory(LoginRequiredMixin, CreateView):
     template_name = 'stories/authors/create_story.html'
     model = Stories
-    # inlines = [CharacterInline, AuthorInline]
     form_class = StoryForm
 
     def get_success_url(self):
@@ -200,14 +199,12 @@ class createStory(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         form.instance.save()
-        form.instance.authors.add(self.request.user)
-        form.instance.authors.save()
+        form.instance.author.add(self.request.user)
         return super().form_valid(form)
 
 class updateStory(LoginRequiredMixin, UpdateView):
     template_name = "stories/authors/edit_story.html"
     model = Stories
-    # inlines = [CharacterInline]
     form_class = StoryForm
 
     def get_success_url(self):
@@ -215,7 +212,7 @@ class updateStory(LoginRequiredMixin, UpdateView):
 
 
 class deleteStory(LoginRequiredMixin, DeleteView):
-    #template_name = 'stories/create_story.html'
+    template_name = "stories/authors/delete_story.html"
     model = Stories
     success_url = reverse_lazy('author:list')
 
@@ -223,14 +220,14 @@ class createChapter(LoginRequiredMixin,CreateView):
     model = Chapter
     form_class = ChapterForm
    # success_url = reverse_lazy('login')
-    template_name = "stories/create_chapter.html"
+    template_name = "stories/authors/create_chapter.html"
 
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)
 
 class updateChapter(LoginRequiredMixin, UpdateView):
-    template_name = "stories/edit_chapter.html"
+    template_name = "stories/authors/edit_chapter.html"
     model = Chapter
     form_class = ChapterForm
 

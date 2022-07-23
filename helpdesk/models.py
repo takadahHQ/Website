@@ -1,8 +1,5 @@
 """
 django-helpdesk - A Django powered ticket tracker for small enterprise.
-
-(c) Copyright 2008 Jutda. All Rights Reserved. See LICENSE for details.
-
 models.py - Model (and hence database) definitions. This is the core of the
             helpdesk structure.
 """
@@ -1400,13 +1397,13 @@ class KBItem(models.Model):
         blank=True,
     )
 
-    team = models.ForeignKey(
-        helpdesk_settings.HELPDESK_TEAMS_MODEL,
-        on_delete=models.CASCADE,
-        verbose_name=_('Team'),
-        blank=True,
-        null=True,
-    )
+    # team = models.ForeignKey(
+    #     helpdesk_settings.HELPDESK_TEAMS_MODEL,
+    #     on_delete=models.CASCADE,
+    #     verbose_name=_('Team'),
+    #     blank=True,
+    #     null=True,
+    # )
 
     order = models.PositiveIntegerField(
         _('Order'),

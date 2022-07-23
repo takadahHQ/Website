@@ -27,7 +27,7 @@ class StoryForm(forms.ModelForm):
 
     class Meta:
         model = Stories
-        fields = ('title','abbreviation', 'summary', 'author', 'cover', 'story_type', 'tags', 'language','genre','rating', 'released_at','status',)
+        fields = ('title','abbreviation', 'summary', 'cover', 'story_type', 'tags', 'language','genre','rating', 'released_at','status',)
 
 # AuthorSet = inlineformset_factory(
 #     Story,
@@ -46,7 +46,7 @@ class ChapterForm(forms.ModelForm):
 class AuthorForm(forms.ModelForm):
     class Meta:
         model = Author
-        fields = ('story', 'user')
+        fields = ('user',)
 
 class CharacterForm(forms.ModelForm):
     class Meta:
@@ -56,4 +56,4 @@ class CharacterForm(forms.ModelForm):
 class EditorForm(forms.ModelForm):
     class Meta:
         model = Editor
-        fields = ('story', 'user')
+        fields = ('user',)

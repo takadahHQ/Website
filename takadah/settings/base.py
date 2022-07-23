@@ -75,8 +75,8 @@ INSTALLED_APPS = [
     'import_export', 
     'flag',
     'watson',
-    'reversion'
-    #'helpdesk',  # This is us!
+    'reversion',
+    'helpdesk',  # This is us!
     #'reports',
     #make a supports app
     #'subscriptions',

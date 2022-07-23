@@ -55,7 +55,7 @@ def StoryFollow(request, id):
     return render(request, 'stories/partials/following.html', {'story': story})
 
 class ShowStory(DetailView):
-    template_name = 'reader/story_detail.html'
+    template_name = 'stories/readers/story_detail.html'
     context_object_name = 'story'
 
     def get_queryset(self):
@@ -63,7 +63,7 @@ class ShowStory(DetailView):
 
 class ShowChapter(HistoryMixin, DetailView):
     model = Chapter
-    template_name = 'reader/read.html'
+    template_name = 'stories/readers/read.html'
     context_object_name = 'story'
 
 class ShowTag(DetailView):

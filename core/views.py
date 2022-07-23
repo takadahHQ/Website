@@ -37,7 +37,7 @@ class ProfileView(UpdateView):
 
 
 class ShowBookmark(LoginRequiredMixin, ListView):
-    template_name = 'reader/bookmark.html'
+    template_name = 'stories/reader/bookmark.html'
     context_object_name = 'bookmarks'
     paginate_at = 10
 
@@ -45,7 +45,7 @@ class ShowBookmark(LoginRequiredMixin, ListView):
         return Bookmark.objects.filter(user=self.request.user).order_by('-created_at')
 
 class ShowHistory(LoginRequiredMixin, ListView):
-    template_name = 'reader/history.html'
+    template_name = 'stories/reader/history.html'
     context_object_name = 'histories'
 
     def get_queryset(self):
@@ -55,9 +55,4 @@ class DeleteHistory(LoginRequiredMixin, DeleteView):
     model = History
     context_object_name = 'histories'
     sucess_url = reverse_lazy('core:history')
-
-# class ShowStory(DetailView):
-#     template_name = 'reader/story_detail.html'
-
-# class ShowChapter(DetailView):
-#     template_name = 'reader/read.html'
+    template_name = 'stories/reader/read.html'

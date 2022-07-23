@@ -3,12 +3,12 @@
 {% load tailwind_filters %}
 
 {% block title %}
-Edit:{{ form.title.value | title }}
+Delete: {{ object | title }}
 {% endblock title %}
 {% block breadcrumbs %}
 <li><a href="{% url 'core:index' %}">Home</a></li>
 <li><a href="{% url 'author:dashboard' %}">Author</a></li> 
-<li><a href="{{ story.story.get_absolute_url}}">{{ form.title.value | title }}</a></li> 
+<li><a href="{{ story.story.get_absolute_url}}">{{ object | title }}</a></li> 
 <li><a>Delete</a></li> 
 {% endblock %}
 {% block content %}
@@ -17,11 +17,9 @@ Edit:{{ form.title.value | title }}
     <h1>Do You want to Delete this story.</h1>
     <form method="post">
         {% csrf_token %}
-        {{ form|crispy }}
-        {% for formset in inlines %}
-        {{ formset|crispy }}
-        {% endfor %}
-        <button type="submit" class="btn border-none bg-green-500 text-gray-50">Delete Story</button>
+<p>Are you sure you want to delete "{{ object }}"?</p>
+        <button type="submit" class="btn border-none bg-red-500 text-gray-50">Delete Story</button>
     </form>
 </section>
 {% endblock content %}
+
