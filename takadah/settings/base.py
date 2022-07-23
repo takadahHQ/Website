@@ -88,6 +88,7 @@ INTERNAL_IPS = [
 
 MIDDLEWARE = [
     'debug_toolbar.middleware.DebugToolbarMiddleware',
+    'watson.middleware.SearchContextMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
