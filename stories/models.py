@@ -334,7 +334,7 @@ class Stories(models.Model):
 
     def get_absolute_url(self):
         story_type = self.story_type.name
-        return reverse("story:show", kwargs={"type": self.story_type.name, "slug": self.slug})
+        return reverse("story:show", kwargs={"type": self.story_type.name.lower(), "slug": self.slug})
        # return reverse("model_detail", kwargs={"pk": self.pk})
     
     class Meta:

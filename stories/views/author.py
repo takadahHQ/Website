@@ -79,8 +79,13 @@ def add_author(request):
 
 def update_author(request, pk):
     author = Author.objects.get(pk=pk)
+    form = AuthorForm(request.POST or None, instance=author)
+    if request.method =="POST":
+        if form.is_valid():
+            author = form.save()
+            return redirect("detail-author", pk=author.id)
     context = {
-        "aform": AuthorForm(),
+        "aform": form,
         "author": author,
     }
     return render(request, "stories/partials/author_form.html", context)
@@ -93,7 +98,6 @@ def delete_author(request, pk):
 def save_author(request, pk):
     story = Stories.objects.get(id=pk)
     authors = Author.objects.filter(story=story)
-
     form = AuthorForm(request.POST or None)
 
     if request.method == "POST":
@@ -101,7 +105,7 @@ def save_author(request, pk):
             author = form.save(commit=False)
             author.story = story
             author.save()
-            return HttpResponse("success")
+            return redirect("detail-author", pk=author.id)
         else:
             return render(request, "stories/partials/add_author.html", context={"aform": form})
     else:

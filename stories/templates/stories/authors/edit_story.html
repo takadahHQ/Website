@@ -8,7 +8,7 @@ Edit: {{ form.title.value | title }}
 {% block breadcrumbs %}
 <li><a href="{% url 'core:index' %}">Home</a></li>
 <li><a href="{% url 'author:dashboard' %}">Author</a></li> 
-<li><a href="{{ story.story.get_absolute_url}}">{{ form.title.value | title }}</a></li> 
+<li><a href="{{ story.story.get_absolute_url }}">{{ form.title.value | title }}</a></li> 
 <li><a>Update</a></li> 
 {% endblock %}
 {% block content %}
@@ -17,7 +17,9 @@ Edit: {{ form.title.value | title }}
     <form method="post">
         {% csrf_token %}
         {{ form|crispy }}
-        {% include 'stories/includes/add_reference.html' %}
+        {{ story.story.id }}
+        {{ form.id.value | title }}
+        {% include 'stories/includes/add_reference.html' with story=story.story.id %}
 <!--         {% for formset in inlines %}
         {{ formset|crispy }} 
         {% endfor %}-->

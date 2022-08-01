@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Story
+{% endblock title %}
+
+{% block page-title %}
+Story
+{% endblock page-title %}
+{% block breadcrumbs %}
+<li><a href="{% url 'core:index' %}">Home</a></li>
+<li><a href="{% url 'author:dashboard' %}">Author</a></li> 
+<li><a>{{ user.name}}'s Stories</a></li> 
+{% endblock %}
+{% block content %}
+<div class="p-8 rounded bg-gray-50 shadow-blue-400">
+    <main class="container">
+        <div class="flex flex-col">
+            <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
+              <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
+                <div class="overflow-hidden">
+                  <table class="min-w-full rounded" id="story" data-replace="jtable" data-component="datatable" data-locale="en" data-search="true">
+                    <thead class="bg-blue-100 border-b font-bold text-lg">
+                      <tr>
+                        <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                          #
+                        </th>
+                        <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                          Story
+                        </th>
+                        <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                          Chapters
+                        </th>
+                        <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                            Status
+                          </th>
+                        <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                          Action
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        {% for story in  stories %}
+                      <tr class="{% cycle 'bg-gray-100' 'bg-white' %} border-b">
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"> {{forloop.counter0}} </td>
+                        <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                            <a href="{% url 'author:show' story.id %}">
+                          {{ story.title }}
+                      </a>
+                        </td>
+                        <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                            {{ story.chapters_set.count }}
+                        </td>
+                        <td class="text-sm text-white dark:text-gray-800 font-light px-6 py-4 whitespace-nowrap">
+                            <span class="badge border-0 p-3 
+                            {% if story.status == "prerelease" %}
+                             bg-blue-600
+                            {% elif story.status == "published" %}
+                             bg-green-600
+                            {% elif story.status == "complete" %}
+                             bg-green-700 
+                            {% elif story.status == "draft" %}
+                             bg-blue-500
+                             {% elif story.status == "haitus" %}
+                             bg-orange-500  
+                            {% else %}
+                             bg-red-600  
+                             {% endif %}">{{ story.status }}</span>  
+                          </td>
+                        <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                          <a href="{% url 'author:update' story.id %}" class="btn btn-sm bg-blue-600 border-0">View</a>
+                          <a href="{% url 'author:update' story.id %}" class="btn btn-sm bg-green-600 border-0">Update</a>
+                          <a href="{% url 'author:delete' story.id %}" class="btn btn-sm bg-red-600 border-0">Delete</a>
+                        </td>
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+    </main>
+</div>
+{% endblock content %}
