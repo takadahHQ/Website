@@ -145,9 +145,9 @@
                           </div>
                           <span class="hidden lg:flex">{{ user.name }}</span>
                         </label>
-                        <ul tabindex="0" class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box">
+                        <ul tabindex="0" class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-gray-700 rounded-box">
                           <li>
-                            <a class="justify-between">
+                            <a class="justify-between" href="{{ user.get_absolute_url }}">
                               Profile
                               <span class="badge">New</span>
                             </a>

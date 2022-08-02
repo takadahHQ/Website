@@ -4,6 +4,7 @@ from django.conf import settings
 from django.forms.widgets import TextInput
 from ckeditor.fields import RichTextField
 from ckeditor_uploader.fields import RichTextUploadingField
+from django.urls import reverse, reverse_lazy
 
 class Kycs(models.Model):
     status_choices = (
@@ -226,6 +227,9 @@ class Users(AbstractUser):
             return self.get_full_name()
         else:
             return self.get_username()
+
+    def get_absolute_url(self):
+        return reverse_lazy("core:author", kwargs={"username": self.username.lower()})
 
     class Meta:
         verbose_name_plural =  'users'
