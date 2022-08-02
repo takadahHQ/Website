@@ -1,4 +1,4 @@
-
+{% load static %}
 h1, .h2, .h3 {
 	color:{{ settings.color }};
 	font-family: 'Yeseva One', cursive;
@@ -28,9 +28,14 @@ h1:hover, .h2:hover, .h3:hover{
 }
 
 .logo {
+	content: url({% static 'images/logo-colored.svg' %});
+	width: 2vw;
 	color: {{ settings.color }};
 }
 
+.logo-dark{
+	content: url({% static 'images/logo-dark.svg' %});
+}
 .nav-base{
 	background-color: {{ settings.color }};
 	color: white;
