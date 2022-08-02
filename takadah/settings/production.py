@@ -4,30 +4,28 @@ from .base import *
 SECRET_KEY = 'Takadah-%$)wg^oeyeezyu(@&ai^v793brks2q20pweey(sjn#(x+3+^$*tq'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = ['takadah.com', '127.0.0.1']
+DEBUG = False
 
 INTERNAL_IPS = [
     '127.0.0.1',
 ]
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'takalqei_django',
-#         'USER': 'takalqei_django',
-#         'PASSWORD': 'Z!nox2018',
-#         'HOST': 'localhost',
-#         'PORT': '3306',
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'takalqei_django',
+        'USER': 'takalqei_django',
+        'PASSWORD': 'Z!nox2018',
+        'HOST': 'localhost',
+        'PORT': '3306',
+    }
+}
 
 AUTH_PASSWORD_VALIDATORS = [
     {

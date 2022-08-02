@@ -66,7 +66,7 @@ INSTALLED_APPS = [
     'core',
     'pages',
     'blog',
-    'debug_toolbar',
+    # 'debug_toolbar',
     #'stallionaire_pages',
     #'stallionaire_blog',
     'stories',
