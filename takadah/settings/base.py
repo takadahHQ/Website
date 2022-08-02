@@ -23,13 +23,13 @@ SITE_ID = 1
 # SECURITY WARNING: don't run with debug turned on in production!
 #DEBUG = True
 
-ALLOWED_HOSTS = ['takadah.com', '127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['www.takadah.com','takadah.com', '127.0.0.1', 'localhost']
 
 HIJACK_ALLOW_GET_REQUESTS = True
 HIJACK_PERMISSION_CHECK = "hijack.permissions.superusers_and_staff"
 
 X_FRAME_OPTIONS = "SAMEORIGIN"
-SILENCED_SYSTEM_CHECKS = ["security.W019"]
+#SILENCED_SYSTEM_CHECKS = ["security.W019"]
 
 # Application definition
 

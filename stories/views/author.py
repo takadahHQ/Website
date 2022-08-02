@@ -78,7 +78,7 @@ def add_author(request):
     return render(request, "stories/partials/add_author.html", context)
 
 def update_author(request, pk):
-    author = Author.objects.get(pk=pk)
+    author = Author.objects.get(id=pk)
     form = AuthorForm(request.POST or None, instance=author)
     if request.method =="POST":
         if form.is_valid():
@@ -90,8 +90,15 @@ def update_author(request, pk):
     }
     return render(request, "stories/partials/author_form.html", context)
 
+def detail_author(request, pk):
+    author = Author.objects.get(id=pk)
+    context = {
+        "author": author,
+    }
+    return render(request, "stories/partials/author_details.html", context)
+
 def delete_author(request, pk):
-    author = Author.objects.get(pk=pk)
+    author = Author.objects.get(id=pk)
     author.delete()
     return HttpResponse('')
 
@@ -105,7 +112,7 @@ def save_author(request, pk):
             author = form.save(commit=False)
             author.story = story
             author.save()
-            return redirect("detail-author", pk=author.id)
+            return redirect("detail-author", pk=story.id)
         else:
             return render(request, "stories/partials/add_author.html", context={"aform": form})
     else:
@@ -213,6 +220,10 @@ class updateStory(LoginRequiredMixin, UpdateView):
 
     def get_success_url(self):
         return reverse_lazy('author:show', kwargs={'pk': self.object.pk})
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context['story'] = self.object.pk
+        return context
 
 
 class deleteStory(LoginRequiredMixin, DeleteView):

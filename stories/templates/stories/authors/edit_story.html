@@ -20,9 +20,6 @@ Edit: {{ form.title.value | title }}
         {{ story.story.id }}
         {{ form.id.value | title }}
         {% include 'stories/includes/add_reference.html' with story=story.story.id %}
-<!--         {% for formset in inlines %}
-        {{ formset|crispy }} 
-        {% endfor %}-->
         <button type="submit" class="btn border-none bg-green-500 text-gray-50">Update Story</button>
     </form>
 </section>

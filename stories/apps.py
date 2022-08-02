@@ -9,5 +9,6 @@ class StoriesConfig(AppConfig):
     def ready(self):
         stories = self.get_model("Stories")
         author = self.get_model("Author")
-        watson.register(stories, fields=("title", "summary","abbreviation",))
+        #watson.register(stories, fields=("title", "summary","abbreviation",))
+        watson.register(stories)
         watson.register(author)
