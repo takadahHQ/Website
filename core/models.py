@@ -225,7 +225,7 @@ class Users(AbstractUser):
         elif self.get_full_name():
             return self.get_full_name()
         else:
-            return self.get_username()      
+            return self.get_username()
 
     class Meta:
         verbose_name_plural =  'users'

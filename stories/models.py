@@ -305,7 +305,9 @@ class Stories(models.Model):
         return self.dislikes.count()
     # #@admin.display(description='First chapter of Story')
     def get_read_guest(self):
-        return self.chapters_set.first().get_absolute_url()
+        #hack to get it to work
+        if self.chapter_set.first():
+            return self.chapter_set.first().get_absolute_url()
 
     def get_read_user(self, request):
         story = History.objects.filter(user=request.user).get(story=self.story)

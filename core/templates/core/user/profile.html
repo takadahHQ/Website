@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% load tailwind_filters %}
+
+{% block title %}
+Bookmarks
+{% endblock title %}
+
+{% block page-title %}
+Profile
+{% endblock page-title %}
+{% block breadcrumbs %}
+<li><a href="{% url 'core:index' %}">Home</a></li> 
+<li><a>Users</a></li> 
+<li><a> {{ author.name }}</a></li> 
+{% endblock %}
+{% block content %}
+<div class="container rounded shadow-blue-400 my-12 mx-auto px-4 md:px-12">
+    <div class="flex flex-wrap -mx-1 lg:-mx-4">
+{% for followers in author.follwers.all %}
+    <!-- Column -->
+    <div class="bg-white rounded dark:grey-700 my-1 p-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/6">
+
+        <!-- Article -->
+        <article class="mt-2 overflow-hidden hover:scale-110 transition duration-300 ease-in-out">
+
+            <a href="{{ bookmark.story.get_absolute_url}}">
+                <img alt="Placeholder" class="block h-auto w-full hover:scale-105 transition duration-300 ease-in-out rounded-lg shadow-lg " src="{{ bookmark.story.get_cover }}">
+            </a>
+
+            <header class="flex items-center justify-between leading-tight p-2 md:p-4">
+                <p class="text-sm font-bold">
+                    <a class="no-underline hover:underline text-black" href="{{ bookmark.story.get_absolute_url}}">
+                        {{ bookmark.story.title | title }}
+                    </a>
+                </p>
+            </header>
+            <footer class="flex items-center justify-between leading-none p-2 md:p-4">
+                <a class="flex items-center no-underline hover:text-blue-400 text-black" href="{{ bookmark.get_read }}">
+                    <p class="text-sm text-grey-300">Progress {{ bookmark.get_read_position }} of {{ bookmark.story.chapters_set.count }}</p>
+                </a>
+            </footer>
+
+        </article>
+        <!-- END Article -->
+
+    </div>
+    <!-- END Column -->
+{% empty %}
+<h3 class="flex justify-center">No Novel read yet, do you need help?</h3>
+{% endfor %}
+</div>
+</div>
+<div class="bg-white rounded shadow-blue-400 p-2 lg:p-8 mt-2 dark:bg-gray-700">
+    <section>
+    <div x-data="{
+        tabs: [ 'Stories', 'Followed', 'Reviews'],
+        activeTabIndex: 0
+    }">
+        <div class="tabs my-6">
+            <template x-for="(tab, index) in tabs" :key="index">
+                <a class="tab tab-bordered" 
+                    :class="{'tab-active': activeTabIndex == index}"
+                    x-on:click="activeTabIndex = index"
+                    x-text=tab
+                ></a>
+            </template>
+        </div>
+        <div class="my-6 p-6">
+            <div x-show="activeTabIndex == 0">
+                <div class="text-2xl">{{ author.name }}'s Stories</div>
+            <div class="text-gray-500">
+                {{ story.summary | safe }}
+            </div>
+            </div>
+            <div x-show="activeTabIndex == 1">
+                Latest Release： Chapter {{ story.chapters_set.last.position  }}: <a href="{{ story.chapters_set.last.get_absolute_url }}">{{ story.chapters_set.last.title | title }}</a> {{ story.chapters_set.last.created_at | timesince }}<hr class="mt-5">
+                <div class="columns-2">
+                {% for chapter in story.chapters_set.all %}
+                <div class="p-4">
+                {{ chapter.position }} <a class="text-blue-800" href="{{ chapter.get_absolute_url }}">{{ chapter.title | title }}</a> <br>
+                <p class="text-xs text-green-blue-400"> {{ chapter.created_at | timesince }} ago</p>
+                </div>
+                {% endfor %}
+            </div>
+            </div>
+            <div x-show="activeTabIndex == 2">Reviews<br>Coming Soon</div>
+        </div>
+    </div>
+</section>
+</div>
+{% endblock content %}

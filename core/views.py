@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from requests import request
 
 from stories.models import Bookmark, History, Stories
@@ -56,3 +56,20 @@ class DeleteHistory(LoginRequiredMixin, DeleteView):
     context_object_name = 'histories'
     sucess_url = reverse_lazy('core:history')
     template_name = 'core/reader/read.html'
+
+
+class AuthorView(DetailView):
+    # model: Users
+    queryset = Users.objects.filter(is_active=True)
+    slug_field = "username"
+    slug_url_kwarg = "username"
+    context_object_name = "author"
+    template_name = "core/user/profile.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
+
+    # def get_queryset(self):
+    #     user = get_object_or_404(Users, username=self.kwargs['username'])
+    #     return user
