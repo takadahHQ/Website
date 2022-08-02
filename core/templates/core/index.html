@@ -1,0 +1,155 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Takadah
+{% endblock title %}
+{% block breadcrumbs%}
+{% endblock %}
+
+{% block content %}
+<div class="">
+{% if weekly %}
+<!-- Weekly Featured -->
+    <section id="weekly" class="block min-w-full max-w-full">
+        <div class="text-2xl border-b-2 border-blue-600">Weekly Featured</div><br>
+        <div class="flex flex-wrap -mx-1 lg:-mx-4">
+            {% for story in weekly %}
+                <!-- Column -->
+                <div class="my-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/4">
+            
+                    <!-- Article -->
+                    <article class="overflow-hidden hover:grayscale transition duration-300 ease-in-out">
+            
+                        <a href="{{ story.get_absolute_url}}">
+                            <img alt="{{ story.title | lower }}" class="block h-auto w-full hover:scale-80 hover:saturate-200 transition duration-300 ease-in-out rounded-lg shadow-lg " src="{{ story.get_cover }}">
+                        </a>
+            
+                        <header class="flex items-start justify-start leading-tight p-2 md:p-4">
+                            <p class="text-sm font-bold">
+                                <a class="no-underline hover:underline text-black" href="{{ story.get_absolute_url}}">
+                                    {{ story.title | title }}
+                                </a>
+                            </p>
+                        </header>
+                        <footer class="leading-none md:-mt-7 p-1 md:p-4">
+                            <a class="no-underline hover:text-blue-400 text-grey-400" href="{{ story.genre.first.get_absolute_url }}">
+                                <p class="text-sm text-grey-300">
+                                {{ story.genre.first.name }}
+                                </p>
+                            </a>
+                        </footer>
+            
+                    </article>
+                    <!-- END Article -->
+            
+                </div>
+                <!-- END Column -->
+            {% empty %}
+            <h3 class="flex justify-center">No Novel read yet, do you need help?</h3>
+            {% endfor %}
+            </div>
+    </section>    
+<!-- end Weekly Featured -->
+{% endif %}
+{% if potential %}
+<!-- Potential -->
+<section id="potential">
+    <div class="text-2xl border-b-2 border-blue-600">Pontential Stars</div><br>
+</section>    
+<!-- end Potential -->
+{% endif %}
+{% if fresh %}
+<!-- new -->
+<section id="fresh">
+    <div class="text-2xl border-b-2 border-blue-600">New Stories</div><br>
+    <div class="flex flex-wrap -mx-1 lg:-mx-4">
+        {% for story in fresh %}
+            <!-- Column -->
+            <div class="my-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/4">
+        
+                <!-- Article -->
+                <article class="overflow-hidden hover:scale-80 transition duration-300 ease-in-out">
+        
+                    <a href="{{ story.get_absolute_url}}">
+                        <img alt="{{ story.title | lower }}" class="block h-auto w-full hover:scale-105 hover:saturate-200 hover:rounded-lg transition duration-300 ease-in-out rounded-lg shadow-lg " src="{{ story.get_cover }}">
+                    </a>
+        
+                    <header class="flex items-start justify-start leading-tight p-2 md:p-4">
+                        <p class="text-sm font-bold">
+                            <a class="no-underline hover:underline text-black" href="{{ story.get_absolute_url}}">
+                                {{ story.title | title }}
+                            </a>
+                        </p>
+                    </header>
+                    <footer class="leading-none md:-mt-7 p-1 md:p-4">
+                        <a class="no-underline hover:text-blue-400 text-grey-400" href="{{ story.genre.first.get_absolute_url }}">
+                            <p class="text-sm text-grey-300">
+                            {{ story.genre.first.name }}
+                            </p>
+                        </a>
+                    </footer>
+        
+                </article>
+                <!-- END Article -->
+        
+            </div>
+            <!-- END Column -->
+        {% empty %}
+        <h3 class="flex justify-center">No Novel read yet, do you need help?</h3>
+        {% endfor %}
+        </div>
+</section>    
+<!-- end new -->
+{% endif %}
+{% if completed %}
+<!-- Completed -->
+<section id="completed" class="block min-w-full max-w-full">
+    <div class="text-2xl border-b-2 border-blue-600">Completed</div><br>
+    <div class="flex flex-wrap -mx-1 lg:mx-4">
+        {% for story in completed %}
+            <!-- Column -->
+            <div class="my-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/4">
+        
+                <!-- Article -->
+                <article class="overflow-hidden hover:scale-110 transition duration-300 ease-in-out">
+        
+                    <a href="{{ story.get_absolute_url}}">
+                        <img alt="{{ story.title | lower }}" class="block h-auto w-full hover:scale-110 transition duration-300 ease-in-out rounded-lg shadow-lg " src="{{ story.get_cover }}">
+                    </a>
+        
+                    <header class="flex items-start justify-start leading-tight p-2 md:p-4">
+                        <p class="text-sm font-bold">
+                            <a class="no-underline hover:underline text-black" href="{{ story.get_absolute_url}}">
+                                {{ story.title | title }}
+                            </a>
+                        </p>
+                    </header>
+                    <footer class="leading-none md:-mt-7 p-1 md:p-4">
+                        <a class="no-underline hover:text-blue-400 text-grey-400" href="{{ story.genre.first.get_absolute_url }}">
+                            <p class="text-sm text-grey-300">
+                            {{ story.genre.first.name }}
+                            </p>
+                        </a>
+                    </footer>
+        
+                </article>
+                <!-- END Article -->
+        
+            </div>
+            <!-- END Column -->
+        {% empty %}
+        <h3 class="flex justify-center">No Novel read yet, do you need help?</h3>
+        {% endfor %}
+        </div>
+</section>    
+<!-- end Completed -->
+{% endif %}
+{% if tags %}
+<!-- Tags -->
+<section id="potential">
+    <div class="text-2xl border-b-2 border-blue-600">Popular Tags</div><br>
+</section>    
+<!-- end Tags -->
+{% endif %}
+</div>
+{% endblock content %}

@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% load advert_tags %}
+{% load tailwind_filters %}
+
+{% block title %}
+History
+{% endblock title %}
+
+{% block page-title %}
+History
+{% endblock page-title %}
+{% block breadcrumbs %}
+<li><a href="{% url 'core:index' %}">Home</a></li>
+
+<li><a>Tag</a></li> 
+{% endblock %}
+{% block content %}
+<span class="flex justify-end">{{ page.updated_at | timesince}}</span>
+<div class="bg-white rounded shadow-blue-400 p-2 lg:p-8  space-y-4">
+    {% for history in histories %}
+    <div class="flex flex-col hover:scale-105 transition duration-300 ease-in-out">
+        <div class="bg-white shadow-md  rounded-3xl p-4">
+            <div class="flex-none lg:flex">
+                <div class=" h-full w-full lg:h-48 lg:w-48   lg:mb-0 mb-3">
+                    <img src="{{ history.story.get_cover }}"
+                        alt="Just a flower" class=" w-full  object-scale-down lg:object-cover  lg:h-48 rounded-2xl">
+                </div>
+                <div class="flex-auto ml-3 justify-evenly py-2">
+                    <a href="{{ history.story.get_absolute_url}}">
+                        <div class="flex flex-wrap ">
+                            <div class="w-full flex-none text-xs text-blue-700 font-medium ">
+                                {{ history.story.story_type.name }}
+                            </div>
+                            <h2 class="flex-auto text-lg font-medium">{{ history.story.title }}</h2>
+                        </div>
+                        <p class="mt-3"></p>
+                        <div class="flex py-4  text-sm text-gray-500">
+                            <div class="flex-1 inline-flex items-center">
+                                {{ history.story.summary | safe }}
+                            </div>
+                        </div>
+                    </a>
+                    <div class="flex p-4 pb-2 border-t border-gray-200 "></div>
+                    <div class="flex space-x-3 text-sm font-medium">
+                        <button disabled>
+                            <p class="text-sm text-grey-300">Progress {{ history.chapter.position }} of {{ history.story.chapters_set.count }}</p>
+                        </button>
+                        <div class="flex-auto flex space-x-3">
+                        </div>
+                        <button class="mb-2 md:mb-0 bg-white px-4 py-2 shadow-sm tracking-wider border text-gray-600 rounded-full hover:bg-gray-100 inline-flex items-center space-x-2 " type="button" aria-label="like">
+                            <a href="{{ history.chapter.get_absolute_url }}" >Continue Reading</a>
+                        </button>
+                        
+                        <button
+                            class="mb-2 md:mb-0 bg-gray-900 px-5 py-2 shadow-sm tracking-wider text-white rounded-full hover:bg-gray-800"
+                            type="button" aria-label="like"><a href="{% url 'core:stop-reading' history.id %}" >Delete</a></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% empty %}
+<h3 class="flex justify-center">No Novel read yet, do you need help?</h3>
+{% endfor %}
+</div>
+{% endblock content %}
