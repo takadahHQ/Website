@@ -35,7 +35,15 @@ h1:hover, .h2:hover, .h3:hover{
 }
 
 .logo-dark{
+	content: url({% static 'images/logo-light.svg' %});
+	width: 2vw;
+	min-width: 25px;
+}
+
+.logo-light{
 	content: url({% static 'images/logo-dark.svg' %});
+	width: 2vw;
+	min-width: 25px;
 }
 .nav-base{
 	background-color: {{ settings.color }};
