@@ -17,7 +17,7 @@ def index(request):
     completed = Stories.objects.filter(status='completed')[:12]
     return render(request, 'stories/index.html', {'weekly': weekly, 'fresh': fresh, 'completed': completed})
 
-def error_500(request, exception):
+def error_500(request):
     return render(request, 'core/error/500.html')
 
 def error_404(request, exception):
