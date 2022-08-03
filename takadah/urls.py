@@ -29,6 +29,10 @@ urlpatterns = [
     path('', include('core.urls')),
     path('', include(tf_urls)),
 ]
+
+handler404 = 'core.views.error_404'
+handler500 = 'core.views.error_500'
+
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
@@ -36,5 +40,4 @@ else:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-handler500 = 'core.views.error_500'
-handler404 = 'core.views.error_404'
+
