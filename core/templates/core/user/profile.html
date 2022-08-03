@@ -69,7 +69,13 @@ Profile
             <div x-show="activeTabIndex == 0">
                 <div class="text-2xl">{{ author.name }}'s Stories</div>
             <div class="text-gray-500">
-                {{ story.summary | safe }}
+                {% for story in user.stories_set.all %}
+                <li>
+                    {{ story.title }}
+                </li>
+                {% empty %}
+                user has no story
+                {% endfor %}
             </div>
             </div>
             <div x-show="activeTabIndex == 1">
