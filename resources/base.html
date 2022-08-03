@@ -259,9 +259,9 @@
 			  </div>
 
 			</div>
-            {% autoescape on %}
+            {% comment %} {% autoescape on %}
             {% analytical_body_bottom %}
-            {% endautoescape %}
+            {% endautoescape %} {% endcomment %}
             <script src="{% static 'js/alpine.min.js' %}" defer ></script>
             <script src="{% static 'js/htmx.min.js' %}" defer ></script>
             <script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
