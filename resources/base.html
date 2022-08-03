@@ -237,7 +237,7 @@
 		</div>
 		<footer class="px-10 py-4 footer bg-base-200 dark:bg-gray-700 dark:text-gray-200 text-base-content">
 			<div class="items-center grid-flow-col">
-			 <img class="logo-dark dark:logo" />
+			 <img class="logo-dark dark:logo-light" />
 			  <p class="opacity-1 text-sm">
                   <span class="text-2xl">{{ settings.name }}</span>
                   <br/>{{ settings.tagline | safe }}
@@ -262,8 +262,8 @@
             {% autoescape off %}
             {% analytical_body_bottom %}
             {% endautoescape %}
-            <script src="{% static '/js/alpine.min.js' %}" defer ></script>
-            <script src="{% static '/js/htmx.min.js' %}" defer ></script>
+            <script src="{% static 'js/alpine.min.js' %}" defer ></script>
+            <script src="{% static 'js/htmx.min.js' %}" defer ></script>
             <script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
             <script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
             <script src="{% static 'js/site.js' %}"></script>
