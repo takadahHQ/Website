@@ -4,6 +4,7 @@ from .api import api
 from django.conf import settings
 from django.conf.urls.static import static
 from two_factor.urls import urlpatterns as tf_urls
+from django.conf.urls import handler404, handler500
 
 
 urlpatterns = [
