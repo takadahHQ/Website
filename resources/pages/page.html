@@ -17,7 +17,7 @@
 {% endblock %}
 {% block content %}
 <span class="flex justify-end">Last Updated: {{ page.updated_at | timesince}}</span>
-<div class="bg-gray-50 rounded shadow-blue-400 p-8">
+<div class="bg-gray-50 rounded shadow-blue-400 p-8 dark:bg-gray-700 dark:bg-grey-200">
     {% autoescape on %}
     {{ page.content | inject_advert:1  | safe}}
     {% endautoescape %}
