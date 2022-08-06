@@ -15,9 +15,9 @@
 
 {% block content %}
 {% if blog.updated_at %}
-<span class="flex justify-end">Last Updated: {{ blog.updated_at | timesince}}</span>
+<span class="flex justify-end text-[#{{ settings.color }}]-200">Last Updated: {{ blog.updated_at | timesince}}</span>
 {% endif %}
-<div class="p-8 rounded bg-gray-50 shadow-blue-400">
+<div class="p-8 rounded bg-gray-50 text-sky-400 dark:bg-gray-800 dark:text-grey-300">
     <article class="post">
         <p class="indent-4 hover:indent-8">{{ blog.content |safe }}</p>
     </article>
