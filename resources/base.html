@@ -37,7 +37,7 @@
     {% analytical_head_bottom %} 
 	</head>
 
-	<body class="min-h-screen bg-[#{{ settings.color }}]-100 dark:bg-[#{{ settings.color }}]-800 text-[#{{ settings.color }}]-900 dark:text-[#{{ settings.color }}]-300 font-serif leading-normal tracking-normal" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+	<body class="min-h-screen bg-[{{ settings.color }}]-100 dark:bg-[{{ settings.color }}]-800 text-[{{ settings.color }}]-900 dark:text-[{{ settings.color }}]-300 font-serif leading-normal tracking-normal" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
         {% analytical_body_top %}
         <div class="w-full">
             <div class="flex justify-between bg-white dark:bg-gray-700 flex-wrap">
