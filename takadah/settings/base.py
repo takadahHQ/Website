@@ -87,7 +87,7 @@ INTERNAL_IPS = [
 ]
 
 MIDDLEWARE = [
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
+    # 'debug_toolbar.middleware.DebugToolbarMiddleware',
     'watson.middleware.SearchContextMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
@@ -221,7 +221,7 @@ JAZZMIN_SETTINGS = {
     "site_brand": "Takadah",
 
     # Logo to use for your site, must be present in static files, used for brand on top left
-    #"site_logo": "books/img/logo.png",
+    "site_logo": "static/images/logo-colored.svg",
 
     # CSS classes that are applied to the logo above
     "site_logo_classes": "img-circle",
@@ -236,7 +236,7 @@ JAZZMIN_SETTINGS = {
     "copyright": "Takadah",
 
     # The model admin to search from the search bar, search bar omitted if excluded
-    "search_model": "auth.User",
+    "search_model": "core.User",
 
     # Field name on user model that contains avatar ImageField/URLField/Charfield or a callable that receives the user
     "user_avatar": None,
@@ -255,7 +255,7 @@ JAZZMIN_SETTINGS = {
        # {"name": "Admin Home", "url": "admin:index", "permissions": ["auth.view_user"]},
 
         # model admin to link to (Permissions checked against model)
-        {"model": "auth.User"},
+        {"model": "core.User"},
 
         # App with dropdown menu to all its models pages (Permissions checked against models)
         {"app": "stories"},
@@ -304,7 +304,7 @@ JAZZMIN_SETTINGS = {
     # for the full list of 5.13.0 free icon classes
     "icons": {
         "auth": "fas fa-users-cog",
-        "auth.user": "fas fa-user",
+        "core.user": "fas fa-user",
         "auth.Group": "fas fa-users",
     },
     # Icons that are used when one is not manually specified
@@ -414,8 +414,6 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'mail'
 EMAIL_HOST_PASSWORD = 'EmailProvider'
 
-#CLICKMAP_TRACKER_ID = 'XXXXXXXX'
-#CRAZY_EGG_ACCOUNT_NUMBER = '12345678'
 MIXPANEL_API_TOKEN = 'dc4537f245806621832017184b5f7d0c'
 MATOMO_DOMAIN_PATH = 'mamoto.takadah.com'
 MATOMO_SITE_ID = '1'

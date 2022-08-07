@@ -37,11 +37,11 @@
     {% analytical_head_bottom %} 
 	</head>
 
-	<body class="min-h-screen bg-mono-100 dark:bg-mono-900 text-mono-900 dark:text-mono-300 font-serif leading-normal tracking-normal" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+	<body class="min-h-screen bg-mono-200 dark:bg-mono-900 text-mono-900 dark:text-mono-300 font-serif leading-normal tracking-normal" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
         {% analytical_body_top %}
         <div class="w-full">
-            <div class="flex justify-between bg-white dark:bg-gray-700 flex-wrap">
-                <div class="flex justify-start text-gray-800 dark:text-gray-300 place-content-center pre-nav flex-wrap">
+            <div class="flex justify-between bg-mono-50 dark:bg-mono-700 flex-wrap">
+                <div class="flex justify-start text-mono-800 dark:text-mono-300 place-content-center pre-nav flex-wrap">
                     <!-- Logo -->
                     {% comment %}
                         <div class="grid grid-flow-col p-2">
@@ -122,8 +122,8 @@
                     </div>
                     <form action="{% url 'watson:search' %}">
                         <div class="form-control">
-                            <div class="input-group text-gray-700 bg-transparent focus:outline-none">
-                              <input type="text" name="q" value="{{request.GET.q}}" placeholder="Search…" class="bg-transparent text-gray-200" />
+                            <div class="input-group text-mono-700 bg-transparent focus:outline-none">
+                              <input type="text" name="q" value="{{request.GET.q}}" placeholder="Search…" class="bg-transparent text-mono-200" />
                               <button class="">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
                               </button>
@@ -147,7 +147,7 @@
                           </div>
                           <span class="hidden lg:flex">{{ user.name }}</span>
                         </label>
-                        <ul tabindex="0" class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-gray-700 rounded-box">
+                        <ul tabindex="0" class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-mono-700 rounded-box">
                           <li>
                             <a class="justify-between" href="{{ user.get_absolute_url }}">
                               Profile
@@ -195,7 +195,7 @@
 		{% csrf_token %}
 		<div class="container mx-auto">
 			<main class="p-2 md:p-8">
-                <h1 class="text-5xl flex items-center justify-center text-[#{{ settings.color }}]-500 dark:text-[#{{ settings.color }}]-200">{% block page-title %}{% endblock %}</h1><br/>
+                <h1 class="text-5xl flex items-center justify-center text-mono-500 dark:text-mono-100 hover:text-mono-50">{% block page-title %}{% endblock %}</h1><br/>
 		   		<section class="content">
                     <section>
                     <!-- Breadcrumbs -->
@@ -216,7 +216,7 @@
 		   		</section>
 			</main>
             <button
-        class="absolute bottom-5 right-5 w-10 h-10 rounded-full bg-gray-800 flex justify-center items-center text-white"
+        class="relative bottom-5 right-5 w-10 h-10 rounded-full bg-mono-800 flex justify-center items-center text-mono-50"
         id="theme-toggle"
       >
         <svg
@@ -235,9 +235,9 @@
         </svg>
       </button>
 		</div>
-		<footer class="px-10 py-4 footer bg-base-200 dark:bg-gray-700 dark:text-gray-200 text-base-content">
+		<footer class="px-10 py-4 footer bg-base-200 dark:bg-mono-700 dark:text-mono-200 text-base-content">
 			<div class="items-center grid-flow-col">
-			 <img class="logo-dark dark:fill-gray-200 dark:stroke-gray-200" />
+			 <img class="logo-dark dark:fill-mono-200" />
 			  <p class="opacity-1 text-sm">
                   <span class="text-2xl">{{ settings.name }}</span>
                   <br/>{{ settings.tagline | safe }}
@@ -290,5 +290,8 @@ mixpanel.track('Sign Up', {
             <!-- Matomo Image Tracker-->
 <img referrerpolicy="no-referrer-when-downgrade" src="https://mamoto.takadah.com/matomo.php?idsite=1&amp;rec=1" style="border:0" alt="" />
 <!-- End Matomo -->
+<span class="bg-mono-50 bg-mono-100 bg-mono-200 bg-mono-300 bg-mono-400 bg-mono-500 bg-mono-600 bg-mono-700 bg-mono-800 bg-mono-900"></span>
+<span class="text-mono-50 text-mono-100 text-mono-200 text-mono-300 text-mono-400 text-mono-500 text-mono-600 text-mono-700 text-mono-800 text-mono-900"></span>
+<span class="fill-mono-50 fill-mono-100 fill-mono-200 fill-mono-300 fill-mono-400 fill-mono-500 fill-mono-600 fill-mono-700 fill-mono-800 fill-mono-900"></span>
 	</body>
 </html>

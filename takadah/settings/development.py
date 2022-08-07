@@ -5,7 +5,7 @@ SECRET_KEY = 'takadah-dev-%$)wg^oewabdu(@&ai^v793brks2q20ehlu(sjn#(x+3+^$*tq'
 
 DEBUG = True
 
-ALLOWED_HOSTS = ['takadah.com', '127.0.0.1']
+ALLOWED_HOSTS = ['www.takadah.com','takadah.com', '127.0.0.1']
 
 
 INTERNAL_IPS = [
@@ -40,7 +40,7 @@ AUTH_PASSWORD_VALIDATORS = [
     ]
 
 #Local 
-STATIC_URL = 'template/'
+STATIC_URL = 'static/'
 # STATIC_ROOT = os.path.join(BASE_DIR, 'static')  
-MEDIA_URL = '/media/'
+MEDIA_URL = 'media/'
 # MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

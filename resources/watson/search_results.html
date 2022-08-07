@@ -16,7 +16,7 @@ Search results{% if query %} for &ldquo;{{query}}&rdquo;{% endif %}
             <ul>
     {% for result in search_results %}
         <li>
-            <article class="bg-white rounded shadow p-8 dark:bg-gray-700 dark:text-gray-400">
+            <article class="bg-mono-50 rounded shadow p-8 dark:bg-mono-700 dark:text-mono-400">
                 <img src="{{ result.object.cover.url }}" alt="{{ result.title }}"/>
                 <h1 class="text-3xl">
                     {% if result.url %}<a href="{{result.url}}">{% endif %}
@@ -26,19 +26,19 @@ Search results{% if query %} for &ldquo;{{query}}&rdquo;{% endif %}
                 {% if result.description %}
                     <p>{{ result.description }}</p>
                 {% endif %}
-                    <p class="text-gray-500">{{result.object.summary | safe }}</p>
+                    <p class="text-mono-500">{{result.object.summary | safe }}</p>
             </article>
         </li>
     {% endfor %}
 </ul>
         {% else %}
             {% if query %}
-            <div class="bg-white rounded shadow p-8 dark:bg-gray-700 dark:text-gray-400">
+            <div class="bg-mono-50 rounded shadow p-8 dark:bg-mono-700 dark:text-mono-400">
                 <p class="flex items-center justify-center text-bold capitalize"><em>There are no results to display.</em></p>
                 <p><em>Try entering a less specific search term.</em></p>
               </div>
             {% else %}
-            <div class="bg-white rounded shadow p-8 dark:bg-gray-700 dark:text-gray-400">
+            <div class="bg-mono-50 rounded shadow p-8 dark:bg-mono-700 dark:text-mono-400">
                 <p class="flex items-center justify-center"><em>Please enter a query in the search form.</em></p>
             </div>
             {% endif %}
