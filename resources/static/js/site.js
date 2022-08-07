@@ -8,14 +8,14 @@ let theme = localStorage.getItem("T_SITE_THEME") || "light";
 theme === "light" ? setLightTheme() : setDarkTheme();
 
 function setDarkTheme() {
-  document.body.classList.add("dark");
+  document.documentElement.classList.add('dark')
   themeToggleButton.innerHTML = SUN_SVG;
   localStorage.setItem("T_SITE_THEME", "dark");
   theme = "dark";
 }
 
 function setLightTheme() {
-  document.body.classList.remove("dark");
+  document.documentElement.classList.remove('dark')
   themeToggleButton.innerHTML = MOON_SVG;
   localStorage.setItem("T_SITE_THEME", "light");
   theme = "light";
