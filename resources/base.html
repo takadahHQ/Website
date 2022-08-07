@@ -202,8 +202,8 @@
                     {% if request.path != "/" %}
                       <div class="text-sm breadcrumbs">
                         <ul>
+                        <li><a href="{% url 'core:index' %}">Home</a></li> 
                         {%block breadcrumbs %}
-                          <li><a href="{% url 'core:index' %}">Home</a></li> 
                         {% endblock %}
                         </ul>
                       </div>

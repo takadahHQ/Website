@@ -2,6 +2,6 @@
 
 <div>
 <p> {{ story.authors.name }} </p>
-    <button hx-get="{% url 'author:update-author' story.id %}" class="btn border-none bg-green-800 text-gray-50">Update</button>
-    <button hx-get="{% url 'author:delete-author' story.id %}" class="btn border-none bg-grey-500 text-gray-50">Delete</button>
+    <button hx-get="{% url 'author:update-author' story.id %}" class="btn border-none bg-mono-800 text-mono-50">Update</button>
+    <button hx-get="{% url 'author:delete-author' story.id %}" class="btn border-none bg-mono-500 text-mono-50">Delete</button>
 </div>

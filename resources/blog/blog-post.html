@@ -8,16 +8,15 @@
 {{ blog.title | title }}
 {% endblock page-title %}
 {% block breadcrumbs %}
-<li><a href="{% url 'core:index' %}">Home</a></li>
 <li><a href="{% url 'blog:list' %}">Blog</a></li>  
 <li><a>{{ blog.title }}</a></li> 
 {% endblock %}
 
 {% block content %}
 {% if blog.updated_at %}
-<span class="flex justify-end text-[#{{ settings.color }}]-200">Last Updated: {{ blog.updated_at | timesince}}</span>
+<span class="flex justify-end text-mono-200">Last Updated: {{ blog.updated_at | timesince}}</span>
 {% endif %}
-<div class="p-8 rounded bg-gray-50 text-sky-400 dark:bg-gray-800 dark:text-grey-300">
+<div class="p-8 rounded bg-mono-50 text-mono-400 dark:bg-mono-800 dark:text-mono-200">
     <article class="post">
         <p class="indent-4 hover:indent-8">{{ blog.content |safe }}</p>
     </article>

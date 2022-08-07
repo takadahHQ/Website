@@ -6,7 +6,6 @@
 {{ story.title | title }} - New Chapter
 {% endblock title %}
 {% block breadcrumbs %}
-<li><a href="{% url 'core:index' %}">Home</a></li>
 <li><a href="{{ story.story.story_type.get_absolute_url}}">{{ story.story.story_type.name }}</a></li> 
 <li><a href="{{ story.story.get_absolute_url}}">{{ story.story.title }}</a></li> 
 <li><a>Add new Chapter</a></li> 
@@ -17,7 +16,7 @@
     <form method="post">
         {% csrf_token %}
         {{ form|crispy }}
-        <button type="submit" class="btn border-none bg-green-500 text-gray-50">Add Chapter</button>
+        <button type="submit" class="btn border-none bg-mono-500 text-mono-50">Add Chapter</button>
     </form>
 </section>
 {% endblock content %}

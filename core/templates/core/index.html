@@ -11,7 +11,7 @@ Takadah
 {% if weekly %}
 <!-- Weekly Featured -->
     <section id="weekly" class="block min-w-full max-w-full">
-        <div class="text-2xl border-b-2 border-blue-600">Weekly Featured</div><br>
+        <div class="text-2xl border-b-2 border-mono-600">Weekly Featured</div><br>
         <div class="flex flex-wrap -mx-1 lg:-mx-4">
             {% for story in weekly %}
                 <!-- Column -->
@@ -32,8 +32,8 @@ Takadah
                             </p>
                         </header>
                         <footer class="leading-none md:-mt-7 p-1 md:p-4">
-                            <a class="no-underline hover:text-blue-400 text-grey-400" href="{{ story.genre.first.get_absolute_url }}">
-                                <p class="text-sm text-grey-300">
+                            <a class="no-underline hover:text-mono-400 text-mono-400" href="{{ story.genre.first.get_absolute_url }}">
+                                <p class="text-sm text-mono-300">
                                 {{ story.genre.first.name }}
                                 </p>
                             </a>
@@ -54,14 +54,14 @@ Takadah
 {% if potential %}
 <!-- Potential -->
 <section id="potential">
-    <div class="text-2xl border-b-2 border-blue-600">Pontential Stars</div><br>
+    <div class="text-2xl border-b-2 border-mono-600">Pontential Stars</div><br>
 </section>    
 <!-- end Potential -->
 {% endif %}
 {% if fresh %}
 <!-- new -->
 <section id="fresh">
-    <div class="text-2xl border-b-2 border-blue-600">New Stories</div><br>
+    <div class="text-2xl border-b-2 border-mono-600">New Stories</div><br>
     <div class="flex flex-wrap -mx-1 lg:-mx-4">
         {% for story in fresh %}
             <!-- Column -->
@@ -82,8 +82,8 @@ Takadah
                         </p>
                     </header>
                     <footer class="leading-none md:-mt-7 p-1 md:p-4">
-                        <a class="no-underline hover:text-blue-400 text-grey-400" href="{{ story.genre.first.get_absolute_url }}">
-                            <p class="text-sm text-grey-300">
+                        <a class="no-underline hover:text-mono-400 text-mono-400" href="{{ story.genre.first.get_absolute_url }}">
+                            <p class="text-sm text-mono-300">
                             {{ story.genre.first.name }}
                             </p>
                         </a>
@@ -104,7 +104,7 @@ Takadah
 {% if completed %}
 <!-- Completed -->
 <section id="completed" class="block min-w-full max-w-full">
-    <div class="text-2xl border-b-2 border-blue-600">Completed</div><br>
+    <div class="text-2xl border-b-2 border-mono-600">Completed</div><br>
     <div class="flex flex-wrap -mx-1 lg:mx-4">
         {% for story in completed %}
             <!-- Column -->
@@ -125,8 +125,8 @@ Takadah
                         </p>
                     </header>
                     <footer class="leading-none md:-mt-7 p-1 md:p-4">
-                        <a class="no-underline hover:text-blue-400 text-grey-400" href="{{ story.genre.first.get_absolute_url }}">
-                            <p class="text-sm text-grey-300">
+                        <a class="no-underline hover:text-mono-400 text-mono-400" href="{{ story.genre.first.get_absolute_url }}">
+                            <p class="text-sm text-mono-300">
                             {{ story.genre.first.name }}
                             </p>
                         </a>
@@ -147,7 +147,7 @@ Takadah
 {% if tags %}
 <!-- Tags -->
 <section id="potential">
-    <div class="text-2xl border-b-2 border-blue-600">Popular Tags</div><br>
+    <div class="text-2xl border-b-2 border-mono-600">Popular Tags</div><br>
 </section>    
 <!-- end Tags -->
 {% endif %}

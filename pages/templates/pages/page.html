@@ -9,7 +9,6 @@
 {{ page.title | title }}
 {% endblock page-title %}
 {% block breadcrumbs %}
-<li><a href="{% url 'core:index' %}">Home</a></li>
 {% if page.parent %}
 <li><a href="{{ page.parent.get_absolute_url }}">{{ page.parent.title }}</a></li> 
 {% endif %} 

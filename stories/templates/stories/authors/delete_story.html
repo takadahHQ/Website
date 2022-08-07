@@ -6,7 +6,6 @@
 Delete: {{ object | title }}
 {% endblock title %}
 {% block breadcrumbs %}
-<li><a href="{% url 'core:index' %}">Home</a></li>
 <li><a href="{% url 'author:dashboard' %}">Author</a></li> 
 <li><a href="{{ story.story.get_absolute_url}}">{{ object | title }}</a></li> 
 <li><a>Delete</a></li> 
@@ -14,11 +13,11 @@ Delete: {{ object | title }}
 {% block content %}
 <!-- Story Detials -->
 <section class="w-full">
-    <h1>Do You want to Delete this story.</h1>
+    <h1 class="dark:text-mono-100">Do You want to Delete this story.</h1>
     <form method="post">
         {% csrf_token %}
 <p>Are you sure you want to delete "{{ object }}"?</p>
-        <button type="submit" class="btn border-none bg-red-500 text-gray-50">Delete Story</button>
+        <button type="submit" class="btn border-none bg-mono-500 text-mono-50">Delete Story</button>
     </form>
 </section>
 {% endblock content %}

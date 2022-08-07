@@ -5,10 +5,10 @@
         {% csrf_token %}
         {{ aform|crispy }}
         {% if author %}
-        <button hx-post="{% url 'author:update-author' story.id %}" class="btn border-none bg-blue-200 text-gray-50">Update</button>
-        <button hx-post="{% url 'author:update-author' story.id %}" class="btn border-none bg-red-200 text-gray-50">Delete</button>
+        <button hx-post="{% url 'author:update-author' story.id %}" class="btn border-none bg-mono-500 text-mono-50">Update</button>
+        <button hx-post="{% url 'author:update-author' story.id %}" class="btn border-none bg-red-400 text-mono-50">Delete</button>
         {% else %}
-        <button hx-post="." class="btn border-none bg-green-800 text-gray-50">Save</button>
+        <button hx-post="." class="btn border-none bg-mono-800 text-mono-50">Save</button>
         {% endif %}
     </form>
 </div>

@@ -2,6 +2,7 @@
     "name": "Takadah",
     "short_name": "Takadah",
     "icons": [
+    
         {
             "src": "/static/images/android-chrome-192x192.png",
             "sizes": "192x192",

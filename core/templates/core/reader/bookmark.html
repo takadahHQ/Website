@@ -1,5 +1,4 @@
 {% extends 'base.html' %}
-{% load advert_tags %}
 {% load tailwind_filters %}
 
 {% block title %}
@@ -10,15 +9,14 @@ Bookmarks
 Bookmarks
 {% endblock page-title %}
 {% block breadcrumbs %}
-<li><a href="{% url 'core:index' %}">Home</a></li> 
 <li><a>Bookmarks</a></li> 
 {% endblock %}
 {% block content %}
-<div class="container rounded shadow-blue-400 my-12 mx-auto px-4 md:px-12">
+<div class="container rounded shadow-mono-400 my-12 mx-auto px-4 md:px-12">
     <div class="flex flex-wrap -mx-1 lg:-mx-4">
 {% for bookmark in bookmarks %}
     <!-- Column -->
-    <div class="bg-white rounded dark:grey-700 my-1 p-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/6">
+    <div class="bg-mono-50 rounded dark:bg-mono-700 my-1 p-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/6">
 
         <!-- Article -->
         <article class="mt-2 overflow-hidden hover:scale-110 transition duration-300 ease-in-out">
@@ -35,8 +33,8 @@ Bookmarks
                 </p>
             </header>
             <footer class="flex items-center justify-between leading-none p-2 md:p-4">
-                <a class="flex items-center no-underline hover:text-blue-400 text-black" href="{{ bookmark.get_read }}">
-                    <p class="text-sm text-grey-300">Progress {{ bookmark.get_read_position }} of {{ bookmark.story.chapters_set.count }}</p>
+                <a class="flex items-center no-underline hover:text-mono-400 text-black" href="{{ bookmark.get_read }}">
+                    <p class="text-sm text-mono-200">Progress {{ bookmark.get_read_position }} of {{ bookmark.story.chapters_set.count }}</p>
                 </a>
             </footer>
 

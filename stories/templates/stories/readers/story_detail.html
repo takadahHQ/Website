@@ -4,7 +4,6 @@
 {{ story.title | title }}
 {% endblock title %}
 {% block breadcrumbs %}
-<li><a href="{% url 'core:index' %}">Home</a></li>
 <li><a href="{{ story.story_type.get_absolute_url}}">{{ story.story_type.name }}</a></li> 
 <li><a>{{ story.title }}</a></li> 
 {% endblock %}
@@ -20,7 +19,7 @@
                 {% render_flag_form story user request %}
                 </span>
             <div class="flex space-x-2 flex-wrap">
-                <h1 class="text-2xl md:text-5xl">{{ story.title | title }}</h1>
+                <h1 class="text-2xl md:text-5xl dark:text-mono-100">{{ story.title | title }}</h1>
                 <span class="badge p-4 bg-black">{{ story.abbreviation }}</span>
             </div>
             <!-- genre status chapter views-->
@@ -42,7 +41,7 @@
                 <div class="">
                     Author{{ story.authors_count |pluralize }}: 
                     {% for author in story.author.all %}
-                        <span class="badge badge-accent"> 
+                        <span class="badge badge-accent bg-mono-400"> 
                             {{ author.name }}
                         </span>
                     {% empty %}
@@ -73,7 +72,7 @@
         </div>
     </div>
 </section>
-<div class="bg-white rounded shadow-blue-400 p-2 lg:p-8 mt-2 dark:bg-gray-700">
+<div class="bg-mono-50 rounded shadow-mono-600 p-2 lg:p-8 mt-2 dark:bg-mono-700">
     <section>
     <div x-data="{
         tabs: [ 'About', 'Table of Content', 'Reviews'],
@@ -81,7 +80,7 @@
     }">
         <div class="tabs my-6">
             <template x-for="(tab, index) in tabs" :key="index">
-                <a class="tab tab-bordered" 
+                <a class="tab tab-bordered dark:text-mono-100" 
                     :class="{'tab-active': activeTabIndex == index}"
                     x-on:click="activeTabIndex = index"
                     x-text=tab
@@ -91,7 +90,7 @@
         <div class="my-6 p-6">
             <div x-show="activeTabIndex == 0">
                 <div class="text-2xl">Synopsis</div>
-            <div class="text-gray-500">
+            <div class="text-mono-300">
                 {{ story.summary | safe }}
             </div>
             </div>
@@ -100,8 +99,8 @@
                 <div class="columns-2">
                 {% for chapter in story.chapters_set.all %}
                 <div class="p-4">
-                {{ chapter.position }} <a class="text-blue-800" href="{{ chapter.get_absolute_url }}">{{ chapter.title | title }}</a> <br>
-                <p class="text-xs text-green-blue-400"> {{ chapter.created_at | timesince }} ago</p>
+                {{ chapter.position }} <a class="text-mono-800" href="{{ chapter.get_absolute_url }}">{{ chapter.title | title }}</a> <br>
+                <p class="text-xs text-green-mono-400"> {{ chapter.created_at | timesince }} ago</p>
                 </div>
                 {% endfor %}
             </div>
@@ -114,7 +113,7 @@
     <section>
         <div class="text-2xl">Tags</div>
         {% for tag in story.tags.all %}
-        <div class="badge bg-orange-300 border-none p-4">
+        <div class="badge bg-mono-300 border-none p-4">
         <a href="{{ tag.get_absolute_url }}">{{ tag.name | title }}</a>
         </div>
         {% endfor %}
@@ -123,6 +122,4 @@
         <div class="text-2xl">Recommendation</div>
         Recommendation
     </section>
-</div>
-</div>
 {% endblock content %}
