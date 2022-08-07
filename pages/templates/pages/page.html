@@ -11,15 +11,19 @@
 {% block breadcrumbs %}
 <li><a href="{% url 'core:index' %}">Home</a></li>
 {% if page.parent %}
-<li><a href="{{ page.parent.get_absolute_url }}">Blog</a></li> 
+<li><a href="{{ page.parent.get_absolute_url }}">{{ page.parent.title }}</a></li> 
 {% endif %} 
 <li><a>{{ page.title }}</a></li> 
 {% endblock %}
 {% block content %}
 <span class="flex justify-end">Last Updated: {{ page.updated_at | timesince}}</span>
-<div class="bg-gray-50 rounded dark:bg-mono-800  dark:shadow-mono-100 shadow-blue-400 p-8">
+<div class="bg-mono-50 dark:bg-mono-800 rounded  dark:shadow-mono-100 dark:text-mono-100 shadow-mono-400 p-8">
     {% autoescape on %}
-    {{ page.content | inject_advert:0  | safe}}
+    {{ page.content | safe}}
     {% endautoescape %}
 </div>
 {% endblock content %}
+
+{% comment %}
+ {{ page.content | inject_advert:0  | safe}}
+{% endcomment %}

@@ -40,11 +40,12 @@ h1:hover, .h2:hover, .h3:hover{
 	min-width: 25px;
 }
 
-.logo-light{
-	content: url({% static 'images/logo-dark.svg' %});
+.dark .logo-dark{
 	width: 2vw;
 	min-width: 25px;
-}
+	content: url({% static 'images/logo-dark.svg' %});
+} 
+
 .nav-base{
 	background-color: {{ settings.color }};
 	color: white;
