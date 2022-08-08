@@ -26,6 +26,7 @@ urlpatterns = [
     path('author/', include('stories.authors')),
     path('pages/', include('pages.urls')),
     path('search/', include("watson.urls", namespace="watson")),
+    path('newsfeed/', include('newsfeed.urls', namespace='newsfeed')),
     path('', include('core.urls')),
     path('', include(tf_urls)),
 ]

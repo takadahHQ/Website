@@ -77,6 +77,7 @@ INSTALLED_APPS = [
     'watson',
     'reversion',
     'helpdesk',  # This is us!
+    'newsfeed',
     #'reports',
     #make a supports app
     #'subscriptions',

@@ -1,4 +1,4 @@
-        <section class="m-2 p-8 bg-white dark:bg-mono-700 rounded shadow">
+        <section class="m-2 p-8 bg-mono-50 dark:bg-mono-700 rounded shadow">
           <button type="button" hx-get="{% url 'author:add-editor' %}" hx-target="#authorforms" hx-swap="beforeend" class="btn border-none bg-mono-500 text-mono-50">
             Add Co-Author
         </button>
@@ -8,13 +8,13 @@
           {% endfor %}
         </div>
         </section>
-        <section class="m-2 p-8 bg-white dark:bg-mono-700 rounded shadow">
+        <section class="m-2 p-8 bg-mono-50 dark:bg-mono-700 rounded shadow">
           <button type="button" hx-get="{% url 'author:add-editor' %}" hx-target="#editorforms" hx-swap="beforeend" class="btn border-none bg-mono-500 text-mono-50">
             Add Editor
         </button>
         <div id="editorforms"></div>
         </section>
-        <section class="m-2 p-8 bg-white dark:bg-mono-700 rounded shadow">
+        <section class="m-2 p-8 bg-mono-50 dark:bg-mono-700 rounded shadow">
           <button type="button" hx-get="{% url 'author:add-character' %}" hx-target="#characterforms" hx-swap="beforeend" class="btn border-none bg-mono-500 text-mono-50">
             Add Character
         </button>

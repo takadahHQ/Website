@@ -74,6 +74,7 @@ django-two-factor-auth==1.14.0
 django-user-accounts==3.2.0
 django-user-sessions==1.7.1
 django-watson==1.6.2
+django-newsfeed==0.8.8
 django-weasyprint==2.1.0
 djangorestframework==3.13.1
 email-reply-parser==0.5.12

@@ -12,7 +12,7 @@ Delete: {{ object | title }}
 {% endblock %}
 {% block content %}
 <!-- Story Detials -->
-<section class="w-full">
+<section class="w-full m-2 p-8 bg-mono-50 dark:bg-mono-700 rounded shadow">
     <h1 class="dark:text-mono-100">Do You want to Delete this story.</h1>
     <form method="post">
         {% csrf_token %}
