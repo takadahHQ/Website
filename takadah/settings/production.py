@@ -4,7 +4,7 @@ from .base import *
 SECRET_KEY = 'Takadah-%$)wg^oeyeezyu(@&ai^v793brks2q20pweey(sjn#(x+3+^$*tq'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 INTERNAL_IPS = [
     '127.0.0.1',
