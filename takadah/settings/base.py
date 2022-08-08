@@ -66,9 +66,6 @@ INSTALLED_APPS = [
     'core',
     'pages',
     'blog',
-    # 'debug_toolbar',
-    #'stallionaire_pages',
-    #'stallionaire_blog',
     'stories',
     'adverts',
     'hijack',
@@ -88,7 +85,6 @@ INTERNAL_IPS = [
 ]
 
 MIDDLEWARE = [
-    # 'debug_toolbar.middleware.DebugToolbarMiddleware',
     'watson.middleware.SearchContextMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
@@ -125,22 +121,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'takadah.wsgi.application'
-
-
-# Database
-# https://docs.djangoproject.com/en/4.0/ref/settings/#databases
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'takalqei_django',
-#         'USER': 'takalqei_django',
-#         'PASSWORD': 'Z!nox2018',
-#         'HOST': 'localhost',
-#         'PORT': '3306',
-#     }
-# }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
