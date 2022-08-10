@@ -1,6 +1,8 @@
 from django.apps import AppConfig
 from watson import search as watson
 
+from core.apps import CoreConfig
+
 
 class StoriesConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
@@ -8,7 +10,5 @@ class StoriesConfig(AppConfig):
 
     def ready(self):
         stories = self.get_model("Stories")
-        author = self.get_model("Author")
         #watson.register(stories, fields=("title", "summary","abbreviation",))
         watson.register(stories)
-        watson.register(author)
