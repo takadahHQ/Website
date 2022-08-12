@@ -17,9 +17,9 @@ def make(img_author, img_title, img_slug):
     return file    
 
 def background():
-    startColor = (random.randrange(60, 66), random.randrange(100, 138), random.randrange(1, 255))
-    endColorX = (random.randrange(60, 65), random.randrange(200, 255), random.randrange(217, 255))
-    endColorY = (random.randrange(100, 118), random.randrange(60, 65), random.randrange(1, 255))
+    startColor = (random.randrange(1, 66), random.randrange(1, 138), random.randrange(1, 255))
+    endColorX = (random.randrange(1, 65), random.randrange(1, 255), random.randrange(1, 255))
+    endColorY = (random.randrange(1, 118), random.randrange(1, 65), random.randrange(1, 255))
     size = (300, 500)
 
     im = Image.new("RGB", size, 'black')
