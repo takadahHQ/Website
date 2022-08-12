@@ -57,5 +57,5 @@ admin.site.register(Bookmark)
 admin.site.register(Chapter)
 admin.site.register(Character)
 admin.site.register(Universe)
-
+admin.site.register(Author)
 admin.site.register(Stories, StoriesAdmin)
