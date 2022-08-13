@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
 {% load advert_tags %}
 {% load tailwind_filters %}
-
 {% block title %}
 Edit: {{ form.title.value | title }}
 {% endblock title %}
@@ -16,9 +15,7 @@ Edit: {{ form.title.value | title }}
     <form method="post">
         {% csrf_token %}
         {{ form|crispy }}
-        {{ story.story.id }}
-        {{ form.id.value | title }}
-        {% include 'stories/includes/add_reference.html' with story=story.story.id %}
+        {% include 'stories/includes/add_reference.html' with story=story %}
         <button type="submit" class="btn border-none bg-green-500 text-mono-50">Update Story</button>
     </form>
 </section>

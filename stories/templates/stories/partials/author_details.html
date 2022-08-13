@@ -1,7 +1,6 @@
 {% load tailwind_filters %}
-
-<div>
-<p> {{ story.authors.name }} </p>
+<div class="flex inline space-x-2">
+    <h1 class="p-2 text-2xl text-mono-900 dark:text-mono-100"> {{ author.user.name }} </h1>
     <button hx-get="{% url 'author:update-author' story.id %}" class="btn border-none bg-mono-800 text-mono-50">Update</button>
     <button hx-get="{% url 'author:delete-author' story.id %}" class="btn border-none bg-mono-500 text-mono-50">Delete</button>
 </div>

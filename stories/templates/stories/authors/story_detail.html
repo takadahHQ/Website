@@ -113,7 +113,7 @@
     <section>
         <div class="text-2xl">Tags</div>
         {% for tag in story.tags.all %}
-        <div class="badge bg-mono-300 border-none p-4">
+        <div class="badge bg-mono-300 border-none p-4 text-mono-50">
         <a href="{{ tag.get_absolute_url }}">{{ tag.name | title }}</a>
         </div>
         {% endfor %}
