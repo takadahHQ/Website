@@ -4,7 +4,7 @@
     <form method="POST" class="inline">
         {% csrf_token %}
         {{ aform|crispy }}
-        {% if author %}
+        {% if authors %}
         <button hx-post="{% url 'author:update-author' story.id %}" class="btn border-none bg-mono-500 text-mono-50">Update</button>
         <button hx-post="{% url 'author:update-author' story.id %}" class="btn border-none bg-red-400 text-mono-50">Delete</button>
         {% else %}

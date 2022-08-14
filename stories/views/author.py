@@ -1,5 +1,6 @@
+from pprint import pprint
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView, DetailView, ListView, TemplateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -71,9 +72,26 @@ class storyList(LoginRequiredMixin, ListView):
     def get_queryset(self):
         return Stories.objects.filter(author =self.request.user)
 
-def add_author(request):
+def add_author(request, pk):
+    story = Stories.objects.filter(id=pk).prefetch_related('author', 'editor', 'characters')
+    authors = Author.objects.filter(story=story)
+    form =  AuthorForm(request.POST or None),
+
+    if request.method == "POST":
+        if form.is_valid():
+            author = form.save(commit=False)
+            author.story = story
+            author.save()
+            return redirect("detail-author", pk=author.id)
+        else:
+            return render(request, "stories/partials/author_form.html", {
+                "aform": form,
+            })
+
     context = {
-        "aform": AuthorForm(),
+        "aform": form,
+        "story": story,
+        "authors": authors,
     }
     return render(request, "stories/partials/add_author.html", context)
 
@@ -220,9 +238,11 @@ class updateStory(LoginRequiredMixin, UpdateView):
 
     def get_success_url(self):
         return reverse_lazy('author:show', kwargs={'pk': self.object.pk})
+
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
-        context['story'] = self.object.pk
+        context['story'] = self.object
+        context['author'] = Author.objects.filter(story=self.object.pk)
         return context
 
 
