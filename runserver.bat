@@ -1,1 +1,1 @@
-py remote.py runserver
+py manage.py runserver
