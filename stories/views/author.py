@@ -101,7 +101,7 @@ def update_author(request, pk):
     if request.method =="POST":
         if form.is_valid():
             author = form.save()
-            return redirect("detail-author", pk=author.id)
+            return redirect("author:detail-author", pk=author.id)
     context = {
         "aform": form,
         "author": author,
@@ -130,7 +130,7 @@ def save_author(request, pk):
             author = form.save(commit=False)
             author.story = story
             author.save()
-            return redirect("detail-author", pk=story.id)
+            return redirect("author:detail-author", pk=story.id)
         else:
             return render(request, "stories/partials/add_author.html", context={"aform": form})
     else:
