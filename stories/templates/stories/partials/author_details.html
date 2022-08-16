@@ -1,6 +1,6 @@
 {% load tailwind_filters %}
 <div class="flex inline space-x-2" hx-target="this" hx-swap="outerHTML">
-    <h1 class="p-2 text-2xl text-mono-900 dark:text-mono-100"> {{ author.user.name }} </h1>
+    <h1 class="p-2 text-2xl mt-2 text-mono-900 dark:text-mono-100"> {{ author.user.name }} </h1>
     {% if author %}
     <button hx-get="{% url 'author:update-author' author.story.id %}" class="btn border-none bg-mono-800 text-mono-50">Update</button>
     <button hx-get="{% url 'author:delete-author' author.story.id %}" class="btn border-none bg-mono-500 text-mono-50">Delete</button>

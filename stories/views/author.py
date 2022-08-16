@@ -135,7 +135,8 @@ def save_author(request, pk):
         else:
             return render(request, "stories/partials/add_author.html", context={"aform": form})
     else:
-        return render(request, "stories/partials/add_author.html", context={"aform": form})
+        return render(request, "stories/partials/add_author.html", context={"aform": form,        "story": story,
+        "authors": authors,})
 
 def add_editor(request):
     # story = Stories.objects.get(id=pk)
