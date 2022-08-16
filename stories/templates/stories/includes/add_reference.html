@@ -8,7 +8,7 @@
           {% endfor %}
         </div>
         </section>
-        <section class="m-2 p-8 bg-mono-50 dark:bg-mono-700 rounded shadow">
+        {% comment %} <section class="m-2 p-8 bg-mono-50 dark:bg-mono-700 rounded shadow">
           <button type="button" hx-get="{% url 'author:add-editor' %}" hx-target="#editorforms" hx-swap="beforeend" class="btn border-none bg-mono-500 text-mono-50">
             Add Editor
         </button>
@@ -19,4 +19,4 @@
             Add Character
         </button>
         <div id="characterforms"></div>
-        </section>
+        </section> {% endcomment %}

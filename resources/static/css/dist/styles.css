@@ -4640,6 +4640,10 @@ body[dir="rtl"] .checkbox:checked,
   height: 100%;
 }
 
+.h-80 {
+  height: 20rem;
+}
+
 .min-h-screen {
   min-height: 100vh;
 }
