@@ -72,30 +72,6 @@ class storyList(LoginRequiredMixin, ListView):
     def get_queryset(self):
         return Stories.objects.filter(author =self.request.user)
 
-def add_author(request, pk):
-    story = Stories.objects.get(id=pk)#.prefetch_related('author', 'editor', 'characters')
-    authors = Author.objects.get(story=story)
-    form =  AuthorForm(),
-
-    if request.method == "POST":
-        if form.is_valid():
-            story.save()
-            author = form.save()
-            # author.story = story
-            # author.save()
-            return redirect("author:detail-author", pk=author.id)
-        else:
-            return render(request, "stories/partials/author_form.html", {
-                "aform": form,
-            })
-
-    context = {
-        "aform": form,
-        "story": story,
-        "authors": authors,
-    }
-    return render(request, "stories/partials/add_author.html", context)
-
 def update_author(request, pk):
     author = Author.objects.get(id=pk)
     form = AuthorForm(request.POST or None, instance=author)
