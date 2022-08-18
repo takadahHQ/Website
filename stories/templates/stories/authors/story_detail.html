@@ -39,9 +39,9 @@
             </div>
             <div class="flex space-x-2 flex-wrap">
                 <div class="">
-                    Author{{ story.authors_count |pluralize }}: 
+                    Author{{ story.authors_count |pluralize }}:
                     {% for author in story.author.all %}
-                        <span class="badge badge-accent bg-mono-400"> 
+                        <span class="badge bg-tiber-400"> 
                             {{ author.name }}
                         </span>
                     {% empty %}
@@ -50,9 +50,9 @@
                         </span>
                     {% endfor %}
                 </div>
-                <div class="">
+                {% comment %} <div class="">
                     Editor{{ story.editors_count |pluralize }}: {{ story.editor.name | default:"Ghost" }}
-                </div>
+                </div> {% endcomment %}
             </div>
             <div class="flex space-x-2 flex-wrap">
                 {% include "stories/partials/following.html" %}
@@ -65,8 +65,6 @@
                 {% else %}
                 <a href="{{ story.get_read_guest }}" class="btn btn-primary rounded-full">Read</a>
                 {% endif %}
-
-                {% include "stories/partials/bookmark.html" %}
             </div>
             
         </div>

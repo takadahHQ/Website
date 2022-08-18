@@ -14,7 +14,39 @@
             "type": "image/png"
         }
     ],
-    "theme_color": "#ffffff",
-    "background_color": "#ffffff",
-    "display": "standalone"
+    "theme_color": "#212121",
+    "background_color": "#e3e3e3",
+    "display": "standalone",
+    "start_url": "/",
+    "scope": "/",
+    "shortcuts": [
+        {
+          "name": "Your Bookmarks",
+          "short_name": "Bookmarks",
+          "description": "View your bookmarks",
+          "url": "/bookmark/",
+          "icons": [{ "src": "static/images/android-chrome-192x192.png", "sizes": "192x192" }]
+        },
+        {
+          "name": "Your History",
+          "short_name": "History",
+          "description": "View your Takadah history",
+          "url": "/history/",
+          "icons": [{ "src": "static/images/android-chrome-192x192.png", "sizes": "192x192" }]
+        }
+      ],
+      "description": "Takadah: Your creativity needs a guide",
+      "screenshots": [
+        {
+          "src": "static/images/screenshot1.png",
+          "type": "image/png",
+          "sizes": "540x720"
+        },
+        {
+          "src": "static/images/screenshot2.jpg",
+          "type": "image/jpg",
+          "sizes": "540x720"
+        }
+      ]
 }
+

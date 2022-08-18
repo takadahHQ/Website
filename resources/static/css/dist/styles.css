@@ -5039,6 +5039,16 @@ body[dir="rtl"] .checkbox:checked,
   background-color: rgb(26 34 56 / var(--tw-bg-opacity));
 }
 
+.bg-tiber-400 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(16 210 241 / var(--tw-bg-opacity));
+}
+
+.bg-tiber-800 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(4 86 107 / var(--tw-bg-opacity));
+}
+
 .bg-gradient-to-r {
   background-image: linear-gradient(to right, var(--tw-gradient-stops));
 }
@@ -5389,6 +5399,11 @@ body[dir="rtl"] .checkbox:checked,
 .text-success {
   --tw-text-opacity: 1;
   color: hsl(var(--su) / var(--tw-text-opacity));
+}
+
+.text-tiber-50 {
+  --tw-text-opacity: 1;
+  color: rgb(238 255 255 / var(--tw-text-opacity));
 }
 
 .no-underline {
