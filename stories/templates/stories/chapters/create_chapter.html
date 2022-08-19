@@ -6,8 +6,8 @@
 {{ story.title | title }} - New Chapter
 {% endblock title %}
 {% block breadcrumbs %}
-<li><a href="{{ story.story.story_type.get_absolute_url}}">{{ story.story.story_type.name }}</a></li> 
-<li><a href="{{ story.story.get_absolute_url}}">{{ story.story.title }}</a></li> 
+<li><a href="{{ story.story_type.get_absolute_url}}">{{ story.story_type.name }}</a></li> 
+<li><a href="{{ story.get_absolute_url}}">{{ story.title }}</a></li> 
 <li><a>Add new Chapter</a></li> 
 {% endblock %}
 {% block content %}

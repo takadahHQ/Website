@@ -60,11 +60,7 @@
                 {% include "stories/partials/dislike.html" %}
             </div>
             <div class="w-full flex flex-wrap space-x-2">
-                {% if user.is_authenticated %}
-                <a href="{{ story.get_read_user }}" class="btn btn-primary rounded-full">Read Change</a>
-                {% else %}
-                <a href="{{ story.get_read_guest }}" class="btn btn-primary rounded-full">Read</a>
-                {% endif %}
+                <a href="{% url 'author:create-chapter' story.id %}" class="btn bg-rebel-500 border-none rounded">Add New Chapter</a>
             </div>
             
         </div>
@@ -93,11 +89,11 @@
             </div>
             </div>
             <div x-show="activeTabIndex == 1">
-                Latest Release： Chapter {{ story.chapters_set.last.position  }}: <a href="{{ story.chapters_set.last.get_absolute_url }}">{{ story.chapters_set.last.title | title }}</a> {{ story.chapters_set.last.created_at | timesince }}<hr class="mt-5">
+                Latest Release： Chapter {{ story.chapter_set.last.position  }}: <a href="{{ story.chapter_set.last.get_absolute_url }}">{{ story.chapter_set.last.title | title }}</a> {{ story.chapter_set.last.created_at | timesince }}<hr class="mt-5">
                 <div class="columns-2">
-                {% for chapter in story.chapters_set.all %}
+                {% for chapter in story.chapter_set.all %}
                 <div class="p-4">
-                {{ chapter.position }} <a class="text-mono-800" href="{{ chapter.get_absolute_url }}">{{ chapter.title | title }}</a> <br>
+                {{ chapter.position }} <a class="text-mono-800" href="{{ chapter.get_absolute_url }}">{{ chapter.title | title }}</a> <a class="btn bg-tiber-500 text-mono-100" href="{% url 'author:update-chapter' story.id chapter.slug %}">Edit</a><a class="btn bg-rebel-500 text-mono-100" href="{% url 'author:delete-chapter' story.id chapter.slug %}">Edit</a><br>
                 <p class="text-xs text-green-mono-400"> {{ chapter.created_at | timesince }} ago</p>
                 </div>
                 {% endfor %}

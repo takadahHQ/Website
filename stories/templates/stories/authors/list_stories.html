@@ -67,7 +67,7 @@ Story
                              {% endif %}">{{ story.status }}</span>  
                           </td>
                         <td class="text-sm text-mono-900 font-light px-6 py-4 whitespace-nowrap">
-                          <a href="{% url 'author:update' story.id %}" class="btn btn-sm bg-mono-600 border-0">View</a>
+                          <a href="{% url 'author:show' story.id %}" class="btn btn-sm bg-mono-600 border-0">View</a>
                           <a href="{% url 'author:update' story.id %}" class="btn btn-sm bg-mono-400 border-0">Update</a>
                           <a href="{% url 'author:delete' story.id %}" class="btn btn-sm bg-mono-300 border-0">Delete</a>
                         </td>

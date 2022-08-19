@@ -59,9 +59,9 @@ class Chapter(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(self.story.abbreviation + "-" + self.position)
-            self.words = self.text.count()
-        self.words = self.text.count()
+            self.slug = slugify(self.story.abbreviation + "- chapter-" + f'{self.position}')
+            self.words = self.text.count(self.text)
+        self.words = self.text.count(self.text)
         super(Chapter, self).save(*args, **kwargs)
 
     def get_absolute_url(self):

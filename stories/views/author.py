@@ -233,23 +233,35 @@ class createChapter(LoginRequiredMixin,CreateView):
     model = Chapter
     form_class = ChapterForm
    # success_url = reverse_lazy('login')
-    template_name = "stories/authors/create_chapter.html"
+    template_name = "stories/chapters/create_chapter.html"
 
     def form_valid(self, form):
         form.instance.user = self.request.user
+        form.instance.edited_by = self.request.user
+        form.instance.story = Stories.objects.get(id=self.kwargs.get('pk'))
         return super().form_valid(form)
 
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context['story'] = Stories.objects.get(id=self.kwargs.get('pk'))
+        return context
+
 class updateChapter(LoginRequiredMixin, UpdateView):
-    template_name = "stories/authors/edit_chapter.html"
+    template_name = "stories/chapters/edit_chapter.html"
     model = Chapter
     form_class = ChapterForm
 
     def form_valid(self, form):
         form.instance.edited_by = self.request.user
         return super().form_valid(form)
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context['story'] = self.object.story
+        return context
   #  success_url = reverse_lazy('dashboard')
 
 class deleteChapter(LoginRequiredMixin, DeleteView):
-    #template_name = 'stories/create_story.html'
+    template_name = 'sstories/chapters/delete_story.html'
     model = Chapter
     success_url = reverse_lazy('author:list')

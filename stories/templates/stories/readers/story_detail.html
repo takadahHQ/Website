@@ -95,9 +95,9 @@
             </div>
             </div>
             <div x-show="activeTabIndex == 1">
-                Latest Release： Chapter {{ story.chapters_set.last.position  }}: <a href="{{ story.chapters_set.last.get_absolute_url }}">{{ story.chapters_set.last.title | title }}</a> {{ story.chapters_set.last.created_at | timesince }}<hr class="mt-5">
+                Latest Release： Chapter {{ story.chapter_set.last.position  }}: <a href="{{ story.chapter_set.last.get_absolute_url }}">{{ story.chapter_set.last.title | title }}</a> {{ story.chapter_set.last.created_at | timesince }}<hr class="mt-5">
                 <div class="columns-2">
-                {% for chapter in story.chapters_set.all %}
+                {% for chapter in story.chapter_set.all %}
                 <div class="p-4">
                 {{ chapter.position }} <a class="text-mono-800" href="{{ chapter.get_absolute_url }}">{{ chapter.title | title }}</a> <br>
                 <p class="text-xs text-green-mono-400"> {{ chapter.created_at | timesince }} ago</p>
