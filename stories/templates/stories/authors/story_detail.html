@@ -66,7 +66,7 @@
         </div>
     </div>
 </section>
-<div class="bg-mono-50 rounded shadow-mono-400 p-2 lg:p-8 mt-2">
+<div class="bg-mono-50 rounded shadow-mono-600 p-2 lg:p-8 mt-2 dark:bg-mono-700 text-mono-700">
     <section>
     <div x-data="{
         tabs: [ 'About', 'Table of Content', 'Reviews'],
@@ -74,7 +74,7 @@
     }">
         <div class="tabs my-6">
             <template x-for="(tab, index) in tabs" :key="index">
-                <a class="tab tab-bordered" 
+                <a class="tab tab-bordered dark:text-mono-100" 
                     :class="{'tab-active': activeTabIndex == index}"
                     x-on:click="activeTabIndex = index"
                     x-text=tab
@@ -83,29 +83,34 @@
         </div>
         <div class="my-6 p-6">
             <div x-show="activeTabIndex == 0">
-                <div class="text-2xl">Synopsis</div>
-            <div class="text-mono-500">
+                <div class="dark:text-mono-100 text-mono-700 text-2xl">Synopsis</div>
+            <div class="text-mono-600">
                 {{ story.summary | safe }}
             </div>
             </div>
             <div x-show="activeTabIndex == 1">
-                Latest Release： Chapter {{ story.chapter_set.last.position  }}: <a href="{{ story.chapter_set.last.get_absolute_url }}">{{ story.chapter_set.last.title | title }}</a> {{ story.chapter_set.last.created_at | timesince }}<hr class="mt-5">
+                Latest Release： Chapter {{ story.chapter_set.last.position  }}: <a href="{{ story.chapter_set.last.get_absolute_url }}">{{ story.chapter_set.last.title | title }}</a> <div class="badge bg-mono-300 border-none p-4 text-mono-50">{{ story.chapter_set.last.created_at | timesince }}</div>
+                    <hr class="mt-5">
                 <div class="columns-2">
                 {% for chapter in story.chapter_set.all %}
                 <div class="p-4">
-                {{ chapter.position }} <a class="text-mono-800" href="{{ chapter.get_absolute_url }}">{{ chapter.title | title }}</a> <a class="btn bg-tiber-500 text-mono-100" href="{% url 'author:update-chapter' story.id chapter.slug %}">Edit</a><a class="btn bg-rebel-500 text-mono-100" href="{% url 'author:delete-chapter' story.id chapter.slug %}">Edit</a><br>
+                {{ chapter.position }} <a class="text-mono-800 dark:text-mono-200" href="{{ chapter.get_absolute_url }}">{{ chapter.title | title }}</a> <a class="btn btn-sm bg-tiber-500 text-mono-100 m-2" href="{% url 'author:update-chapter' story.id chapter.slug %}">Edit</a><a class="btn btn-sm bg-rebel-500 text-mono-100 m-2" href="{% url 'author:delete-chapter' story.id chapter.slug %}">Delete</a><br>
                 <p class="text-xs text-green-mono-400"> {{ chapter.created_at | timesince }} ago</p>
                 </div>
                 {% endfor %}
             </div>
             </div>
-            <div x-show="activeTabIndex == 2">Reviews<br>Coming Soon</div>
+            <div x-show="activeTabIndex == 2">
+                <div class="dark:text-mono-100 text-mono-700">
+                    Reviews<br>Coming Soon
+                </div>
+            </div>
         </div>
     </div>
 </section>
   
     <section>
-        <div class="text-2xl">Tags</div>
+        <div class="text-2xl dark:text-mono-100 text-mono-700">Tags</div>
         {% for tag in story.tags.all %}
         <div class="badge bg-mono-300 border-none p-4 text-mono-50">
         <a href="{{ tag.get_absolute_url }}">{{ tag.name | title }}</a>
@@ -113,7 +118,7 @@
         {% endfor %}
     </section>
     <section>
-        <div class="text-2xl">Recommendation</div>
+        <div class="text-2xl dark:text-mono-100 text-mono-700">Recommendation</div>
         Recommendation
     </section>
 </div>

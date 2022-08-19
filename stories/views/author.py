@@ -1,6 +1,6 @@
 from pprint import pprint
 from django.http import HttpResponse
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView, DetailView, ListView, TemplateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -251,6 +251,13 @@ class updateChapter(LoginRequiredMixin, UpdateView):
     model = Chapter
     form_class = ChapterForm
 
+    def get_object(self, queryset=None):
+        chapter = get_object_or_404(Chapter,
+            story__id=self.kwargs['pk'],
+            slug=self.kwargs['slug']
+        )
+        return chapter
+
     def form_valid(self, form):
         form.instance.edited_by = self.request.user
         return super().form_valid(form)
@@ -262,6 +269,18 @@ class updateChapter(LoginRequiredMixin, UpdateView):
   #  success_url = reverse_lazy('dashboard')
 
 class deleteChapter(LoginRequiredMixin, DeleteView):
-    template_name = 'sstories/chapters/delete_story.html'
+    template_name = 'stories/chapters/delete_chapter.html'
     model = Chapter
     success_url = reverse_lazy('author:list')
+
+    def get_object(self, queryset=None):
+        chapter = get_object_or_404(Chapter,
+            story__id=self.kwargs['pk'],
+            slug=self.kwargs['slug']
+        )
+        return chapter
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context['story'] = self.object.story
+        return context

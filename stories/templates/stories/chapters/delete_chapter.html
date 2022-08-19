@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load tailwind_filters %}
+
+{% block title %}
+Delete: {{ story.title | title }}
+{% endblock title %}
+{% block breadcrumbs %}
+<li><a href="{{ story.story_type.get_absolute_url}}">{{ story.story_type.name }}</a></li> 
+<li><a href="{{ story.get_absolute_url}}">{{ story.title }}</a></li> 
+<li><a>Delete></li> 
+{% endblock %}
+{% block content %}
+<!-- Story Detials -->
+<section class="w-full">
+    <form method="post">
+        {% csrf_token %}
+        <p>Are you sure you want to delete "{{ object }}"?</p>
+            <input type="submit" value="Confirm" class="btn border-none bg-mono-500 text-mono-50">
+        </form>
+</section>
+{% endblock content %}

@@ -42,7 +42,7 @@
                     Author{{ story.authors_count |pluralize }}: 
                     {% for author in story.author.all %}
                         <span class="badge badge-accent bg-mono-400"> 
-                            {{ author.name }}
+                            <a href="{% url 'core:author' author.username %}">{{ author.name }}</a>
                         </span>
                     {% empty %}
                         <span class="badge-accent"> 
@@ -61,9 +61,9 @@
             </div>
             <div class="w-full flex flex-wrap space-x-2">
                 {% if user.is_authenticated %}
-                <a href="{{ story.get_read_user }}" class="btn btn-primary rounded-full">Read Change</a>
+                <a href="{{ story.get_read_user }}" class="btn btn-primary border-none rounded">Read Change</a>
                 {% else %}
-                <a href="{{ story.get_read_guest }}" class="btn btn-primary rounded-full">Read</a>
+                <a href="{{ story.get_read_guest }}" class="btn btn-primary border-none rounded">Read</a>
                 {% endif %}
 
                 {% include "stories/partials/bookmark.html" %}
@@ -89,29 +89,32 @@
         </div>
         <div class="my-6 p-6">
             <div x-show="activeTabIndex == 0">
-                <div class="text-2xl">Synopsis</div>
-            <div class="text-mono-300">
+                <div class="text-2xl dark:text-mono-100 text-mono-700">Synopsis</div>
+            <div class="text-mono-600">
                 {{ story.summary | safe }}
             </div>
             </div>
             <div x-show="activeTabIndex == 1">
-                Latest Release： Chapter {{ story.chapter_set.last.position  }}: <a href="{{ story.chapter_set.last.get_absolute_url }}">{{ story.chapter_set.last.title | title }}</a> {{ story.chapter_set.last.created_at | timesince }}<hr class="mt-5">
+                Latest Release： Chapter {{ story.chapter_set.last.position  }}: <a href="{{ story.chapter_set.last.get_absolute_url }}">{{ story.chapter_set.last.title | title }}</a> <div class="badge bg-mono-200 border-none p-4 text-mono-50">{{ story.chapter_set.last.created_at | timesince }}</div><hr class="mt-5">
                 <div class="columns-2">
                 {% for chapter in story.chapter_set.all %}
                 <div class="p-4">
-                {{ chapter.position }} <a class="text-mono-800" href="{{ chapter.get_absolute_url }}">{{ chapter.title | title }}</a> <br>
-                <p class="text-xs text-green-mono-400"> {{ chapter.created_at | timesince }} ago</p>
+                {{ chapter.position }} <a class="text-mono-800 dark:text-mono-200" href="{{ chapter.get_absolute_url }}">{{ chapter.title | title }}</a> <br>
+                <p class="text-xs text-tiber-400"> {{ chapter.created_at | timesince }} ago</p>
                 </div>
                 {% endfor %}
             </div>
             </div>
-            <div x-show="activeTabIndex == 2">Reviews<br>Coming Soon</div>
+            <div x-show="activeTabIndex == 2">
+                <div class="dark:text-mono-100 text-mono-700">
+                    Reviews<br>Coming Soon
+                </div></div>
         </div>
     </div>
 </section>
 
     <section>
-        <div class="text-2xl">Tags</div>
+        <div class="text-2xl dark:text-mono-100 text-mono-700">Tags</div>
         {% for tag in story.tags.all %}
         <div class="badge bg-mono-300 border-none p-4">
         <a href="{{ tag.get_absolute_url }}">{{ tag.name | title }}</a>
@@ -119,7 +122,7 @@
         {% endfor %}
     </section>
     <section>
-        <div class="text-2xl">Recommendation</div>
+        <div class="text-2xl dark:text-mono-100 text-mono-700">Recommendation</div>
         Recommendation
     </section>
 {% endblock content %}

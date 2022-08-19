@@ -1,4 +1,4 @@
- <div class="btn bg-mono-300 rounded-full text-mono-800" id="bookmarkstory">
+ <div class="btn bg-mono-300 border-none rounded hover:text-mono-50 text-mono-800" id="bookmarkstory">
         <button hx-post="{% url 'story:bookmark' story.id %}" id="bookmark-button" 
           hx-target="#bookmarkstory" hx-swap="outerHTML">
           {% if request.user in story.likes.all %}
