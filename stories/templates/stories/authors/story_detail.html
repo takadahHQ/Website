@@ -94,7 +94,9 @@
                 <div class="columns-2">
                 {% for chapter in story.chapter_set.all %}
                 <div class="p-4">
-                {{ chapter.position }} <a class="text-mono-800 dark:text-mono-200" href="{{ chapter.get_absolute_url }}">{{ chapter.title | title }}</a> <a class="btn btn-sm bg-tiber-500 text-mono-100 m-2" href="{% url 'author:update-chapter' story.id chapter.slug %}">Edit</a><a class="btn btn-sm bg-rebel-500 text-mono-100 m-2" href="{% url 'author:delete-chapter' story.id chapter.slug %}">Delete</a><br>
+                {{ chapter.position }} <a class="text-mono-800 dark:text-mono-200" href="{{ chapter.get_absolute_url }}">{{ chapter.title | title }} </a> 
+                <a class="btn btn-sm hover:bg-tiber-600 border-none text-mono-100 m-2" href="{% url 'author:update-chapter' story.id chapter.slug %}">Edit</a>
+                <a class="btn btn-sm hover:bg-rebel-500 border-none text-mono-100 m-2" href="{% url 'author:delete-chapter' story.id chapter.slug %}">Delete</a><br>
                 <p class="text-xs text-green-mono-400"> {{ chapter.created_at | timesince }} ago</p>
                 </div>
                 {% endfor %}
