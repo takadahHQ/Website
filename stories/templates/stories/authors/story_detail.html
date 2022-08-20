@@ -60,13 +60,13 @@
                 {% include "stories/partials/dislike.html" %}
             </div>
             <div class="w-full flex flex-wrap space-x-2">
-                <a href="{% url 'author:create-chapter' story.id %}" class="btn bg-rebel-500 border-none rounded">Add New Chapter</a>
+                <a href="{% url 'author:create-chapter' story.id %}" class="btn hover:bg-rebel-500 border-none rounded">Add New Chapter</a>
             </div>
             
         </div>
     </div>
 </section>
-<div class="bg-mono-50 rounded shadow-mono-600 p-2 lg:p-8 mt-2 dark:bg-mono-700 text-mono-700">
+<div class="bg-mono-50 rounded shadow-mono-600 p-2 lg:p-8 mt-2 dark:bg-mono-700 text-mono-700 dark:text-mono-200">
     <section>
     <div x-data="{
         tabs: [ 'About', 'Table of Content', 'Reviews'],
@@ -84,7 +84,7 @@
         <div class="my-6 p-6">
             <div x-show="activeTabIndex == 0">
                 <div class="dark:text-mono-100 text-mono-700 text-2xl">Synopsis</div>
-            <div class="text-mono-600">
+            <div class="text-mono-600 dark:text-mono-200">
                 {{ story.summary | safe }}
             </div>
             </div>
@@ -95,8 +95,8 @@
                 {% for chapter in story.chapter_set.all %}
                 <div class="p-4">
                 {{ chapter.position }} <a class="text-mono-800 dark:text-mono-200" href="{{ chapter.get_absolute_url }}">{{ chapter.title | title }} </a> 
-                <a class="btn btn-sm hover:bg-tiber-600 border-none text-mono-100 m-2" href="{% url 'author:update-chapter' story.id chapter.slug %}">Edit</a>
-                <a class="btn btn-sm hover:bg-rebel-500 border-none text-mono-100 m-2" href="{% url 'author:delete-chapter' story.id chapter.slug %}">Delete</a><br>
+                <a class="btn btn-sm hover:bg-tiber-600 dark:bg-mono-400 border-none text-mono-100 m-2" href="{% url 'author:update-chapter' story.id chapter.slug %}">Edit</a>
+                <a class="btn btn-sm hover:bg-rebel-500 dark:bg-mono-400 border-none text-mono-100 m-2" href="{% url 'author:delete-chapter' story.id chapter.slug %}">Delete</a><br>
                 <p class="text-xs text-green-mono-400"> {{ chapter.created_at | timesince }} ago</p>
                 </div>
                 {% endfor %}
