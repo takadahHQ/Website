@@ -8,6 +8,8 @@ from hijack.contrib.admin import HijackUserAdminMixin
 # class Users(HijackUserAdminMixin, admin.ModelAdmin):
 #     def get_hijack_user(self, obj):
 #         return obj.pk
+
+@admin.register(Users)
 class UserAdmin(HijackUserAdminMixin, admin.ModelAdmin):
     list_display = ('name', 'bio', 'following_count', 'followers_count')
 
@@ -15,9 +17,9 @@ class UserAdmin(HijackUserAdminMixin, admin.ModelAdmin):
     search_fields = ['pseudonym']
 
     def get_hijack_user(self, obj):
-        return obj
+        return obj.id
 
-admin.site.register(Users, UserAdmin)
+# admin.site.register(Users, UserAdmin)
 admin.site.register(Menus)
 admin.site.register(Transactions)
 admin.site.register(Transfers)

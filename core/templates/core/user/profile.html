@@ -3,36 +3,36 @@
 {% load humanize %}
 
 {% block title %}
-{{ user.name }}'s Profile
+{{ author.name }}'s Profile
 {% endblock title %}
 
 {% block page-title %}
 Profile
 {% endblock page-title %}
 {% block breadcrumbs %}
-<li><a>Users</a></li> 
+<li><a>authors</a></li> 
 <li><a> {{ author.name }}</a></li> 
 {% endblock %}
 {% block content %}
 <!-- profile section -->
 <div class="bg-mono-50 rounded shadow-mono-400 p-2 lg:p-8 mt-2 dark:bg-mono-700 dark:text-mono-200">
-    {%if user.profile_photo %}
-    <img class="img-circle border bg-mono-50 md:w-50"  src="{{ user.profile_photo.url}}"/>
+    {%if author.profile_photo %}
+    <img class="img-circle border bg-mono-50 md:w-50"  src="{{ author.profile_photo.url}}"/>
     {% else %}
-    <img class="img-circle border bg-mono-50 md:w-50" src="{{ user.get_profile_image }}"/>
+    <img class="img-circle border bg-mono-50 md:flex md:w-50" src="{{ author.get_profile_image }}"/>
     {% endif %}
     <div class="my-1 p-1 w-full lg:my-4 lg:px-4">
-    <h1 class="text-4xl dark:text-mono-100 flex justify-center"> {{ user.name }}</h1>
-    {%if user.bio %}
-    <p class="flex justify-center">{{ user.bio| safe }}</p>
+    <h1 class="text-4xl dark:text-mono-100 flex justify-center"> {{ author.name| capfirst }}</h1>
+    {%if author.bio %}
+    <p class="flex justify-center">{{ author.bio| safe }}</p>
     {% else %}
     <p class="flex justify-center">Writing is the secret technique to exploring worlds yet undiscovered.</p>
     {% endif %}
     <div class="flex justify-center">
-        {{ user.followers_count }} Followers  {% if user.website %}| {{ user.website| safe }} {% endif %} {% if user.location %}| {{ user.location| safe }}  {% endif %} {% if user.birth_date %}| {{ user.birth_date| safe }} {% endif %} | Earned | Views 
+        {{ author.followers_count }} Followers  {% if author.website %}| {{ author.website| safe }} {% endif %} {% if author.location %}| {{ author.location| safe }}  {% endif %} {% if author.birth_date %}| {{ author.birth_date| safe }} {% endif %} | Earned | Views 
     </div>
     <div class="flex justify-center">
-       Joined {{ user.date_joined|date:'d, M' }}   {% if user.updated_at != user.date_joined %}| Updated Profile: {{ user.updated_at|naturaltime }} {% endif %} {% if user.location %}| {{ user.location| safe }}  {% endif %} {% if user.birth_date %}| {{ user.birthdate|date:'d, M' }} {% endif %} | {% if user.referral_id %}|  Introduced By: {{ user.referral_id.name | safe }}  {% endif %} | Views 
+       Joined {{ author.date_joined|date:'d, M' }}   {% if author.updated_at != author.date_joined %}| Updated Profile: {{ author.updated_at|naturaltime }} {% endif %} {% if author.location %}| {{ author.location| safe }}  {% endif %} {% if author.birth_date %}| {{ author.birthdate|date:'d, M' }} {% endif %} | {% if author.referral_id %}|  Introduced By: {{ author.referral_id.name | safe }}  {% endif %} | Views 
     </div>
     </div>
 </div>
@@ -57,7 +57,7 @@ Profile
             <div x-show="activeTabIndex == 0">
                 <div class="text-2xl">{{ author.name }}'s Stories</div><hr/>
             <div class="text-mono-300">
-                {% for story in user.stories_set.all %}
+                {% for story in author.stories_set.all %}
                 <li>
                     {{ story.title }}
                 </li>
@@ -69,7 +69,7 @@ Profile
                 <div x-show="activeTabIndex == 1">
                     <div class="text-2xl">{{ author.name }}'s Edited Stories</div><hr/>
                 <div class="text-mono-300">
-                    {% for story in user.stories_set.all %}
+                    {% for story in author.stories_set.all %}
                     <li>
                         {{ story.title }}
                     </li>
