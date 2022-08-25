@@ -5,6 +5,12 @@ from django.forms.widgets import TextInput
 from ckeditor.fields import RichTextField
 from ckeditor_uploader.fields import RichTextUploadingField
 from django.urls import reverse, reverse_lazy
+import secrets
+
+def create_token():
+    token = secrets.token_urlsafe(20)
+    return token
+
 
 class Kycs(models.Model):
     status_choices = (
@@ -194,7 +200,12 @@ class CustomUserManager(UserManager):
         case_insensitive_username_field = '{}__iexact'.format(self.model.USERNAME_FIELD)
         return self.get(**{case_insensitive_username_field: username})
 
-class Users(AbstractUser):  
+class Users(AbstractUser): 
+    gender_choices = (
+        ('male', 'Male'),
+        ('female', 'Female'),
+        ('human', 'Human'), 
+        ) 
     pseudonym = models.CharField(max_length=255, blank=True, null=True)
     bio = RichTextField(null=True, blank=True)
     location = models.CharField(max_length=30, blank=True)
@@ -204,19 +215,29 @@ class Users(AbstractUser):
         "self", blank=True, related_name="followers", symmetrical=False
     )
     # created_at = models.DateTimeField(auto_now_add=True)
-    # updated_at = models.DateTimeField(auto_now=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    gender = models.CharField(max_length=100, choices=gender_choices, default='human')
     kyc_verified_at = models.DateTimeField(blank=True, null=True)
     language = models.ForeignKey('Languages', on_delete=models.CASCADE, blank=True, null=True)
     referral_id = models.ForeignKey('Users', on_delete=models.CASCADE, blank=True, null=True)
-    referral_code = models.CharField(max_length=50, blank=True, null=True)
+    referral_code = models.CharField(max_length=50, default=create_token(),  blank=True, null=True)
 
     objects = CustomUserManager()
 
     def __str__(self):
         return self.name()
-        
+
+    def referral_code(self):
+        code = "ref-%s" % (self.username)
+        return code.strip()
+
+    def get_profile_image(self):
+        image = "https://avatars.dicebear.com/api/open-peeps/%s.svg" %(self.username)
+        return image
+
     def following_count(self):
         return self.following.count()
+
     def followers_count(self):
         return self.followers.count()
         

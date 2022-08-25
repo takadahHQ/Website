@@ -1,8 +1,9 @@
 {% extends 'base.html' %}
 {% load tailwind_filters %}
+{% load humanize %}
 
 {% block title %}
-Bookmarks
+{{ user.name }}'s Profile
 {% endblock title %}
 
 {% block page-title %}
@@ -15,7 +16,11 @@ Profile
 {% block content %}
 <!-- profile section -->
 <div class="bg-mono-50 rounded shadow-mono-400 p-2 lg:p-8 mt-2 dark:bg-mono-700 dark:text-mono-200">
-    <img class="img-circle border bg-mono-50"  src="{{ user.profile.url}}"/>
+    {%if user.profile_photo %}
+    <img class="img-circle border bg-mono-50 md:w-50"  src="{{ user.profile_photo.url}}"/>
+    {% else %}
+    <img class="img-circle border bg-mono-50 md:w-50" src="{{ user.get_profile_image }}"/>
+    {% endif %}
     <div class="my-1 p-1 w-full lg:my-4 lg:px-4">
     <h1 class="text-4xl dark:text-mono-100 flex justify-center"> {{ user.name }}</h1>
     {%if user.bio %}
@@ -24,7 +29,10 @@ Profile
     <p class="flex justify-center">Writing is the secret technique to exploring worlds yet undiscovered.</p>
     {% endif %}
     <div class="flex justify-center">
-        {{ user.followers_count }} Followers  {% if user.website %}| {{ user.website| safe }} {% endif %} {% if user.location %}| {{ user.location| safe }}  {% endif %} {% if user.birth_date %}| {{ user.birthdate| safe }} {% endif %} | Earned | Views
+        {{ user.followers_count }} Followers  {% if user.website %}| {{ user.website| safe }} {% endif %} {% if user.location %}| {{ user.location| safe }}  {% endif %} {% if user.birth_date %}| {{ user.birth_date| safe }} {% endif %} | Earned | Views 
+    </div>
+    <div class="flex justify-center">
+       Joined {{ user.date_joined|date:'d, M' }}   {% if user.updated_at != user.date_joined %}| Updated Profile: {{ user.updated_at|naturaltime }} {% endif %} {% if user.location %}| {{ user.location| safe }}  {% endif %} {% if user.birth_date %}| {{ user.birthdate|date:'d, M' }} {% endif %} | {% if user.referral_id %}|  Introduced By: {{ user.referral_id.name | safe }}  {% endif %} | Views 
     </div>
     </div>
 </div>
