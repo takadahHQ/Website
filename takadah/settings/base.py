@@ -69,6 +69,7 @@ INSTALLED_APPS = [
     'stories',
     'adverts',
     'hijack',
+    'hijack.contrib.admin',
     'import_export', 
     'flag',
     'watson',

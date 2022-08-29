@@ -228,6 +228,7 @@ class Users(AbstractUser):
     language = models.ForeignKey('Languages', on_delete=models.CASCADE, blank=True, null=True)
     ref_code = models.CharField(max_length=20,  blank=True)
     referrer = models.ForeignKey('Users', on_delete=models.CASCADE, blank=True, null=True)
+    active = models.BooleanField(default=True)
 
 
     objects = CustomUserManager()
@@ -258,6 +259,9 @@ class Users(AbstractUser):
 
     def following_count(self):
         return self.following.count()
+
+    def is_active(self):
+        return self.active
 
     def followers_count(self):
         return self.followers.count()
