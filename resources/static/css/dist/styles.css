@@ -5680,16 +5680,6 @@ body[dir="rtl"] .checkbox:checked,
   background-color: rgb(227 227 227 / var(--tw-bg-opacity));
 }
 
-.hover\:bg-rebel-500:hover {
-  --tw-bg-opacity: 1;
-  background-color: rgb(255 42 42 / var(--tw-bg-opacity));
-}
-
-.hover\:bg-tiber-600:hover {
-  --tw-bg-opacity: 1;
-  background-color: rgb(0 144 172 / var(--tw-bg-opacity));
-}
-
 .hover\:indent-8:hover {
   text-indent: 2rem;
 }
@@ -5758,11 +5748,6 @@ body[dir="rtl"] .checkbox:checked,
 .dark .dark\:bg-mono-200 {
   --tw-bg-opacity: 1;
   background-color: rgb(200 200 200 / var(--tw-bg-opacity));
-}
-
-.dark .dark\:bg-mono-400 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(129 129 129 / var(--tw-bg-opacity));
 }
 
 .dark .dark\:fill-mono-200 {
