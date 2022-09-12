@@ -11,6 +11,7 @@ from . import images as img
 from django.core.files import File
 from requests import request
 from django.contrib.contenttypes.fields import GenericRelation
+from taggit.managers import TaggableManager
 
 from flag.models import Flag
 
@@ -269,7 +270,7 @@ class Stories(models.Model):
     summary = RichTextField('synopsis')
     cover = models.ImageField(max_length=255, blank=True, null=True)
     story_type = models.ForeignKey('Type', on_delete=models.CASCADE)
-    tags = models.ManyToManyField('Tag',blank=True)
+   # tags = models.ManyToManyField('Tag',blank=True)
     following = models.ManyToManyField(
         settings.AUTH_USER_MODEL, blank=True, related_name="story_followers", symmetrical=False
     )
@@ -283,6 +284,7 @@ class Stories(models.Model):
     rating = models.ForeignKey('Rating', on_delete=models.DO_NOTHING, blank=True, null=True)
     released_at = models.DateTimeField()
     featured = models.BooleanField(default=False)
+    tags = TaggableManager()
     flags = GenericRelation(Flag)
     status = models.CharField(max_length=100, choices=status_choices, default='draft')
     created_at = models.DateTimeField(auto_now_add=True)

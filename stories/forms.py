@@ -1,7 +1,7 @@
 import datetime
 from django import forms
 from stories.models import Author, Chapter, Stories, Tag, Character, Editor, Author
-from django.forms.widgets import NumberInput
+from django.forms.widgets import NumberInput, TextInput, Select, CheckboxInput
 from django.conf import settings
 
 class DateTimeLocalInput(forms.DateTimeInput):
@@ -17,6 +17,14 @@ class StoryForm(forms.ModelForm):
     class Meta:
         model = Stories
         fields = ('title','abbreviation', 'summary', 'cover', 'story_type', 'tags', 'language','genre','rating', 'released_at','status',)
+        widgets= {
+            "language": Select(attrs={'class': 'bg-white focus:outline-none border border-gray-300 rounded-lg py-2 px-4 block w-full appearance-none leading-normal text-gray-700'}),
+            "story_type": Select(attrs={'class': 'bg-white focus:outline-none border border-gray-300 rounded-lg py-2 px-4 block w-full appearance-none leading-normal text-gray-700'}),
+            "genre": Select(attrs={'class': 'bg-white focus:outline-none border border-gray-300 rounded-lg py-2 px-4 block w-full appearance-none leading-normal text-gray-700'}),
+            "rating": Select(attrs={'class': 'bg-white focus:outline-none border border-gray-300 rounded-lg py-2 px-4 block w-full appearance-none leading-normal text-gray-700'}),
+            "status": Select(attrs={'class': 'bg-white focus:outline-none border border-gray-300 rounded-lg py-2 px-4 block w-full appearance-none leading-normal text-gray-700'}),
+           "tags": TextInput(attrs={'class': 'textinput bg-white px-4 rounded-lg py-2 block border w-full text-gray-700 leading-normal focus:outline-none appearance-none border-gray-300'})
+        }
 
 # AuthorSet = inlineformset_factory(
 #     Story,

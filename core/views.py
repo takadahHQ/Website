@@ -66,7 +66,7 @@ class DeleteHistory(LoginRequiredMixin, DeleteView):
 
 class AuthorView(DetailView):
     # model: Users
-    queryset = Users.objects.filter(is_active=True).prefetch_related('author_user', 'editor','chapter_set')
+    #queryset = Users.objects.filter(is_active=True).prefetch_related('author_user', 'editor','chapter_set')
     slug_field = "username"
     slug_url_kwarg = "username"
     context_object_name = "author"
@@ -76,6 +76,6 @@ class AuthorView(DetailView):
         context = super().get_context_data(**kwargs)
         return context
 
-    # def get_queryset(self):
-    #     user = get_object_or_404(Users, username=self.kwargs['username'])
-    #     return user
+    def get_queryset(self):
+        user = get_object_or_404(Users, username=self.kwargs['username'])
+        return user

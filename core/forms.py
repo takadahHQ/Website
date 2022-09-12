@@ -1,4 +1,3 @@
-from dataclasses import fields
 from django import forms
 from django.forms import ModelForm
 from django.forms.widgets import TextInput
@@ -39,6 +38,12 @@ class SignUpForm(UserCreationForm):
     class Meta:
         model = Users
         fields = ('username','pseudonym', 'first_name', 'last_name', 'email', 'password1', 'password2', )
+        help_texts = {
+            "username": "The username you select cannout be changed but your pseudonym can",
+            "first_name": "Your legal first name.",
+            "last_name": "Your legal last name",
+            "pseudonym": "The name you want to publish your works under."
+        }
 
     # def __init__(self, *args, **kwargs):
     #   super(SignUpForm, self).__init__(*args, **kwargs)

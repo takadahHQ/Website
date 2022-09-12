@@ -301,3 +301,21 @@ class Wallets(models.Model):
     class Meta:
         verbose_name_plural =  'wallets'
         unique_together = (('holder_type', 'holder_id', 'slug'),)
+
+
+class Site(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    name = models.CharField(max_length=255)
+    hero_header = models.CharField(max_length=255)
+    hero_text = models.CharField(max_length=255)
+    newsletter_header = models.CharField(max_length=255)
+    newsletter_text = models.CharField(max_length=255)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name_plural =  'site'
+       # unique_together = (('holder_type', 'holder_id', 'slug'),)

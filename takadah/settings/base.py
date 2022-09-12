@@ -76,6 +76,7 @@ INSTALLED_APPS = [
     'reversion',
     'helpdesk',  # This is us!
     'newsfeed',
+    'taggit',
     #'reports',
     #make a supports app
     #'subscriptions',
@@ -154,6 +155,7 @@ USE_I18N = True
 USE_TZ = True
 
 TAILWIND_APP_NAME = 'owliver'
+TAGGIT_CASE_INSENSITIVE = True
 # MEDIA_URL = '/media/'
 # STATIC_URL = '/static/'
 # MEDIA_ROOT = os.path.join(BASE_DIR, '/media/')
