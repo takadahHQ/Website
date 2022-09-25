@@ -71,6 +71,7 @@ django-user-sessions==1.7.1
 django-watson==1.6.2
 django-newsfeed==0.8.8
 django-weasyprint==2.1.0
+django-taggit==3.0.0
 djangorestframework==3.13.1
 email-reply-parser==0.5.12
 et-xmlfile==1.1.0
@@ -95,7 +96,6 @@ multidict==6.0.2
 odfpy==1.4.1
 openpyxl==3.0.10
 phonenumbers==8.12.50
-Pillow==7.2.0
 poyo==0.5.0
 prompt-toolkit==3.0.30
 pyasn1==0.4.8

@@ -12,12 +12,12 @@ INTERNAL_IPS = [
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'takalqei_django',
-        'USER': 'takalqei_django',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'takalqei_server',
+        'USER': 'takalqei_admin',
         'PASSWORD': 'Z!nox2018',
         'HOST': 'localhost',
-        'PORT': '3306',
+        'PORT': '5432',
     }
 }
 

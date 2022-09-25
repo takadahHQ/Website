@@ -60,7 +60,7 @@ INSTALLED_APPS = [
     'extra_views',
     'braces',
     'fontawesomefree',
-    'auditlog',
+    #'auditlog',
     'ckeditor',
     'ckeditor_uploader',
     'core',
