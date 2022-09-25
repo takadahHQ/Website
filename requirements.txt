@@ -35,7 +35,7 @@ defusedxml==0.7.1
 device-detector==5.0.1
 diff-match-patch==20200713
 diskcache==5.4.0
-Django==4.0.3
+Django==4.0.7
 django-admin-interface==0.19.1
 django-analytical==3.1.0
 django-appconf==1.0.5
