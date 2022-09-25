@@ -1,4 +1,3 @@
-from arrow import now
 from django.db import models
 from django.urls import reverse
 from ckeditor.fields import RichTextField
@@ -68,7 +67,7 @@ class Post(models.Model):
     meta = models.JSONField(blank=True, null=True)
     tags = models.ManyToManyField(Tags, blank=True,related_name="posts_tags")
     topics = models.ManyToManyField(Topics, related_name="posts_topics", blank=True)
-    published_at = models.DateTimeField(default=now)
+    published_at = models.DateTimeField(auto_now=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     deleted_at = models.DateTimeField(blank=True, null=True)

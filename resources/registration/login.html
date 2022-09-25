@@ -11,7 +11,7 @@ Login
 {% endblock page-title %}
 
 {% block content %}
-<div class="bg-white rounded shadow-blue-400 p-2 lg:p-8 max-w-md space-y-4">
+<div class="bg-white rounded shadow-blue-400 p-2 lg:p-8 max-w-md space-y-4 dark:text-gray-200">
     <form method="post">
         {% csrf_token %}
         {{ form|crispy }}
