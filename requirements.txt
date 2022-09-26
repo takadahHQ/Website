@@ -91,7 +91,7 @@ Markdown==3.3.7
 MarkupPy==1.14
 MarkupSafe==2.1.1
 maxminddb==2.2.0
-multidict==6.0.2
+# multidict==6.0.2
 odfpy==1.4.1
 openpyxl==3.0.10
 phonenumbers==8.12.50
