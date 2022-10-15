@@ -115,7 +115,7 @@
         <div class="text-2xl dark:text-mono-100 text-mono-700">Tags</div>
         {% for tag in story.tags.all %}
         <div class="badge bg-mono-300 border-none p-4 text-mono-50">
-        <a href="{{ tag.get_absolute_url }}">{{ tag.name | title }}</a>
+        <a href="{% url 'story:tag' tag.slug %}">{{ tag.name | title }}</a>
         </div>
         {% endfor %}
     </section>

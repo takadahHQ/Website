@@ -19,28 +19,12 @@ Profile
     {%if user.profile_photo %}
     <img class="img-circle border bg-mono-50 md:w-50"  src="{{ user.profile_photo.url}}"/>
     {% else %}
-<<<<<<< HEAD
-<<<<<<< HEAD
     <img class="img-circle border bg-mono-50 md:w-50" src="{{ author.get_profile_image }}"/>
     {% endif %}
     <div class="my-1 p-1 w-full lg:my-4 lg:px-4">
-    <h1 class="text-4xl dark:text-mono-100 flex justify-center"> {{ author.name }}</h1>
-=======
-    <img class="img-circle border bg-mono-50 md:flex md:w-50" src="{{ author.get_profile_image }}"/>
-    {% endif %}
-    <div class="my-1 p-1 w-full lg:my-4 lg:px-4">
     <h1 class="text-4xl dark:text-mono-100 flex justify-center"> {{ author.name| capfirst }}</h1>
->>>>>>> master/master
     {%if author.bio %}
     <p class="flex justify-center">{{ author.bio| safe }}</p>
-=======
-    <img class="img-circle border bg-mono-50 md:w-50" src="{{ user.get_profile_image }}"/>
-    {% endif %}
-    <div class="my-1 p-1 w-full lg:my-4 lg:px-4">
-    <h1 class="text-4xl dark:text-mono-100 flex justify-center"> {{ user.name }}</h1>
-    {%if user.bio %}
-    <p class="flex justify-center">{{ user.bio| safe }}</p>
->>>>>>> parent of 743a289 (today)
     {% else %}
     <p class="flex justify-center">Writing is the secret technique to exploring worlds yet undiscovered.</p>
     {% endif %}
@@ -71,7 +55,7 @@ Profile
         </div>
         <div class="my-6 p-6">
             <div x-show="activeTabIndex == 0">
-                <div class="text-2xl">{{ author.name }}'s Stories</div><hr/>
+                <div class="text-2xl">{{ author.name| capfirst }}'s Stories</div><hr/>
             <div class="text-mono-300">
                 {% for story in user.stories_set.all %}
                 <li>
@@ -83,7 +67,7 @@ Profile
             </div>
             </div>
                 <div x-show="activeTabIndex == 1">
-                    <div class="text-2xl">{{ author.name }}'s Edited Stories</div><hr/>
+                    <div class="text-2xl">{{ author.name | capfirst }}'s Edited Stories</div><hr/>
                 <div class="text-mono-300">
                     {% for story in user.stories_set.all %}
                     <li>

@@ -6,8 +6,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import View
 from django.db.models import Count
 from stories.forms import StoryForm, ChapterForm
-
-from stories.models import Chapter, Stories, Tag, Bookmark, Language, Genre, Rating,Type, Universe
+from taggit.models import Tag
+from stories.models import Chapter, Stories, Bookmark, Language, Genre, Rating,Type, Universe
 from stories.views.mixins import HistoryMixin
 
 
@@ -66,13 +66,18 @@ class ShowChapter(HistoryMixin, DetailView):
     template_name = 'stories/readers/read.html'
     context_object_name = 'story'
 
-class ShowTag(DetailView):
-    model = Tag
+class ShowTag(ListView):
+    model = Stories
     template_name = 'stories/tags.html'
     context_object_name = 'story'
 
     def get_queryset(self):
-        return Stories.objects.exclude(status='pending').exclude(status='draft').filter(tags=self.kwargs.get('pk'))
+        return Stories.objects.filter(tags__slug__in=[self.kwargs.get('slug')])
+    
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context['tag'] = get_object_or_404(Tag, slug=self.kwargs.get('slug'))#Tag.objects.get(slug=self.kwargs.get('slug'))
+        return context
 
 class ShowGenre(ListView):
     model = Stories
@@ -81,7 +86,12 @@ class ShowGenre(ListView):
 
     def get_queryset(self):
         #Stories.objects.filter(stories__genre=self.kwargs.get('pk')).exclude(stories__status='pending')#.order_by('-created_at')[:15]
-        return Stories.objects.exclude(status='pending').exclude(status='draft').filter(genre=self.kwargs.get('pk'))
+        return Stories.objects.exclude(status='pending').exclude(status='draft').filter(genre__slug=self.kwargs.get('slug'))
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context['genre'] = get_object_or_404(Genre, slug=self.kwargs.get('slug'))#Tag.objects.get(slug=self.kwargs.get('slug'))
+        return context
 
 class ShowRating(ListView):
     model = Rating
@@ -89,7 +99,7 @@ class ShowRating(ListView):
     context_object_name = 'story'
 
     def get_queryset(self):
-        return Rating.objects.exclude(status='pending').exclude(status='draft').filter(rating=self.kwargs.get('pk'))
+        return Rating.objects.exclude(status='pending').exclude(status='draft').filter(rating__slug=self.kwargs.get('slug'))
 
 class ShowType(ListView):
     model = Stories
@@ -97,7 +107,12 @@ class ShowType(ListView):
     context_object_name = 'story'
 
     def get_queryset(self):
-        return Stories.objects.exclude(status='pending').exclude(status='draft').filter(story_type=self.kwargs.get('pk'))
+        return Stories.objects.exclude(status='pending').exclude(status='draft').filter(story_type__slug=self.kwargs.get('slug'))
+    
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context['type'] = get_object_or_404(Type, slug=self.kwargs.get('slug'))#Tag.objects.get(slug=self.kwargs.get('pk'))
+        return context
 
 class ShowLanguage(ListView):
     model = Language
@@ -105,7 +120,7 @@ class ShowLanguage(ListView):
     context_object_name = 'story'
 
     def get_queryset(self):
-        return Language.objects.exclude(status='pending').exclude(status='draft').filter(language=self.kwargs.get('pk'))
+        return Language.objects.exclude(status='pending').exclude(status='draft').filter(language__slug=self.kwargs.get('slug'))
 
 
 

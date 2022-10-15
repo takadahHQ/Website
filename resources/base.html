@@ -46,7 +46,29 @@
 <!-- End Matomo -->
     {% analytical_head_bottom %} 
 	</head>
-
+  <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.js" defer></script>
+  <style>
+  @import url(https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/5.3.45/css/materialdesignicons.min.css);
+  @-webkit-keyframes fadeIn {
+    from { opacity:0 }
+    to { opacity:1 }
+  }
+  @keyframes fadeIn {
+    from { opacity:0 }
+    to { opacity:1 }
+  }
+  @-webkit-keyframes fadeInUp {
+    from { opacity:0; transform:translate3d(0,10%,0) }
+    to { opacity:1; transform:translate3d(0,0,0) }
+  }
+  @keyframes fadeInUp {
+    from { opacity:0; transform:translate3d(0,10%,0) }
+    to { opacity:1; transform:translate3d(0,0,0) }
+  }
+  
+  dialog[open] { -webkit-animation-duration:0.3s; animation-duration:0.3s; -webkit-animation-fill-mode:both; animation-fill-mode:both; -webkit-animation-name:fadeInUp; animation-name:fadeInUp }
+  dialog::backdrop { background: rgba(0, 0, 0, 0.3); backdrop-filter: blur(3px); -webkit-animation-duration:0.3s; animation-duration:0.3s; -webkit-animation-fill-mode:both; animation-fill-mode:both; -webkit-animation-name:fadeIn; animation-name:fadeIn  }
+  </style>
 	<body class="min-h-screen bg-mono-200 dark:bg-mono-900 text-mono-900 dark:text-mono-300 font-serif leading-normal tracking-normal" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
         {% analytical_body_top %}
         <div class="w-full">
@@ -269,6 +291,7 @@
         </svg>
       </button>
 		</div>
+  
 		<footer class="px-10 py-4 footer bg-base-200 dark:bg-mono-700 dark:text-mono-200 text-base-content">
             
 			<div class="items-center grid-flow-col">
@@ -302,7 +325,7 @@
             <script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
             <script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
             <script src="{% static 'js/site.js' %}"></script>
-            {% if request|cookie_group_accepted:"analytics" %}
+  {% if request|cookie_group_accepted:"analytics" %}
             {# load 3rd party analytics #}
         <script type="text/javascript">
 (function(f,b){if(!b.__SV){var e,g,i,h;window.mixpanel=b;b._i=[];b.init=function(e,f,c){function g(a,d){var b=d.split(".");2==b.length&&(a=a[b[0]],d=b[1]);a[d]=function(){a.push([d].concat(Array.prototype.slice.call(arguments,0)))}}var a=b;"undefined"!==typeof c?a=b[c]=[]:c="mixpanel";a.people=a.people||[];a.toString=function(a){var d="mixpanel";"mixpanel"!==c&&(d+="."+c);a||(d+=" (stub)");return d};a.people.toString=function(){return a.toString(1)+".people (stub)"};i="disable time_event track track_pageview track_links track_forms track_with_groups add_group set_group remove_group register register_once alias unregister identify name_tag set_config reset opt_in_tracking opt_out_tracking has_opted_in_tracking has_opted_out_tracking clear_opt_in_out_tracking start_batch_senders people.set people.set_once people.unset people.increment people.append people.union people.track_charge people.clear_charges people.delete_user people.remove".split(" ");
@@ -331,9 +354,6 @@ mixpanel.track('Sign Up', {
 <span class="text-rebel-50 text-rebel-100 text-rebel-200 text-rebel-300 text-rebel-400 text-rebel-500 text-rebel-600 text-rebel-700 text-rebel-800 text-rebel-900"></span>
 <span class="bg-tiber-50 bg-tiber-100 bg-tiber-200 bg-tiber-300 bg-tiber-400 bg-tiber-500 bg-tiber-600 bg-tiber-700 bg-tiber-800 bg-tiber-900"></span>
 <span class="text-tiber-50 text-tiber-100 text-tiber-200 text-tiber-300 text-tiber-400 text-tiber-500 text-tiber-600 text-tiber-700 text-tiber-800 text-tiber-900"></span>
-{% load cookie_consent_tags %}
-<script type="{% js_type_for_cookie_consent request "social" "*:.google.com" %}" data-varname="social">
-  alert("Social cookie accepted");
-</script>
+{% block scripts %}{% endblock scripts %}
 	</body>
 </html>

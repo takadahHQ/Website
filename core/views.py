@@ -77,5 +77,6 @@ class AuthorView(DetailView):
         return context
 
     def get_queryset(self):
-        user = get_object_or_404(Users, username=self.kwargs['username'])
+       # user = get_object_or_404(Users, username=self.kwargs['username'])
+        user =  Users.objects.filter(username = self.kwargs.get("username", None))
         return user

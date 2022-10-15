@@ -25,7 +25,11 @@
             <!-- genre status chapter views-->
             <div class="flex space-x-2 flex-wrap justify justify-space">
                 <div class="p-2">
-                    {{ story.genre.first.name }}
+                    {% for genre in story.genre.all %}
+                    <span class="badge badge-accent bg-rebel-300 p-3 border-0"> 
+                        <a href="{{ genre.get_absolute_url }}">{{ genre.name }}</a>
+                    </span>
+                {% endfor %}
                 </div>
                 <div class="p-2">
                     {{ story.status | title }}
@@ -41,7 +45,7 @@
                 <div class="">
                     Author{{ story.authors_count |pluralize }}: 
                     {% for author in story.author.all %}
-                        <span class="badge badge-accent bg-mono-400"> 
+                        <span class="badge badge-accent bg-mono-400 border-0"> 
                             <a href="{% url 'core:author' author.username %}">{{ author.name }}</a>
                         </span>
                     {% empty %}
@@ -117,7 +121,7 @@
         <div class="text-2xl dark:text-mono-100 text-mono-700">Tags</div>
         {% for tag in story.tags.all %}
         <div class="badge bg-mono-300 border-none p-4">
-        <a href="{{ tag.get_absolute_url }}">{{ tag.name | title }}</a>
+            <a href="{% url 'story:tag' tag.slug %}">{{ tag.name | title }}</a>
         </div>
         {% endfor %}
     </section>

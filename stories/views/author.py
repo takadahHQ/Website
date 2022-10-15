@@ -1,4 +1,3 @@
-from pprint import pprint
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
@@ -205,9 +204,30 @@ class createStory(LoginRequiredMixin, CreateView):
         return reverse_lazy('author:update', kwargs={'pk': self.object.pk})
 
     def form_valid(self, form):
-        form.instance.save()
-        form.instance.author.add(self.request.user)
+        # self.object = form.save()
+        #     # form.instance.save()
+        #     # form.instance.author.add(self.request.user)
+        # self.object.author.add(self.request.user)
+        # self.object.save()
         return super().form_valid(form)
+
+
+class StoriesCreateView(LoginRequiredMixin, CreateView):
+    model = Stories
+    template_name = "stories/authors/create_story.html"
+    form_class = StoryForm
+
+    def get_success_url(self):
+        return reverse_lazy('author:update', kwargs={'pk': self.object.pk})
+
+    def form_valid(self, form):
+        self.object = form.save()
+            # form.instance.save()
+            # form.instance.author.add(self.request.user)
+        self.object.author.add(self.request.user)
+        self.object.save()
+        return super().form_valid(form)
+
 
 class updateStory(LoginRequiredMixin, UpdateView):
     template_name = "stories/authors/edit_story.html"

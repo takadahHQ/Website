@@ -3,11 +3,11 @@ from . import views
 
 app_name = 'story'
 urlpatterns = [
-    path('tags/<slug>-<int:id>/', views.ShowTag.as_view(), name='tag'),
-    path('genre/<slug>-<pk>/', views.ShowGenre.as_view(), name='genre'),
-    path('language/<slug>-<int:id>/', views.ShowLanguage.as_view(), name='language'),
-    path('rating/<slug>-<int:id>/', views.ShowRating.as_view(), name='rating'),
-    path('type/<slug>-<int:id>/', views.ShowType.as_view(), name='type'),
+    path('tags/<slug>/', views.ShowTag.as_view(), name='tag'),
+    path('genre/<slug>/', views.ShowGenre.as_view(), name='genre'),
+    path('language/<slug>/', views.ShowLanguage.as_view(), name='language'),
+    path('rating/<slug>/', views.ShowRating.as_view(), name='rating'),
+    path('type/<slug>/', views.ShowType.as_view(), name='type'),
     path('<str:type>/<slug>/', views.ShowStory.as_view(), name='show'),
     path('story/<int:id>/like/', views.StoryLike, name='like'),
     path('story/<int:id>/dislike/', views.StoryDisLike, name='dislike'),
