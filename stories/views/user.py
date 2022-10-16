@@ -9,49 +9,24 @@ from stories.forms import StoryForm, ChapterForm
 from taggit.models import Tag
 from stories.models import Chapter, Stories, Bookmark, Language, Genre, Rating,Type, Universe
 from stories.views.mixins import HistoryMixin
+from stories.actions import get_genre, get_stories_by_genre, get_tag, get_stories_by_tag, get_type, get_stories_by_type, like_story, dislike_story, follow_story, get_story
 
 
 def StoryLike(request, id):
-    story = get_object_or_404(Stories, id=id)
-    if story.likes.filter(id=request.user.id).exists():
-        story.likes.remove(request.user)
-        story.save()
-    else:
-        story.likes.add(request.user)
-        story.save()
-
+    story = like_story(user=request.user, slug=id)
     return render(request, 'stories/partials/like.html', {'story': story})
 
 def StoryDisLike(request, id):
-    #use together with htmx
-    story = get_object_or_404(Stories, id=id)
-    if story.dislikes.filter(id=request.user.id).exists():
-        story.dislikes.remove(request.user)
-        story.save()
-    else:
-        story.dislikes.add(request.user)
-        story.save()
-
+    story = dislike_story(user=request.user, slug=id)
     return render(request, 'stories/partials/dislike.html', {'story': story})
 
 def StoryBookmark(request, id):
-    story = get_object_or_404(Stories, id=id)
-    bookmark = Bookmark.objects.update_or_create(story=story, user=request.user, defaults={'story': story, 'user':request.user,})
-    bookmark.save()
-    bookmarks = Bookmark.objects.get(story=id)
-    #save the story, user, url(!optional) and status
+    bookmarks = bookmark_story(user=request.user, slug=id)
     return render(request, 'stories/partials/bookmark.html', {'bookmark': bookmarks})
 
 
 def StoryFollow(request, id):
-    story = get_object_or_404(Stories, id=id)
-    if story.following.filter(id=request.user.id).exists():
-        story.following.remove(request.user)
-        story.save()
-    else:
-        story.following.add(request.user)
-        story.save()
-
+    story = follow_story(user=request.user, slug=id)
     return render(request, 'stories/partials/following.html', {'story': story})
 
 class ShowStory(DetailView):
@@ -59,7 +34,7 @@ class ShowStory(DetailView):
     context_object_name = 'story'
 
     def get_queryset(self):
-        return Stories.objects.select_related('story_type', 'language','rating').filter(slug=self.kwargs['slug']).exclude(status='pending').annotate(chapter_count=Count('chapter'))
+        return get_story(slug=self.kwargs.get('slug'))
 
 class ShowChapter(HistoryMixin, DetailView):
     model = Chapter
@@ -72,25 +47,25 @@ class ShowTag(ListView):
     context_object_name = 'story'
 
     def get_queryset(self):
-        return Stories.objects.filter(tags__slug__in=[self.kwargs.get('slug')])
+        return get_stories_by_tag(self.kwargs.get('slug'))
     
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
-        context['tag'] = get_object_or_404(Tag, slug=self.kwargs.get('slug'))#Tag.objects.get(slug=self.kwargs.get('slug'))
+        context['tag'] = get_tag(slug=self.kwargs.get('slug'))
         return context
 
 class ShowGenre(ListView):
     model = Stories
     template_name = 'stories/genres.html'
-    context_object_name = 'genres'
+    context_object_name = 'story'
 
     def get_queryset(self):
         #Stories.objects.filter(stories__genre=self.kwargs.get('pk')).exclude(stories__status='pending')#.order_by('-created_at')[:15]
-        return Stories.objects.exclude(status='pending').exclude(status='draft').filter(genre__slug=self.kwargs.get('slug'))
+        return get_stories_by_genre(slug=self.kwargs.get('slug'))
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
-        context['genre'] = get_object_or_404(Genre, slug=self.kwargs.get('slug'))#Tag.objects.get(slug=self.kwargs.get('slug'))
+        context['genre'] = get_genre(self.kwargs.get('slug'))
         return context
 
 class ShowRating(ListView):
@@ -99,7 +74,7 @@ class ShowRating(ListView):
     context_object_name = 'story'
 
     def get_queryset(self):
-        return Rating.objects.exclude(status='pending').exclude(status='draft').filter(rating__slug=self.kwargs.get('slug'))
+        return get_all_ratings(slug=self.kwargs.get('slug'))
 
 class ShowType(ListView):
     model = Stories
@@ -107,11 +82,11 @@ class ShowType(ListView):
     context_object_name = 'story'
 
     def get_queryset(self):
-        return Stories.objects.exclude(status='pending').exclude(status='draft').filter(story_type__slug=self.kwargs.get('slug'))
+        return get_stories_by_type(self.kwargs.get('slug'))
     
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
-        context['type'] = get_object_or_404(Type, slug=self.kwargs.get('slug'))#Tag.objects.get(slug=self.kwargs.get('pk'))
+        context['type'] = get_type(self.kwargs.get('slug'))
         return context
 
 class ShowLanguage(ListView):
@@ -120,7 +95,7 @@ class ShowLanguage(ListView):
     context_object_name = 'story'
 
     def get_queryset(self):
-        return Language.objects.exclude(status='pending').exclude(status='draft').filter(language__slug=self.kwargs.get('slug'))
+        return get_language(self.kwargs.get('slug'))
 
 
 
