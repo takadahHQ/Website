@@ -6,6 +6,7 @@ import glob, os, math
 import random
 from urllib.request import urlopen
 from django.conf import settings 
+
 def make(img_author, img_title, img_slug):
     bg = background()
     name = img_author

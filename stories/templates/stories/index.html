@@ -60,18 +60,18 @@ Takadah
 {% endif %}
 {% if fresh %}
 <!-- new -->
-<section id="fresh">
+{% comment %} <section id="fresh">
     <div class="text-2xl border-b-2 border-mono-600">New Stories</div><br>
     <div class="flex flex-wrap -mx-1 lg:-mx-4">
         {% for story in fresh %}
             <!-- Column -->
-            <div class="my-1 w-full md:w-1/2 space-x-2 h-80 lg:my-4 lg:px-4 lg:w-1/4">
+            <div class="my-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/4 space-x-2 h-20">
         
                 <!-- Article -->
-                <article class="overflow-hidden h-80 hover:scale-80 transition duration-300 ease-in-out">
+                <article class="absolute h-20 w-50 hover:scale-80 transition duration-300 ease-in-out">
         
                     <a href="{{ story.get_absolute_url}}">
-                        <img alt="{{ story.title | lower }}" class="block h-auto w-full hover:scale-105 hover:saturate-200 hover:rounded-lg transition duration-300 ease-in-out rounded-lg shadow-lg " src="{{ story.get_cover }}">
+                        <img alt="{{ story.title | lower }}" class="hover:scale-105 hover:saturate-200 hover:rounded-lg transition duration-300 ease-in-out rounded-lg shadow-lg object-cover" src="{{ story.get_cover }}">
                     </a>
         
                     <header class="flex items-start justify-start leading-tight p-2 md:p-4">
@@ -98,8 +98,46 @@ Takadah
         <h3 class="flex justify-center">No Novel read yet, do you need help?</h3>
         {% endfor %}
         </div>
-</section>    
+</section>     {% endcomment %}
 <!-- end new -->
+
+<section class="bg-gray-100 dark:bg-gray-900 py-10 px-12">
+    <!-- Card Grid -->
+    <div
+        class="grid grid-flow-row gap-8 text-neutral-600 sm:grid-cols-1 md:grid-cols-4 lg:grid-cols-4 space-x-2 h-42">
+        {% for story in fresh %}
+            <!-- Card Item -->
+            <div
+                class="my-8 rounded shadow-lg shadow-gray-200 dark:shadow-gray-900 bg-white dark:bg-gray-800 duration-300 hover:-translate-y-1">
+                <!-- Clickable Area -->
+                <a href="{{ story.get_absolute_url}}" class="cursor-pointer">
+                    <figure>
+                        <!-- Image -->
+                        <img alt="{{ story.title | lower }}"
+                        src="{{ story.get_cover }}"
+                            class="rounded-t h-22 w-full object-cover hover:scale-105 hover:saturate-200 hover:rounded-lg transition duration-300 ease-in-out rounded-lg shadow-lg" />
+
+                        <figcaption class="p-4">
+                            <!-- Title -->
+                            <p
+                                class="text-lg mb-4 font-bold leading-relaxed text-gray-800 dark:text-gray-300">
+                                {{ story.title | title }}
+                            </p>
+
+                            <!-- Description -->
+                            <small
+                                class="leading-5 text-gray-500 dark:text-gray-400">
+                                {{ story.genre.first.name }}
+                            </small>
+                        </figcaption>
+                    </figure>
+                </a>
+            </div>
+            {% empty %}
+            <h3 class="flex justify-center">No Novel read yet, do you need help?</h3>
+            {% endfor %}
+    </div>
+</section>
 {% endif %}
 {% if completed %}
 <!-- Completed -->
@@ -151,14 +189,14 @@ Takadah
 </section>    
 <!-- end Tags -->
 {% endif %}
-<section>
-    <a href="/novel/">
+{% comment %} <section>
+    <a href="{{ story.get_absolute_url}}">
         <div class="relative h-0 pb-[146%]">
             <div>
                 <span class="MuiSkeleton-root MuiSkeleton-rectangular MuiSkeleton-wave MuiSkeleton-withChildren MuiSkeleton-fitContent MuiSkeleton-heightAuto absolute top-0 left-0 w-full h-full max-w-none rounded-[6px] bg-[#e9e9e9] dark:bg-[#2a2a2a] ww-4bfvrx">
                     <div class="absolute top-0 left-0 w-full h-full bg-skins-bookcover rounded-r-5">
                     </div>
-                    <div class="absolute top-0 left-0 w-full h-full bg-[url('/images/Bookcover@3x.png')] bg-[length:100%_100%]">
+                    <div class="absolute top-0 left-0 w-full h-full bg-[url('{{ story.get_cover }}')] bg-[length:100%_100%]">
                     </div>
                 </span>
             </div>
@@ -167,11 +205,13 @@ Takadah
     <div class="px-4 pt-4 text-gray-800 dark:text-gray-300">
         <div class="flex flex-col">
             <span class="MuiSkeleton-root MuiSkeleton-rectangular MuiSkeleton-wave MuiSkeleton-withChildren MuiSkeleton-fitContent MuiSkeleton-heightAuto max-w-[100%] bg-transparent bg-[#e9e9e9] bg-gradient-to-r from-[#f1f1f1] to-[#e9e9e9] dark:bg-[#2a2a2a] dark:from-[#333] dark:to-[#2a2a2a] sm:mx-0 mt-4 h-12 last:w-96 md:h-14 ww-4bfvrx">
-                <a class="line-clamp-2 font-set-sb13 md:font-set-sb15" href="/novel/"></a>
-            </span><span class="MuiSkeleton-root MuiSkeleton-rectangular MuiSkeleton-wave max-w-[100%] bg-transparent bg-[#e9e9e9] bg-gradient-to-r from-[#f1f1f1] to-[#e9e9e9] dark:bg-[#2a2a2a] dark:from-[#333] dark:to-[#2a2a2a] sm:mx-0 mt-4 h-12 last:w-96 md:h-14 ww-1cuzdvz">
+                <a class="line-clamp-2 font-set-sb13 md:font-set-sb15" href="{{ story.get_absolute_url}}">{{ story.title | title }}</a>
+            </span>
+            <span class="MuiSkeleton-root MuiSkeleton-rectangular MuiSkeleton-wave max-w-[100%] bg-transparent bg-[#e9e9e9] bg-gradient-to-r from-[#f1f1f1] to-[#e9e9e9] dark:bg-[#2a2a2a] dark:from-[#333] dark:to-[#2a2a2a] sm:mx-0 mt-4 h-12 last:w-96 md:h-14 ww-1cuzdvz">
+                {{ story.genre.first.name }}
             </span>
         </div>
     </div>
-</section> 
+</section>  {% endcomment %}
 </div>
 {% endblock content %}

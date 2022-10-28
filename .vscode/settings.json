@@ -1,3 +1,12 @@
 {
-    "git.ignoreLimitWarning": true
+    "git.ignoreLimitWarning": true,
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "database": "${workspaceFolder:Takadah}/db.sqlite3",
+            "name": "Takadah"
+        }
+    ],
+    "sqltools.useNodeRuntime": true
 }

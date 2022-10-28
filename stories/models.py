@@ -313,8 +313,8 @@ class Stories(idModel, timeStampModel):
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify('-'.join([self.abbreviation, self.title]))
-        if not self.cover:
-            self.cover = self.create_cover()
+        # if not self.cover:
+        #     self.cover = self.create_cover()
 
         super(Stories, self).save(*args, **kwargs)
 

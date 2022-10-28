@@ -60,6 +60,7 @@
                 {% include "stories/partials/dislike.html" %}
             </div>
             <div class="w-full flex flex-wrap space-x-2">
+                <a href="{% url 'author:update' story.id %}" class="btn hover:bg-rebel-500 border-none rounded">Edit the Story</a>
                 <a href="{% url 'author:create-chapter' story.id %}" class="btn hover:bg-rebel-500 border-none rounded">Add New Chapter</a>
             </div>
             

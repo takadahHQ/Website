@@ -9,6 +9,11 @@ def get_genre(slug):
     genre = get_object_or_404(queryset, slug=slug)
     return genre
 
+# def get_user(slug):
+#     queryset = Users.objects.exclude(Q(status='pending') | Q(status='draft'))
+#     genre = get_object_or_404(queryset, slug=slug)
+#     return genre
+
 def get_stories_by_genre(slug):
     genre = get_genre(slug=slug)
     test = stories = Stories.objects.filter(~Q(status='pending') | ~Q(status='draft'))
@@ -31,6 +36,12 @@ def get_type(slug):
 def get_stories_by_type(slug):
     types = get_type(slug=slug)
     stories = Stories.objects.filter(~Q(status='pending') | ~Q(status='draft'), story_type__slug__in=[types.slug])
+    return stories
+
+
+def get_stories_by_author(user):
+    # types = get_type(slug=slug)
+    stories = Stories.objects.filter(~Q(status='pending') | ~Q(status='draft'), author__user__in=[user])
     return stories
 
 def get_language(slug):

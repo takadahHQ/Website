@@ -10,6 +10,7 @@ from stories.forms import AuthorForm, EditorForm, StoryForm, ChapterForm, Charac
 from stories.models import Chapter, Stories, Character, Author, Editor
 from extra_views import CreateWithInlinesView, UpdateWithInlinesView, InlineFormSetFactory
 from django.conf import settings
+from stories.actions import get_stories_by_author
 
 class CharacterInline(InlineFormSetFactory):
     model = Character
@@ -43,7 +44,8 @@ class storyDashboard(LoginRequiredMixin, TemplateView):
         return likes
 
     def story_list(self):
-       story =  Stories.objects.exclude(status='pending').exclude(status='draft').filter(author=self.request.user)
+    #    story =  Stories.objects.exclude(status='pending').exclude(status='draft').filter(author__user__in=self.request.user)
+       story =  get_stories_by_author(user=self.request.user)
        return story
 
     def story_stats(self):
@@ -221,11 +223,13 @@ class StoriesCreateView(LoginRequiredMixin, CreateView):
         return reverse_lazy('author:update', kwargs={'pk': self.object.pk})
 
     def form_valid(self, form):
-        self.object = form.save()
-            # form.instance.save()
-            # form.instance.author.add(self.request.user)
-        self.object.author.add(self.request.user)
-        self.object.save()
+        # self.object = form.save()
+        # self.object.save()
+        form.instance.save()
+        form.instance.author.add(self.request.user)
+        # self.object.author.add(self.request.user)
+        # self.object.save()
+        form.instance.get_cover()
         return super().form_valid(form)
 
 
