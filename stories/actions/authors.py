@@ -1,7 +1,5 @@
 from django.db.models import Q,Count
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse, HttpResponseRedirect
-from taggit.models import Tag
 from stories.models import Chapter, Stories, Bookmark, Language, Genre, Rating,Type, Universe
 
 
