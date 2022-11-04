@@ -41,7 +41,7 @@ def get_stories_by_type(slug):
 
 def get_stories_by_author(user):
     # types = get_type(slug=slug)
-    stories = Stories.objects.filter(~Q(status='pending') | ~Q(status='draft'), author__user__in=[user])
+    stories = Stories.objects.filter(~Q(status='pending') | ~Q(status='draft'), author=user.id)
     return stories
 
 def get_language(slug):

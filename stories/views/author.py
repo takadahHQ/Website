@@ -6,11 +6,12 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 # from django.views import View
 # from django.db.models import Count
 from django.db.models import Avg, Count
+from stories.actions.authors import get_author_stories_reviews, get_author_stories_views, get_daily_earnings, get_monthly_earnings, get_weekly_earnings
 from stories.forms import AuthorForm, EditorForm, StoryForm, ChapterForm, CharacterForm
 from stories.models import Chapter, Stories, Character, Author, Editor
 from extra_views import CreateWithInlinesView, UpdateWithInlinesView, InlineFormSetFactory
 from django.conf import settings
-from stories.actions import get_stories_by_author
+from stories.actions import get_stories_by_author, get_author_stories_likes, get_author_stories_dislikes
 
 class CharacterInline(InlineFormSetFactory):
     model = Character
@@ -34,6 +35,7 @@ class storyDashboard(LoginRequiredMixin, TemplateView):
         context['total_likes'] = self.total_likes()
         context['published'] = self.story_list()
         context['stats'] = self.story_stats()
+        context['earnings'] = self.story_earnings()
         return context
 
     def total_likes(self):
@@ -49,7 +51,18 @@ class storyDashboard(LoginRequiredMixin, TemplateView):
        return story
 
     def story_stats(self):
-        stats = {'views': {'result': 1234, 'updated': '2 hours ago'}, 'likes': {'result': 63689, 'updated': '2 minutes ago'}, 'dislikes': {'result': 1234, 'updated': '21 days ago'}, 'reviews': {'result': 44748534, 'updated': '2 seconds ago'}}
+        likes = get_author_stories_likes(author=self.request.user)
+        dislikes = get_author_stories_dislikes(author=self.request.user)
+        reviews = get_author_stories_reviews(author=self.request.user)
+        views = get_author_stories_views(author=self.request.user)
+        stats = {'views': {'result': views, 'updated': '2 hours ago'}, 'likes': {'result': likes, 'updated': '2 minutes ago'}, 'dislikes': {'result': dislikes, 'updated': '21 days ago'}, 'reviews': {'result': reviews, 'updated': '2 seconds ago'}}
+        return stats
+
+    def story_earnings(self):
+        daily = get_daily_earnings(author=self.request.user)
+        weekly = get_weekly_earnings(author=self.request.user)
+        monthly = get_monthly_earnings(author=self.request.user)
+        stats = {'daily': {'amount': daily}, 'weekly': {'amount': weekly}, 'monthly': {'amount': monthly}}
         return stats
 
 class viewStory(LoginRequiredMixin, DetailView):
@@ -71,7 +84,7 @@ class storyList(LoginRequiredMixin, ListView):
     context_object_name = 'stories'
 
     def get_queryset(self):
-        return Stories.objects.filter(author =self.request.user)
+        return Stories.objects.filter(author =self.request.user.id)
 
 def update_author(request, pk):
     author = Author.objects.get(id=pk)

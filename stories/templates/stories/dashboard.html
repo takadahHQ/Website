@@ -81,14 +81,14 @@ Dashboard
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 px-4 xl:p-0 gap-4 xl:gap-6">
             <div class="col-span-1 md:col-span-2 lg:col-span-4 flex justify-between">
                 <h2 class="text-xs md:text-sm text-mono-700 font-bold tracking-wide md:tracking-wider">
-                    Weekly Statistics</h2>
+                    Lifetime Statistics</h2>
                 <a href="#" class="text-xs text-mono-800 font-semibold uppercase">More</a>
             </div>
             <div class="bg-white p-6 rounded-xl border border-mono-50">
                 <div class="flex justify-between items-start">
                     <div class="flex flex-col">
                         <p class="text-xs text-mono-600 tracking-wide">Views</p>
-                        <h3 class="mt-1 text-lg text-mono-500 font-bold">$ {{ stats.views.result }}</h3>
+                        <h3 class="mt-1 text-lg text-mono-500 font-bold"> {{ stats.views.result }}</h3>
                         <span class="mt-4 text-xs text-mono-500">Last  {{ stats.views.updated }}</span>
                     </div>
                     <div class="bg-mono-500 p-1 xl:p-2 rounded-md">
@@ -100,7 +100,7 @@ Dashboard
                 <div class="flex justify-between items-start">
                     <div class="flex flex-col">
                         <p class="text-xs text-mono-600 tracking-wide">Likes</p>
-                        <h3 class="mt-1 text-lg text-green-500 font-bold">{{ total_likes }}${{ stats.likes.result }}</h3>
+                        <h3 class="mt-1 text-lg text-green-500 font-bold">{{ stats.likes.result }}</h3>
                         <span class="mt-4 text-xs text-mono-500">Last {{ stats.likes.updated }}</span>
                     </div>
                     <div class="bg-green-500 p-1 xl:p-2 rounded-md">
@@ -112,7 +112,7 @@ Dashboard
                 <div class="flex justify-between items-start">
                     <div class="flex flex-col">
                         <p class="text-xs text-mono-600 tracking-wide">DisLikes</p>
-                        <h3 class="mt-1 text-lg text-yellow-500 font-bold">$ {{ stats.dislikes.result }}</h3>
+                        <h3 class="mt-1 text-lg text-yellow-500 font-bold">{{ stats.dislikes.result }}</h3>
                         <span class="mt-4 text-xs text-mono-600">Last {{ stats.dislikes.updated }}</span>
                     </div>
                     <div class="bg-yellow-500 p-1 xl:p-2 rounded-md">
@@ -124,7 +124,7 @@ Dashboard
                 <div class="flex justify-between items-start">
                     <div class="flex flex-col">
                         <p class="text-xs text-mono-600 tracking-wide">Reviews</p>
-                        <h3 class="mt-1 text-lg text-indigo-500 font-bold">$ {{ stats.reviews.result }}</h3>
+                        <h3 class="mt-1 text-lg text-indigo-500 font-bold">{{ stats.reviews.result }}</h3>
                         <span class="mt-4 text-xs text-mono-500">Last {{ stats.reviews.updated }}</span>
                     </div>
                     <div class="bg-indigo-500 p-1 xl:p-2 rounded-md">
@@ -140,18 +140,19 @@ Dashboard
                 <h2 class="text-xs md:text-sm text-mono-600 font-bold tracking-wide">Earning Summary Transactions</h2>
             </div>
             <div class="col-span-2 bg-white p-6 rounded-xl border border-mono-50 flex flex-col space-y-6">
+                <p class="text-rebel-500">These figures are for demo purposes only and are not yet implemented.</p>
                 <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 flex justify-between items-center">
                     <div class="p-4 cursor-pointer border">
                         <span class="text-xs text-mono-500 font-semibold">Daily</span>
-                        <h2 class="text-mono-800 font-bold tracking-wider">$ 27.80</h2>
+                        <h2 class="text-mono-800 font-bold tracking-wider">$ {{ earnings.daily.amount }}</h2>
                     </div>
                     <div class="p-4 cursor-pointer border">
                         <span class="text-xs text-mono-500 font-semibold">Weekly</span>
-                        <h2 class="text-mono-800 font-bold tracking-wider">$ 192.92</h2>
+                        <h2 class="text-mono-800 font-bold tracking-wider">$ {{ earnings.weekly.amount }}</h2>
                     </div>
                     <div class="p-4 cursor-pointer border">
                         <span class="text-xs text-mono-500 font-semibold">Monthly</span>
-                        <h2 class="text-mono-800 font-bold tracking-wider">$ 501.10</h2>
+                        <h2 class="text-mono-800 font-bold tracking-wider">$ {{ earnings.monthly.amount }}</h2>
                     </div>
                 </div>
                 <canvas id="myChart"></canvas>
@@ -179,9 +180,9 @@ Dashboard
                     </li>
                     {% for story in published %}
                     <li class="py-3 flex justify-between text-sm text-mono-500 font-semibold">
-                        <p class="px-4 font-semibold">{{ story.chapters_set.last.created_at| naturalday |default:"No chapter" }}</p>
+                        <p class="px-4 font-semibold">{{ story.chapter_set.last.created_at| naturalday |default:"No chapter" }}</p>
                         <p class="px-4 text-mono-600">{{ story.title }}</p>
-                        <p class="px-4 tracking-wider">{{ story.chapters_set.last.title|default:"No chapter" }}</p>
+                        <p class="px-4 tracking-wider">{{ story.chapter_set.last.title|default:"No chapter" }}</p>
                         <p class="px-4 text-mono-600">{{ story.genre.first.name }}</p>
                         <p class="md:text-base text-mono-800 flex items-center gap-2">
                             16.90
