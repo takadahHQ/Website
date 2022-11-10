@@ -11,6 +11,35 @@ def create_token():
     token = secrets.token_urlsafe(20)
     return token
 
+class statusModel(models.Model):
+    status_choices = (
+        ('active', 'Active'),
+        ('inactive', 'Inactive'), 
+        )
+    status = models.CharField(max_length=100, choices=status_choices, default='active')
+
+    class Meta:
+        abstract = True
+
+class timeStampModel(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        abstract = True
+
+class nameModel(models.Model):
+    name = models.CharField(max_length=255)
+
+    class Meta:
+        abstract = True
+
+class idModel(models.Model):
+    id = models.BigAutoField(primary_key=True)
+
+    class Meta:
+        abstract = True
+
 
 class Kycs(models.Model):
     status_choices = (
@@ -319,3 +348,19 @@ class Site(models.Model):
     class Meta:
         verbose_name_plural =  'site'
        # unique_together = (('holder_type', 'holder_id', 'slug'),)
+
+class Bank(idModel, statusModel, timeStampModel):
+    holder = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    name = models.CharField(max_length=255)
+    holder_name = models.CharField(max_length=255)
+    swift = models.CharField(max_length=255)
+    iban = models.CharField(max_length=255)
+    address = models.CharField(max_length=255))
+    account_number = models.CharField(max_length=32)
+
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name_plural =  'banks'
