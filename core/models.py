@@ -115,8 +115,7 @@ class Settings(idModel, nameModel, statusModel, timeStampModel):
     class Meta:
         verbose_name_plural =  'settings'
 
-class Socials(idModel, statusModel, timeStampModel):
-    name = models.CharField(max_length=255)
+class Socials(idModel, nameModel, statusModel, timeStampModel):
     icon = models.TextField(blank=True, null=True)
     image = models.CharField(max_length=255, blank=True, null=True)
     link = models.CharField(max_length=255)

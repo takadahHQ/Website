@@ -92,4 +92,24 @@ def bookmark_story(user, slug):
     bookmark.save()
     bookmarks = Bookmark.objects.get(story=story.id)
     return bookmarks
+
+def get_featured_stories(count):
+    stories = Stories.objects.filter(featured=True).filter(status='active')[:count]
+    return stories
+
+def get_weekly_stories(count):
+    stories = Stories.objects.filter(featured=True).filter(status='active')[:count]
+    return stories
+
+def get_fresh_stories(count):
+    exclude = ['draft', 'prerelease']
+    stories = Stories.objects.order_by('created_at').exclude(status__in=exclude)[:count]
+    return stories
+
+def get_completed_stories(count):
+    stories =  Stories.objects.filter(status='completed')[:count]
+    return stories
     
+def get_updated_stories(count):
+    stories = Stories.objects.order_by('updated_at').filter(status='active')[:count]
+    return stories
