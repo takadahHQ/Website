@@ -7,15 +7,12 @@ from .models import Users
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView, DetailView, ListView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from .actions import get_users_profile, homepage, get_bookmarks, get_histories
 
 
 def index(request):
-    #return HttpResponse("Hello, to the stories application")
-    exclude = ['draft', 'prerelease']
-    weekly = Stories.objects.filter(featured=True).filter(status='active')[:12]
-    fresh = Stories.objects.order_by('created_at').exclude(status__in=exclude)[:12]
-    completed = Stories.objects.filter(status='completed')[:12]
-    return render(request, 'stories/index.html', {'weekly': weekly, 'fresh': fresh, 'completed': completed})
+    context = homepage(count=12)
+    return render(request, 'stories/index.html', context)
 
 def error_500(request):
     return render(request, 'core/error/500.html')
@@ -48,14 +45,14 @@ class ShowBookmark(LoginRequiredMixin, ListView):
     paginate_at = 10
 
     def get_queryset(self):
-        return Bookmark.objects.filter(user=self.request.user).order_by('-created_at')
+        return get_bookmarks(user=self.request.user)
 
 class ShowHistory(LoginRequiredMixin, ListView):
     template_name = 'core/reader/history.html'
     context_object_name = 'histories'
 
     def get_queryset(self):
-        return History.objects.filter(user=self.request.user).order_by('-created_at')
+        return get_histories(user=self.request.user)
 
 class DeleteHistory(LoginRequiredMixin, DeleteView):
     model = History
@@ -78,5 +75,5 @@ class AuthorView(DetailView):
 
     def get_queryset(self):
        # user = get_object_or_404(Users, username=self.kwargs['username'])
-        user =  Users.objects.filter(username = self.kwargs.get("username", None))
+        user =  get_users_profile(self.kwargs.get("username", None))
         return user

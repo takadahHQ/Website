@@ -49,7 +49,6 @@ class Kycs(idModel, statusModel, timeStampModel):
     country_id = models.PositiveIntegerField()
     document_type = models.CharField(max_length=15)
     selfie = models.ImageField(blank=True, null=True)
-    status = models.CharField(max_length=100, choices=status_choices, default='active')
     rejected_reason = RichTextField(blank=True, null=True)
     approved_at = models.DateTimeField(blank=True, null=True)
     rejected_at = models.DateTimeField(blank=True, null=True)
@@ -254,7 +253,7 @@ class Users(AbstractUser):
         verbose_name_plural =  'users'
 
 
-class Wallet(idModel, nameModel, timeStampModel):
+class Wallets(idModel, nameModel, timeStampModel):
     holder_type = models.CharField(max_length=255)
     holder_id = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     slug = models.SlugField(max_length=255)
@@ -290,7 +289,7 @@ class Bank(idModel, nameModel, statusModel, timeStampModel):
     holder_name = models.CharField(max_length=255)
     swift = models.CharField(max_length=255)
     iban = models.CharField(max_length=255)
-    address = models.CharField(max_length=255))
+    address = models.CharField(max_length=255)
     account_number = models.CharField(max_length=32)
 
 
