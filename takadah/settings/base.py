@@ -418,3 +418,122 @@ MATOMO_DOMAIN_PATH = 'mamoto.takadah.com'
 MATOMO_SITE_ID = '1'
 #ANALYTICAL_INTERNAL_IPS = ['192.168.1.45', '192.168.1.57']
 ANALYTICAL_AUTO_IDENTIFY = True
+
+
+# GeoIP
+
+MAXMIND_CITY_DB = os.getenv("MAXMIND_CITY_DB", "/etc/GeoLite2-City.mmdb")
+MAXMIND_ASN_DB = os.getenv("MAXMIND_ASN_DB", "/etc/GeoLite2-ASN.mmdb")
+
+
+MESSAGE_TAGS = {
+    messages.INFO: "~info",
+    messages.WARNING: "~warning",
+    messages.ERROR: "~critical",
+    messages.SUCCESS: "~positive",
+}
+
+# Email
+
+SERVER_EMAIL = os.getenv("SERVER_EMAIL", "Shynet <noreply@shynet.example.com>")
+DEFAULT_FROM_EMAIL = SERVER_EMAIL
+
+if DEBUG or os.environ.get("EMAIL_HOST") is None:
+    EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+else:
+    EMAIL_HOST = os.environ.get("EMAIL_HOST")
+    EMAIL_PORT = int(os.environ.get("EMAIL_PORT", 465))
+    EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER")
+    EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
+    EMAIL_USE_SSL = os.environ.get("EMAIL_USE_SSL")
+    EMAIL_USE_TLS = os.environ.get("EMAIL_USE_TLS")
+
+# Auto fields
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# NPM
+
+NPM_ROOT_PATH = "../"
+
+NPM_FILE_PATTERNS = {
+    "a17t": [os.path.join("dist", "a17t.css"), os.path.join("dist", "tailwind.css")],
+    "apexcharts": [os.path.join("dist", "apexcharts.min.js")],
+    "litepicker": [
+        os.path.join("dist", "nocss", "litepicker.js"),
+        os.path.join("dist", "css", "litepicker.css"),
+        os.path.join("dist", "plugins", "ranges.js"),
+    ],
+    "turbolinks": [os.path.join("dist", "turbolinks.js")],
+    "stimulus": [os.path.join("dist", "stimulus.umd.js")],
+    "inter-ui": [os.path.join("Inter (web)", "*")],
+    "@fortawesome": [os.path.join("fontawesome-free", "js", "all.min.js")],
+    "datamaps": [os.path.join("dist", "datamaps.world.min.js")],
+    "d3": ["d3.min.js"],
+    "topojson": [os.path.join("build", "topojson.min.js")],
+    "flag-icon-css": [
+        os.path.join("css", "flag-icon.min.css"),
+        os.path.join("flags", "*"),
+    ],
+}
+
+# Shynet
+
+# Can everyone create services, or only superusers?
+# Note that in the current version of Shynet, being able to edit a service allows
+# you to see every registered user on the Shynet instance. This will be changed in
+# a future version.
+ONLY_SUPERUSERS_CREATE = os.getenv("ONLY_SUPERUSERS_CREATE", "True") == "True"
+
+# Should the script use HTTPS to send the POST requests? The hostname is from
+# the django SITE default. (Edit it using the admin panel.)
+SCRIPT_USE_HTTPS = os.getenv("SCRIPT_USE_HTTPS", "True") == "True"
+
+# How frequently should the tracking script "phone home" with a heartbeat, in
+# milliseconds?
+SCRIPT_HEARTBEAT_FREQUENCY = int(os.getenv("SCRIPT_HEARTBEAT_FREQUENCY", "5000"))
+
+# How much time can elapse between requests from the same user before a new
+# session is created, in seconds?
+SESSION_MEMORY_TIMEOUT = int(os.getenv("SESSION_MEMORY_TIMEOUT", "1800"))
+
+# Should the Shynet version information be displayed?
+SHOW_SHYNET_VERSION = os.getenv("SHOW_SHYNET_VERSION", "True") == "True"
+
+# Should Shynet show third-party icons in the dashboard?
+SHOW_THIRD_PARTY_ICONS = os.getenv("SHOW_THIRD_PARTY_ICONS", "True") == "True"
+
+# Should Shynet never collect any IP?
+BLOCK_ALL_IPS = os.getenv("BLOCK_ALL_IPS", "False") == "True"
+
+# Include date and service ID in salt?
+AGGRESSIVE_HASH_SALTING = os.getenv("AGGRESSIVE_HASH_SALTING", "False") == "True"
+
+# What location url should be linked to in the frontend?
+LOCATION_URL = os.getenv(
+    "LOCATION_URL", "https://www.openstreetmap.org/?mlat=$LATITUDE&mlon=$LONGITUDE"
+)
+
+# How many services should be displayed on dashboard page?
+DASHBOARD_PAGE_SIZE = int(os.getenv("DASHBOARD_PAGE_SIZE", "5"))
+
+# Should background bars be scaled to full width?
+USE_RELATIVE_MAX_IN_BAR_VISUALIZATION = (
+    os.getenv("USE_RELATIVE_MAX_IN_BAR_VISUALIZATION", "True") == "True"
+)
+
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_METHODS = ["GET", "OPTIONS"]
+
+# IPWare Precedence Options
+IPWARE_META_PRECEDENCE_ORDER = (
+    'HTTP_CF_CONNECTING_IP',
+    'HTTP_X_FORWARDED_FOR', 'X_FORWARDED_FOR', # client, proxy1, proxy2
+    'HTTP_CLIENT_IP',
+    'HTTP_X_REAL_IP',
+    'HTTP_X_FORWARDED',
+    'HTTP_X_CLUSTER_CLIENT_IP',
+    'HTTP_FORWARDED_FOR',
+    'HTTP_FORWARDED',
+    'HTTP_VIA',
+    'REMOTE_ADDR',
+)
