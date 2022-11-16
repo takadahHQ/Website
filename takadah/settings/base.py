@@ -5,6 +5,7 @@ import diskcache
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
+DEBUG = False
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'Takadah-%$)wg^oewabdu(@&ai^v793brks30Retehlu(sjn#(x+3+^$*tq'
@@ -425,13 +426,6 @@ ANALYTICAL_AUTO_IDENTIFY = True
 MAXMIND_CITY_DB = os.getenv("MAXMIND_CITY_DB", "/etc/GeoLite2-City.mmdb")
 MAXMIND_ASN_DB = os.getenv("MAXMIND_ASN_DB", "/etc/GeoLite2-ASN.mmdb")
 
-
-MESSAGE_TAGS = {
-    messages.INFO: "~info",
-    messages.WARNING: "~warning",
-    messages.ERROR: "~critical",
-    messages.SUCCESS: "~positive",
-}
 
 # Email
 
