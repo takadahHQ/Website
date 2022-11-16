@@ -99,9 +99,9 @@ class Categories(Sluggable, idModel, nameModel, statusModel, timeStampModel):
 
 
 class Chapter(idModel, statusModel, timeStampModel):
-    story = models.ForeignKey('Stories', on_delete=models.CASCADE)
+    story = models.ForeignKey('Stories', related_name='chapters', on_delete=models.CASCADE)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    edited_by = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='editor', on_delete=models.DO_NOTHING)
+    edited_by = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='chapter_editor', on_delete=models.DO_NOTHING)
     position = models.IntegerField()
     slug = models.SlugField(null=True, unique=True)
     title = models.CharField(max_length=255)
@@ -138,8 +138,40 @@ class Chapter(idModel, statusModel, timeStampModel):
         except:
             return None
 
+    def get_reviews(self):
+        return self.reviews.filter(parent=None).filter(status='active')
+
     class Meta:
         verbose_name_plural = 'chapters'
+
+
+class Review(idModel, statusModel, timeStampModel):
+    story = models.ForeignKey('Stories', related_name='reviews', on_delete=models.CASCADE)
+    chapter = models.ForeignKey('Chapter', related_name='chapter_reviews', null=True, blank=True, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    parent=models.ForeignKey("self", null=True, blank=True, on_delete=models.CASCADE)
+    text = RichTextUploadingField()
+    flags = GenericRelation(Flag)
+
+    # def save(self, *args, **kwargs):
+    #     if not self.slug:
+    #         self.slug = slugify(self.story.abbreviation + "- chapter-" + f'{self.position}')
+    #         self.words = self.text.count(self.text)
+    #     self.words = self.text.count(self.text)
+    #     super(Chapter, self).save(*args, **kwargs)
+
+    # def get_absolute_url(self):
+    #     return reverse("story:read", kwargs={"type": self.story.story_type.slug, "story": self.story.slug, "slug": self.slug})
+
+    class Meta:
+        verbose_name_plural = 'reviews'
+        ordering = ('created_at',)
+    
+    def __str__(self):
+        return self.text[:50]
+
+    def get_reviews(self):
+        return Review.objects.filter(parent=self).filter(status='active')
 
 class Bookmark(idModel, statusModel, timeStampModel):
     story = models.ForeignKey('Stories', related_name='bookmarked', on_delete=models.CASCADE)
@@ -273,6 +305,7 @@ class Stories(idModel, timeStampModel):
     rating = models.ForeignKey('Rating', on_delete=models.DO_NOTHING, blank=True, null=True)
     released_at = models.DateTimeField()
     featured = models.BooleanField(default=False)
+    featured_at = models.DateTimeField(blank=True, null=True)
     tags = TaggableManager()
     flags = GenericRelation(Flag)
     status = models.CharField(max_length=100, choices=status_choices, default='draft')

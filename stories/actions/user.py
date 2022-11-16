@@ -2,7 +2,9 @@ from django.db.models import Q,Count
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from taggit.models import Tag
-from stories.models import Chapter, Stories, Bookmark, Language, Genre, Rating,Type, Universe
+from django.contrib.auth import get_user_model
+from stories.models import Chapter, Stories, Bookmark, Language, Genre, Rating,Type, History, Universe
+from core.models import Users
 
 def get_genre(slug):
     queryset = Genre.objects.exclude(Q(status='pending') | Q(status='draft'))
@@ -17,7 +19,7 @@ def get_genre(slug):
 def get_stories_by_genre(slug):
     genre = get_genre(slug=slug)
     test = stories = Stories.objects.filter(~Q(status='pending') | ~Q(status='draft'))
-    stories = Stories.objects.filter(~Q(status='pending') | ~Q(status='draft'), genre__slug=genre.slug)
+    stories = Stories.objects.filter(~Q(status='pending') | ~Q(status='draft'), genre__slug=genre.slug).prefetch_related('story_type','language','rating', 'flags', 'following','likes','dislikes', 'author','editor','genre','characters', 'tags')
     return stories
 
 def get_tag(slug):
@@ -26,7 +28,7 @@ def get_tag(slug):
 
 def get_stories_by_tag(slug):
     tag = get_tag(slug=slug)
-    stories = Stories.objects.filter(~Q(status='pending') | ~Q(status='draft'), tags__slug__in=[tag.slug])
+    stories = Stories.objects.filter(~Q(status='pending') | ~Q(status='draft'), tags__slug__in=[tag.slug]).prefetch_related('story_type','language','rating', 'flags', 'following','likes','dislikes', 'author','editor','genre','characters', 'tags')
     return stories
 
 def get_type(slug):
@@ -35,13 +37,13 @@ def get_type(slug):
 
 def get_stories_by_type(slug):
     types = get_type(slug=slug)
-    stories = Stories.objects.filter(~Q(status='pending') | ~Q(status='draft'), story_type__slug__in=[types.slug])
+    stories = Stories.objects.filter(~Q(status='pending') | ~Q(status='draft'), story_type__slug__in=[types.slug]).prefetch_related('story_type','language','rating', 'flags', 'following','likes','dislikes', 'author','editor','genre','characters', 'tags')
     return stories
 
 
 def get_stories_by_author(user):
     # types = get_type(slug=slug)
-    stories = Stories.objects.filter(~Q(status='pending') | ~Q(status='draft'), author=user.id)
+    stories = Stories.objects.filter(~Q(status='pending') | ~Q(status='draft'), author=user.id).prefetch_related('story_type','language','rating', 'flags', 'following','likes','dislikes', 'author','editor','genre','characters', 'tags')
     return stories
 
 def get_language(slug):
@@ -49,11 +51,11 @@ def get_language(slug):
     return language
 
 def get_story(slug):
-    story = Stories.objects.select_related('story_type', 'language','rating').filter(~Q(status='pending') | ~Q(status='draft'), slug=slug).annotate(chapter_count=Count('chapter'))
+    story = Stories.objects.filter(~Q(status='pending') | ~Q(status='draft'), slug=slug).annotate(chapters_count=Count('chapters')).prefetch_related('story_type','language','rating', 'following','likes','dislikes', 'author','editor','genre','characters', 'tags', 'story__chapters', 'chapters')
     return story
 
 def get_all_ratings(slug):
-    ratings = Rating.objects.filter(~Q(status='pending') | ~Q(status='draft'), rating__slug=self.kwargs.get('slug'))
+    ratings = Rating.objects.filter(~Q(status='pending') | ~Q(status='draft'), rating__slug=slug)
     return ratings
 
 def like_story(user, slug):
@@ -93,23 +95,39 @@ def bookmark_story(user, slug):
     bookmarks = Bookmark.objects.get(story=story.id)
     return bookmarks
 
+def get_bookmarked_stories(user):
+    bookmarks = Bookmark.objects.filter(user=user).filter(status='active').order_by('-created_at').prefetch_related('story')
+    return bookmarks
+
+def get_user_histories(user):
+    histories = History.objects.filter(user=user).filter(status='active').order_by('-created_at').prefetch_related('story','chapter', 'story__story_type',)
+    return histories
+
 def get_featured_stories(count):
-    stories = Stories.objects.filter(featured=True).filter(status='active')[:count]
+    stories = ( Stories.objects.filter(featured=True)
+    .select_related('story_type','language','rating', 'flags')
+    .filter(status='active')
+    .prefetch_related('story_type','language','rating', 'flags', 'following','likes','dislikes', 'author','editor','genre','characters', 'tags')[:count]
+    )
     return stories
 
 def get_weekly_stories(count):
-    stories = Stories.objects.filter(featured=True).filter(status='active')[:count]
+    stories = Stories.objects.filter(featured=True).filter(status='active').prefetch_related('story_type','language','rating', 'flags', 'following','likes','dislikes', 'author','editor','genre','characters', 'tags')[:count]
     return stories
 
 def get_fresh_stories(count):
     exclude = ['draft', 'prerelease']
-    stories = Stories.objects.order_by('created_at').exclude(status__in=exclude)[:count]
+    stories = Stories.objects.order_by('created_at').exclude(status__in=exclude).prefetch_related('story_type','language','rating', 'flags', 'following','likes','dislikes', 'author','editor','genre','characters', 'tags')[:count]
     return stories
 
 def get_completed_stories(count):
-    stories =  Stories.objects.filter(status='completed')[:count]
+    stories =  Stories.objects.filter(status='completed').prefetch_related('story_type','language','rating', 'flags', 'following','likes','dislikes', 'author','editor','genre','characters', 'tags')[:count]
     return stories
     
 def get_updated_stories(count):
-    stories = Stories.objects.order_by('updated_at').filter(status='active')[:count]
+    stories = Stories.objects.order_by('updated_at').filter(status='active').prefetch_related('story_type','language','rating', 'flags', 'following','likes','dislikes', 'author','editor','genre','characters', 'tags')[:count]
     return stories
+
+def get_user_profile(user):
+    user = Users.objects.filter(username = user).prefetch_related('authors','editors')
+    return user

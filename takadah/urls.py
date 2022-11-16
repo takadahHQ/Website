@@ -8,7 +8,6 @@ from django.conf.urls import handler404, handler500
 
 
 urlpatterns = [
-    path('report/', include('reports.urls')),
     path('ads/', include('adverts.urls')),
     path('admin/', admin.site.urls),
     #path("api/", api.urls),

@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+import diskcache
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
@@ -74,10 +75,9 @@ INSTALLED_APPS = [
     'flag',
     'watson',
     'reversion',
-    'helpdesk',  # This is us!
+    'helpdesk', 
     'newsfeed',
     'taggit',
-    #'reports',
     #make a supports app
     #'subscriptions',
 ]
@@ -101,6 +101,21 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'takadah.urls'
+
+CACHES = {
+    'default': {
+        'BACKEND': 'diskcache.DjangoCache',
+        'LOCATION': '/path/to/cache/directory',
+        'TIMEOUT': 300,
+        # ^-- Django setting for default timeout of each key.
+        'SHARDS': 8,
+        'DATABASE_TIMEOUT': 0.010,  # 10 milliseconds
+        # ^-- Timeout for each DjangoCache database transaction.
+        'OPTIONS': {
+            'size_limit': 2 ** 30   # 1 gigabyte
+        },
+    },
+}
 
 TEMPLATES = [
     {
