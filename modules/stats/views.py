@@ -18,9 +18,9 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import TemplateView, View
 from ipware import get_client_ip
 
-from core.models import Service
+from modules.stats.models import Service
 
-from ..tasks import ingress_request
+from modules.stats.tasks import ingress_request
 
 
 def ingress(request, service_uuid, identifier, tracker, payload):

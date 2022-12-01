@@ -56,7 +56,6 @@ INSTALLED_APPS = [
     "two_factor",
     #'two_factor.plugins.phonenumber',  # <- if you want phone number capability.
     "two_factor.plugins.email",
-    "modules.owliver",
     "crispy_forms",
     "crispy_tailwind",
     "extra_views",
@@ -65,22 +64,24 @@ INSTALLED_APPS = [
     #'auditlog',
     "ckeditor",
     "ckeditor_uploader",
-    "modules.core",
-    "modules.pages",
-    "modules.blog",
-    "modules.stories",
-    "modules.adverts",
     "hijack",
     "hijack.contrib.admin",
     "import_export",
     "flag",
     "watson",
+    "ipware",
     "reversion",
-    "modules.helpdesk",
     "newsfeed",
     "taggit",
     # make a supports app
     #'subscriptions',
+    "modules.core",
+    "modules.pages",
+    "modules.blog",
+    "modules.stories",
+    "modules.adverts",
+    "modules.helpdesk",
+    "modules.owliver",
 ]
 
 INTERNAL_IPS = [

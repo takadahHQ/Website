@@ -8,5 +8,6 @@
             "name": "Takadah"
         }
     ],
-    "sqltools.useNodeRuntime": true
+    "sqltools.useNodeRuntime": true,
+    "python.analysis.typeCheckingMode": "off"
 }
