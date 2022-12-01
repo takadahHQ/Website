@@ -14,6 +14,7 @@ class DatatablesTicketSerializer(serializers.ModelSerializer):
     A serializer for the Ticket model, returns data in the format as required by
     datatables for ticket_list.html. Called from staff.datatables_ticket_list.
     """
+
     ticket = serializers.SerializerMethodField()
     assigned_to = serializers.SerializerMethodField()
     submitter = serializers.SerializerMethodField()
@@ -28,9 +29,21 @@ class DatatablesTicketSerializer(serializers.ModelSerializer):
     class Meta:
         model = Ticket
         # fields = '__all__'
-        fields = ('ticket', 'id', 'priority', 'title', 'queue', 'status',
-                  'created', 'due_date', 'assigned_to', 'submitter', 'row_class',
-                  'time_spent', 'kbitem')
+        fields = (
+            "ticket",
+            "id",
+            "priority",
+            "title",
+            "queue",
+            "status",
+            "created",
+            "due_date",
+            "assigned_to",
+            "submitter",
+            "row_class",
+            "time_spent",
+            "kbitem",
+        )
 
     def get_queue(self, obj):
         return {"title": obj.queue.title, "id": obj.queue.id}
@@ -74,26 +87,34 @@ class DatatablesTicketSerializer(serializers.ModelSerializer):
 class FollowUpAttachmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = FollowUpAttachment
-        fields = ('id', 'followup', 'file', 'filename', 'mime_type', 'size')
+        fields = ("id", "followup", "file", "filename", "mime_type", "size")
 
 
 class FollowUpSerializer(serializers.ModelSerializer):
     followupattachment_set = FollowUpAttachmentSerializer(many=True, read_only=True)
     attachments = serializers.ListField(
-        child=serializers.FileField(),
-        write_only=True,
-        required=False
+        child=serializers.FileField(), write_only=True, required=False
     )
 
     class Meta:
         model = FollowUp
         fields = (
-            'id', 'ticket', 'date', 'title', 'comment', 'public', 'user', 'new_status', 'message_id',
-            'time_spent', 'followupattachment_set', 'attachments'
+            "id",
+            "ticket",
+            "date",
+            "title",
+            "comment",
+            "public",
+            "user",
+            "new_status",
+            "message_id",
+            "time_spent",
+            "followupattachment_set",
+            "attachments",
         )
 
     def create(self, validated_data):
-        attachments = validated_data.pop('attachments', None)
+        attachments = validated_data.pop("attachments", None)
         followup = super().create(validated_data)
         if attachments:
             process_attachments(followup, attachments)
@@ -107,8 +128,20 @@ class TicketSerializer(serializers.ModelSerializer):
     class Meta:
         model = Ticket
         fields = (
-            'id', 'queue', 'title', 'description', 'resolution', 'submitter_email', 'assigned_to', 'status', 'on_hold',
-            'priority', 'due_date', 'merged_to', 'attachment', 'followup_set'
+            "id",
+            "queue",
+            "title",
+            "description",
+            "resolution",
+            "submitter_email",
+            "assigned_to",
+            "status",
+            "on_hold",
+            "priority",
+            "due_date",
+            "merged_to",
+            "attachment",
+            "followup_set",
         )
 
     def __init__(self, *args, **kwargs):
@@ -116,26 +149,26 @@ class TicketSerializer(serializers.ModelSerializer):
 
         # Add custom fields
         for field in CustomField.objects.all():
-            self.fields['custom_%s' % field.name] = field.build_api_field()
+            self.fields["custom_%s" % field.name] = field.build_api_field()
 
     def create(self, validated_data):
-        """ Use TicketForm to validate and create ticket """
-        queues = HelpdeskUser(self.context['request'].user).get_queues()
+        """Use TicketForm to validate and create ticket"""
+        queues = HelpdeskUser(self.context["request"].user).get_queues()
         queue_choices = [(q.id, q.title) for q in queues]
         data = validated_data.copy()
-        data['body'] = data['description']
+        data["body"] = data["description"]
         # TicketForm needs id for ForeignKey (not the instance themselves)
-        data['queue'] = data['queue'].id
-        if data.get('assigned_to'):
-            data['assigned_to'] = data['assigned_to'].id
-        if data.get('merged_to'):
-            data['merged_to'] = data['merged_to'].id
+        data["queue"] = data["queue"].id
+        if data.get("assigned_to"):
+            data["assigned_to"] = data["assigned_to"].id
+        if data.get("merged_to"):
+            data["merged_to"] = data["merged_to"].id
 
-        files = {'attachment': data.pop('attachment', None)}
+        files = {"attachment": data.pop("attachment", None)}
 
         ticket_form = TicketForm(data=data, files=files, queue_choices=queue_choices)
         if ticket_form.is_valid():
-            ticket = ticket_form.save(user=self.context['request'].user)
+            ticket = ticket_form.save(user=self.context["request"].user)
             ticket.set_custom_field_values()
             return ticket
 
@@ -152,11 +185,11 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('first_name', 'last_name', 'username', 'email', 'password')
+        fields = ("first_name", "last_name", "username", "email", "password")
 
     def create(self, validated_data):
         user = super(UserSerializer, self).create(validated_data)
         user.is_active = True
-        user.set_password(validated_data['password'])
+        user.set_password(validated_data["password"])
         user.save()
         return user

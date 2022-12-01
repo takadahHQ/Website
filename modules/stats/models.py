@@ -1,10 +1,3 @@
-# Create your models here.
-#get the total vistors to a story
-#count of vistors by country
-#count of vistors by gender
-#count of visitors by age
-#amount of first time users to a story
-
 import uuid
 
 from django.db import models
@@ -17,13 +10,12 @@ import re
 import uuid
 
 from secrets import token_urlsafe
-
 from django.apps import apps
 from django.conf import settings
-from django.contrib.auth.models import AbstractUser
 from django.core.exceptions import ValidationError
 from django.db.models.functions import TruncDate, TruncHour
 from django.db.utils import NotSupportedError
+from modules.stories.models import Stories
 
 # How long a session a needs to go without an update to no longer be considered 'active' (i.e., currently online)
 ACTIVE_USER_TIMEDELTA = timezone.timedelta(
@@ -61,13 +53,15 @@ def _default_api_token():
 
 def _default_uuid():
     return str(uuid.uuid4())
-class User(AbstractUser):
-    username = models.TextField(default=_default_uuid, unique=True)
-    email = models.EmailField(unique=True)
-    api_token = models.TextField(default=_default_api_token, unique=True)
 
-    def __str__(self):
-        return self.email
+
+# class User(AbstractUser):
+#     username = models.TextField(default=_default_uuid, unique=True)
+#     email = models.EmailField(unique=True)
+#     api_token = models.TextField(default=_default_api_token, unique=True)
+
+#     def __str__(self):
+#         return self.email
 
 
 class Service(models.Model):
@@ -78,13 +72,13 @@ class Service(models.Model):
     uuid = models.UUIDField(default=_default_uuid, primary_key=True)
     name = models.TextField(max_length=64, verbose_name=_("Name"))
     owner = models.ForeignKey(
-        User,
+        "stories.Stories",
         verbose_name=_("Owner"),
         on_delete=models.CASCADE,
-        related_name="owning_services",
+        related_name="analytics",
     )
     collaborators = models.ManyToManyField(
-        User,
+        settings.AUTH_USER_MODEL,
         verbose_name=_("Collaborators"),
         related_name="collaborating_services",
         blank=True,
@@ -360,7 +354,7 @@ class Service(models.Model):
             kwargs={"pk": self.pk},
         )
 
-        
+
 class Session(models.Model):
     uuid = models.UUIDField(default=_default_uuid, primary_key=True)
     service = models.ForeignKey(
@@ -455,8 +449,8 @@ class Hit(models.Model):
     last_seen = models.DateTimeField(default=timezone.now, db_index=True)
     heartbeats = models.IntegerField(default=0)
     tracker = models.TextField(
-        choices=[("JS", "JavaScript"), ("PIXEL", "Pixel (noscript)")]
-    )  # Tracking pixel or JS
+        choices=[("BACK", "Backend"), ("API", "Api (noscript)")]
+    )  # Tracking backend or API
 
     # Advanced page information
     location = models.TextField(blank=True, db_index=True)
@@ -487,8 +481,3 @@ class Hit(models.Model):
             "dashboard:service_session",
             kwargs={"pk": self.service.pk, "session_pk": self.session.pk},
         )
-
-
-
-
-

@@ -9,14 +9,12 @@ from django.test.utils import override_settings
 User = get_user_model()
 
 
-@override_settings(
-    HELPDESK_VIEW_A_TICKET_PUBLIC=True
-)
+@override_settings(HELPDESK_VIEW_A_TICKET_PUBLIC=True)
 class TestTicketLookupPublicEnabled(TestCase):
     def setUp(self):
-        q = Queue(title='Q1', slug='q1')
+        q = Queue(title="Q1", slug="q1")
         q.save()
-        t = Ticket(title='Test Ticket', submitter_email='test@domain.com')
+        t = Ticket(title="Test Ticket", submitter_email="test@domain.com")
         t.queue = q
         t.save()
         self.ticket = t
@@ -33,20 +31,26 @@ class TestTicketLookupPublicEnabled(TestCase):
         # we will exercise 'reverse' to lookup/build the URL
         # from the ticket info we have
         # http://example.com/helpdesk/view/?ticket=q1-1&email=None
-        response = self.client.get(reverse('helpdesk:public_view'),
-                                   {'ticket': self.ticket.ticket_for_url,
-                                    'email': self.ticket.submitter_email})
+        response = self.client.get(
+            reverse("helpdesk:public_view"),
+            {
+                "ticket": self.ticket.ticket_for_url,
+                "email": self.ticket.submitter_email,
+            },
+        )
         self.assertEqual(response.status_code, 200)
 
     def test_ticket_with_changed_queue(self):
         # Make a ticket (already done in setup() )
         # Now make another queue
-        q2 = Queue(title='Q2', slug='q2')
+        q2 = Queue(title="Q2", slug="q2")
         q2.save()
         # grab the URL / params which would have been emailed out to submitter.
-        url = reverse('helpdesk:public_view')
-        params = {'ticket': self.ticket.ticket_for_url,
-                  'email': self.ticket.submitter_email}
+        url = reverse("helpdesk:public_view")
+        params = {
+            "ticket": self.ticket.ticket_for_url,
+            "email": self.ticket.submitter_email,
+        }
         # Pickup the ticket created in setup() and change its queue
         self.ticket.queue = q2
         self.ticket.save()
@@ -56,15 +60,17 @@ class TestTicketLookupPublicEnabled(TestCase):
         self.assertNotContains(response, "Invalid ticket ID")
 
     def test_add_email_to_ticketcc_if_not_in(self):
-        staff_email = 'staff@mail.com'
-        staff_user = User.objects.create(username='staff', email=staff_email, is_staff=True)
+        staff_email = "staff@mail.com"
+        staff_user = User.objects.create(
+            username="staff", email=staff_email, is_staff=True
+        )
         self.ticket.assigned_to = staff_user
         self.ticket.save()
-        email_1 = 'user1@mail.com'
+        email_1 = "user1@mail.com"
         ticketcc_1 = self.ticket.ticketcc_set.create(email=email_1)
 
         # Add new email to CC
-        email_2 = 'user2@mail.com'
+        email_2 = "user2@mail.com"
         ticketcc_2 = self.ticket.add_email_to_ticketcc_if_not_in(email=email_2)
         self.assertEqual(list(self.ticket.ticketcc_set.all()), [ticketcc_1, ticketcc_2])
 
@@ -79,7 +85,9 @@ class TestTicketLookupPublicEnabled(TestCase):
         self.assertEqual(list(self.ticket.ticketcc_set.all()), [ticketcc_1, ticketcc_2])
 
         # Move a ticketCC from ticket 1 to ticket 2
-        ticket_2 = Ticket.objects.create(queue=self.ticket.queue, title='Ticket 2', submitter_email=email_2)
+        ticket_2 = Ticket.objects.create(
+            queue=self.ticket.queue, title="Ticket 2", submitter_email=email_2
+        )
         self.assertEqual(ticket_2.ticketcc_set.count(), 0)
         ticket_2.add_email_to_ticketcc_if_not_in(ticketcc=ticketcc_1)
         self.assertEqual(ticketcc_1.ticket, ticket_2)

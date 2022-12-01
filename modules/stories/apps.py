@@ -1,8 +1,6 @@
 from django.apps import AppConfig
 from watson import search as watson
 
-from modules.core.apps import CoreConfig
-
 
 class StoriesConfig(AppConfig):
     default_auto_field = "django.db.models.BigAutoField"

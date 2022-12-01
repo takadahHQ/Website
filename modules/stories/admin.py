@@ -1,14 +1,28 @@
 from django.contrib import admin
-from .models import Stories, Categories, Chapter, Character, Bookmark, Genre, Language, Rating, Universe, Type, Author, Editor
+from .models import (
+    Stories,
+    Categories,
+    Chapter,
+    Character,
+    Bookmark,
+    Genre,
+    Language,
+    Rating,
+    Universe,
+    Type,
+    Author,
+    Editor,
+)
 
 from import_export import resources
+
 # Register your models here.
 
 
 class StoriesResource(resources.ModelResource):
-
     class Meta:
         model = Stories
+
 
 class EditorInline(admin.StackedInline):
     model = Editor
@@ -19,11 +33,18 @@ class AuthorInline(admin.StackedInline):
     model = Author
     max_num = 3
 
+
 class StoriesAdmin(admin.ModelAdmin):
-    list_display = ('title', 'cover', 'summary', 'status','released_at', 'created_at', 'updated_at')
-    inlines = [
-        AuthorInline, EditorInline
-    ]
+    list_display = (
+        "title",
+        "cover",
+        "summary",
+        "status",
+        "released_at",
+        "created_at",
+        "updated_at",
+    )
+    inlines = [AuthorInline, EditorInline]
     resource_class = StoriesResource
 
     # fieldsets = (
@@ -44,11 +65,14 @@ class StoriesAdmin(admin.ModelAdmin):
     #     })
     # )
     # prepopulated_fields = {"slug": ("title",)}
-    
+
     # autocomplete_fields = ['tags', 'title']
+
+
 class MainAdmin(admin.ModelAdmin):
-    list_display = ('name', 'slug', 'created_at', 'updated_at')
+    list_display = ("name", "slug", "created_at", "updated_at")
     prepopulated_fields = {"slug": ("name",)}
+
 
 # admin.site.register(Tag)
 admin.site.register(Type, MainAdmin)
@@ -59,6 +83,8 @@ admin.site.register(Rating, MainAdmin)
 admin.site.register(Bookmark)
 admin.site.register(Chapter)
 admin.site.register(Character)
-admin.site.register(Universe, )
+admin.site.register(
+    Universe,
+)
 admin.site.register(Author)
 admin.site.register(Stories, StoriesAdmin)

@@ -15,7 +15,7 @@ class AuthenticationLog(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'authentication_log'
+        db_table = "authentication_log"
 
 
 class Authors(models.Model):
@@ -28,7 +28,7 @@ class Authors(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'authors'
+        db_table = "authors"
 
 
 class BandwagonEvents(models.Model):
@@ -43,7 +43,7 @@ class BandwagonEvents(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'bandwagon_events'
+        db_table = "bandwagon_events"
 
 
 class BankAccounts(models.Model):
@@ -65,7 +65,7 @@ class BankAccounts(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'bank_accounts'
+        db_table = "bank_accounts"
 
 
 class BetaReaders(models.Model):
@@ -78,7 +78,7 @@ class BetaReaders(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'beta_readers'
+        db_table = "beta_readers"
 
 
 class Bookmarks(models.Model):
@@ -92,7 +92,7 @@ class Bookmarks(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'bookmarks'
+        db_table = "bookmarks"
 
 
 class CanvasPosts(models.Model):
@@ -112,8 +112,8 @@ class CanvasPosts(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'canvas_posts'
-        unique_together = (('slug', 'user_id'),)
+        db_table = "canvas_posts"
+        unique_together = (("slug", "user_id"),)
 
 
 class CanvasPostsTags(models.Model):
@@ -122,8 +122,8 @@ class CanvasPostsTags(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'canvas_posts_tags'
-        unique_together = (('post_id', 'tag_id'),)
+        db_table = "canvas_posts_tags"
+        unique_together = (("post_id", "tag_id"),)
 
 
 class CanvasPostsTopics(models.Model):
@@ -132,8 +132,8 @@ class CanvasPostsTopics(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'canvas_posts_topics'
-        unique_together = (('post_id', 'topic_id'),)
+        db_table = "canvas_posts_topics"
+        unique_together = (("post_id", "topic_id"),)
 
 
 class CanvasTags(models.Model):
@@ -147,8 +147,8 @@ class CanvasTags(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'canvas_tags'
-        unique_together = (('slug', 'user_id'),)
+        db_table = "canvas_tags"
+        unique_together = (("slug", "user_id"),)
 
 
 class CanvasTopics(models.Model):
@@ -162,8 +162,8 @@ class CanvasTopics(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'canvas_topics'
-        unique_together = (('slug', 'user_id'),)
+        db_table = "canvas_topics"
+        unique_together = (("slug", "user_id"),)
 
 
 class CanvasUsers(models.Model):
@@ -185,7 +185,7 @@ class CanvasUsers(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'canvas_users'
+        db_table = "canvas_users"
 
 
 class CanvasViews(models.Model):
@@ -198,7 +198,7 @@ class CanvasViews(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'canvas_views'
+        db_table = "canvas_views"
 
 
 class CanvasVisits(models.Model):
@@ -211,7 +211,7 @@ class CanvasVisits(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'canvas_visits'
+        db_table = "canvas_visits"
 
 
 class Categories(models.Model):
@@ -224,7 +224,7 @@ class Categories(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'categories'
+        db_table = "categories"
 
 
 class Chapters(models.Model):
@@ -244,7 +244,7 @@ class Chapters(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'chapters'
+        db_table = "chapters"
 
 
 class Characters(models.Model):
@@ -257,7 +257,7 @@ class Characters(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'characters'
+        db_table = "characters"
 
 
 class Countries(models.Model):
@@ -270,7 +270,7 @@ class Countries(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'countries'
+        db_table = "countries"
 
 
 class FailedJobs(models.Model):
@@ -284,7 +284,7 @@ class FailedJobs(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'failed_jobs'
+        db_table = "failed_jobs"
 
 
 class Genres(models.Model):
@@ -297,7 +297,7 @@ class Genres(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'genres'
+        db_table = "genres"
 
 
 class KycDocuments(models.Model):
@@ -311,7 +311,7 @@ class KycDocuments(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'kyc_documents'
+        db_table = "kyc_documents"
 
 
 class Kycs(models.Model):
@@ -332,7 +332,7 @@ class Kycs(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'kycs'
+        db_table = "kycs"
 
 
 class Languages(models.Model):
@@ -346,7 +346,7 @@ class Languages(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'languages'
+        db_table = "languages"
 
 
 class Menus(models.Model):
@@ -363,7 +363,7 @@ class Menus(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'menus'
+        db_table = "menus"
 
 
 class Migrations(models.Model):
@@ -372,7 +372,7 @@ class Migrations(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'migrations'
+        db_table = "migrations"
 
 
 class ModelChangesHistory(models.Model):
@@ -390,7 +390,7 @@ class ModelChangesHistory(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'model_changes_history'
+        db_table = "model_changes_history"
 
 
 class Packages(models.Model):
@@ -406,7 +406,7 @@ class Packages(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'packages'
+        db_table = "packages"
 
 
 class Pages(models.Model):
@@ -423,7 +423,7 @@ class Pages(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'pages'
+        db_table = "pages"
 
 
 class PasswordResets(models.Model):
@@ -433,7 +433,7 @@ class PasswordResets(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'password_resets'
+        db_table = "password_resets"
 
 
 class PersonalAccessTokens(models.Model):
@@ -449,7 +449,7 @@ class PersonalAccessTokens(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'personal_access_tokens'
+        db_table = "personal_access_tokens"
 
 
 class Ratings(models.Model):
@@ -462,7 +462,7 @@ class Ratings(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'ratings'
+        db_table = "ratings"
 
 
 class Reports(models.Model):
@@ -477,7 +477,7 @@ class Reports(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'reports'
+        db_table = "reports"
 
 
 class RouteUsage(models.Model):
@@ -492,11 +492,11 @@ class RouteUsage(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'route_usage'
+        db_table = "route_usage"
 
 
 class ScheduleHistories(models.Model):
-    schedule = models.ForeignKey('Schedules', models.DO_NOTHING)
+    schedule = models.ForeignKey("Schedules", models.DO_NOTHING)
     command = models.CharField(max_length=255)
     params = models.TextField(blank=True, null=True)
     output = models.TextField()
@@ -506,7 +506,7 @@ class ScheduleHistories(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'schedule_histories'
+        db_table = "schedule_histories"
 
 
 class Schedules(models.Model):
@@ -536,7 +536,7 @@ class Schedules(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'schedules'
+        db_table = "schedules"
 
 
 class Sessions(models.Model):
@@ -549,7 +549,7 @@ class Sessions(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'sessions'
+        db_table = "sessions"
 
 
 class Settings(models.Model):
@@ -568,7 +568,7 @@ class Settings(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'settings'
+        db_table = "settings"
 
 
 class SiteSearchConfigs(models.Model):
@@ -590,7 +590,7 @@ class SiteSearchConfigs(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'site_search_configs'
+        db_table = "site_search_configs"
 
 
 class Socials(models.Model):
@@ -605,7 +605,7 @@ class Socials(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'socials'
+        db_table = "socials"
 
 
 class Sponsors(models.Model):
@@ -618,7 +618,7 @@ class Sponsors(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'sponsors'
+        db_table = "sponsors"
 
 
 class StatsEvents(models.Model):
@@ -631,7 +631,7 @@ class StatsEvents(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'stats_events'
+        db_table = "stats_events"
 
 
 class Stories(models.Model):
@@ -653,14 +653,14 @@ class Stories(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'stories'
+        db_table = "stories"
 
 
 class Transactions(models.Model):
     id = models.BigAutoField(primary_key=True)
     payable_type = models.CharField(max_length=255)
     payable_id = models.PositiveBigIntegerField()
-    wallet = models.ForeignKey('Wallets', models.DO_NOTHING)
+    wallet = models.ForeignKey("Wallets", models.DO_NOTHING)
     type = models.CharField(max_length=8)
     amount = models.DecimalField(max_digits=64, decimal_places=0)
     confirmed = models.IntegerField()
@@ -671,7 +671,7 @@ class Transactions(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'transactions'
+        db_table = "transactions"
 
 
 class Transfers(models.Model):
@@ -692,7 +692,7 @@ class Transfers(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'transfers'
+        db_table = "transfers"
 
 
 class Types(models.Model):
@@ -704,7 +704,7 @@ class Types(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'types'
+        db_table = "types"
 
 
 class Universes(models.Model):
@@ -717,7 +717,7 @@ class Universes(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'universes'
+        db_table = "universes"
 
 
 class Users(models.Model):
@@ -746,7 +746,7 @@ class Users(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'users'
+        db_table = "users"
 
 
 class Wallets(models.Model):
@@ -765,5 +765,5 @@ class Wallets(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'wallets'
-        unique_together = (('holder_type', 'holder_id', 'slug'),)
+        db_table = "wallets"
+        unique_together = (("holder_type", "holder_id", "slug"),)

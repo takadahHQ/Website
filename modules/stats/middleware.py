@@ -1,8 +1,10 @@
 from django.utils.functional import SimpleLazyObject
 import time
-from .utils import getUserAgents
+import json
+from modules.stats.utils import getUserAgent
 from modules.stats.tasks import ingress_request
 from ipware import get_client_ip
+
 
 def ingress(request, service_uuid, identifier, tracker, payload):
     time = time.timezone.now()
@@ -41,20 +43,21 @@ class UserAgentMiddleware(object):
 
 
 class AnalyticsMiddleware(object):
-    def process_request(self, request, **args, **kwargs):
+    def __call__(self, *args, **kwargs):
+        service_uuid = self.kwargs.get("service_uuid")
+        service_identifier = self.kwargs.get("identifier", "")
+
+    def process_request(self, request):
         self.start_time = time.time()
         payload = json.loads(self.request.body)
-        # hit, hit_created = HitCount.objects.get_or_create(url=request.path)
-        # hit.hits = F('hits') + 1
-        # hit.save()
         ingress(
             self.request,
-            self.kwargs.get("service_uuid"),
-            self.kwargs.get("identifier", ""),
+            self.service_uuid,
+            self.service_identifier,
             "BACK",
             payload,
         )
-        return response
+        return
 
     def process_exception(self, request, exception):
         pass

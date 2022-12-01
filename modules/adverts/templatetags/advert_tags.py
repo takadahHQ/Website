@@ -3,6 +3,7 @@ from django.template.loader import render_to_string
 
 register = template.Library()
 
+
 @register.filter
 def inject_advert(value, arg):
 

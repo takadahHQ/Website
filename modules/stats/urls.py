@@ -1,12 +1,10 @@
 from django.contrib import admin
 from django.urls import include, path
 
-import views 
+import views
 
 urlpatterns = [
-    path(
-        "<service_uuid>/pixel.gif", views.PixelView.as_view(), name="endpoint_pixel"
-    ),
+    path("<service_uuid>/pixel.gif", views.PixelView.as_view(), name="endpoint_pixel"),
     path(
         "<service_uuid>/script.js", views.ScriptView.as_view(), name="endpoint_script"
     ),

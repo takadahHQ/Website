@@ -9,48 +9,70 @@ class PostInlineTags(admin.TabularInline):
 
 class TagsAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("name",)}
-    inlines = [
-        PostInlineTags
-    ]
-    search_fields = ['name']
+    inlines = [PostInlineTags]
+    search_fields = ["name"]
+
 
 class PostInlineCategory(admin.StackedInline):
     model = Post
     max_num = 2
 
+
 class CategoryAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("name",)}
-    inlines = [
-        PostInlineCategory
-    ]
+    inlines = [PostInlineCategory]
+
 
 class TopicsAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("name",)}
-    search_fields = ['name']
+    search_fields = ["name"]
+
 
 class PostAdmin(admin.ModelAdmin):
-    list_display = ('title', 'slug', 'content', 'status', 'created_at', 'updated_at')
+    list_display = ("title", "slug", "content", "status", "created_at", "updated_at")
     fieldsets = (
-        (None, {
-            "fields": ('title', 'slug', 'category','featured_image', 'featured_image_caption', 'content',),
-        }),
-        ('Topics and Tags',{
-            'classes': ('collapse',),
-            'fields': ('tags', 'topics'),
-        }),
-        ('SEO', {
-            'classes': ('collapse',),
-            'fields': ('seo_title', 'seo_keywords', 'seo_description',)
-        }),
-        ('Publish', {
-            'classes': ('collapse',),
-            'fields': ('status', 'published_at', 'deleted_at')
-        })
+        (
+            None,
+            {
+                "fields": (
+                    "title",
+                    "slug",
+                    "category",
+                    "featured_image",
+                    "featured_image_caption",
+                    "content",
+                ),
+            },
+        ),
+        (
+            "Topics and Tags",
+            {
+                "classes": ("collapse",),
+                "fields": ("tags", "topics"),
+            },
+        ),
+        (
+            "SEO",
+            {
+                "classes": ("collapse",),
+                "fields": (
+                    "seo_title",
+                    "seo_keywords",
+                    "seo_description",
+                ),
+            },
+        ),
+        (
+            "Publish",
+            {
+                "classes": ("collapse",),
+                "fields": ("status", "published_at", "deleted_at"),
+            },
+        ),
     )
     prepopulated_fields = {"slug": ("title",)}
-    
-    autocomplete_fields = ['tags', 'topics']
 
+    autocomplete_fields = ["tags", "topics"]
 
 
 # admin.site.register(Category)

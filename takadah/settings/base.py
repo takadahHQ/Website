@@ -11,6 +11,7 @@ DEBUG = False
 SECRET_KEY = "Takadah-%$)wg^oewabdu(@&ai^v793brks30Retehlu(sjn#(x+3+^$*tq"
 
 AUTH_USER_MODEL = "core.Users"
+STORIES_MODEL = "stories.Stories"
 LOGIN_REDIRECT_URL = "core:index"
 LOGOUT_REDIRECT_URL = "core:index"
 
@@ -82,6 +83,7 @@ INSTALLED_APPS = [
     "modules.adverts",
     "modules.helpdesk",
     "modules.owliver",
+    "modules.stats",
 ]
 
 INTERNAL_IPS = [
@@ -99,6 +101,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "hijack.middleware.HijackUserMiddleware",
+    "modules.stats.middleware.AnalyticsMiddleware",
     # 'auditlog.middleware.AuditlogMiddleware',
 ]
 

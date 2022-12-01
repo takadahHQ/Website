@@ -1,32 +1,32 @@
 from .base import *
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'takadah-dev-%$)wg^oewabdu(@&ai^v793brks2q20ehlu(sjn#(x+3+^$*tq'
+SECRET_KEY = "takadah-dev-%$)wg^oewabdu(@&ai^v793brks2q20ehlu(sjn#(x+3+^$*tq"
 
 DEBUG = True
 
-ALLOWED_HOSTS = ['www.takadah.com','takadah.com', '127.0.0.1']
+ALLOWED_HOSTS = ["www.takadah.com", "takadah.com", "127.0.0.1"]
 
 
 INTERNAL_IPS = [
-    '127.0.0.1',
+    "127.0.0.1",
 ]
 INSTALLED_APPS += [
-    'django_browser_reload',
-    'debug_toolbar',
+    "django_browser_reload",
+    "debug_toolbar",
     #'django_fastdev',
 ]
 
 MIDDLEWARE += [
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
-    'django_browser_reload.middleware.BrowserReloadMiddleware',
-     ]
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
+    "django_browser_reload.middleware.BrowserReloadMiddleware",
+]
 
 # #Local
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
     }
 }
 
@@ -35,12 +35,12 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
-    ]
+]
 
-#Local 
-STATIC_URL = 'static/'
-# STATIC_ROOT = os.path.join(BASE_DIR, 'static')  
-MEDIA_URL = 'media/'
+# Local
+STATIC_URL = "static/"
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+MEDIA_URL = "media/"
 # MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

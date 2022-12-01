@@ -7,16 +7,15 @@ from helpdesk.models import Ticket, Queue, UserSettings
 User = get_user_model()
 
 
-def get_user(username='helpdesk.staff',
-             password='password',
-             is_staff=False,
-             is_superuser=False):
+def get_user(
+    username="helpdesk.staff", password="password", is_staff=False, is_superuser=False
+):
     try:
         user = User.objects.get(username=username)
     except User.DoesNotExist:
-        user = User.objects.create_user(username=username,
-                                        password=password,
-                                        email='%s@example.com' % username)
+        user = User.objects.create_user(
+            username=username, password=password, email="%s@example.com" % username
+        )
         user.is_staff = is_staff
         user.is_superuser = is_superuser
         user.save()
@@ -46,25 +45,29 @@ def reload_urlconf(urlconf=None):
         reload(sys.modules[urlconf])
 
     from django.urls import clear_url_caches
+
     clear_url_caches()
 
 
 def create_ticket(**kwargs):
-    q = kwargs.get('queue', None)
+    q = kwargs.get("queue", None)
     if q is None:
         try:
             q = Queue.objects.all()[0]
         except IndexError:
-            q = Queue.objects.create(title='Test Q', slug='test', )
+            q = Queue.objects.create(
+                title="Test Q",
+                slug="test",
+            )
     data = {
-        'title': "I wish to register a complaint",
-        'queue': q,
+        "title": "I wish to register a complaint",
+        "queue": q,
     }
     data.update(kwargs)
     return Ticket.objects.create(**data)
 
 
-HELPDESK_URLCONF = 'helpdesk.urls'
+HELPDESK_URLCONF = "helpdesk.urls"
 
 
 def print_response(response, stdout=False):

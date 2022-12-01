@@ -51,7 +51,8 @@ class HitAdmin(admin.ModelAdmin):
     list_filter = ("initial", "tracker")
 
 
-admin.site.register(Hit, HitAdmin) 
+admin.site.register(Hit, HitAdmin)
+
 
 class ServiceAdmin(admin.ModelAdmin):
     list_display = ("name", "link", "owner", "status")
