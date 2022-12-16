@@ -1,7 +1,6 @@
-from django.shortcuts import get_object_or_404, render
-from requests import request
+from django.shortcuts import render
 
-from modules.stories.models import Bookmark, History, Stories
+from modules.stories.models import History
 from .forms import SignUpForm, ProfileForm
 from .models import Users
 from django.urls import reverse_lazy

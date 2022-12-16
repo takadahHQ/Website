@@ -29,7 +29,7 @@ def ingress(request, service_uuid, identifier, tracker, payload):
     )
 
 
-class UserAgentMiddleware(object):
+class UserAgentMiddleware:
     def __init__(self, get_response=None):
         if get_response is not None:
             self.get_response = get_response
@@ -42,10 +42,15 @@ class UserAgentMiddleware(object):
         request.user_agent = SimpleLazyObject(lambda: getUserAgent(request))
 
 
-class AnalyticsMiddleware(object):
-    def __call__(self, *args, **kwargs):
-        service_uuid = self.kwargs.get("service_uuid")
-        service_identifier = self.kwargs.get("identifier", "")
+class AnalyticsMiddleware:
+    def __init__(self, get_response=None):
+        if get_response is not None:
+            self.get_response = get_response
+
+    def __call__(self, request):
+        self.process_request(request)
+        self.process_view(request)
+        return self.get_response(request)
 
     def process_request(self, request):
         self.start_time = time.time()
@@ -66,6 +71,8 @@ class AnalyticsMiddleware(object):
         return response
 
     def process_view(self, request, func, *args, **kwargs):
+        service_uuid = self.kwargs.get("service_uuid")
+        service_identifier = self.kwargs.get("identifier", "")
         if request.path != reverse("index"):
             return None
 
@@ -73,6 +80,13 @@ class AnalyticsMiddleware(object):
         response = func(request)
         costed = time.time() - start
         print("process view: {:.2f}s".format(costed))
+        ingress(
+            self.request,
+            self.service_uuid,
+            self.service_identifier,
+            "BACK",
+            self.payload,
+        )
         return response
 
     def process_response(self, request, response):

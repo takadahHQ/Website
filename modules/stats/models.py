@@ -14,8 +14,7 @@ from django.apps import apps
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.db.models.functions import TruncDate, TruncHour
-from django.db.utils import NotSupportedError
-from modules.stories.models import Stories
+from ..stories.models import Stories
 
 # How long a session a needs to go without an update to no longer be considered 'active' (i.e., currently online)
 ACTIVE_USER_TIMEDELTA = timezone.timedelta(
@@ -72,7 +71,7 @@ class Service(models.Model):
     uuid = models.UUIDField(default=_default_uuid, primary_key=True)
     name = models.TextField(max_length=64, verbose_name=_("Name"))
     owner = models.ForeignKey(
-        "stories.Stories",
+        settings.AUTH_USER_MODEL,
         verbose_name=_("Owner"),
         on_delete=models.CASCADE,
         related_name="analytics",

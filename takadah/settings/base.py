@@ -36,7 +36,7 @@ X_FRAME_OPTIONS = "SAMEORIGIN"
 
 # Application definition
 
-INSTALLED_APPS = [
+DJANGO_APPS = [
     "jazzmin",
     "django.contrib.admin",
     "django.contrib.auth",
@@ -46,6 +46,9 @@ INSTALLED_APPS = [
     "django.contrib.humanize",
     "django.contrib.staticfiles",
     "django.contrib.sites",
+]
+
+THIRD_PARTY_APPS = [
     "flags",
     "tailwind",
     "analytical",
@@ -74,7 +77,9 @@ INSTALLED_APPS = [
     "reversion",
     "newsfeed",
     "taggit",
-    # make a supports app
+]
+
+LOCAL_APPS = [
     #'subscriptions',
     "modules.core",
     "modules.pages",
@@ -83,8 +88,9 @@ INSTALLED_APPS = [
     "modules.adverts",
     "modules.helpdesk",
     "modules.owliver",
-    "modules.stats",
 ]
+
+INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
 INTERNAL_IPS = [
     "127.0.0.1",
@@ -101,7 +107,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "hijack.middleware.HijackUserMiddleware",
-    "modules.stats.middleware.AnalyticsMiddleware",
+    # "modules.stats.middleware.AnalyticsMiddleware",
     # 'auditlog.middleware.AuditlogMiddleware',
 ]
 

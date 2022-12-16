@@ -8,7 +8,8 @@ from modules.stories.actions.user import (
     get_user_profile,
     get_weekly_stories,
 )
-from modules.stories.models import Bookmark, History, Stories
+
+# from modules.stories.models import Bookmark, History, Stories
 
 
 def homepage(count):

@@ -1,6 +1,7 @@
 from django.contrib import admin
 from .models import Category, Post, Tags, Topics
 
+
 # Register your models here.
 class PostInlineTags(admin.TabularInline):
     model = Post.tags.through
