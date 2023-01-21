@@ -57,10 +57,12 @@ Profile
             <div x-show="activeTabIndex == 0">
                 <div class="text-2xl">{{ author.name| capfirst }}'s Stories</div><hr/>
             <div class="text-mono-300">
-                {% for story in user.stories_set.all %}
+                {% for story in user.authors.all %}
+                <ol class="list-none hover:list-decimal">
                 <li>
-                    {{ story.title }}
+                   <a href="{{ story.get_absolute_url }}"> {{ story.title }}</a>
                 </li>
+            </ol>
                 {% empty %}
                 {{ author.name | title }} has not written any story
                 {% endfor %}
@@ -69,17 +71,19 @@ Profile
                 <div x-show="activeTabIndex == 1">
                     <div class="text-2xl">{{ author.name | capfirst }}'s Edited Stories</div><hr/>
                 <div class="text-mono-300">
-                    {% for story in user.stories_set.all %}
-                    <li>
-                        {{ story.title }}
-                    </li>
+                    {% for story in user.editors.all %}
+                    <ol class="list-none hover:list-decimal">
+                        <li>
+                           <a href="{{ story.get_absolute_url }}"> {{ story.title }}</a>
+                        </li>
+                    </ol>
                     {% empty %}
                     {{ author.name | title }} has not edited any story
                     {% endfor %}
                 </div>
                 </div>
             <div x-show="activeTabIndex == 2">
-                Latest Release： Chapter {{ story.chapters_set.last.position  }}: <a href="{{ story.chapters_set.last.get_absolute_url }}">{{ story.chapters_set.last.title | title }}</a> {{ story.chapters_set.last.created_at | timesince }}<hr class="mt-5">
+                Followed stories： Chapter {{ story.chapters_set.last.position  }}: <a href="{{ story.chapters_set.last.get_absolute_url }}">{{ story.chapters_set.last.title | title }}</a> {{ story.chapters_set.last.created_at | timesince }}<hr class="mt-5">
                 <div class="columns-2">
                 {% for chapter in story.chapters_set.all %}
                 <div class="p-4">

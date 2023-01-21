@@ -342,5 +342,7 @@ def get_updated_stories(count):
 
 
 def get_user_profile(user):
-    user = Users.objects.filter(username=user).prefetch_related("authors", "editors")
+    user = Users.objects.filter(username=user).prefetch_related(
+        "authors", "editors", "authors__story"
+    )
     return user
