@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponse
-from .models import Post, Category
+from modules.blog.models import Post, Category
 from django.views import generic
 from django.http import Http404
 
@@ -52,3 +52,7 @@ class PostView(generic.DetailView):
 
     # def get_queryset(self):
     #      return Post.objects.filter(category__slug=category).get(slug=slug)
+
+
+def view_a(request):
+    return render(request, "view_a.html")

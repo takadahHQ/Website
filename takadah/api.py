@@ -1,13 +1,28 @@
-from ninja import NinjaAPI
+from ninja import NinjaAPI, Router
 
-api = NinjaAPI(version="0.0.1")
+# # accounts
+# from modules.accounts.api.user import router as accounts_user_router
+# from modules.accounts.api.staff import router as accounts_staff_router
 
+# # core
+# from modules.core.api.user import router as core_user_router
+# from modules.core.api.staff import router as core_staff_router
 
-@api.get("/add")
-def add(request, a: int, b: int):
-    return {"result": a + b}
+# blog
+from modules.blog.api.user import router as blog_user_router
+from modules.blog.api.staff import router as blog_staff_router
 
-
-@api.get("/hello")
-def hello(request):
-    return "Hello Netesy"
+api = NinjaAPI(
+    title="Takadah API",
+    version="1.0.0",
+    description="The API for Takadah",
+)
+# # accounts
+# api.add_router("/account/", accounts_user_router)
+# api.add_router("/account/", accounts_staff_router)
+# # core
+# api.add_router("/core/", core_user_router)
+# api.add_router("/core/", core_staff_router)
+# # blog
+api.add_router("/blog/", blog_user_router)
+api.add_router("/blog/", blog_staff_router)

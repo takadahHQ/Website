@@ -3,7 +3,7 @@
 {% load humanize %}
 
 {% block title %}
-{{ user.name }}'s Profile
+{{ author.name }}'s Profile
 {% endblock title %}
 
 {% block page-title %}
@@ -29,10 +29,10 @@ Profile
     <p class="flex justify-center">Writing is the secret technique to exploring worlds yet undiscovered.</p>
     {% endif %}
     <div class="flex justify-center">
-        {{ user.followers_count }} Followers  {% if user.website %}| {{ user.website| safe }} {% endif %} {% if user.location %}| {{ user.location| safe }}  {% endif %} {% if user.birth_date %}| {{ user.birth_date| safe }} {% endif %} | Earned | Views 
+        {{ author.followers_count }} Followers  {% if author.website %}| {{ author.website| safe }} {% endif %} {% if author.location %}| {{ author.location| safe }}  {% endif %} {% if author.birth_date %}| {{ author.birth_date| safe }} {% endif %} | Earned | Views 
     </div>
     <div class="flex justify-center">
-       Joined {{ user.date_joined|date:'d, M' }}   {% if user.updated_at != user.date_joined %}| Updated Profile: {{ user.updated_at|naturaltime }} {% endif %} {% if user.location %}| {{ user.location| safe }}  {% endif %} {% if user.birth_date %}| {{ user.birthdate|date:'d, M' }} {% endif %} | {% if user.referral_id %}|  Introduced By: {{ user.referral_id.name | safe }}  {% endif %} | Views 
+       Joined {{ author.date_joined|date:'d, M' }}   {% if author.updated_at != author.date_joined %}| Updated Profile: {{ author.updated_at|naturaltime }} {% endif %} {% if author.location %}| {{ author.location| safe }}  {% endif %} {% if author.birth_date %}| {{ author.birthdate|date:'d, M' }} {% endif %} | {% if author.referral_id %}|  Introduced By: {{ author.referral_id.name | safe }}  {% endif %} | Views 
     </div>
     </div>
 </div>
@@ -57,12 +57,43 @@ Profile
             <div x-show="activeTabIndex == 0">
                 <div class="text-2xl">{{ author.name| capfirst }}'s Stories</div><hr/>
             <div class="text-mono-300">
-                {% for story in user.authors.all %}
-                <ol class="list-none hover:list-decimal">
-                <li>
-                   <a href="{{ story.get_absolute_url }}"> {{ story.title }}</a>
-                </li>
-            </ol>
+                {{ author.editors.all | pprint }}
+                {% for story in author.authors.all %}
+                <div class="flex flex-col scale-95 hover:scale-105 transition duration-300 ease-in-out">
+                    <div class="bg-white shadow-md  rounded-3xl p-4">
+                        <div class="flex-none lg:flex">
+                            <div class=" h-full w-full lg:h-48 lg:w-48   lg:mb-0 mb-3">
+                                <a href="{{ story.get_absolute_url }}">
+                                <img src="{{ story.get_cover }}"
+                                    alt="{{ story.title }}" class="w-full object-scale-down lg:object-cover  lg:h-48 rounded-2xl">
+                                </a>
+                                </div>
+                            <div class="flex-auto ml-3 justify-evenly py-2">
+                                <a href="{{ story.get_absolute_url }}">
+                                    <div class="flex flex-wrap ">
+                                        <a href="{{ story.story_type.get_absolute_url }}" class="w-full flex-none text-xs text-mono-700 font-medium ">
+                                            {{ story.story_type.name }}
+                                        </a>
+                                        <h2><a href="{{ story.get_absolute_url }}" class="flex-auto text-lg font-medium">{{ story.title }}</a></h2>
+                                    </div>
+                                    <p class="flex-auto text-lg font-medium">                          
+                                            Written by:{% for author in story.author.all %}
+                                        <span class="badge badge-accent bg-mono-400"> 
+                                            <a href="{% url 'core:author' author.username %}">{{ author.name }}</a>
+                                        </span>
+                                    {% endfor %}</p>
+                                    <div class="flex pb-2 mt-3 border-t border-mono-500 dark:border-mono-200 "></div>
+                                    <div class="mt-3 flex py-4  text-sm text-mono-500">
+                                        <a href="{{ story.get_absolute_url }}">
+                                        <div class="flex-1 inline-flex items-center">
+                                            {{ story.summary | safe }}
+                                        </div>
+                                    </a>
+                                    </div>
+                                </a>
+                        </div>
+                    </div>
+                </div>
                 {% empty %}
                 {{ author.name | title }} has not written any story
                 {% endfor %}
@@ -72,11 +103,41 @@ Profile
                     <div class="text-2xl">{{ author.name | capfirst }}'s Edited Stories</div><hr/>
                 <div class="text-mono-300">
                     {% for story in user.editors.all %}
-                    <ol class="list-none hover:list-decimal">
-                        <li>
-                           <a href="{{ story.get_absolute_url }}"> {{ story.title }}</a>
-                        </li>
-                    </ol>
+                    <div class="flex flex-col scale-95 hover:scale-105 transition duration-300 ease-in-out">
+                        <div class="bg-white shadow-md  rounded-3xl p-4">
+                            <div class="flex-none lg:flex">
+                                <div class=" h-full w-full lg:h-48 lg:w-48   lg:mb-0 mb-3">
+                                    <a href="{{ story.get_absolute_url }}">
+                                    <img src="{{ story.get_cover }}"
+                                        alt="{{ story.title }}" class="w-full object-scale-down lg:object-cover  lg:h-48 rounded-2xl">
+                                    </a>
+                                    </div>
+                                <div class="flex-auto ml-3 justify-evenly py-2">
+                                    <a href="{{ story.get_absolute_url }}">
+                                        <div class="flex flex-wrap ">
+                                            {% comment %} <a href="{{ story.story_type.get_absolute_url }}" class="w-full flex-none text-xs text-mono-700 font-medium ">
+                                                {{ story.story_type.name }}
+                                            </a> {% endcomment %}
+                                            <h2><a href="{{ story.get_absolute_url }}" class="flex-auto text-lg font-medium">{{ story.title }}</a></h2>
+                                        </div>
+                                        <p class="flex-auto text-lg font-medium">                          
+                                                Written by:{% for author in story.author.all %}
+                                            <span class="badge badge-accent bg-mono-400"> 
+                                                <a href="{% url 'core:author' author.username %}">{{ author.name }}</a>
+                                            </span>
+                                        {% endfor %}</p>
+                                        <div class="flex pb-2 mt-3 border-t border-mono-500 dark:border-mono-200 "></div>
+                                        <div class="mt-3 flex py-4  text-sm text-mono-500">
+                                            <a href="{{ story.get_absolute_url }}">
+                                            <div class="flex-1 inline-flex items-center">
+                                                {{ story.summary | safe }}
+                                            </div>
+                                        </a>
+                                        </div>
+                                    </a>
+                            </div>
+                        </div>
+                    </div>
                     {% empty %}
                     {{ author.name | title }} has not edited any story
                     {% endfor %}
