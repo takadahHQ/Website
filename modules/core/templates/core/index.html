@@ -64,6 +64,7 @@ Takadah
     <div class="text-2xl border-b-2 border-mono-600">New Stories</div><br>
     <div class="flex flex-wrap -mx-1 lg:-mx-4">
         {% for story in fresh %}
+        </div>
             <!-- Column -->
             <div class="my-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/4">
         
@@ -76,7 +77,7 @@ Takadah
         
                     <header class="flex items-start justify-start leading-tight p-2 md:p-4">
                         <p class="text-sm font-bold">
-                            <a class="no-underline hover:underline text-black" href="{{ story.get_absolute_url}}">
+                            <a class="no-underline hover:underline text-black" href="{{ story.get_absolute_url }}">
                                 {{ story.title | title }}
                             </a>
                         </p>
@@ -100,6 +101,32 @@ Takadah
         </div>
 </section>    
 <!-- end new -->
+{% endif %}
+{% if fresh %}
+<section id="fresh-2">
+    <div class="mt-6 grid grid-cols-2 gap-x-4 gap-y-10 sm:gap-x-6 md:grid-cols-4 md:gap-8">
+        {% for story in fresh %}
+        <!-- start call-->
+        <div class="group relative">
+            <div class="w-full h-56 rounded-md overflow-hidden group-hover:opacity-75 lg:h-72 xl:h-80">
+                <img class="w-full h-full object-cover object-center"  loading="lazy" srcset={{ story.get_cover }}" onload="window.requestAnimationFrame(function(){if(!(size=getBoundingClientRect().width))return;onload=null;sizes=Math.ceil(size/window.innerWidth*100)+'vw';});" sizes="1px" src="{{ story.get_cover }}" alt="{{ story.title | slugify }}" width="800" height="1000">
+        
+            </div>
+            <div class="mt-4 flex items-start justify-between">
+                <h3 class="text-sm text-gray-700">
+                    <a href="{{ story.get_absolute_url}}">
+                        <span class="absolute inset-0"></span>
+                        {{ story.title | title }}
+                    </a>
+                </h3>
+                <p class="ml-4 text-sm font-medium text-gray-900">
+                    {{ story.genre.first.name }}
+                </p>
+            </div>
+            <!-- end -->
+            {% endfor %}
+    </div>
+</section>
 {% endif %}
 {% if completed %}
 <!-- Completed -->

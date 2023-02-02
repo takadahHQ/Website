@@ -6,7 +6,7 @@
                 </div>
 
  <div class="btn btn-ghost" id="followstory">
-        <button hx-get="{% url 'story:follow' story.id %}" id="follow-button" 
+        <button hx-get="{% url 'stories:follow' story.id %}" id="follow-button" 
           hx-target="#followstory" hx-swap="outerHTML">
           {% if request.user in story.following.all %}
 <svg xmlns="http://www.w3.org/2000/svg" class="inline-block w-6 mr-2 stroke-current text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">

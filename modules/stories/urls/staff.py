@@ -1,5 +1,5 @@
 from django.urls import path
-from modules.blog.views import staff
+from modules.stories.views import staff
 
 urls = [
     # dashboard

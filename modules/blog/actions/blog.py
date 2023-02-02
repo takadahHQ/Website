@@ -1,4 +1,4 @@
-from modules.accounts.models import User, UserMeta
+from modules.blog.models import User, UserMeta
 from django.contrib.auth import login, logout
 from django.contrib.auth.hashers import check_password
 from django.db.models import Q

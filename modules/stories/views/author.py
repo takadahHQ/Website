@@ -139,7 +139,7 @@ def update_author(request, pk):
     if request.method == "POST":
         if form.is_valid():
             author = form.save()
-            return redirect("author:detail-author", pk=author.id)
+            return redirect("stories:author:detail-author", pk=author.id)
     context = {
         "aform": form,
         "author": author,
@@ -171,7 +171,7 @@ def save_author(request, pk):
             author = form.save(commit=False)
             author.story = story
             author.save()
-            return redirect("author:detail-author", pk=story.id)
+            return redirect("stories:author:detail-author", pk=story.id)
         else:
             return render(
                 request, "stories/partials/add_author.html", context={"aform": form}
@@ -261,7 +261,7 @@ def add_character(request):
 #     if formset.is_valid():
 #         formset.instance = story
 #         formset.save()
-#         return redirect("author:show", pk=story.id)
+#         return redirect("stories:author:show", pk=story.id)
 
 #     context = {
 #         "characterset": characterset
@@ -276,7 +276,7 @@ class createStory(LoginRequiredMixin, CreateView):
     form_class = StoryForm
 
     def get_success_url(self):
-        return reverse_lazy("author:update", kwargs={"pk": self.object.pk})
+        return reverse_lazy("stories:author:update", kwargs={"pk": self.object.pk})
 
     def form_valid(self, form):
         # self.object = form.save()
@@ -293,7 +293,7 @@ class StoriesCreateView(LoginRequiredMixin, CreateView):
     form_class = StoryForm
 
     def get_success_url(self):
-        return reverse_lazy("author:update", kwargs={"pk": self.object.pk})
+        return reverse_lazy("stories:author:update", kwargs={"pk": self.object.pk})
 
     def form_valid(self, form):
         # self.object = form.save()
@@ -312,7 +312,7 @@ class updateStory(LoginRequiredMixin, UpdateView):
     form_class = StoryForm
 
     def get_success_url(self):
-        return reverse_lazy("author:show", kwargs={"pk": self.object.pk})
+        return reverse_lazy("stories:author:show", kwargs={"pk": self.object.pk})
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
@@ -372,7 +372,7 @@ class updateChapter(LoginRequiredMixin, UpdateView):
 class deleteChapter(LoginRequiredMixin, DeleteView):
     template_name = "stories/chapters/delete_chapter.html"
     model = Chapter
-    success_url = reverse_lazy("author:list")
+    success_url = reverse_lazy("stories:author:list")
 
     def get_object(self, queryset=None):
         chapter = get_object_or_404(

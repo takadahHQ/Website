@@ -6,7 +6,7 @@
 Delete: {{ object | title }}
 {% endblock title %}
 {% block breadcrumbs %}
-<li><a href="{% url 'author:dashboard' %}">Author</a></li> 
+<li><a href="{% url 'stories:author:dashboard' %}">Author</a></li> 
 <li><a href="{{ story.story.get_absolute_url}}">{{ object | title }}</a></li> 
 <li><a>Delete</a></li> 
 {% endblock %}

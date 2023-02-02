@@ -35,7 +35,7 @@ def background():
         random.randrange(1, 65),
         random.randrange(1, 255),
     )
-    size = (300, 500)
+    size = (150, 250)
 
     im = Image.new("RGB", size, "black")
     pixels = im.load()
@@ -121,8 +121,8 @@ def author(image, name):
     # font = ImageFont.truetype(font_file_path, size=30, encoding="utf-8")
     # font = ImageFont.truetype(font_file_path, size=30)
     truetype_url = "https://github.com/googlefonts/josefinsans/blob/master/fonts/ttf/JosefinSans-Bold.ttf?raw=true"
-    font = ImageFont.truetype(urlopen(truetype_url), size=30)
-    (x, y) = (150, 480)
+    font = ImageFont.truetype(urlopen(truetype_url), size=15)
+    (x, y) = (75, 240)
     color = "rgb(255, 055,05)"  # white color
     draw.text((x, y), name, fill=color, font=font, anchor="md")
     return image
@@ -135,7 +135,7 @@ def title(image, title):
     truetype_url = (
         "https://github.com/googlefonts/Fira/blob/main/ttf/FiraSans-Bold.ttf?raw=true"
     )
-    font = ImageFont.truetype(urlopen(truetype_url), size=25)
+    font = ImageFont.truetype(urlopen(truetype_url), size=12)
     # font_file_path = 'static/fonts/FiraCode-SemiBold.ttf'
     # font = ImageFont.truetype(font_file_path, size=25)
     color = "rgb(255, 255, 255)"  # white color
@@ -143,8 +143,8 @@ def title(image, title):
     lines = text_wrap(title, font, image_size[0] - 10)
     line_height = font.getsize("hg")[1]
 
-    x = 150
-    y = 400
+    x = 75
+    y = 200
     for line in lines:
         # draw the line on the image
         draw.text((x, y), line, fill=color, font=font, anchor="ms")

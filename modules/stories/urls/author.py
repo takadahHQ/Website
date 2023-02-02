@@ -1,8 +1,8 @@
 from django.urls import path
-from . import views
+from modules.stories.views import author as views
 
 app_name = "author"
-urlpatterns = [
+urls = [
     path("", views.storyDashboard.as_view(), name="dashboard"),
     path("list/", views.storyList.as_view(), name="list"),
     path("add/<int:pk>/author/", views.save_author, name="add-author"),

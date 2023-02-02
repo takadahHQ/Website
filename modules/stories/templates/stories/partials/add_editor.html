@@ -4,6 +4,6 @@
     <form method="POST">
         {% csrf_token %}
         {{ eform|crispy }}
-        <button type="submit" hx-post="{% url 'author:add-author' story %}" class="btn border-none bg-mono-800 text-mono-50">Save</button>
+        <button type="submit" hx-post="{% url 'stories:author:add-author' story %}" class="btn border-none bg-mono-800 text-mono-50">Save</button>
     </form>
 </div>

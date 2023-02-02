@@ -1,8 +1,7 @@
 from django.urls import path
-from . import views
+from modules.stories.views import user as views
 
-app_name = "story"
-urlpatterns = [
+urls = [
     path("tags/<slug>/", views.ShowTag.as_view(), name="tag"),
     path("genre/<slug>/", views.ShowGenre.as_view(), name="genre"),
     path("language/<slug>/", views.ShowLanguage.as_view(), name="language"),

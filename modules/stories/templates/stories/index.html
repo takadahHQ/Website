@@ -100,39 +100,59 @@ Takadah
         </div>
 </section>     {% endcomment %}
 <!-- end new -->
-
-<section class="bg-gray-100 dark:bg-gray-900 py-10 px-12">
+<section class="bg-gray-100 dark:bg-gray-800 py-10 px-12" id="fresh">
     <!-- Card Grid -->
     <div
-        class="grid grid-flow-row gap-8 text-neutral-600 sm:grid-cols-1 md:grid-cols-4 lg:grid-cols-4 space-x-2 h-42">
+        class="grid grid-flow-row gap-2 text-neutral-600 grid-cols-1 md:grid-cols-3 lg:grid-cols-6 m-2">
         {% for story in fresh %}
             <!-- Card Item -->
             <div
-                class="my-8 rounded shadow-lg shadow-gray-200 dark:shadow-gray-900 bg-white dark:bg-gray-800 duration-300 hover:-translate-y-1">
+                class="h-80 m-4 {% if forloop.first %}col-span-auto md:col-span-2 {% endif %}
+                {% if forloop.last %}col-end-auto {%  endif %}  my-8">
                 <!-- Clickable Area -->
                 <a href="{{ story.get_absolute_url}}" class="cursor-pointer">
-                    <figure>
+                    <figure class="h-64">
                         <!-- Image -->
                         <img alt="{{ story.title | lower }}"
                         src="{{ story.get_cover }}"
-                            class="rounded-t h-22 w-full object-cover hover:scale-105 hover:saturate-200 hover:rounded-lg transition duration-300 ease-in-out rounded-lg shadow-lg" />
+                            class="rounded-t h-64 w-full hover:scale-95 object-cover hover:saturate-200 hover:rounded-lg transition duration-300 ease-in-out rounded-lg shadow-lg" />
 
-                        <figcaption class="p-4">
+                        <figcaption class="p-2 md:p-4 object-contain">
                             <!-- Title -->
                             <p
-                                class="text-lg mb-4 font-bold leading-relaxed text-gray-800 dark:text-gray-300">
+                                class="text-xs md:text-md lg:text-lg font-bold leading-relaxed text-gray-800 dark:text-gray-300">
                                 {{ story.title | title }}
                             </p>
 
-                            <!-- Description -->
+                            <!-- Genre -->
                             <small
-                                class="leading-5 text-gray-500 dark:text-gray-400">
+                                class="mt-4 leading-5 text-gray-500 dark:text-gray-400">
                                 {{ story.genre.first.name }}
                             </small>
                         </figcaption>
                     </figure>
                 </a>
             </div>
+            {% comment %} <div class="bg-grey-50 shadow rounded m-2">
+            <figure class="md:flex bg-slate-100 rounded-xl p-8 md:p-0 dark:bg-slate-800">
+                <img class="w-24 h-48 md:w-48 md:h-auto md:rounded-none mx-auto" src="{{ story.get_cover }}" alt="" width="384" height="512">
+                <div class="pt-6 md:p-8 text-center md:text-left space-y-4">
+                  <blockquote>
+                    <p class="text-lg font-medium">
+                        {{ story.title | title }}
+                    </p>
+                  </blockquote>
+                  <figcaption class="font-medium">
+                    <div class="text-sky-500 dark:text-sky-400">
+                        {{ story.genre.first.name }}
+                    </div>
+                    <div class="text-slate-700 dark:text-slate-500">
+                      Staff Engineer, Algolia
+                    </div>
+                  </figcaption>
+                </div>
+              </figure>
+            </div> {% endcomment %}
             {% empty %}
             <h3 class="flex justify-center">No Novel read yet, do you need help?</h3>
             {% endfor %}
@@ -152,7 +172,7 @@ Takadah
                 <article class="overflow-hidden hover:scale-110 transition duration-300 ease-in-out">
         
                     <a href="{{ story.get_absolute_url}}">
-                        <img alt="{{ story.title | lower }}" class="block h-auto w-full hover:scale-110 transition duration-300 ease-in-out rounded-lg shadow-lg " src="{{ story.get_cover }}">
+                        <img alt="{{ story.title | lower }}" class="block h-48 w-full hover:scale-110 transition duration-300 ease-in-out rounded-lg shadow-lg " src="{{ story.get_cover }}">
                     </a>
         
                     <header class="flex items-start justify-start leading-tight p-2 md:p-4">

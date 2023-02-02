@@ -142,7 +142,7 @@ class Chapter(idModel, statusModel, timeStampModel):
 
     def get_absolute_url(self):
         return reverse(
-            "story:read",
+            "stories:read",
             kwargs={
                 "type": self.story.story_type.slug,
                 "story": self.story.slug,
@@ -156,7 +156,7 @@ class Chapter(idModel, statusModel, timeStampModel):
                 position=self.position + 1
             )
             return reverse(
-                "story:read",
+                "stories:read",
                 kwargs={
                     "type": next_post.story.story_type.slug,
                     "story": next_post.story.slug,
@@ -172,7 +172,7 @@ class Chapter(idModel, statusModel, timeStampModel):
                 position=self.position - 1
             )
             return reverse(
-                "story:read",
+                "stories:read",
                 kwargs={
                     "type": previous_post.story.story_type.slug,
                     "story": previous_post.story.slug,
@@ -213,7 +213,7 @@ class Review(idModel, statusModel, timeStampModel):
     #     super(Chapter, self).save(*args, **kwargs)
 
     # def get_absolute_url(self):
-    #     return reverse("story:read", kwargs={"type": self.story.story_type.slug, "story": self.story.slug, "slug": self.slug})
+    #     return reverse("stories:read", kwargs={"type": self.story.story_type.slug, "story": self.story.slug, "slug": self.slug})
 
     class Meta:
         verbose_name_plural = "reviews"
@@ -342,7 +342,7 @@ class Genre(Sluggable, descModel, idModel, nameModel, statusModel, timeStampMode
         verbose_name_plural = "genres"
 
     def get_absolute_url(self):
-        return reverse("story:genre", kwargs={"slug": self.slug})
+        return reverse("stories:genre", kwargs={"slug": self.slug})
 
 
 class Language(Sluggable, idModel, nameModel, statusModel, timeStampModel):
@@ -356,7 +356,7 @@ class Language(Sluggable, idModel, nameModel, statusModel, timeStampModel):
         verbose_name_plural = "languages"
 
     def get_absolute_url(self):
-        return reverse("story:langauage", kwargs={"slug": self.slug})
+        return reverse("stories:langauage", kwargs={"slug": self.slug})
 
 
 class Rating(Sluggable, idModel, nameModel, descModel, statusModel, timeStampModel):
@@ -367,7 +367,7 @@ class Rating(Sluggable, idModel, nameModel, descModel, statusModel, timeStampMod
         verbose_name_plural = "ratings"
 
     def get_absolute_url(self):
-        return reverse("story:rating", kwargs={"slug": self.slug})
+        return reverse("stories:rating", kwargs={"slug": self.slug})
 
 
 class Stories(idModel, timeStampModel):
@@ -452,7 +452,7 @@ class Stories(idModel, timeStampModel):
         file = img.make(name, self.title, self.slug)
         filename = self.slug + ".png"
         self.cover.save(filename, File(file), save=True)
-        return self.cover.url
+        return self.cover
 
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -470,10 +470,10 @@ class Stories(idModel, timeStampModel):
             return self.cover.url
 
     def get_absolute_url(self):
-        story_type = self.story_type.name
+        story_type = self.story_type.slug
         return reverse(
-            "story:show",
-            kwargs={"type": self.story_type.name.lower(), "slug": self.slug},
+            "stories:show",
+            kwargs={"type": story_type, "slug": self.slug},
         )
 
     class Meta:
@@ -488,7 +488,7 @@ class Type(Sluggable, idModel, nameModel, statusModel, timeStampModel):
         verbose_name_plural = "types"
 
     def get_absolute_url(self):
-        return reverse("story:type", kwargs={"slug": self.slug})
+        return reverse("stories:type", kwargs={"slug": self.slug})
 
 
 class Universe(Sluggable, idModel, nameModel, statusModel, timeStampModel):
