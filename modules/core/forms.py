@@ -4,7 +4,7 @@ from django.forms.widgets import TextInput
 from django.contrib.auth.forms import UserCreationForm
 from .models import Users, Settings
 
-from modules.stories.models import Language
+from modules.stories.models.language import Language
 
 
 class ColorInput(forms.TextInput):

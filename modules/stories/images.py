@@ -1,8 +1,5 @@
 from PIL import Image, ImageEnhance, ImageDraw, ImageFont
-from django.core.files import File
-
 from . import tupleFunctions as tf
-import glob, os, math
 import random
 from urllib.request import urlopen
 from django.conf import settings

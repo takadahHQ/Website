@@ -39,32 +39,47 @@ from modules.stories.actions import (
 )
 
 
-def StoryLike(request, id):
+def storyLike(request, id):
     story = like_story(user=request.user, slug=id)
     return render(request, "stories/partials/like.html", {"story": story})
 
 
-def StoryDisLike(request, id):
+def storyDisLike(request, id):
     story = dislike_story(user=request.user, slug=id)
     return render(request, "stories/partials/dislike.html", {"story": story})
 
 
-def StoryBookmark(request, id):
+def storyBookmark(request, id):
     bookmarks = bookmark_story(user=request.user, slug=id)
     return render(request, "stories/partials/bookmark.html", {"bookmark": bookmarks})
 
 
-def StoryFollow(request, id):
+def storyFollow(request, id):
     story = follow_story(user=request.user, slug=id)
     return render(request, "stories/partials/following.html", {"story": story})
 
 
-class ShowStory(DetailView):
-    template_name = "stories/readers/story_detail.html"
-    context_object_name = "story"
+# def showStory(request, id):
+#     context = {}
+#     template = ""
+#     return render(request, template, context)
 
-    def get_queryset(self):
-        return get_story(slug=self.kwargs.get("slug"))
+
+def showStory(request, type: str, slug: str):
+    story = get_story(slug=slug, type=type)
+    review = ""
+    recommendation = ""
+    context = {"story": story}
+    template = "stories/readers/story_detail.html"
+    return render(request, template, context)
+
+
+# class ShowStory(DetailView):
+#     template_name = "stories/readers/story_detail.html"
+#     context_object_name = "story"
+
+#     def get_queryset(self):
+#         return get_story(slug=self.kwargs.get("slug"))
 
 
 class ShowChapter(HistoryMixin, DetailView):

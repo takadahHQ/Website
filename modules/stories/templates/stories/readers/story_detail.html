@@ -104,9 +104,9 @@
             </div>
             </div>
             <div x-show="activeTabIndex == 1">
-                Latest Release： Chapter {{ story.chapter_set.last.position  }}: <a href="{{ story.chapter_set.last.get_absolute_url }}">{{ story.chapter_set.last.title | title }}</a> <div class="badge bg-mono-200 border-none p-4 text-mono-50">{{ story.chapter_set.last.created_at | timesince }}</div><hr class="mt-5">
+                Latest Release： Chapter {{ story.chapters.last.position  }}: <a href="{{ story.chapter_set.last.get_absolute_url }}">{{ story.chapter_set.last.title | title }}</a> <div class="badge bg-mono-200 border-none p-4 text-mono-50">{{ story.chapter_set.last.created_at | timesince }}</div><hr class="mt-5">
                 <div class="columns-2">
-                {% for chapter in story.chapter_set.all %}
+                {% for chapter in story.chapters.all %}
                 <div class="p-4">
                 {{ chapter.position }} <a class="text-mono-800 dark:text-mono-200" href="{{ chapter.get_absolute_url }}">{{ chapter.title | title }}</a>
                 {% if user in story.author.all %}

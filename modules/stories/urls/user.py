@@ -7,11 +7,11 @@ urls = [
     path("language/<slug>/", views.ShowLanguage.as_view(), name="language"),
     path("rating/<slug>/", views.ShowRating.as_view(), name="rating"),
     path("type/<slug>/", views.ShowType.as_view(), name="type"),
-    path("<str:type>/<slug>/", views.ShowStory.as_view(), name="show"),
-    path("story/<int:id>/like/", views.StoryLike, name="like"),
-    path("story/<int:id>/dislike/", views.StoryDisLike, name="dislike"),
-    path("story/follow/<int:id>/", views.StoryFollow, name="follow"),
-    path("story/bookmark/<int:id>/", views.StoryBookmark, name="bookmark"),
+    path("<str:type>/<slug>/", views.showStory, name="show"),
+    path("story/<int:id>/like/", views.storyLike, name="like"),
+    path("story/<int:id>/dislike/", views.storyDisLike, name="dislike"),
+    path("story/follow/<int:id>/", views.storyFollow, name="follow"),
+    path("story/bookmark/<int:id>/", views.storyBookmark, name="bookmark"),
     path(
         "<str:type>/<slug:story>/<slug:slug>/", views.ShowChapter.as_view(), name="read"
     ),

@@ -131,9 +131,10 @@ def get_language(slug):
     return language
 
 
-def get_story(slug):
+def get_story(slug: str, type: str):
     story = (
-        Stories.objects.filter(~Q(status="pending") | ~Q(status="draft"), slug=slug)
+        Stories.objects.filter(~Q(status="pending") | ~Q(status="draft"))
+        .filter(story_type__slug=type)
         .annotate(chapters_count=Count("chapters"))
         .prefetch_related(
             "story_type",
@@ -150,6 +151,7 @@ def get_story(slug):
             "story__chapters",
             "chapters",
         )
+        .get(slug=slug)
     )
     return story
 
