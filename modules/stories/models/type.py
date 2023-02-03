@@ -14,6 +14,7 @@ class Type(Sluggable, idModel, nameModel, statusModel, timeStampModel):
 
     class Meta:
         verbose_name_plural = "types"
+        # app_label = "modules.stories"
 
     def get_absolute_url(self):
         return reverse("stories:type", kwargs={"slug": self.slug})

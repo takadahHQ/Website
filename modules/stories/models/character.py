@@ -25,3 +25,4 @@ class Character(Sluggable, idModel, nameModel, statusModel, timeStampModel):
 
     class Meta:
         verbose_name_plural = "characters"
+        # app_label = "modules_stories"

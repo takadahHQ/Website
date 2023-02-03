@@ -12,6 +12,7 @@ class statusModel(models.Model):
 
     class Meta:
         abstract = True
+        # app_label = "modules.stories"
 
 
 class timeStampModel(models.Model):

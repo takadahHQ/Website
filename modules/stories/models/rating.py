@@ -15,6 +15,7 @@ class Rating(Sluggable, idModel, nameModel, descModel, statusModel, timeStampMod
 
     class Meta:
         verbose_name_plural = "ratings"
+        # app_label = "modules.stories"
 
     def get_absolute_url(self):
         return reverse("stories:rating", kwargs={"slug": self.slug})

@@ -15,6 +15,7 @@ class Genre(Sluggable, descModel, idModel, nameModel, statusModel, timeStampMode
 
     class Meta:
         verbose_name_plural = "genres"
+        # app_label = "modules_stories"
 
     def get_absolute_url(self):
         return reverse("stories:genre", kwargs={"slug": self.slug})

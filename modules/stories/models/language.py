@@ -18,6 +18,7 @@ class Language(Sluggable, idModel, nameModel, statusModel, timeStampModel):
 
     class Meta:
         verbose_name_plural = "languages"
+        # app_label = "modules.stories"
 
     def get_absolute_url(self):
         return reverse("stories:langauage", kwargs={"slug": self.slug})

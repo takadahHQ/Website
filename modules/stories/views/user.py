@@ -73,13 +73,17 @@ def showStory(request, type: str, slug: str):
     template = "stories/readers/story_detail.html"
     return render(request, template, context)
 
+    # class ShowStory(DetailView):
+    #     template_name = "stories/readers/story_detail.html"
+    #     context_object_name = "story"
 
-# class ShowStory(DetailView):
-#     template_name = "stories/readers/story_detail.html"
-#     context_object_name = "story"
+    #     def get_queryset(self):
+    #         return get_story(slug=self.kwargs.get("slug"),type=self.kwargs.get("type"))
 
-#     def get_queryset(self):
-#         return get_story(slug=self.kwargs.get("slug"))
+    # def get_context_data(self, *args, **kwargs):
+    #     context = super().get_context_data(*args, **kwargs)
+    #     context["review"] = get_reviews(story__slug=self.kwargs.get("slug"))
+    #     return context
 
 
 class ShowChapter(HistoryMixin, DetailView):

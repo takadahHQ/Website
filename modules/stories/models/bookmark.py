@@ -32,3 +32,4 @@ class Bookmark(idModel, statusModel, timeStampModel):
 
     class Meta:
         verbose_name_plural = "bookmarks"
+        # app_label = "modules_stories"

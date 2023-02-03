@@ -1,4 +1,4 @@
-from django.db.models import Q, Count
+from django.db.models import Q, Count, Prefetch
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from taggit.models import Tag
@@ -15,6 +15,7 @@ from modules.stories.models import (
     Universe,
 )
 from modules.core.models import Users
+from modules.stories.models.review import Review
 
 
 def get_genre(slug):
@@ -148,12 +149,29 @@ def get_story(slug: str, type: str):
             "genre",
             "characters",
             "tags",
+            Prefetch("reviews", queryset=Review.objects.filter(status="active")),
             "story__chapters",
             "chapters",
         )
         .get(slug=slug)
     )
     return story
+
+
+def get_reviews(story: str, chapter: str = None):
+    reviews = (
+        Review.objects.filter(~Q(status="pending") | ~Q(status="draft"))
+        .filter(story__slug=type)
+        .annotate(chapters_count=Count("chapters"))
+        .select_related(
+            "story",
+            "chapter",
+            "user",
+            "parent",
+        )
+        .get(slug=slug)
+    )
+    return reviews
 
 
 def get_all_ratings(slug):

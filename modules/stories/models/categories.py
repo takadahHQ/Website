@@ -18,3 +18,4 @@ class Categories(Sluggable, idModel, nameModel, statusModel, timeStampModel):
 
     class Meta:
         verbose_name_plural = "categories"
+        # app_label = "modules_stories"

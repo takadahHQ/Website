@@ -28,3 +28,4 @@ class Editor(idModel, statusModel, timeStampModel):
 
     class Meta:
         verbose_name_plural = "editors"
+        # app_label = "modules_stories"

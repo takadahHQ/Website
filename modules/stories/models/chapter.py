@@ -93,3 +93,4 @@ class Chapter(idModel, statusModel, timeStampModel):
 
     class Meta:
         verbose_name_plural = "chapters"
+        # app_label = "modules_stories"
