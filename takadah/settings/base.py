@@ -87,7 +87,7 @@ LOCAL_APPS = [
     "modules.blog",
     "modules.stories",
     "modules.adverts",
-    "modules.helpdesk",
+    # "modules.helpdesk",
     "modules.owliver",
 ]
 
@@ -117,7 +117,7 @@ ROOT_URLCONF = "takadah.urls"
 CACHES = {
     "default": {
         "BACKEND": "diskcache.DjangoCache",
-        "LOCATION": "/path/to/cache/directory",
+        "LOCATION": os.path.join(BASE_DIR, "cache"),
         "TIMEOUT": 300,
         # ^-- Django setting for default timeout of each key.
         "SHARDS": 8,
