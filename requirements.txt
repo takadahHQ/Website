@@ -141,5 +141,5 @@ zope.interface>=5.4.0
 zopfli>=0.2.1
 django-ipware>=4.0.2
 user-agents>=2.2.0
-psycopg2-binar>=2.9.2
+psycopg2-binary>=2.9.2
 pycountry>=20.7.3
