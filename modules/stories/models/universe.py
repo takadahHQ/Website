@@ -16,4 +16,4 @@ class Universe(Sluggable, idModel, nameModel, statusModel, timeStampModel):
 
     class Meta:
         verbose_name_plural = "universes"
-        # app_label = "modules.stories"
+        app_label = "stories"

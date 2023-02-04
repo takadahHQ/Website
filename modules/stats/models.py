@@ -115,6 +115,7 @@ class Service(models.Model):
         verbose_name = _("Service")
         verbose_name_plural = _("Services")
         ordering = ["name", "uuid"]
+        app_label = "stats"
 
     def __str__(self):
         return self.name
@@ -412,6 +413,7 @@ class Session(models.Model):
             models.Index(fields=["service", "-last_seen"]),
             models.Index(fields=["service", "identifier"]),
         ]
+        app_label = "stats"
 
     @property
     def is_currently_active(self):

@@ -39,7 +39,7 @@ class Review(idModel, statusModel, timeStampModel):
     class Meta:
         verbose_name_plural = "reviews"
         ordering = ("created_at",)
-        # app_label = "modules.stories"
+        app_label = "stories"
 
     def __str__(self):
         return self.text[:50]

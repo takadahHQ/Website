@@ -30,6 +30,7 @@ class Sponsors(statusModel):
 
     class Meta:
         verbose_name_plural = "sponsors"
+        app_label = "subscription"
 
 
 class Packages(statusModel):
@@ -40,3 +41,4 @@ class Packages(statusModel):
 
     class Meta:
         verbose_name_plural = "packages"
+        app_label = "subscription"

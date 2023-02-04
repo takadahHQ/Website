@@ -26,4 +26,4 @@ class History(idModel, statusModel, timeStampModel):
 
     class Meta:
         verbose_name_plural = "histories"
-        # app_label = "modules.stories"
+        app_label = "stories"

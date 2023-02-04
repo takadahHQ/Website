@@ -17,6 +17,7 @@ class Category(models.Model):
 
     class Meta:
         verbose_name_plural = "Blog Categories"
+        app_label = "blog"
 
     def __str__(self):
         return self.name
@@ -34,6 +35,10 @@ class Tags(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        verbose_name_plural = "Blog Tags"
+        app_label = "blog"
+
 
 class Topics(models.Model):
     slug = models.CharField(max_length=255)
@@ -43,6 +48,10 @@ class Topics(models.Model):
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        verbose_name_plural = "Blog Topics"
+        app_label = "blog"
 
 
 class Post(models.Model):
@@ -113,6 +122,7 @@ class Post(models.Model):
     class Meta:
         verbose_name_plural = "Blog Posts"
         unique_together = (("slug", "user_id"),)
+        app_label = "blog"
 
 
 # class PostViews(models.Model):

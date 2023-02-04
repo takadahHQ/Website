@@ -124,4 +124,4 @@ class Stories(idModel, timeStampModel):
 
     class Meta:
         verbose_name_plural = "stories"
-        # app_label = "modules.stories"
+        app_label = "stories"

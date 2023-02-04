@@ -28,4 +28,4 @@ class Author(idModel, statusModel, timeStampModel):
 
     class Meta:
         verbose_name_plural = "authors"
-        # app_label = "modules_stories"
+        app_label = "stories"

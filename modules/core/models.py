@@ -60,13 +60,14 @@ class Kycs(idModel, statusModel, timeStampModel):
 
     class Meta:
         verbose_name_plural = "kycs"
+        app_label = "core"
 
     def __str__(self):
         return self.first_name
 
 
 class KycDocuments(idModel, nameModel, statusModel, timeStampModel):
-    kyc = models.ForeignKey(Kycs, on_delete=models.CASCADE)
+    kyc = models.ForeignKey("Kycs", on_delete=models.CASCADE)
     path = models.CharField(max_length=255, blank=True, null=True)
 
     def __str__(self):
@@ -74,6 +75,7 @@ class KycDocuments(idModel, nameModel, statusModel, timeStampModel):
 
     class Meta:
         verbose_name_plural = "kyc_documents"
+        app_label = "core"
 
 
 class Languages(idModel, nameModel, statusModel, timeStampModel):
@@ -85,6 +87,7 @@ class Languages(idModel, nameModel, statusModel, timeStampModel):
 
     class Meta:
         verbose_name_plural = "languages"
+        app_label = "core"
 
 
 class Menus(idModel, nameModel, statusModel, timeStampModel):
@@ -108,6 +111,7 @@ class Menus(idModel, nameModel, statusModel, timeStampModel):
 
     class Meta:
         verbose_name_plural = "menus"
+        app_label = "core"
 
 
 class Settings(idModel, nameModel, statusModel, timeStampModel):
@@ -124,6 +128,7 @@ class Settings(idModel, nameModel, statusModel, timeStampModel):
 
     class Meta:
         verbose_name_plural = "settings"
+        app_label = "core"
 
 
 class Socials(idModel, nameModel, statusModel, timeStampModel):
@@ -136,6 +141,7 @@ class Socials(idModel, nameModel, statusModel, timeStampModel):
 
     class Meta:
         verbose_name_plural = "socials"
+        app_label = "core"
 
 
 class Transactions(idModel, timeStampModel):
@@ -153,6 +159,7 @@ class Transactions(idModel, timeStampModel):
 
     class Meta:
         verbose_name_plural = "transactions"
+        app_label = "core"
 
 
 class Transfers(idModel, timeStampModel):
@@ -186,6 +193,7 @@ class Transfers(idModel, timeStampModel):
 
     class Meta:
         verbose_name_plural = "transfers"
+        app_label = "core"
 
 
 class CustomUserManager(UserManager):
@@ -276,6 +284,7 @@ class Users(AbstractUser):
 
     class Meta:
         verbose_name_plural = "users"
+        app_label = "core"
 
 
 class Wallets(idModel, nameModel, timeStampModel):
@@ -294,6 +303,7 @@ class Wallets(idModel, nameModel, timeStampModel):
     class Meta:
         verbose_name_plural = "wallets"
         unique_together = (("holder_type", "holder_id", "slug"),)
+        app_label = "core"
 
 
 class Site(idModel, nameModel, timeStampModel):
@@ -307,6 +317,7 @@ class Site(idModel, nameModel, timeStampModel):
 
     class Meta:
         verbose_name_plural = "site"
+        app_label = "core"
 
     # unique_together = (('holder_type', 'holder_id', 'slug'),)
 
@@ -324,3 +335,4 @@ class Bank(idModel, nameModel, statusModel, timeStampModel):
 
     class Meta:
         verbose_name_plural = "banks"
+        app_label = "core"

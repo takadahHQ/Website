@@ -1,9 +1,3 @@
-"""
-django-helpdesk - A Django powered ticket tracker for small enterprise.
-models.py - Model (and hence database) definitions. This is the core of the
-            helpdesk structure.
-"""
-
 from django.contrib.auth.models import Permission
 from django.contrib.auth import get_user_model
 from django.contrib.contenttypes.models import ContentType
@@ -375,6 +369,7 @@ class Queue(models.Model):
         return "%s" % self.title
 
     class Meta:
+        app_label = "helpdesk"
         ordering = ("title",)
         verbose_name = _("Queue")
         verbose_name_plural = _("Queues")
@@ -844,6 +839,7 @@ class Ticket(models.Model):
 
     class Meta:
         get_latest_by = "created"
+        app_label = "helpdesk"
         ordering = ("id",)
         verbose_name = _("Ticket")
         verbose_name_plural = _("Tickets")
@@ -1033,6 +1029,7 @@ class FollowUp(models.Model):
     )
 
     class Meta:
+        app_label = "helpdesk"
         ordering = ("date",)
         verbose_name = _("Follow-up")
         verbose_name_plural = _("Follow-ups")
@@ -1100,6 +1097,7 @@ class TicketChange(models.Model):
         return out
 
     class Meta:
+        app_label = "helpdesk"
         verbose_name = _("Ticket change")
         verbose_name_plural = _("Ticket changes")
 
@@ -1174,6 +1172,7 @@ class Attachment(models.Model):
         )
 
     class Meta:
+        app_label = "helpdesk"
         ordering = ("filename",)
         verbose_name = _("Attachment")
         verbose_name_plural = _("Attachments")
@@ -1243,6 +1242,7 @@ class PreSetReply(models.Model):
     """
 
     class Meta:
+        app_label = "helpdesk"
         ordering = ("name",)
         verbose_name = _("Pre-set reply")
         verbose_name_plural = _("Pre-set replies")
@@ -1312,6 +1312,7 @@ class EscalationExclusion(models.Model):
         return "%s" % self.name
 
     class Meta:
+        app_label = "helpdesk"
         verbose_name = _("Escalation exclusion")
         verbose_name_plural = _("Escalation exclusions")
 
@@ -1376,6 +1377,7 @@ class EmailTemplate(models.Model):
         return "%s" % self.template_name
 
     class Meta:
+        app_label = "helpdesk"
         ordering = ("template_name", "locale")
         verbose_name = _("e-mail template")
         verbose_name_plural = _("e-mail templates")
@@ -1423,6 +1425,7 @@ class KBCategory(models.Model):
         return "%s" % self.name
 
     class Meta:
+        app_label = "helpdesk"
         ordering = ("title",)
         verbose_name = _("Knowledge base category")
         verbose_name_plural = _("Knowledge base categories")
@@ -1524,6 +1527,7 @@ class KBItem(models.Model):
         return "%s: %s" % (self.category.title, self.title)
 
     class Meta:
+        app_label = "helpdesk"
         ordering = (
             "order",
             "title",
@@ -1600,6 +1604,7 @@ class SavedSearch(models.Model):
             return "%s" % self.title
 
     class Meta:
+        app_label = "helpdesk"
         verbose_name = _("Saved search")
         verbose_name_plural = _("Saved searches")
 
@@ -1702,6 +1707,7 @@ class UserSettings(models.Model):
         return "Preferences for %s" % self.user
 
     class Meta:
+        app_label = "helpdesk"
         verbose_name = _("User Setting")
         verbose_name_plural = _("User Settings")
 
@@ -1730,6 +1736,7 @@ class IgnoreEmail(models.Model):
     """
 
     class Meta:
+        app_label = "helpdesk"
         verbose_name = _("Ignored e-mail address")
         verbose_name_plural = _("Ignored e-mail addresses")
 
@@ -1889,6 +1896,9 @@ class TicketCC(models.Model):
         if self.user and not self.user.email:
             raise ValidationError("User has no email address")
 
+    class Meta:
+        app_label = "helpdesk"
+
 
 class CustomFieldManager(models.Manager):
     def get_queryset(self):
@@ -2012,6 +2022,7 @@ class CustomField(models.Model):
         return "%s" % self.name
 
     class Meta:
+        app_label = "helpdesk"
         verbose_name = _("Custom field")
         verbose_name_plural = _("Custom fields")
 
@@ -2081,6 +2092,7 @@ class TicketCustomFieldValue(models.Model):
         return "%s / %s" % (self.ticket, self.field)
 
     class Meta:
+        app_label = "helpdesk"
         unique_together = (("ticket", "field"),)
         verbose_name = _("Ticket custom field value")
         verbose_name_plural = _("Ticket custom field values")
@@ -2094,6 +2106,7 @@ class TicketDependency(models.Model):
     """
 
     class Meta:
+        app_label = "helpdesk"
         unique_together = (("ticket", "depends_on"),)
         verbose_name = _("Ticket dependency")
         verbose_name_plural = _("Ticket dependencies")
