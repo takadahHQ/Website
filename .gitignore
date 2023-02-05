@@ -3,6 +3,7 @@
 */*/__pycache__
 static/*
 media/*
+cache/*
 node_modules/*
 node_modules
 takadah-venv
