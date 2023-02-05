@@ -12,6 +12,7 @@ from .models import (
     Type,
     Author,
     Editor,
+    Review,
 )
 
 from import_export import resources
@@ -34,6 +35,11 @@ class AuthorInline(admin.StackedInline):
     max_num = 3
 
 
+class ReviewInline(admin.StackedInline):
+    model = Review
+    max_num = 5
+
+
 class StoriesAdmin(admin.ModelAdmin):
     list_display = (
         "title",
@@ -44,7 +50,7 @@ class StoriesAdmin(admin.ModelAdmin):
         "created_at",
         "updated_at",
     )
-    inlines = [AuthorInline, EditorInline]
+    inlines = [AuthorInline, EditorInline, ReviewInline]
     resource_class = StoriesResource
 
     # fieldsets = (
@@ -88,3 +94,4 @@ admin.site.register(
 )
 admin.site.register(Author)
 admin.site.register(Stories, StoriesAdmin)
+admin.site.register(Review)
