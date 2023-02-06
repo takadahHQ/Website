@@ -13,7 +13,11 @@ SECRET_KEY = "Takadah-%$)wg^oewabdu(@&ai^v793brks30Retehlu(sjn#(x+3+^$*tq"
 
 AUTH_USER_MODEL = "core.Users"
 STORIES_MODEL = "stories.Stories"
-LOGIN_REDIRECT_URL = "core:index"
+# LOGIN_REDIRECT_URL = "core:index"
+LOGIN_URL = 'two_factor:login'
+
+# this one is optional
+LOGIN_REDIRECT_URL = 'two_factor:profile'
 LOGOUT_REDIRECT_URL = "core:index"
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "tailwind"
@@ -59,7 +63,6 @@ THIRD_PARTY_APPS = [
     "django_otp.plugins.otp_totp",
     "django_otp.plugins.otp_email",
     "two_factor",
-    #'two_factor.plugins.phonenumber',  # <- if you want phone number capability.
     "two_factor.plugins.email",
     "crispy_forms",
     "crispy_tailwind",
@@ -105,6 +108,7 @@ MIDDLEWARE = [
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django_otp.middleware.OTPMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "hijack.middleware.HijackUserMiddleware",
