@@ -40,7 +40,7 @@ django-appconf>=1.0.5
 django-braces>=1.15.0
 django-browser-reload>=1.3.0
 django-ckeditor>=6.2.0
-git+https://github.com/jazzband/django-cookie-consent@master#egg=django-cookie-consent
+django-cookie-consent>=0.3.2-dev.1
 dj-stripe>=2.7.2
 django-crispy-forms>=1.14.0
 django-debug-toolbar>=3.2.4
@@ -143,3 +143,4 @@ django-ipware>=4.0.2
 user-agents>=2.2.0
 psycopg2-binary>=2.9.2
 pycountry>=20.7.3
+pillow==8.0.0
