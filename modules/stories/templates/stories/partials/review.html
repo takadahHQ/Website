@@ -1,0 +1,37 @@
+<review class="rounded-xl p-8 md:p-0 m-2 h-48" id="{{ review.id }}">
+<review-container class="flex">
+  <img class="w-24 h-24 rounded-xl m-4 dark:bg-mono-800 bg-mono-100 dark:text-mono-100" src="{{ review.user.get_profile_image }}">
+  <review-content class="p-2 w-full text-center md:text-left space-y-2">
+    <review-caption class="-mt-4 -mb-2">
+      <div class="text-sky-500 dark:text-sky-400 text-lg font-bold font-sans">
+        <h2 class="font-bold font-sans">{{ review.user.name }} {% if review.user in review.story.author.all %}
+            <div class="badge bg-blue-300 border-none p-2 text-xs">
+                Author
+            </div>
+        {% endif %}</h2>             
+      </div>
+     <div class="text-mono-700 dark:text-mono-300 text-sm font-medium font-sans">
+          <h2> 
+      {% if review.chapter %}
+        Chapter: {{ review.chapter }}
+      {% endif %}
+        Posted: {{ review.created_at | timesince }}
+        </h2>
+      </div>
+    </review-caption>
+    <review-text class="p-2 w-full">
+      <p class="text-normal w-full rounded-xl font-medium">
+         {% if  review.parent.user.name %} <strong>@{{ review.parent.user.name }}</strong>{% endif %}{{ review.text | safe }}
+      </p>
+    </review-text>
+  </review-content>
+  </review-container>
+    {% for review in review.get_reviews %}
+      <div class="text-gray-300 font-bold pl-14">|
+       <reply class="" id="{{ review.id }}">
+          {% include 'stories/partials/review.html' with review=review %}
+        </reply>
+      </div>
+    {% endfor %}
+</review>
+
