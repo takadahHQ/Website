@@ -13,15 +13,15 @@
      <div class="text-mono-700 dark:text-mono-300 text-sm font-medium font-sans">
           <h2> 
       {% if review.chapter %}
-        Chapter: {{ review.chapter }}
+        Chapter: {{ review.chapter }}<br/>
       {% endif %}
-        Posted: {{ review.created_at | timesince }}
+        {{ review.created_at | timesince }}
         </h2>
       </div>
     </review-caption>
     <review-text class="p-2 w-full">
       <p class="text-normal w-full rounded-xl font-medium">
-         {% if  review.parent.user.name %} <strong>@{{ review.parent.user.name }}</strong>{% endif %}{{ review.text | safe }}
+         {% if  review.parent.user.name %} <strong>@{{ review.parent.user.name }}</strong>{% endif %} {{ review.text | safe }}
       </p>
     </review-text>
   </review-content>
