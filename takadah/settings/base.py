@@ -84,7 +84,7 @@ THIRD_PARTY_APPS = [
 ]
 
 LOCAL_APPS = [
-    #'subscriptions',
+    #'modules.subscriptions',
     "modules.core",
     "modules.pages",
     "modules.blog",

@@ -149,7 +149,7 @@ def get_story(slug: str, type: str):
             "genre",
             "characters",
             "tags",
-            Prefetch("reviews", queryset=Review.objects.filter(status="active")),
+            Prefetch("reviews", queryset=Review.objects.filter(status="active").order_by('parent')),
             "story__chapters",
             "chapters",
         )
@@ -161,15 +161,19 @@ def get_story(slug: str, type: str):
 def get_reviews(story: str, chapter: str = None):
     reviews = (
         Review.objects.filter(~Q(status="pending") | ~Q(status="draft"))
-        .filter(story__slug=type)
-        .annotate(chapters_count=Count("chapters"))
+        .filter(story__slug=story)
+        .filter(chapter__slug=chapter)
+        .filter(parent=None)
+        .annotate(chapters_count=Count("chapter"))
         .select_related(
             "story",
             "chapter",
             "user",
             "parent",
-        )
-        .get(slug=slug)
+        ).prefetch_related("story__author",)
+        .order_by('parent')
+            def get_comments(self):
+
     )
     return reviews
 

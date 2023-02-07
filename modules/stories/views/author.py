@@ -324,7 +324,7 @@ class updateStory(LoginRequiredMixin, UpdateView):
 class deleteStory(LoginRequiredMixin, DeleteView):
     template_name = "stories/authors/delete_story.html"
     model = Stories
-    success_url = reverse_lazy("author:list")
+    success_url = reverse_lazy("stories:author:list")
 
 
 class createChapter(LoginRequiredMixin, CreateView):

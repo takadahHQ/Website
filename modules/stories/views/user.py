@@ -36,6 +36,7 @@ from modules.stories.actions import (
     dislike_story,
     follow_story,
     get_story,
+    get_reviews,
 )
 
 
@@ -90,6 +91,11 @@ class ShowChapter(HistoryMixin, DetailView):
     model = Chapter
     template_name = "stories/readers/read.html"
     context_object_name = "story"
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context["reviews"] = get_reviews(story=self.kwargs.get("story"), chapter=self.kwargs.get("slug"))
+        return context
 
 
 class ShowTag(ListView):

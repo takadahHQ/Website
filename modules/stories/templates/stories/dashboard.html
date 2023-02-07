@@ -180,9 +180,9 @@ Dashboard
                     </li>
                     {% for story in published %}
                     <li class="py-3 flex justify-between text-sm text-mono-500 font-semibold">
-                        <p class="px-4 font-semibold">{{ story.chapter_set.last.created_at| naturalday |default:"No chapter" }}</p>
+                        <p class="px-4 font-semibold">{{ story.chapters.last.created_at| naturalday |default:"No chapter" }}</p>
                         <p class="px-4 text-mono-600">{{ story.title }}</p>
-                        <p class="px-4 tracking-wider">{{ story.chapter_set.last.title|default:"No chapter" }}</p>
+                        <p class="px-4 tracking-wider">{{ story.chapters.last.title|default:"No chapter" }}</p>
                         <p class="px-4 text-mono-600">{{ story.genre.first.name }}</p>
                         <p class="md:text-base text-mono-800 flex items-center gap-2">
                             16.90
