@@ -165,7 +165,7 @@ def get_reviews(story: str, chapter: str = None):
         .filter(story__slug=story)
         .filter(chapter__slug=chapter)
         .filter(parent=parent)
-        # .annotate(chapters_count=Count("chapter"))
+        .annotate(chapters_count=Count("chapter"))
         .select_related(
             "story",
             "chapter",
