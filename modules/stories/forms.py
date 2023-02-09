@@ -1,6 +1,6 @@
 import datetime
 from django import forms
-from modules.stories.models import Author, Chapter, Stories, Character, Editor, Author
+from modules.stories.models import Author, Chapter, Stories, Character, Editor, Author, Review
 from django.forms.widgets import NumberInput, TextInput, Select, CheckboxInput
 from django.conf import settings
 
@@ -73,6 +73,11 @@ class AuthorForm(forms.ModelForm):
     class Meta:
         model = Author
         fields = ["user"]
+
+class ReviewForm(forms.ModelForm):
+    class Meta:
+        model = Review
+        fields = ["text", "parent", "user"]
 
 
 class CharacterForm(forms.ModelForm):

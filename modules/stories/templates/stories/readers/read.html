@@ -65,9 +65,6 @@
         </div>
         </div>
 </section>
-<section id="reviews">
-  {% for review in reviews %}
-    {% include "stories/partials/review.html" %}
-  {% endfor %}
-</section>
+{{ reviewed | pprint}}
+{% include "stories/includes/comments.html" %}
 {% endblock content %}

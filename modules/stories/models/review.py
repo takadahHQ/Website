@@ -44,5 +44,5 @@ class Review(idModel, statusModel, timeStampModel):
     def __str__(self):
         return self.text[:50]
 
-    def get_reviews(self):
+    def get_replies(self):
         return Review.objects.filter(parent=self).filter(status="active")

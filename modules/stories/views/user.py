@@ -94,7 +94,7 @@ class ShowChapter(HistoryMixin, DetailView):
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
-        context["reviews"] = get_reviews(story=self.kwargs.get("story"), chapter=self.kwargs.get("slug"))
+        context["reviewed"] = get_reviews(story=self.kwargs.get("story"), chapter=self.kwargs.get("slug"))
         return context
 
 

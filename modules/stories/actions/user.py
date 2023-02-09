@@ -149,7 +149,7 @@ def get_story(slug: str, type: str):
             "genre",
             "characters",
             "tags",
-            Prefetch("reviews", queryset=Review.objects.filter(parent=None).filter(status="active").order_by('parent')),
+            Prefetch("reviews", queryset=Review.objects.filter(parent=None).filter(status="active")),
             "story__chapters",
             "chapters",
         )
@@ -159,19 +159,21 @@ def get_story(slug: str, type: str):
 
 
 def get_reviews(story: str, chapter: str = None):
+    parent = None
     reviews = (
         Review.objects.filter(~Q(status="pending") | ~Q(status="draft"))
         .filter(story__slug=story)
         .filter(chapter__slug=chapter)
-        .filter(parent=None)
-        .annotate(chapters_count=Count("chapter"))
+        .filter(parent=parent)
+        # .annotate(chapters_count=Count("chapter"))
         .select_related(
             "story",
             "chapter",
             "user",
             "parent",
         ).prefetch_related("story__author",)
-        #.order_by('parent')
+        .filter(parent=parent)
+        .order_by('created_at')
             
 
     )
@@ -370,3 +372,27 @@ def get_user_profile(user):
         "authors", "editors", "authors__story"
     )
     return user
+
+def create_review(story, chapter, text, user, parent):
+    review = Review(story=story, chapter=chapter, user=user, text=text, parent=parent)
+    review.save()
+    return review
+
+def update_review(id, story, chapter, text, user, parent):
+    review = Review.objects.get(id=id)
+    review.text = text
+    review.save(update_fields=['text'])
+    return review
+
+def get_review(id: int):
+    review = Review.objects.get(id=id)
+    return review
+
+def get_reviews(story, chapter):
+    review = Review.objects.filter(story__slug=story, chapter__slug=chapter)
+    return review
+
+def delete_review(id: int):
+    review = Review.objects.get(id=id)
+    review.delete()
+    return True

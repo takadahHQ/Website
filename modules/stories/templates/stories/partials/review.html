@@ -1,4 +1,5 @@
-<review class="rounded-xl p-8 md:p-0 m-2 h-48" id="{{ review.id }}">
+
+<review class="rounded-xl p-8 md:p-0 h-48" id="{{ review.id }}">
 <review-container class="flex">
   <img class="w-24 h-24 rounded-xl m-4 dark:bg-mono-800 bg-mono-100 dark:text-mono-100" src="{{ review.user.get_profile_image }}">
   <review-content class="p-2 w-full text-center md:text-left space-y-2">
@@ -12,26 +13,21 @@
       </div>
      <div class="text-mono-700 dark:text-mono-300 text-sm font-medium font-sans">
           <h2> 
-      {% if review.chapter %}
+      {% comment %} {% if review.chapter %}
         Chapter: {{ review.chapter }}<br/>
-      {% endif %}
+      {% endif %} {% endcomment %}
         {{ review.created_at | timesince }}
         </h2>
       </div>
     </review-caption>
-    <review-text class="p-2 w-full">
-      <p class="text-normal w-full rounded-xl font-medium">
-         {% if  review.parent.user.name %} <strong>@{{ review.parent.user.name }}</strong>{% endif %} {{ review.text | safe }}
-      </p>
+    <review-text class="m-0 p-2 w-full text-normal w-full rounded-xl font-medium text-mono-700 dark:text-mono-300">
+         {% if  review.parent.user.name %} <strong class="text-mono-800 dark:text-mono-200">@{{ review.parent.user.name }}</strong>{% endif %} {{ review.text | safe }}
     </review-text>
   </review-content>
   </review-container>
-    {% for review in review.get_reviews %}
-      <div class="text-gray-300 font-bold pl-14">|
-       <reply class="" id="{{ review.id }}">
+</review>
+    {% for review in review.get_replies %}
+      <div class="text-mono-700 pl-14 dark:text-mono-200">|
           {% include 'stories/partials/review.html' with review=review %}
-        </reply>
       </div>
     {% endfor %}
-</review>
-
