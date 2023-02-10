@@ -37,8 +37,11 @@ from modules.stories.actions import (
     follow_story,
     get_story,
     get_reviews,
+    get_chapter,
 )
-
+from modules.stories.forms import (
+    ReviewForm,
+)
 
 def storyLike(request, id):
     story = like_story(user=request.user, slug=id)
@@ -157,3 +160,58 @@ class ShowLanguage(ListView):
 
     def get_queryset(self):
         return get_language(self.kwargs.get("slug"))
+
+def update_review(request, story, chapter):
+    review = get_reviews(pk)
+    form = ReviewForm(request.POST or None, instance=review)
+    if request.method == "POST":
+        if form.is_valid():
+            review = form.save()
+            return redirect("stories:detail-review", pk=review.id)
+    context = {
+        "reviewform": form,
+        "review": review,
+    }
+    return render(request, "stories/reviews/form.html", context)
+
+
+def detail_review(request,pk):
+    review = get_review(pk=pk)
+    context = {
+        "review": review,
+    }
+    return render(request, "stories/review/view.html", context)
+
+
+def delete_review(request, pk):
+    delete_review(id=pk)
+    return HttpResponse("")
+
+
+def save_review(request, story, chapter):
+    story = get_chapter(story=story, pk=chapter)
+    reviews = get_reviews_by_id(story=story, chapter=chapter)
+    form = ReviewForm(request.POST or None)
+
+    if request.method == "POST":
+        if form.is_valid():
+            review = form.save(commit=False)
+            review.story = story
+            review.chapter = chapter
+            review.user = self.request.user
+            review.save()
+            return redirect("stories:detail-review", pk=review.id)
+        else:
+            return render(
+                request, "stories/reviews/form.html", context={"aform": form}
+            )
+    else:
+        return render(
+            request,
+            "stories/reviews/form.html",
+            context={
+                "reviewform": form,
+                "reviews": reviews,
+                "story": story,
+            },
+        )

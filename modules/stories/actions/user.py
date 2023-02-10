@@ -157,29 +157,6 @@ def get_story(slug: str, type: str):
     )
     return story
 
-
-def get_reviews(story: str, chapter: str = None):
-    parent = None
-    reviews = (
-        Review.objects.filter(~Q(status="pending") | ~Q(status="draft"))
-        .filter(story__slug=story)
-        .filter(chapter__slug=chapter)
-        .filter(parent=parent)
-        .annotate(chapters_count=Count("chapter"))
-        .select_related(
-            "story",
-            "chapter",
-            "user",
-            "parent",
-        ).prefetch_related("story__author",)
-        .filter(parent=parent)
-        .order_by('created_at')
-            
-
-    )
-    return reviews
-
-
 def get_all_ratings(slug):
     ratings = Rating.objects.filter(
         ~Q(status="pending") | ~Q(status="draft"), rating__slug=slug
@@ -373,19 +350,40 @@ def get_user_profile(user):
     )
     return user
 
+def get_reviews(story: str, chapter: str = None):
+    parent = None
+    reviews = (
+        Review.objects.filter(~Q(status="pending") | ~Q(status="draft"))
+        .filter(story__slug=story)
+        .filter(chapter__slug=chapter)
+        .filter(parent=parent)
+        .annotate(chapters_count=Count("chapter"))
+        .select_related(
+            "story",
+            "chapter",
+            "user",
+            "parent",
+        ).prefetch_related("story__author",)
+        .order_by('created_at')
+            
+
+    )
+    print(reviews)
+    return reviews
+
 def create_review(story, chapter, text, user, parent):
     review = Review(story=story, chapter=chapter, user=user, text=text, parent=parent)
     review.save()
     return review
 
-def update_review(id, story, chapter, text, user, parent):
+def update_review(id, text):
     review = Review.objects.get(id=id)
     review.text = text
     review.save(update_fields=['text'])
     return review
 
 def get_review(id: int):
-    review = Review.objects.get(id=id)
+    review = Review.objects.filter(status='active').get(id=id)
     return review
 
 def get_reviews(story, chapter):

@@ -1,18 +1,24 @@
-<section class="bg-mono-50 rounded shadow-mono-600 p-2 lg:p-8 mt-2 dark:bg-mono-700" id="reviews">
+{% load tailwind_filters %}
+<section class="bg-mono-50 rounded shadow-mono-600 p-2 lg:p-8 mt-2 dark:bg-mono-700" id="comments">
         {% with reviewed.count as total_comments %}
 <b class="text-xl dark:text-mono-50 m-2 p-8">{{ total_comments }} Comment{{ total_comments|pluralize }}</b>
         {% endwith %}
-<form>
+<div hx-target="#comments" hx-swap="beginafter">
+<form hx-post="{% url "stories:add-review" story=story.story.id chapter=story.id %}" class="">
 <div class="px-3 mb-2 mt-2 w-full">
-        <textarea placeholder="comment" class="w-full bg-mono-100 rounded border dark:bg-mono-400 border-mono-400 leading-normal resize-none h-20 py-2 px-3 font-medium placeholder-mono-700 dark:placeholder-mono-100 focus:outline-none focus:bg-white"></textarea>
+{% csrf_token %}
+        <textarea name="text" placeholder="comment" class="w-full bg-mono-100 rounded border dark:bg-mono-400 border-mono-400 leading-normal resize-none h-20 py-2 px-3 font-medium placeholder-mono-700 dark:placeholder-mono-100 focus:outline-none focus:bg-white"></textarea>
     </div>
     <div class="flex justify-end px-4">
-        <input type="submit" class="px-2.5 py-1.5 rounded-md text-white text-sm bg-indigo-500" value="Comment">
+        <button type="submit" class="px-2.5 py-1.5 rounded-md text-white text-sm bg-indigo-500">Comment</button>
     </div>
 </form>
+</div>
 {{ reviewed | pprint}}
 {{ reviews | pprint}}
+<comments id="#comments">
   {% for review in reviewed %}
     {% include "stories/partials/review.html" %}
   {% endfor %}
+  </comment>
 </section>
