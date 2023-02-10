@@ -120,4 +120,4 @@ psycopg2-binary>=2.9.2
 pycountry>=20.7.3
 #pillow==8.0.0
 pandas>=1.5.3
-mindsdb>=22.12.4
+mindsdb>=23.1.3
