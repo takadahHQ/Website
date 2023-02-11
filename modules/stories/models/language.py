@@ -6,12 +6,16 @@ from modules.stories.models.include import (
     nameModel,
     statusModel,
     timeStampModel,
+    CachedQueryManager,
+    CacheInvalidationMixin,
+
 )
 
 
-class Language(Sluggable, idModel, nameModel, statusModel, timeStampModel):
+class Language(CacheInvalidationMixin, Sluggable, idModel, nameModel, statusModel, timeStampModel):
     code = models.CharField(max_length=255)
     native_name = models.CharField(max_length=255)
+    objects = CachedQueryManager()
 
     def __str__(self):
         return self.name

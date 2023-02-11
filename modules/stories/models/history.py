@@ -6,10 +6,13 @@ from modules.stories.models.include import (
     nameModel,
     statusModel,
     timeStampModel,
+    CacheInvalidationMixin,
+    CachedQueryManager
+
 )
 
 
-class History(idModel, statusModel, timeStampModel):
+class History(CacheInvalidationMixin, idModel, statusModel, timeStampModel):
     story = models.ForeignKey(
         "Stories", related_name="history", on_delete=models.CASCADE
     )
@@ -20,6 +23,7 @@ class History(idModel, statusModel, timeStampModel):
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, blank=True, null=True
     )
     url = models.CharField(max_length=255, blank=True, null=True)
+    objects = CachedQueryManager()
 
     def __str__(self):
         return self.story.title

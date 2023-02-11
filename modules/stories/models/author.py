@@ -4,10 +4,12 @@ from modules.stories.models.include import (
     idModel,
     statusModel,
     timeStampModel,
+    CacheInvalidationMixin,
+    CachedQueryManager
 )
 
 
-class Author(idModel, statusModel, timeStampModel):
+class Author(CacheInvalidationMixin ,idModel, statusModel, timeStampModel):
     story = models.ForeignKey(
         "Stories",
         related_name="author_stories",
@@ -22,7 +24,8 @@ class Author(idModel, statusModel, timeStampModel):
         null=True,
         blank=True,
     )
-
+    objects = CachedQueryManager()
+    
     def __str__(self):
         return "{} Written by {}".format(self.story.title, self.user.name())
 

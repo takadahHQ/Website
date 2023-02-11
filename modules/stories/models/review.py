@@ -7,10 +7,12 @@ from modules.stories.models.include import (
     idModel,
     statusModel,
     timeStampModel,
+    CacheInvalidationMixin,
+    CachedQueryManager
 )
 
 
-class Review(idModel, statusModel, timeStampModel):
+class Review(CacheInvalidationMixin, idModel, statusModel, timeStampModel):
     story = models.ForeignKey(
         "Stories", related_name="reviews", on_delete=models.CASCADE
     )
@@ -25,6 +27,8 @@ class Review(idModel, statusModel, timeStampModel):
     parent = models.ForeignKey("self", null=True, blank=True, on_delete=models.CASCADE)
     text = RichTextUploadingField()
     flags = GenericRelation(Flag)
+    
+    objects = CachedQueryManager()
 
     # def save(self, *args, **kwargs):
     #     if not self.slug:

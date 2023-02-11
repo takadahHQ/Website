@@ -6,11 +6,13 @@ from modules.stories.models.include import (
     idModel,
     statusModel,
     timeStampModel,
+    CacheInvalidationMixin,
+    CachedQueryManager
 )
 from modules.stories.models.history import History
 
 
-class Bookmark(idModel, statusModel, timeStampModel):
+class Bookmark(CacheInvalidationMixin, idModel, statusModel, timeStampModel):
     story = models.ForeignKey(
         "Stories", related_name="bookmarked", on_delete=models.CASCADE
     )
@@ -18,7 +20,8 @@ class Bookmark(idModel, statusModel, timeStampModel):
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, blank=True, null=True
     )
     url = models.CharField(max_length=255, blank=True, null=True)
-
+    objects = CachedQueryManager()
+    
     def __str__(self):
         return self.story.title
 

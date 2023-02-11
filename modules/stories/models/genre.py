@@ -6,10 +6,14 @@ from modules.stories.models.include import (
     statusModel,
     timeStampModel,
     descModel,
+    CacheInvalidationMixin,
+    CachedQueryManager,
 )
 
 
-class Genre(Sluggable, descModel, idModel, nameModel, statusModel, timeStampModel):
+class Genre(CacheInvalidationMixin ,Sluggable, descModel, idModel, nameModel, statusModel, timeStampModel):
+    objects = CachedQueryManager()
+    
     def __str__(self):
         return self.name
 

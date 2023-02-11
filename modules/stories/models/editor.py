@@ -4,10 +4,12 @@ from modules.stories.models.include import (
     idModel,
     statusModel,
     timeStampModel,
+    CacheInvalidationMixin,
+    CachedQueryManager,
 )
 
 
-class Editor(idModel, statusModel, timeStampModel):
+class Editor(CacheInvalidationMixin , idModel, statusModel, timeStampModel):
     story = models.ForeignKey(
         "Stories",
         related_name="editor_stories",
@@ -22,6 +24,7 @@ class Editor(idModel, statusModel, timeStampModel):
         null=True,
         blank=True,
     )
+    objects = CachedQueryManager()
 
     def __str__(self):
         return "{} Edited by {}".format(self.story.title, self.user.name())

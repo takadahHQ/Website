@@ -5,10 +5,14 @@ from modules.stories.models.include import (
     nameModel,
     statusModel,
     timeStampModel,
+    CachedQueryManager,
+    CacheInvalidationMixin
 )
 
 
-class Type(Sluggable, idModel, nameModel, statusModel, timeStampModel):
+class Type(CacheInvalidationMixin ,Sluggable, idModel, nameModel, statusModel, timeStampModel):
+    objects = CachedQueryManager()
+    
     def __str__(self):
         return self.name
 

@@ -5,10 +5,12 @@ from modules.stories.models.include import (
     nameModel,
     statusModel,
     timeStampModel,
+    CacheInvalidationMixin,
+    CachedQueryManager,
 )
 
 
-class Character(Sluggable, idModel, nameModel, statusModel, timeStampModel):
+class Character(CacheInvalidationMixin, Sluggable, idModel, nameModel, statusModel, timeStampModel):
     story = models.ForeignKey(
         "Stories", related_name="story", on_delete=models.CASCADE, null=True, blank=True
     )
@@ -19,6 +21,7 @@ class Character(Sluggable, idModel, nameModel, statusModel, timeStampModel):
         null=True,
         blank=True,
     )
+    objects = CachedQueryManager()
 
     def __str__(self):
         return self.name

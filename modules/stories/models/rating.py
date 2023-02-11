@@ -6,10 +6,13 @@ from modules.stories.models.include import (
     statusModel,
     timeStampModel,
     descModel,
+    CacheInvalidationMixin, 
+    CachedQueryManager
 )
 
 
-class Rating(Sluggable, idModel, nameModel, descModel, statusModel, timeStampModel):
+class Rating(CacheInvalidationMixin , Sluggable, idModel, nameModel, descModel, statusModel, timeStampModel):
+    objects = CachedQueryManager()
     def __str__(self):
         return self.name
 

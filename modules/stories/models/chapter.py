@@ -12,10 +12,12 @@ from modules.stories.models.include import (
     idModel,
     statusModel,
     timeStampModel,
+    CachedQueryManager,
+    CacheInvalidationMixin
 )
 
 
-class Chapter(idModel, statusModel, timeStampModel):
+class Chapter(CacheInvalidationMixin ,idModel, statusModel, timeStampModel):
     story = models.ForeignKey(
         "Stories", related_name="chapters", on_delete=models.CASCADE
     )
@@ -33,6 +35,8 @@ class Chapter(idModel, statusModel, timeStampModel):
     words = models.IntegerField(blank=True, null=True)
     released_at = models.DateTimeField()
     flags = GenericRelation(Flag)
+
+    objects = CachedQueryManager()
 
     def __str__(self):
         return self.title

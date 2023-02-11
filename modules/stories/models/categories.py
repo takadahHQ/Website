@@ -5,13 +5,16 @@ from modules.stories.models.include import (
     nameModel,
     statusModel,
     timeStampModel,
+    CacheInvalidationMixin,
+    CachedQueryManager,
 )
 
 
-class Categories(Sluggable, idModel, nameModel, statusModel, timeStampModel):
+class Categories(CacheInvalidationMixin, Sluggable, idModel, nameModel, statusModel, timeStampModel):
     category_type = models.ForeignKey(
         "Type", on_delete=models.CASCADE, blank=True, null=True
     )
+    objects = CachedQueryManager()
 
     def __str__(self):
         return self.name

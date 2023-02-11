@@ -1,6 +1,9 @@
 from django.db import models
 from ckeditor.fields import RichTextField
 from django.utils.text import slugify
+from django.core.cache import cache
+from django.db.models.signals import post_save, post_delete
+from django.dispatch import receiver
 
 
 class statusModel(models.Model):
@@ -83,3 +86,31 @@ class Sluggable(models.Model):
 
     def __str__(self):
         return self.slug
+
+class CacheInvalidationMixin:
+    @classmethod
+    def invalidate_cache(cls, sender, **kwargs):
+        cache_key = f'queryset:{cls._meta.label}'
+        cache.delete(cache_key)
+
+@receiver(post_save, sender=CacheInvalidationMixin)
+@receiver(post_delete, sender=CacheInvalidationMixin)
+def invalidate_cache(sender, **kwargs):
+    sender.invalidate_cache(sender, **kwargs)
+
+
+class CachedQueryManager(models.Manager):
+    def get_queryset(self):
+        # Get the cache key for the queryset
+        cache_key = f'queryset:{self.model._meta.label}'
+        
+        # Try to retrieve the queryset from cache
+        queryset = cache.get(cache_key)
+        if queryset is not None:
+            return queryset
+        
+        # Perform the query and store the result in cache
+        queryset = super().get_queryset()
+        cache.set(cache_key, queryset)
+        
+        return queryset:
