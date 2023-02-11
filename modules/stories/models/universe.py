@@ -5,11 +5,14 @@ from modules.stories.models.include import (
     nameModel,
     statusModel,
     timeStampModel,
+    CacheInvalidationMixin,
+    CachedQueryManager,
 )
 
 
-class Universe(Sluggable, idModel, nameModel, statusModel, timeStampModel):
+class Universe(CacheInvalidationMixin, Sluggable, idModel, nameModel, statusModel, timeStampModel):
     category_id = models.ForeignKey("Categories", on_delete=models.CASCADE)
+    objects = CachedQueryManager()
 
     def __str__(self):
         return self.name

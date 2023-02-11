@@ -16,6 +16,8 @@ from modules.stories.models import (
 )
 from modules.core.models import Users
 from modules.stories.models.review import Review
+import pandas as pd
+from mindsdb import Predictor
 
 
 def get_genre(slug):
@@ -343,6 +345,9 @@ def get_updated_stories(count):
     )
     return stories
 
+def get_chapter(story, pk):
+    chapter = Chapter.objects.filter(status='active').filter(story=story).get(chapter=chapter)
+    return chapter
 
 def get_user_profile(user):
     user = Users.objects.filter(username=user).prefetch_related(
@@ -356,6 +361,27 @@ def get_reviews(story: str, chapter: str = None):
         Review.objects.filter(~Q(status="pending") | ~Q(status="draft"))
         .filter(story__slug=story)
         .filter(chapter__slug=chapter)
+        .filter(parent=parent)
+        .annotate(chapters_count=Count("chapter"))
+        .select_related(
+            "story",
+            "chapter",
+            "user",
+            "parent",
+        ).prefetch_related("story__author",)
+        .order_by('created_at')
+            
+
+    )
+    print(reviews)
+    return reviews
+
+def get_reviews_by_id(story: int, chapter: int = None):
+    parent = None
+    reviews = (
+        Review.objects.filter(~Q(status="pending") | ~Q(status="draft"))
+        .filter(story=story)
+        .filter(chapter=chapter)
         .filter(parent=parent)
         .annotate(chapters_count=Count("chapter"))
         .select_related(
@@ -394,3 +420,40 @@ def delete_review(id: int):
     review = Review.objects.get(id=id)
     review.delete()
     return True
+
+def train_recommendation():
+    query = Stories.objects.values('title', 'slug', 'abbreviation', 'summary',  'story_type', 'following', 'likes', 'dislikes', 'author', 'language', 'genre',  'rating', 'tags')
+    data = pd.DataFrame.from_records(list(query))
+    predictor = Predictor(name='story_recommendation_predictor')
+    predictor.learn(
+    from_data=data,
+    target='likes'
+)
+
+from django.db.models import CharField, Value as V
+from django.db.models.functions import Concat
+
+def predict_next_story(user, story_id):
+    chapters = Chapter.objects.filter(story=story_id)
+    story_text = chapters.aggregate(
+        story_text=Concat(
+            'title', V(' '), 'text', output_field=CharField()
+        )
+    )['story_text']
+
+    data = {
+        'user': user,
+        'text': story_text
+    }
+
+    result = Predictor.predict(data)
+    return result
+
+
+def predict_next_stories(text):
+    data = {
+        'text': text
+    }
+
+    result = Predictor.predict(data)
+    return result['story']
