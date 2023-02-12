@@ -7,7 +7,7 @@ from modules.stories import images as img
 from django.core.files import File
 from django.contrib.contenttypes.fields import GenericRelation
 from taggit.managers import TaggableManager
-from mindsdb import Predictor
+import mindsdb
 from flag.models import Flag
 from modules.stories.models.include import (
     idModel,
@@ -25,7 +25,7 @@ class Stories(CacheInvalidationMixin, idModel, timeStampModel):
     status_choices = (
         ("abandoned", "Abandoned"),
         ("complete", "Complete"),
-        ("haitus", "Haitus"),
+        ("hiatus", "Hiatus"),
         ("prerelease", "Pre-Released"),
         ("published", "Published"),
         ("oneshot", "One Shot"),
@@ -131,7 +131,7 @@ class Stories(CacheInvalidationMixin, idModel, timeStampModel):
 
     @property
     def prediction(self):
-        predictor = Predictor(name='story_recommendation_predictor')
+        predictor = mindsdb.Predictor(name='story_recommendation_predictor')
         # Use the self object to get the data you need to make the prediction
         data = {
             'title': self.title,

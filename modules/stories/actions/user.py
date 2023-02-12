@@ -17,7 +17,7 @@ from modules.stories.models import (
 from modules.core.models import Users
 from modules.stories.models.review import Review
 import pandas as pd
-from mindsdb import Predictor
+import mindsdb
 
 
 def get_genre(slug):
@@ -424,7 +424,7 @@ def delete_review(id: int):
 def train_recommendation():
     query = Stories.objects.values('title', 'slug', 'abbreviation', 'summary',  'story_type', 'following', 'likes', 'dislikes', 'author', 'language', 'genre',  'rating', 'tags')
     data = pd.DataFrame.from_records(list(query))
-    predictor = Predictor(name='story_recommendation_predictor')
+    predictor = mindsdb.Predictor(name='story_recommendation_predictor')
     predictor.learn(
     from_data=data,
     target='likes'
@@ -446,7 +446,7 @@ def predict_next_story(user, story_id):
         'text': story_text
     }
 
-    result = Predictor.predict(data)
+    result = mindsdb.Predictor.predict(data)
     return result
 
 
@@ -455,5 +455,5 @@ def predict_next_stories(text):
         'text': text
     }
 
-    result = Predictor.predict(data)
+    result = mindsdb.Predictor.predict(data)
     return result['story']

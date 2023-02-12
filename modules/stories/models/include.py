@@ -113,4 +113,4 @@ class CachedQueryManager(models.Manager):
         queryset = super().get_queryset()
         cache.set(cache_key, queryset)
         
-        return queryset:
+        return queryset
