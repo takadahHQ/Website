@@ -28,6 +28,9 @@ NPM_BIN_PATH = r"C:\laragon\bin\nodejs\node-v14\npm.cmd"
 
 SITE_ID = 1
 
+STRIPE_PUBLISHABLE_KEY = "pk_live_51Mb59HAv7VHhFV9F8InkobAloXxvLNutNfWiiicOanDflqMYJnH9EaM4vshVfIdLUjMhLEORv9FdLbnZuNaPExh800zHtzPIgH"
+STRIPE_SECRET_KEY = "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"
+
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = True
 
@@ -81,6 +84,7 @@ THIRD_PARTY_APPS = [
     "reversion",
     "newsfeed",
     "taggit",
+    "djstripe",
 ]
 
 LOCAL_APPS = [
@@ -112,6 +116,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "hijack.middleware.HijackUserMiddleware",
+    "djstripe.middleware.SubscriptionPaymentMiddleware",
     # "modules.stats.middleware.AnalyticsMiddleware",
     # 'auditlog.middleware.AuditlogMiddleware',
 ]
