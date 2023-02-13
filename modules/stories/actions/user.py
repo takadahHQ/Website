@@ -1,8 +1,6 @@
 from django.db.models import Q, Count, Prefetch
-from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import get_object_or_404
 from taggit.models import Tag
-from django.contrib.auth import get_user_model
 from modules.stories.models import (
     Chapter,
     Stories,
@@ -12,12 +10,15 @@ from modules.stories.models import (
     Rating,
     Type,
     History,
-    Universe,
 )
 from modules.core.models import Users
 from modules.subscriptions.models import Sponsors, Packages
 from modules.stories.models.review import Review
 import pandas as pd
+from itertools import chain
+from django.db.models import CharField, Value as V
+from django.db.models.functions import Concat
+from datetime import datetime
 
 try:
     mindsdb = __import__("mindsdb")
@@ -383,9 +384,6 @@ def get_story_chapters(story: int, user: int):
     return all_chapters
 
 
-from datetime import datetime
-
-
 def can_view_chapter(user, chapter):
     try:
         sponsor = Sponsors.objects.get(user=user)
@@ -518,10 +516,6 @@ def train_recommendation():
     data = pd.DataFrame.from_records(list(query))
     predictor = mindsdb.Predictor(name="story_recommendation_predictor")
     predictor.learn(from_data=data, target="likes")
-
-
-from django.db.models import CharField, Value as V
-from django.db.models.functions import Concat
 
 
 def predict_next_story(user, story_id):
