@@ -7,7 +7,12 @@ from modules.stories import images as img
 from django.core.files import File
 from django.contrib.contenttypes.fields import GenericRelation
 from taggit.managers import TaggableManager
-import mindsdb
+
+try:
+    mindsdb = __import__("mindsdb")
+except ImportError:
+    mindsdb = None
+
 from flag.models import Flag
 from modules.stories.models.include import (
     idModel,
@@ -131,33 +136,33 @@ class Stories(CacheInvalidationMixin, idModel, timeStampModel):
 
     @property
     def prediction(self):
-        predictor = mindsdb.Predictor(name='story_recommendation_predictor')
+        predictor = mindsdb.Predictor(name="story_recommendation_predictor")
         # Use the self object to get the data you need to make the prediction
         data = {
-            'title': self.title,
-            'slug': self.slug,
-            'summary': self.summary,
-            'story_type': self.story_type,
-            'following': self.following,
-            'likes': self.likes,
-            'dislikes': self.dislikes,
-            'author': self.author,
-            'language': self.language,
-            'genre': self.genre,
-            'rating': self.rating,
-            'tags': self.tags,
-            }
+            "title": self.title,
+            "slug": self.slug,
+            "summary": self.summary,
+            "story_type": self.story_type,
+            "following": self.following,
+            "likes": self.likes,
+            "dislikes": self.dislikes,
+            "author": self.author,
+            "language": self.language,
+            "genre": self.genre,
+            "rating": self.rating,
+            "tags": self.tags,
+        }
         return predictor.predict(when=data)
 
     def recommend_stories(self):
         prediction = self.prediction()
-        recommended_likes = prediction['likes']['prediction']
-        story_type_recommendation = prediction['story_type']
-        rating_recommendation = prediction['rating']
-        genre_recommendation = prediction['genre']
+        recommended_likes = prediction["likes"]["prediction"]
+        story_type_recommendation = prediction["story_type"]
+        rating_recommendation = prediction["rating"]
+        genre_recommendation = prediction["genre"]
         recommended_stories = Stories.objects.filter(likes__in=recommended_likes)[:6]
         return recommended_stories
- 
+
     class Meta:
         verbose_name_plural = "stories"
         app_label = "stories"

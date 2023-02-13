@@ -15,9 +15,14 @@ from modules.stories.models import (
     Universe,
 )
 from modules.core.models import Users
+from modules.subscriptions.models import Sponsors, Packages
 from modules.stories.models.review import Review
 import pandas as pd
-import mindsdb
+
+try:
+    mindsdb = __import__("mindsdb")
+except ImportError:
+    mindsdb = None
 
 
 def get_genre(slug):
@@ -151,13 +156,17 @@ def get_story(slug: str, type: str):
             "genre",
             "characters",
             "tags",
-            Prefetch("reviews", queryset=Review.objects.filter(parent=None).filter(status="active")),
+            Prefetch(
+                "reviews",
+                queryset=Review.objects.filter(parent=None).filter(status="active"),
+            ),
             "story__chapters",
             "chapters",
         )
         .get(slug=slug)
     )
     return story
+
 
 def get_all_ratings(slug):
     ratings = Rating.objects.filter(
@@ -345,15 +354,75 @@ def get_updated_stories(count):
     )
     return stories
 
-def get_chapter(story, pk):
-    chapter = Chapter.objects.filter(status='active').filter(story=story).get(chapter=chapter)
-    return chapter
+
+def get_story_chapters(story: int, user: int):
+    try:
+        sponsor = Sponsors.objects.get(user=user, package__story=story)
+        has_sponsorship = True
+        package = sponsor.package
+        advance = package.advance
+    except Sponsors.DoesNotExist:
+        has_sponsorship = False
+
+    if has_sponsorship:
+        released_chapters = Chapter.objects.filter(
+            story=story, released_at__lte=datetime.now()
+        )
+        unreleased_chapters = Chapter.objects.filter(
+            story=story, released_at__gt=datetime.now()
+        )
+        advance_chapters = unreleased_chapters[:advance]
+        all_chapters = list(chain(released_chapters, advance_chapters))
+
+    if not has_sponsorship:
+        released_chapters = Chapter.objects.filter(
+            story=story, released_at__lte=datetime.now()
+        )
+        all_chapters = released_chapters
+
+    return all_chapters
+
+
+from datetime import datetime
+
+
+def can_view_chapter(user, chapter):
+    try:
+        sponsor = Sponsors.objects.get(user=user)
+        package = Packages.objects.get(story=chapter.story, name=sponsor.package.name)
+    except (Sponsors.DoesNotExist, Packages.DoesNotExist):
+        return chapter.released_at <= datetime.now()
+
+    # Get all the released chapters for this story
+    released_chapters = Chapter.objects.filter(
+        story=chapter.story, released_at__lte=datetime.now()
+    ).order_by("position")
+
+    # Get the position of the chapter in the list of released chapters
+    position = released_chapters.values_list("position", flat=True).index(
+        chapter.position
+    )
+
+    return position < package.advance or chapter.released_at <= datetime.now()
+
+
+def get_chapter(user, story, chapter):
+    # check if can view the chapter else end it there
+    if can_view_chapter(user, chapter):
+        chapter = (
+            Chapter.objects.filter(status="active")
+            .filter(story=story)
+            .get(chapter=chapter)
+        )
+        return chapter
+
 
 def get_user_profile(user):
     user = Users.objects.filter(username=user).prefetch_related(
         "authors", "editors", "authors__story"
     )
     return user
+
 
 def get_reviews(story: str, chapter: str = None):
     parent = None
@@ -368,13 +437,15 @@ def get_reviews(story: str, chapter: str = None):
             "chapter",
             "user",
             "parent",
-        ).prefetch_related("story__author",)
-        .order_by('created_at')
-            
-
+        )
+        .prefetch_related(
+            "story__author",
+        )
+        .order_by("created_at")
     )
     print(reviews)
     return reviews
+
 
 def get_reviews_by_id(story: int, chapter: int = None):
     parent = None
@@ -389,71 +460,84 @@ def get_reviews_by_id(story: int, chapter: int = None):
             "chapter",
             "user",
             "parent",
-        ).prefetch_related("story__author",)
-        .order_by('created_at')
-            
-
+        )
+        .prefetch_related(
+            "story__author",
+        )
+        .order_by("created_at")
     )
     print(reviews)
     return reviews
+
 
 def create_review(story, chapter, text, user, parent):
     review = Review(story=story, chapter=chapter, user=user, text=text, parent=parent)
     review.save()
     return review
 
+
 def update_review(id, text):
     review = Review.objects.get(id=id)
     review.text = text
-    review.save(update_fields=['text'])
+    review.save(update_fields=["text"])
     return review
 
+
 def get_review(id: int):
-    review = Review.objects.filter(status='active').get(id=id)
+    review = Review.objects.filter(status="active").get(id=id)
     return review
+
 
 def get_reviews(story, chapter):
     review = Review.objects.filter(story__slug=story, chapter__slug=chapter)
     return review
+
 
 def delete_review(id: int):
     review = Review.objects.get(id=id)
     review.delete()
     return True
 
+
 def train_recommendation():
-    query = Stories.objects.values('title', 'slug', 'abbreviation', 'summary',  'story_type', 'following', 'likes', 'dislikes', 'author', 'language', 'genre',  'rating', 'tags')
+    query = Stories.objects.values(
+        "title",
+        "slug",
+        "abbreviation",
+        "summary",
+        "story_type",
+        "following",
+        "likes",
+        "dislikes",
+        "author",
+        "language",
+        "genre",
+        "rating",
+        "tags",
+    )
     data = pd.DataFrame.from_records(list(query))
-    predictor = mindsdb.Predictor(name='story_recommendation_predictor')
-    predictor.learn(
-    from_data=data,
-    target='likes'
-)
+    predictor = mindsdb.Predictor(name="story_recommendation_predictor")
+    predictor.learn(from_data=data, target="likes")
+
 
 from django.db.models import CharField, Value as V
 from django.db.models.functions import Concat
 
+
 def predict_next_story(user, story_id):
     chapters = Chapter.objects.filter(story=story_id)
     story_text = chapters.aggregate(
-        story_text=Concat(
-            'title', V(' '), 'text', output_field=CharField()
-        )
-    )['story_text']
+        story_text=Concat("title", V(" "), "text", output_field=CharField())
+    )["story_text"]
 
-    data = {
-        'user': user,
-        'text': story_text
-    }
+    data = {"user": user, "text": story_text}
 
     result = mindsdb.Predictor.predict(data)
     return result
 
 
 def predict_next_stories(text):
-    data = {
-        'text': text
-    }
+    data = {"text": text}
 
     result = mindsdb.Predictor.predict(data)
-    return result['story']
+    return result["story"]

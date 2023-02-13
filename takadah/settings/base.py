@@ -14,10 +14,10 @@ SECRET_KEY = "Takadah-%$)wg^oewabdu(@&ai^v793brks30Retehlu(sjn#(x+3+^$*tq"
 AUTH_USER_MODEL = "core.Users"
 STORIES_MODEL = "stories.Stories"
 # LOGIN_REDIRECT_URL = "core:index"
-LOGIN_URL = 'two_factor:login'
+LOGIN_URL = "two_factor:login"
 
 # this one is optional
-LOGIN_REDIRECT_URL = 'two_factor:profile'
+LOGIN_REDIRECT_URL = "two_factor:profile"
 LOGOUT_REDIRECT_URL = "core:index"
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "tailwind"
@@ -84,12 +84,12 @@ THIRD_PARTY_APPS = [
 ]
 
 LOCAL_APPS = [
-    #'modules.subscriptions',
     "modules.core",
     "modules.pages",
     "modules.blog",
     "modules.stories",
     "modules.adverts",
+    "modules.subscriptions",
     # "modules.helpdesk",
     "modules.owliver",
 ]
