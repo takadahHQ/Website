@@ -28,8 +28,8 @@ NPM_BIN_PATH = r"C:\laragon\bin\nodejs\node-v14\npm.cmd"
 USE_TZ = True
 SITE_ID = 1
 
-STRIPE_PUBLISHABLE_KEY = "pk_live_51Mb59HAv7VHhFV9F8InkobAloXxvLNutNfWiiicOanDflqMYJnH9EaM4vshVfIdLUjMhLEORv9FdLbnZuNaPExh800zHtzPIgH"
-STRIPE_SECRET_KEY = "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"
+# STRIPE_PUBLISHABLE_KEY = "pk_live_51Mb59HAv7VHhFV9F8InkobAloXxvLNutNfWiiicOanDflqMYJnH9EaM4vshVfIdLUjMhLEORv9FdLbnZuNaPExh800zHtzPIgH"
+# STRIPE_SECRET_KEY = "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"
 STRIPE_LIVE_SECRET_KEY = "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"
 STRIPE_TEST_SECRET_KEY = ""
 STRIPE_LIVE_MODE = True  # Change to True in production
@@ -103,6 +103,8 @@ LOCAL_APPS = [
     "modules.adverts",
     "modules.subscriptions",
     # "modules.helpdesk",
+    # "modules.roadmap",
+    # "modules.stats",
     "modules.owliver",
 ]
 

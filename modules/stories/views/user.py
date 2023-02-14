@@ -18,6 +18,7 @@ from modules.stories.actions.user import (
     get_language,
     get_reviews_by_id,
     get_story_by_id,
+    remove_review,
 )
 from modules.stories.forms import StoryForm, ChapterForm
 from taggit.models import Tag
@@ -103,6 +104,13 @@ class ShowChapter(HistoryMixin, DetailView):
     template_name = "stories/readers/read.html"
     context_object_name = "story"
 
+    def get_object(self):
+        story = self.kwargs.get("story")
+        type = self.kwargs.get("type")
+        chapter = self.kwargs.get("slug")
+        user = self.request.user.id
+        return get_chapter(story=story, chapter=chapter, user=user)
+
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
         context["reviewed"] = get_reviews(
@@ -172,13 +180,13 @@ class ShowLanguage(ListView):
         return get_language(self.kwargs.get("slug"))
 
 
-def update_review(request, story, chapter):
-    review = get_reviews(pk)
+def update_review(request, review):
+    review = get_reviews_by_id(review=review)
     form = ReviewForm(request.POST or None, instance=review)
     if request.method == "POST":
         if form.is_valid():
             review = form.save()
-            return redirect("stories:detail-review", pk=review.id)
+            return redirect("stories:detail-review", review=review.id)
     context = {
         "reviewform": form,
         "review": review,
@@ -186,16 +194,16 @@ def update_review(request, story, chapter):
     return render(request, "stories/reviews/form.html", context)
 
 
-def detail_review(request, pk):
-    review = get_reviews_by_id(pk)
+def detail_review(request, review):
+    review = get_reviews_by_id(review)
     context = {
         "review": review,
     }
-    return render(request, "stories/review/view.html", context)
+    return render(request, "stories/reviews/view.html", context)
 
 
-def delete_review(request, pk):
-    delete_review(pk)
+def delete_review(request, review):
+    remove_review(review)
     return HttpResponse("")
 
 
@@ -211,9 +219,10 @@ def save_review(request, story, chapter):
             review = form.save(commit=False)
             review.story = story
             review.chapter = chapter
+            review.parent = request.POST.get("parent")
             review.user = request.user
             review.save()
-            return redirect("stories:detail-review", pk=review.id)
+            return redirect("stories:detail-review", review=review.id)
         else:
             return render(request, "stories/reviews/form.html", context={"aform": form})
     else:
@@ -225,4 +234,28 @@ def save_review(request, story, chapter):
                 "reviews": reviews,
                 "story": story,
             },
+        )
+
+
+def reply_review(request, review):
+    review = get_reviews_by_id(review)
+    user = request.user
+    story = get_story_by_id(review.story)
+    chapter = get_chapter_by_id(user=request.user, chapter=review.chapter)
+    form = ReviewForm(request.POST or None)
+
+    if request.method == "POST":
+        if form.is_valid():
+            review = form.save(commit=False)
+            review.story = story
+            review.chapter = chapter
+            review.parent = review.id
+            review.user = request.user
+            review.save()
+            return redirect("stories:detail-review", review=review.id)
+        else:
+            return render(request, "stories/reviews/form.html", context={"aform": form})
+    else:
+        return redirect(
+            "stories:read", type=story.story_type, story=story, slug=chapter.slug
         )

@@ -6,6 +6,9 @@ from ckeditor.fields import RichTextField
 from ckeditor_uploader.fields import RichTextUploadingField
 from django.urls import reverse, reverse_lazy
 import secrets
+from django.core.cache import cache
+from django.db.models.signals import post_save, post_delete
+from django.dispatch import receiver
 
 
 def create_token():
@@ -46,7 +49,37 @@ class idModel(models.Model):
         abstract = True
 
 
-class Kycs(idModel, statusModel, timeStampModel):
+class CacheInvalidationMixin:
+    @classmethod
+    def invalidate_cache(cls, sender, **kwargs):
+        cache_key = f"queryset:{cls._meta.label}_{cls.id}"
+        cache.delete(cache_key)
+
+
+@receiver(post_save, sender=CacheInvalidationMixin)
+@receiver(post_delete, sender=CacheInvalidationMixin)
+def invalidate_cache(sender, **kwargs):
+    sender.invalidate_cache(sender, **kwargs)
+
+
+class CachedQueryManager(models.Manager):
+    def get_queryset(self):
+        # Get the cache key for the queryset
+        cache_key = f"queryset:{self.model._meta.label}_{self.model.id}"
+
+        # Try to retrieve the queryset from cache
+        queryset = cache.get(cache_key)
+        if queryset is not None:
+            return queryset
+
+        # Perform the query and store the result in cache
+        queryset = super().get_queryset()
+        cache.set(cache_key, queryset)
+
+        return queryset
+
+
+class Kycs(CacheInvalidationMixin, idModel, statusModel, timeStampModel):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     first_name = models.CharField(max_length=70)
     last_name = models.CharField(max_length=70)
@@ -58,6 +91,8 @@ class Kycs(idModel, statusModel, timeStampModel):
     approved_at = models.DateTimeField(blank=True, null=True)
     rejected_at = models.DateTimeField(blank=True, null=True)
 
+    objects = CachedQueryManager()
+
     class Meta:
         verbose_name_plural = "kycs"
         app_label = "core"
@@ -66,9 +101,12 @@ class Kycs(idModel, statusModel, timeStampModel):
         return self.first_name
 
 
-class KycDocuments(idModel, nameModel, statusModel, timeStampModel):
+class KycDocuments(
+    CacheInvalidationMixin, idModel, nameModel, statusModel, timeStampModel
+):
     kyc = models.ForeignKey("Kycs", on_delete=models.CASCADE)
     path = models.CharField(max_length=255, blank=True, null=True)
+    objects = CachedQueryManager()
 
     def __str__(self):
         return self.kyc.first_name + " " + self.name
@@ -78,9 +116,12 @@ class KycDocuments(idModel, nameModel, statusModel, timeStampModel):
         app_label = "core"
 
 
-class Languages(idModel, nameModel, statusModel, timeStampModel):
+class Languages(
+    CacheInvalidationMixin, idModel, nameModel, statusModel, timeStampModel
+):
     code = models.CharField(max_length=255)
     native_name = models.CharField(max_length=255)
+    objects = CachedQueryManager()
 
     def __str__(self):
         return self.name
@@ -90,7 +131,7 @@ class Languages(idModel, nameModel, statusModel, timeStampModel):
         app_label = "core"
 
 
-class Menus(idModel, nameModel, statusModel, timeStampModel):
+class Menus(CacheInvalidationMixin, idModel, nameModel, statusModel, timeStampModel):
     position_choices = (
         ("header", "Header"),
         ("footer", "Footer"),
@@ -105,6 +146,7 @@ class Menus(idModel, nameModel, statusModel, timeStampModel):
     image = models.CharField(max_length=255, blank=True, null=True)
     icon = models.CharField(max_length=255, blank=True, null=True)
     link = models.CharField(max_length=255)
+    objects = CachedQueryManager()
 
     def __str__(self):
         return self.name
@@ -114,7 +156,7 @@ class Menus(idModel, nameModel, statusModel, timeStampModel):
         app_label = "core"
 
 
-class Settings(idModel, nameModel, statusModel, timeStampModel):
+class Settings(CacheInvalidationMixin, idModel, nameModel, statusModel, timeStampModel):
     tagline = models.TextField(blank=True, null=True)
     logo = models.CharField(max_length=255, blank=True, null=True)
     phone = models.CharField(max_length=255)
@@ -122,6 +164,7 @@ class Settings(idModel, nameModel, statusModel, timeStampModel):
     color = models.CharField(max_length=255)
     theme = models.CharField(max_length=255)
     footer = models.CharField(max_length=255)
+    objects = CachedQueryManager()
 
     def __str__(self):
         return self.name
@@ -131,10 +174,11 @@ class Settings(idModel, nameModel, statusModel, timeStampModel):
         app_label = "core"
 
 
-class Socials(idModel, nameModel, statusModel, timeStampModel):
+class Socials(CacheInvalidationMixin, idModel, nameModel, statusModel, timeStampModel):
     icon = models.TextField(blank=True, null=True)
     image = models.CharField(max_length=255, blank=True, null=True)
     link = models.CharField(max_length=255)
+    objects = CachedQueryManager()
 
     def __str__(self):
         return self.name
@@ -144,7 +188,7 @@ class Socials(idModel, nameModel, statusModel, timeStampModel):
         app_label = "core"
 
 
-class Transactions(idModel, timeStampModel):
+class Transactions(CacheInvalidationMixin, idModel, timeStampModel):
     payable_type = models.CharField(max_length=255)
     payable_id = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     wallet = models.ForeignKey("Wallets", models.DO_NOTHING)
@@ -153,6 +197,7 @@ class Transactions(idModel, timeStampModel):
     confirmed = models.IntegerField()
     meta = models.JSONField(blank=True, null=True)
     uuid = models.CharField(unique=True, max_length=36)
+    objects = CachedQueryManager()
 
     def __str__(self):
         return self.amount
@@ -162,7 +207,7 @@ class Transactions(idModel, timeStampModel):
         app_label = "core"
 
 
-class Transfers(idModel, timeStampModel):
+class Transfers(CacheInvalidationMixin, idModel, timeStampModel):
     status_choices = (
         ("active", "Active"),
         ("inactive", "Inactive"),
@@ -187,6 +232,8 @@ class Transfers(idModel, timeStampModel):
     discount = models.DecimalField(max_digits=64, decimal_places=0)
     fee = models.DecimalField(max_digits=64, decimal_places=0)
     uuid = models.CharField(unique=True, max_length=36)
+
+    objects = CachedQueryManager()
 
     def __str__(self):
         return self.fee
@@ -287,7 +334,7 @@ class Users(AbstractUser):
         app_label = "core"
 
 
-class Wallets(idModel, nameModel, timeStampModel):
+class Wallets(CacheInvalidationMixin, idModel, nameModel, timeStampModel):
     holder_type = models.CharField(max_length=255)
     holder_id = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     slug = models.SlugField(max_length=255)
@@ -296,6 +343,8 @@ class Wallets(idModel, nameModel, timeStampModel):
     meta = models.JSONField(blank=True, null=True)
     balance = models.DecimalField(max_digits=64, decimal_places=0)
     decimal_places = models.PositiveSmallIntegerField()
+
+    objects = CachedQueryManager()
 
     def __str__(self):
         return self.name
@@ -306,11 +355,13 @@ class Wallets(idModel, nameModel, timeStampModel):
         app_label = "core"
 
 
-class Site(idModel, nameModel, timeStampModel):
+class Site(CacheInvalidationMixin, idModel, nameModel, timeStampModel):
     hero_header = models.CharField(max_length=255)
     hero_text = models.CharField(max_length=255)
     newsletter_header = models.CharField(max_length=255)
     newsletter_text = models.CharField(max_length=255)
+
+    objects = CachedQueryManager()
 
     def __str__(self):
         return self.name
@@ -322,13 +373,15 @@ class Site(idModel, nameModel, timeStampModel):
     # unique_together = (('holder_type', 'holder_id', 'slug'),)
 
 
-class Bank(idModel, nameModel, statusModel, timeStampModel):
+class Bank(CacheInvalidationMixin, idModel, nameModel, statusModel, timeStampModel):
     holder = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     holder_name = models.CharField(max_length=255)
     swift = models.CharField(max_length=255)
     iban = models.CharField(max_length=255)
     address = models.CharField(max_length=255)
     account_number = models.CharField(max_length=32)
+
+    objects = CachedQueryManager()
 
     def __str__(self):
         return self.name

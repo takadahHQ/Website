@@ -147,6 +147,7 @@ def get_story(slug: str, type: str):
         Stories.objects.filter(~Q(status="pending") | ~Q(status="draft"))
         .filter(story_type__slug=type)
         .annotate(chapters_count=Count("chapters"))
+        .annotate(review_count=Count("reviews"))
         .prefetch_related(
             "story_type",
             "language",
@@ -190,7 +191,7 @@ def get_story_by_id(pk: int):
             "tags",
             Prefetch(
                 "reviews",
-                queryset=Review.objects.filter(parent=None).filter(status="active"),
+                queryset=Review.objects.filter(parent=None, active=True),
             ),
             "story__chapters",
             "chapters",
@@ -414,9 +415,11 @@ def get_story_chapters(story: int, user: int):
     return all_chapters
 
 
-def can_view_chapter(user, chapter):
+def can_view_chapter(user: int, chapter: str):
+    # if user > 0:
+    #     user = 0
     try:
-        chapter = Chapter.objects.get(pk=chapter)
+        chapter = Chapter.objects.get(slug=chapter)
         sponsor = Sponsors.objects.get(user=user)
         package = Packages.objects.get(story=chapter.story, name=sponsor.package.name)
     except (Sponsors.DoesNotExist, Packages.DoesNotExist):
@@ -438,15 +441,14 @@ def can_view_chapter(user, chapter):
 def get_chapter(story: any, chapter: any, user: any = None):
     # check if can view the chapter else end it there
     if can_view_chapter(user, chapter):
-        chapter = (
-            Chapter.objects.filter(status="active").filter(story=story).get(pk=chapter)
-        )
+        chapter = Chapter.objects.get(story__slug=story, slug=chapter)
         return chapter
 
 
 def get_chapter_by_id(chapter: int, user: any = None):
+    slug = Chapter.objects.only("slug").get(id=chapter)
     # check if can view the chapter else end it there
-    if can_view_chapter(user, chapter):
+    if can_view_chapter(user, slug):
         chapter = Chapter.objects.filter(status="active").get(pk=chapter)
         return chapter
 
@@ -459,46 +461,56 @@ def get_user_profile(user):
 
 
 def get_reviews(story: str, chapter: str = None):
-    parent = None
-    review = (
-        Review.objects
-        # .filter(~Q(status="pending") | ~Q(status="draft"))
-        # .filter(story__slug=story).filter(chapter__slug=chapter)
-        # .annotate(chapters_count=Count("story"))
-        .filter(parent=None)
-        # .select_related(
-        #     "story",
-        #     "chapter",
-        #     "user",
-        #     "parent",
-        # )
-        # .prefetch_related(
-        #     "story__author",
-        # )
-        # .order_by("created_at")
+    # parent = None
+    # reviews = (
+    #     Review.objects
+    #     # .filter(~Q(status="pending") | ~Q(status="draft"))
+    #     # .filter(story__slug=story).filter(chapter__slug=chapter)
+    #     # .annotate(chapters_count=Count("story"))
+    #     .filter(parent=None, active=True)
+    #     # .select_related(
+    #     #     "story",
+    #     #     "chapter",
+    #     #     "user",
+    #     #     "parent",
+    #     # )
+    #     # .prefetch_related(
+    #     #     "story__author",
+    #     # )
+    #     # .order_by("created_at")
+    # )
+    # print(list(review))
+    # return reviews
+    reviews = (
+        Review.objects.filter(parent=None, active=True)
+        .select_related("story", "user")
+        .prefetch_related("story__author")
+        .order_by("created_at")
     )
-    print(list(review))
+
+    if chapter:
+        reviews = reviews.filter(story__slug=story, chapter__slug=chapter)
+    else:
+        reviews = reviews.filter(story__slug=story)
+
     return reviews
 
 
 def get_reviews_by_id(review: int):
-    parent = None
-    reviews = (
+    review = (
         Review.objects.filter(~Q(status="pending") | ~Q(status="draft"))
         .select_related(
             "story",
             "chapter",
             "user",
-            "parent",
+            # "parent",
         )
         .prefetch_related(
             "story__author",
         )
-        .get(pk=review)
-        .order_by("created_at")
+        .get(id=review)
     )
-    print(reviews)
-    return reviews
+    return review
 
 
 def create_review(story, chapter, text, user, parent):
@@ -524,7 +536,7 @@ def get_reviews(story, chapter):
     return review
 
 
-def delete_review(id: int):
+def remove_review(id: int):
     review = Review.objects.get(id=id)
     review.delete()
     return True

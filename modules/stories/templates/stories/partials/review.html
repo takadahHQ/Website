@@ -1,4 +1,3 @@
-
 <review class="rounded-xl p-8 md:p-0 h-48" id="{{ review.id }}">
 <review-container class="flex">
   <img class="w-24 h-24 rounded-xl m-4 dark:bg-mono-800 bg-mono-100 dark:text-mono-100" src="{{ review.user.get_profile_image }}">
@@ -20,8 +19,8 @@
         </h2>
       </div>
     </review-caption>
-    <review-text class="m-0 p-2 w-full text-normal w-full rounded-xl font-medium text-mono-700 dark:text-mono-300">
-         {% if  review.parent.user.name %} <strong class="text-mono-800 dark:text-mono-200">@{{ review.parent.user.name }}</strong>{% endif %} {{ review.text | safe }}
+    <review-text class="m-0 p-2 w-full text-normal w-full rounded-xl font-medium text-mono-700 dark:text-mono-300 flex inline">
+         {% if  review.parent.user.name %} <strong class="text-mono-800 dark:text-mono-200 mr-2">@{{ review.parent.user.name }}</strong>{% endif %} {{ review.text | safe }}
     </review-text>
   </review-content>
   </review-container>

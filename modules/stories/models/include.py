@@ -87,11 +87,13 @@ class Sluggable(models.Model):
     def __str__(self):
         return self.slug
 
+
 class CacheInvalidationMixin:
     @classmethod
     def invalidate_cache(cls, sender, **kwargs):
-        cache_key = f'queryset:{cls._meta.label}'
+        cache_key = f"queryset:{cls._meta.label}_{cls.id}"
         cache.delete(cache_key)
+
 
 @receiver(post_save, sender=CacheInvalidationMixin)
 @receiver(post_delete, sender=CacheInvalidationMixin)
@@ -102,15 +104,15 @@ def invalidate_cache(sender, **kwargs):
 class CachedQueryManager(models.Manager):
     def get_queryset(self):
         # Get the cache key for the queryset
-        cache_key = f'queryset:{self.model._meta.label}'
-        
+        cache_key = f"queryset:{self.model._meta.label}_{self.model.id}"
+
         # Try to retrieve the queryset from cache
         queryset = cache.get(cache_key)
         if queryset is not None:
             return queryset
-        
+
         # Perform the query and store the result in cache
         queryset = super().get_queryset()
         cache.set(cache_key, queryset)
-        
+
         return queryset
