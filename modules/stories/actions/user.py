@@ -18,7 +18,9 @@ import pandas as pd
 from itertools import chain
 from django.db.models import CharField, Value as V
 from django.db.models.functions import Concat
-from datetime import datetime
+
+# from timezone import timezone
+from django.utils import timezone
 
 try:
     mindsdb = __import__("mindsdb")
@@ -165,6 +167,34 @@ def get_story(slug: str, type: str):
             "chapters",
         )
         .get(slug=slug)
+    )
+    return story
+
+
+def get_story_by_id(pk: int):
+    story = (
+        Stories.objects
+        # .filter(~Q(status="pending") | ~Q(status="draft"))
+        # .annotate(chapters_count=Count("chapters"))
+        .prefetch_related(
+            "story_type",
+            "language",
+            "rating",
+            "following",
+            "likes",
+            "dislikes",
+            "author",
+            "editor",
+            "genre",
+            "characters",
+            "tags",
+            Prefetch(
+                "reviews",
+                queryset=Review.objects.filter(parent=None).filter(status="active"),
+            ),
+            "story__chapters",
+            "chapters",
+        ).get(pk=pk)
     )
     return story
 
@@ -367,17 +397,17 @@ def get_story_chapters(story: int, user: int):
 
     if has_sponsorship:
         released_chapters = Chapter.objects.filter(
-            story=story, released_at__lte=datetime.now()
+            story=story, released_at__lte=timezone.now()
         )
         unreleased_chapters = Chapter.objects.filter(
-            story=story, released_at__gt=datetime.now()
+            story=story, released_at__gt=timezone.now()
         )
         advance_chapters = unreleased_chapters[:advance]
         all_chapters = list(chain(released_chapters, advance_chapters))
 
     if not has_sponsorship:
         released_chapters = Chapter.objects.filter(
-            story=story, released_at__lte=datetime.now()
+            story=story, released_at__lte=timezone.now()
         )
         all_chapters = released_chapters
 
@@ -386,14 +416,15 @@ def get_story_chapters(story: int, user: int):
 
 def can_view_chapter(user, chapter):
     try:
+        chapter = Chapter.objects.get(pk=chapter)
         sponsor = Sponsors.objects.get(user=user)
         package = Packages.objects.get(story=chapter.story, name=sponsor.package.name)
     except (Sponsors.DoesNotExist, Packages.DoesNotExist):
-        return chapter.released_at <= datetime.now()
+        return chapter.released_at <= timezone.now()
 
     # Get all the released chapters for this story
     released_chapters = Chapter.objects.filter(
-        story=chapter.story, released_at__lte=datetime.now()
+        story=chapter.story, released_at__lte=timezone.now()
     ).order_by("position")
 
     # Get the position of the chapter in the list of released chapters
@@ -401,17 +432,22 @@ def can_view_chapter(user, chapter):
         chapter.position
     )
 
-    return position < package.advance or chapter.released_at <= datetime.now()
+    return position < package.advance or chapter.released_at <= timezone.now()
 
 
-def get_chapter(user, story, chapter):
+def get_chapter(story: any, chapter: any, user: any = None):
     # check if can view the chapter else end it there
     if can_view_chapter(user, chapter):
         chapter = (
-            Chapter.objects.filter(status="active")
-            .filter(story=story)
-            .get(chapter=chapter)
+            Chapter.objects.filter(status="active").filter(story=story).get(pk=chapter)
         )
+        return chapter
+
+
+def get_chapter_by_id(chapter: int, user: any = None):
+    # check if can view the chapter else end it there
+    if can_view_chapter(user, chapter):
+        chapter = Chapter.objects.filter(status="active").get(pk=chapter)
         return chapter
 
 
@@ -424,35 +460,31 @@ def get_user_profile(user):
 
 def get_reviews(story: str, chapter: str = None):
     parent = None
-    reviews = (
-        Review.objects.filter(~Q(status="pending") | ~Q(status="draft"))
-        .filter(story__slug=story)
-        .filter(chapter__slug=chapter)
-        .filter(parent=parent)
-        .annotate(chapters_count=Count("chapter"))
-        .select_related(
-            "story",
-            "chapter",
-            "user",
-            "parent",
-        )
-        .prefetch_related(
-            "story__author",
-        )
-        .order_by("created_at")
+    review = (
+        Review.objects
+        # .filter(~Q(status="pending") | ~Q(status="draft"))
+        # .filter(story__slug=story).filter(chapter__slug=chapter)
+        # .annotate(chapters_count=Count("story"))
+        .filter(parent=None)
+        # .select_related(
+        #     "story",
+        #     "chapter",
+        #     "user",
+        #     "parent",
+        # )
+        # .prefetch_related(
+        #     "story__author",
+        # )
+        # .order_by("created_at")
     )
-    print(reviews)
+    print(list(review))
     return reviews
 
 
-def get_reviews_by_id(story: int, chapter: int = None):
+def get_reviews_by_id(review: int):
     parent = None
     reviews = (
         Review.objects.filter(~Q(status="pending") | ~Q(status="draft"))
-        .filter(story=story)
-        .filter(chapter=chapter)
-        .filter(parent=parent)
-        .annotate(chapters_count=Count("chapter"))
         .select_related(
             "story",
             "chapter",
@@ -462,6 +494,7 @@ def get_reviews_by_id(story: int, chapter: int = None):
         .prefetch_related(
             "story__author",
         )
+        .get(pk=review)
         .order_by("created_at")
     )
     print(reviews)

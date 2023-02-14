@@ -1,2 +1,6 @@
-
+ <form action="" method="post">
+    {% csrf_token %}
+    {{ reviewform }}
+    <input type="submit" value="Submit">
+</form>
 

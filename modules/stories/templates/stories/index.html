@@ -100,8 +100,9 @@ Takadah
         </div>
 </section>     {% endcomment %}
 <!-- end new -->
-<section class="bg-gray-100 dark:bg-gray-800 py-10 px-12" id="fresh">
+<section class="bg-mono-100 dark:bg-mono-700 text-mono-800 dark:text-mono-100 py-10 px-12" id="fresh">
     <!-- Card Grid -->
+    <h3>Fresh Stories</h3>
     <div
         class="grid grid-flow-row gap-2 text-neutral-600 grid-cols-1 md:grid-cols-3 lg:grid-cols-6 m-2">
         {% for story in fresh %}
@@ -120,13 +121,13 @@ Takadah
                         <figcaption class="p-2 md:p-4 object-contain">
                             <!-- Title -->
                             <p
-                                class="text-xs md:text-md lg:text-lg font-bold leading-relaxed text-gray-800 dark:text-gray-300">
+                                class="text-xs md:text-md lg:text-lg font-bold leading-relaxed text-mono-800 dark:text-mono-200">
                                 {{ story.title | title }}
                             </p>
 
                             <!-- Genre -->
                             <small
-                                class="mt-4 leading-5 text-gray-500 dark:text-gray-400">
+                                class="mt-4 leading-5 text-mono-500 dark:text-mono-400">
                                 {{ story.genre.first.name }}
                             </small>
                         </figcaption>
@@ -222,7 +223,7 @@ Takadah
             </div>
         </div>
     </a>
-    <div class="px-4 pt-4 text-gray-800 dark:text-gray-300">
+    <div class="px-4 pt-4 text-mono-800 dark:text-mono-300">
         <div class="flex flex-col">
             <span class="MuiSkeleton-root MuiSkeleton-rectangular MuiSkeleton-wave MuiSkeleton-withChildren MuiSkeleton-fitContent MuiSkeleton-heightAuto max-w-[100%] bg-transparent bg-[#e9e9e9] bg-gradient-to-r from-[#f1f1f1] to-[#e9e9e9] dark:bg-[#2a2a2a] dark:from-[#333] dark:to-[#2a2a2a] sm:mx-0 mt-4 h-12 last:w-96 md:h-14 ww-4bfvrx">
                 <a class="line-clamp-2 font-set-sb13 md:font-set-sb15" href="{{ story.get_absolute_url}}">{{ story.title | title }}</a>

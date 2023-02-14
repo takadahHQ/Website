@@ -16,7 +16,11 @@ urls = [
         "<str:type>/<slug:story>/<slug:slug>/", views.ShowChapter.as_view(), name="read"
     ),
     path("add/<int:story>/<int:chapter>/review/", views.save_review, name="add-review"),
-    path("update/<int:story>/<int:chapter>/review/", views.update_review, name="update-review"),
-    path("show/<int:pk>/review/", views.detail_review, name="detail-review"),
-    path("delete/<int:pk>/review/", views.delete_review, name="delete-review"),
+    path(
+        "update/<int:story>/<int:chapter>/review/",
+        views.update_review,
+        name="update-review",
+    ),
+    path("show/<int:review>/review/", views.detail_review, name="detail-review"),
+    path("delete/<int:review>/review/", views.delete_review, name="delete-review"),
 ]

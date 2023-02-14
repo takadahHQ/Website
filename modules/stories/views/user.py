@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse_lazy, reverse
 from django.views.generic import (
@@ -11,7 +11,14 @@ from django.views.generic import (
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import View
 from django.db.models import Count
-from modules.stories.actions.user import bookmark_story, get_all_ratings, get_language
+from modules.stories.actions.user import (
+    bookmark_story,
+    get_all_ratings,
+    get_chapter_by_id,
+    get_language,
+    get_reviews_by_id,
+    get_story_by_id,
+)
 from modules.stories.forms import StoryForm, ChapterForm
 from taggit.models import Tag
 from modules.stories.models import (
@@ -42,6 +49,7 @@ from modules.stories.actions import (
 from modules.stories.forms import (
     ReviewForm,
 )
+
 
 def storyLike(request, id):
     story = like_story(user=request.user, slug=id)
@@ -97,7 +105,9 @@ class ShowChapter(HistoryMixin, DetailView):
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
-        context["reviewed"] = get_reviews(story=self.kwargs.get("story"), chapter=self.kwargs.get("slug"))
+        context["reviewed"] = get_reviews(
+            story=self.kwargs.get("story"), chapter=self.kwargs.get("slug")
+        )
         return context
 
 
@@ -161,6 +171,7 @@ class ShowLanguage(ListView):
     def get_queryset(self):
         return get_language(self.kwargs.get("slug"))
 
+
 def update_review(request, story, chapter):
     review = get_reviews(pk)
     form = ReviewForm(request.POST or None, instance=review)
@@ -175,8 +186,8 @@ def update_review(request, story, chapter):
     return render(request, "stories/reviews/form.html", context)
 
 
-def detail_review(request,pk):
-    review = get_review(pk=pk)
+def detail_review(request, pk):
+    review = get_reviews_by_id(pk)
     context = {
         "review": review,
     }
@@ -184,13 +195,15 @@ def detail_review(request,pk):
 
 
 def delete_review(request, pk):
-    delete_review(id=pk)
+    delete_review(pk)
     return HttpResponse("")
 
 
 def save_review(request, story, chapter):
-    story = get_chapter(story=story, pk=chapter)
-    reviews = get_reviews_by_id(story=story, chapter=chapter)
+    user = request.user
+    story = get_story_by_id(story)
+    chapter = get_chapter_by_id(user=request.user, chapter=chapter)
+    reviews = get_reviews(story=story, chapter=chapter)
     form = ReviewForm(request.POST or None)
 
     if request.method == "POST":
@@ -198,13 +211,11 @@ def save_review(request, story, chapter):
             review = form.save(commit=False)
             review.story = story
             review.chapter = chapter
-            review.user = self.request.user
+            review.user = request.user
             review.save()
             return redirect("stories:detail-review", pk=review.id)
         else:
-            return render(
-                request, "stories/reviews/form.html", context={"aform": form}
-            )
+            return render(request, "stories/reviews/form.html", context={"aform": form})
     else:
         return render(
             request,

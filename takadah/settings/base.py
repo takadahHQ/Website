@@ -25,11 +25,19 @@ CRISPY_ALLOWED_TEMPLATE_PACKS = "tailwind"
 CRISPY_TEMPLATE_PACK = "tailwind"
 
 NPM_BIN_PATH = r"C:\laragon\bin\nodejs\node-v14\npm.cmd"
-
+USE_TZ = True
 SITE_ID = 1
 
 STRIPE_PUBLISHABLE_KEY = "pk_live_51Mb59HAv7VHhFV9F8InkobAloXxvLNutNfWiiicOanDflqMYJnH9EaM4vshVfIdLUjMhLEORv9FdLbnZuNaPExh800zHtzPIgH"
 STRIPE_SECRET_KEY = "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"
+STRIPE_LIVE_SECRET_KEY = "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"
+STRIPE_TEST_SECRET_KEY = ""
+STRIPE_LIVE_MODE = True  # Change to True in production
+DJSTRIPE_WEBHOOK_SECRET = "whsec_xxx"  # Get it from the section in the Stripe dashboard where you added the webhook endpoint
+DJSTRIPE_USE_NATIVE_JSONFIELD = (
+    True  # We recommend setting to True for new installations
+)
+DJSTRIPE_FOREIGN_KEY_TO_FIELD = "id"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = True
@@ -116,7 +124,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "hijack.middleware.HijackUserMiddleware",
-    "djstripe.middleware.SubscriptionPaymentMiddleware",
+    # "djstripe.middleware.SubscriptionPaymentMiddleware",
     # "modules.stats.middleware.AnalyticsMiddleware",
     # 'auditlog.middleware.AuditlogMiddleware',
 ]
