@@ -191,7 +191,7 @@ def get_story_by_id(pk: int):
             "tags",
             Prefetch(
                 "reviews",
-                queryset=Review.objects.filter(parent=None, active=True),
+                queryset=Review.objects.filter(parent=None, status=True),
             ),
             "story__chapters",
             "chapters",
@@ -416,8 +416,6 @@ def get_story_chapters(story: int, user: int):
 
 
 def can_view_chapter(user: int, chapter: str):
-    # if user > 0:
-    #     user = 0
     try:
         chapter = Chapter.objects.get(slug=chapter)
         sponsor = Sponsors.objects.get(user=user)
@@ -440,16 +438,16 @@ def can_view_chapter(user: int, chapter: str):
 
 def get_chapter(story: any, chapter: any, user: any = None):
     # check if can view the chapter else end it there
-    if can_view_chapter(user, chapter):
+    if can_view_chapter(user=user, chapter=chapter):
         chapter = Chapter.objects.get(story__slug=story, slug=chapter)
         return chapter
 
 
 def get_chapter_by_id(chapter: int, user: any = None):
-    slug = Chapter.objects.only("slug").get(id=chapter)
+    chpt = Chapter.objects.only("slug").get(id=chapter)
     # check if can view the chapter else end it there
-    if can_view_chapter(user, slug):
-        chapter = Chapter.objects.filter(status="active").get(pk=chapter)
+    if can_view_chapter(user=user, chapter=chpt.slug):
+        chapter = Chapter.objects.filter(status="active").get(id=chapter)
         return chapter
 
 
@@ -482,7 +480,7 @@ def get_reviews(story: str, chapter: str = None):
     # print(list(review))
     # return reviews
     reviews = (
-        Review.objects.filter(parent=None, active=True)
+        Review.objects.filter(status="active")
         .select_related("story", "user")
         .prefetch_related("story__author")
         .order_by("created_at")

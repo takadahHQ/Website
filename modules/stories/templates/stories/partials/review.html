@@ -8,13 +8,16 @@
             <div class="badge bg-blue-300 border-none p-2 text-xs">
                 Author
             </div>
-        {% endif %}</h2>             
+        {% endif %}
+        {% if review.chapter %}
+        <div class="badge bg-mono-300 border-none p-2 text-xs">
+    Chapter {{ review.chapter.position }}<br/>
+      </div>
+      {% endif %} 
+      </h2>             
       </div>
      <div class="text-mono-700 dark:text-mono-300 text-sm font-medium font-sans">
           <h2> 
-      {% comment %} {% if review.chapter %}
-        Chapter: {{ review.chapter }}<br/>
-      {% endif %} {% endcomment %}
         {{ review.created_at | timesince }}
         </h2>
       </div>
@@ -26,7 +29,7 @@
   </review-container>
 </review>
     {% for review in review.get_replies %}
-      <div class="text-mono-700 pl-14 dark:text-mono-200">|
+      <div class="text-mono-700 pl-14 dark:text-mono-200" parent-id="review.parent.id">|
           {% include 'stories/partials/review.html' with review=review %}
       </div>
     {% endfor %}
