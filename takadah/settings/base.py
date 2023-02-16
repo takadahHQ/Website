@@ -28,9 +28,9 @@ NPM_BIN_PATH = r"C:\laragon\bin\nodejs\node-v14\npm.cmd"
 USE_TZ = True
 SITE_ID = 1
 
-STRIPE_LIVE_SECRET_KEY = ""
-STRIPE_TEST_SECRET_KEY = ""
-STRIPE_LIVE_MODE = True  # Change to True in production
+STRIPE_LIVE_SECRET_KEY = "sk_live_fddfkflkdfkdfldfk"
+STRIPE_TEST_SECRET_KEY = "sk_test_l;dkjpwojrwpowrogwrpwprf"
+STRIPE_LIVE_MODE = False  # Change to True in production
 DJSTRIPE_WEBHOOK_SECRET = "whsec_xxx"  # Get it from the section in the Stripe dashboard where you added the webhook endpoint
 DJSTRIPE_USE_NATIVE_JSONFIELD = (
     True  # We recommend setting to True for new installations
