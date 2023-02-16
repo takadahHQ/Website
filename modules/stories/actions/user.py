@@ -1,4 +1,4 @@
-from django.db.models import Q, Count, Prefetch
+from django.db.models import Q, Count, Sum, Prefetch
 from django.shortcuts import get_object_or_404
 from taggit.models import Tag
 from modules.stories.models import (
@@ -494,18 +494,17 @@ def get_reviews_by_id(review: int):
 def get_reviews(story, chapter):
     reviews = (
         Review.objects.filter(status="active")
-        .annotate(chapters_count=Count("story"))
-        .filter(parent=None)
         .select_related("story", "user")
         .prefetch_related("story__author")
         .order_by("created_at")
     )
-
+    reviews = reviews.filter(parent=None)
+    count = reviews.count()
     if chapter:
         reviews = reviews.filter(story__slug=story, chapter__slug=chapter)
     else:
         reviews = reviews.filter(story__slug=story)
-    return reviews
+    return reviews, count
 
 
 def remove_review(id: int):

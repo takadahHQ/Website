@@ -113,7 +113,7 @@ class ShowChapter(HistoryMixin, DetailView):
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
-        context["reviewed"] = get_reviews(
+        context["reviewed"], context["reviews_count"] = get_reviews(
             story=self.kwargs.get("story"), chapter=self.kwargs.get("slug")
         )
         return context
@@ -211,7 +211,7 @@ def save_review(request, story, chapter):
     user = request.user
     story = get_story_by_id(story)
     chapter = get_chapter_by_id(user=request.user, chapter=chapter)
-    reviews = get_reviews(story=story, chapter=chapter)
+    reviews, count = get_reviews(story=story, chapter=chapter)
     form = ReviewForm(request.POST or None)
 
     if request.method == "POST":
@@ -219,7 +219,8 @@ def save_review(request, story, chapter):
             review = form.save(commit=False)
             review.story = story
             review.chapter = chapter
-            review.parent = request.POST.get("parent")
+            # if review_id:
+            #     review.parent = review_id
             review.user = request.user
             review.save()
             return redirect("stories:detail-review", review=review.id)
@@ -232,6 +233,7 @@ def save_review(request, story, chapter):
             context={
                 "reviewform": form,
                 "reviews": reviews,
+                "reviews_count": count,
                 "story": story,
             },
         )
