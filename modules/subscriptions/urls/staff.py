@@ -1,5 +1,5 @@
 from django.urls import path
-from modules.subscriptions.views.staff import staff
+from modules.subscriptions.views import staff
 
 urls = [
     path("sponsors/", staff.SponsorListView.as_view(), name="sponsor-list"),

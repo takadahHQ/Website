@@ -4,12 +4,12 @@
   <h1 class="text-3xl font-bold mb-6">Delete Sponsor</h1>
   
   <div class="max-w-2xl bg-white rounded-md shadow-md p-6">
-    <form hx-delete="{% url 'sponsor-delete' sponsor.id %}" hx-target="#sponsor-list">
+    <form hx-delete="{% url 'sponsor:sponsor-delete' sponsor.id %}" hx-target="#sponsor-list">
       {% csrf_token %}
       <p class="text-xl font-bold mb-4">Are you sure you want to delete "{{ sponsor.name }}"?</p>
       <p class="text-gray-600 text-sm mb-4">Deleting this sponsor will remove all associated package subscriptions.</p>
       <div class="flex justify-end">
-        <button type="button" class="px-4 py-2 bg-gray-500 text-white rounded-md mr-4" hx-get="{% url 'sponsor-list' %}" hx-target="#sponsor-list">Cancel</button>
+        <button type="button" class="px-4 py-2 bg-gray-500 text-white rounded-md mr-4" hx-get="{% url 'sponsor:sponsor-list' %}" hx-target="#sponsor-list">Cancel</button>
         <button type="submit" class="px-4 py-2 bg-red-500 text-white rounded-md">Delete</button>
       </div>
     </form>
