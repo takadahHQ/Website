@@ -16,6 +16,7 @@ modules = [
     path("", include("modules.core.urls")),
     path("", include("modules.blog.urls")),
     path("", include("modules.stories.urls")),
+    path("", include("modules.subscriptions.urls")),
 ]
 
 thirdparty = [

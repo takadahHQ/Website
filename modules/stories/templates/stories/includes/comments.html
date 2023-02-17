@@ -1,9 +1,9 @@
 {% load tailwind_filters %}
-<section class="bg-mono-50 rounded shadow-mono-600 p-2 lg:p-8 mt-2 dark:bg-mono-700" id="comments">
-        {% with reviewed.count as total_comments %}
+<section class="bg-mono-50 rounded shadow-mono-600 p-2 lg:p-8 mt-2 dark:bg-mono-700" id="reviews">
+        {% with reviews_count as total_comments %}
 <b class="text-xl dark:text-mono-50 m-2 p-8">{{ total_comments }} Comment{{ total_comments|pluralize }}</b>
         {% endwith %}
-<div hx-target="#comments" hx-swap="beginafter">
+<div hx-target="#comments" hx-swap="afterbegin">
 <form hx-post="{% url "stories:add-review" story=story.story.id chapter=story.id %}" class="">
 <div class="px-3 mb-2 mt-2 w-full">
 {% csrf_token %}
@@ -15,10 +15,9 @@
     </div>
 </form>
 </div>
-{{ reviewed | pprint}}
-<comments id="#comments">
+<comments id="comments">
   {% for review in reviewed %}
     {% include "stories/partials/review.html" %}
   {% endfor %}
-  </comment>
+</comment>
 </section>

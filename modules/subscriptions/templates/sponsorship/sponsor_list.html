@@ -1,0 +1,46 @@
+<!-- list.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8 mt-8">
+    <h2 class="text-2xl font-bold leading-7 text-gray-900 mb-4">Sponsors List</h2>
+
+    <a href="{% url 'create_sponsor' %}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-2">Create Sponsor</a>
+
+    <table class="table-auto">
+      <thead>
+        <tr>
+          <th class="px-4 py-2">ID</th>
+          <th class="px-4 py-2">Story</th>
+          <th class="px-4 py-2">Name</th>
+          <th class="px-4 py-2">Advance</th>
+          <th class="px-4 py-2">Amount</th>
+          <th class="px-4 py-2">Payment Date</th>
+          <th class="px-4 py-2">Expire At</th>
+          <th class="px-4 py-2">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for sponsor in sponsors %}
+          <tr>
+            <td class="border px-4 py-2">{{ sponsor.id }}</td>
+            <td class="border px-4 py-2">{{ sponsor.story.title }}</td>
+            <td class="border px-4 py-2">{{ sponsor.name }}</td>
+            <td class="border px-4 py-2">{{ sponsor.advance }}</td>
+            <td class="border px-4 py-2">{{ sponsor.amount }}</td>
+            <td class="border px-4 py-2">{{ sponsor.payment_date }}</td>
+            <td class="border px-4 py-2">{{ sponsor.expire_at }}</td>
+            <td class="border px-4 py-2">
+              <a href="{% url 'update_sponsor' sponsor.id %}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded">Edit</a>
+              <a href="#" hx-delete="{% url 'delete_sponsor' sponsor.id %}" hx-target="#sponsor-{{ sponsor.id }}" class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded">Delete</a>
+            </td>
+          </tr>
+        {% empty %}
+          <tr>
+            <td class="border px-4 py-2 text-center" colspan="8">No sponsors found.</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}
