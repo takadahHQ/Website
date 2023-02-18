@@ -5,7 +5,7 @@
   <div class="container mx-auto px-4 sm:px-6 lg:px-8 mt-8">
     <h2 class="text-2xl font-bold leading-7 text-gray-900 mb-4">Sponsors List</h2>
 
-    <a href="{% url 'sponsor:create_sponsor' %}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-2">Create Sponsor</a>
+    <a href="{% url 'sponsor:sponsor-create' %}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-2">Create Sponsor</a>
 
     <table class="table-auto">
       <thead>
@@ -31,8 +31,8 @@
             <td class="border px-4 py-2">{{ sponsor.payment_date }}</td>
             <td class="border px-4 py-2">{{ sponsor.expire_at }}</td>
             <td class="border px-4 py-2">
-              <a href="{% url 'sponsor:update_sponsor' sponsor.id %}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded">Edit</a>
-              <a href="#" hx-delete="{% url 'sponsor:delete_sponsor' sponsor.id %}" hx-target="#sponsor-{{ sponsor.id }}" class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded">Delete</a>
+              <a href="{% url 'sponsor:author:sponsor-update' sponsor.id %}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded">Edit</a>
+              <a href="#" hx-delete="{% url 'sponsor:author:sponsor-delete' sponsor.id %}" hx-target="#sponsor-{{ sponsor.id }}" class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded">Delete</a>
             </td>
           </tr>
         {% empty %}
