@@ -24,8 +24,7 @@ CRISPY_ALLOWED_TEMPLATE_PACKS = "tailwind"
 
 CRISPY_TEMPLATE_PACK = "tailwind"
 
-NPM_BIN_PATH = r"C:\laragon\bin\nodejs\node-v14\npm.cmd"
-USE_TZ = True
+NPM_BIN_PATH = r"C:\laragon\bin\nodejs\node-v18\npm.cmd"
 SITE_ID = 1
 
 STRIPE_LIVE_SECRET_KEY = "sk_live_fddfkflkdfkdfldfk"
@@ -94,6 +93,7 @@ THIRD_PARTY_APPS = [
 ]
 
 LOCAL_APPS = [
+    # "theme",
     "modules.core",
     "modules.pages",
     "modules.blog",
@@ -103,7 +103,7 @@ LOCAL_APPS = [
     # "modules.helpdesk",
     # "modules.roadmap",
     # "modules.stats",
-    "modules.owliver",
+    "modules.theme",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -196,7 +196,7 @@ USE_I18N = True
 
 USE_TZ = True
 
-TAILWIND_APP_NAME = "owliver"
+TAILWIND_APP_NAME = "modules.theme"
 TAGGIT_CASE_INSENSITIVE = True
 # MEDIA_URL = '/media/'
 # STATIC_URL = '/static/'
