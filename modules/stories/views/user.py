@@ -180,6 +180,8 @@ class ShowLanguage(ListView):
         return get_language(self.kwargs.get("slug"))
 
 
+
+
 def update_review(request, review):
     review = get_reviews_by_id(review=review)
     form = ReviewForm(request.POST or None, instance=review)
