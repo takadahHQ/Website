@@ -1,9 +1,13 @@
-from django.urls import include, path
 from modules.subscriptions.views import user as views
 
+from django.urls import include, path, register_converter
+from modules.stories.converter import StoryIdConverter
+
+register_converter(StoryIdConverter, "story")
+#        "<str:type>/<story>/",
 urls = [
     path(
-        "<str:type>/<story>/",
+        "<story:story>/",
         include(
             [
                 path(

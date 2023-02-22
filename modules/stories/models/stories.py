@@ -7,6 +7,7 @@ from modules.stories import images as img
 from django.core.files import File
 from django.contrib.contenttypes.fields import GenericRelation
 from taggit.managers import TaggableManager
+from modules.stories.converter import h_encode
 
 try:
     mindsdb = __import__("mindsdb")
@@ -126,6 +127,11 @@ class Stories(CacheInvalidationMixin, idModel, timeStampModel):
             return self.cover.url
         else:
             return self.cover.url
+
+    def id(self):
+        id = h_encode(self.id)
+        print(id)
+        return id
 
     def get_absolute_url(self):
         story_type = self.story_type.slug

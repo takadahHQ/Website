@@ -276,7 +276,7 @@ class createStory(LoginRequiredMixin, CreateView):
     form_class = StoryForm
 
     def get_success_url(self):
-        return reverse_lazy("stories:author:update", kwargs={"pk": self.object.pk})
+        return reverse_lazy("stories:author:update", kwargs={"pk": self.object.id})
 
     def form_valid(self, form):
         # self.object = form.save()
@@ -293,7 +293,7 @@ class StoriesCreateView(LoginRequiredMixin, CreateView):
     form_class = StoryForm
 
     def get_success_url(self):
-        return reverse_lazy("stories:author:update", kwargs={"pk": self.object.pk})
+        return reverse_lazy("stories:author:update", kwargs={"pk": self.object.id})
 
     def form_valid(self, form):
         # self.object = form.save()
@@ -312,7 +312,7 @@ class updateStory(LoginRequiredMixin, UpdateView):
     form_class = StoryForm
 
     def get_success_url(self):
-        return reverse_lazy("stories:author:show", kwargs={"pk": self.object.pk})
+        return reverse_lazy("stories:author:show", kwargs={"pk": self.object.id})
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)

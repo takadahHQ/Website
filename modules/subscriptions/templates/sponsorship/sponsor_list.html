@@ -1,6 +1,12 @@
 <!-- list.html -->
 {% extends 'base.html' %}
 
+{% block breadcrumbs %}
+<li><a href="{% url "stories:author:dashboard" %}">Author</a></li> 
+<li><a href="{% url "stories:author:show" story %}">Story</a></li> 
+<li><a>Packages</a></li> 
+{% endblock %}
+
 {% block content %}
   <div class="container mx-auto px-4 sm:px-6 lg:px-8 mt-8">
     <h2 class="text-2xl font-bold leading-7 text-gray-900 mb-4">Sponsors List</h2>

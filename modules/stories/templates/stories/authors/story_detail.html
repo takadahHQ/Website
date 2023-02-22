@@ -62,6 +62,7 @@
             <div class="w-full flex flex-wrap space-x-2">
                 <a href="{% url 'stories:author:update' story.id %}" class="btn hover:bg-rebel-500 border-none rounded">Edit the Story</a>
                 <a href="{% url 'stories:author:create-chapter' story.id %}" class="btn hover:bg-rebel-500 border-none rounded">Add New Chapter</a>
+                <a href="{% url 'sponsor:author:package-list' story.id %}" class="btn hover:bg-rebel-500 border-none rounded">Sponsorship Packages</a>
             </div>
             
         </div>
