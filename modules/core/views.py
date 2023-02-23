@@ -12,7 +12,14 @@ from django.views.generic import (
     DeleteView,
 )
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .actions import get_users_profile, homepage, get_bookmarks, get_histories
+from .actions import (
+    get_users_profile,
+    homepage,
+    get_bookmarks,
+    get_histories,
+    get_bookmarked_stories,
+    get_profile,
+)
 
 
 def index(request):
@@ -82,9 +89,12 @@ class AuthorView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        bookmarks, reviews = get_profile(user=self.kwargs.get("username", None))
+        context["bookmarks"] = bookmarks
+        context["reviews"] = reviews
         return context
 
     def get_queryset(self):
         # user = get_object_or_404(Users, username=self.kwargs['username'])
-        user = get_users_profile(self.kwargs.get("username", None))
+        user = get_users_profile(user=self.kwargs.get("username", None))
         return user

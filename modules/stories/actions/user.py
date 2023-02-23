@@ -185,6 +185,7 @@ def get_story_by_id(pk: int):
             "likes",
             "dislikes",
             "author",
+            "bookmarks",
             "editor",
             "genre",
             "characters",
@@ -242,20 +243,40 @@ def follow_story(user, slug):
 
 def bookmark_story(user, slug):
     story = get_object_or_404(Stories, id=slug)
-    bookmark = Bookmark.objects.update_or_create(
-        story=story,
-        user=user,
-        defaults={
-            "story": story,
-            "user": user,
-        },
-    )
-    bookmark.save()
-    bookmarks = Bookmark.objects.get(story=story.id)
+    bookmark = Bookmark.objects.filter(story=story, user=user)
+    if bookmark.exists():
+        bookmark.delete()
+    else:
+        bookmark = Bookmark.objects.create(story=story, user=user)
+    bookmarks = get_story_bookmarks(story=story)
+    return bookmarks, story
+
+
+def get_story_bookmarks(story):
+    bookmarks = Bookmark.objects.filter(story=story.id)
     return bookmarks
 
 
+def get_profile(user):
+    test = isinstance(user, int)
+    if test:
+        pass
+    else:
+        user = Users.objects.get(username=user)
+
+    bookmarks = get_bookmarked_stories(user)
+    reviews = get_review_by_user(user)
+    # user = get_user_profile(user)
+
+    return bookmarks, reviews
+
+
 def get_bookmarked_stories(user):
+    test = isinstance(user, int)
+    if test:
+        pass
+    else:
+        user = Users.objects.get(username=user)
     bookmarks = (
         Bookmark.objects.filter(user=user)
         .filter(status="active")
@@ -489,6 +510,17 @@ def get_reviews_by_id(review: int):
         .get(id=review)
     )
     return review
+
+
+def get_review_by_user(user):
+    reviews = (
+        Review.objects.filter(status="active")
+        .filter(user=user)
+        .select_related("story", "user")
+        .prefetch_related("story__author")
+        .order_by("-created_at")
+    )
+    return reviews
 
 
 def get_reviews(story, chapter):

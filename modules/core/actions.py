@@ -7,9 +7,12 @@ from modules.stories.actions.user import (
     get_user_histories,
     get_user_profile,
     get_weekly_stories,
+    get_profile,
+    get_review_by_user,
 )
 
 # from modules.stories.models import Bookmark, History, Stories
+from modules.core.models import Users
 
 
 def homepage(count):
@@ -36,3 +39,17 @@ def get_histories(user):
 def get_users_profile(user):
     user = get_user_profile(user)
     return user
+
+
+def get_profile(user):
+    test = isinstance(user, int)
+    if test:
+        pass
+    else:
+        user = Users.objects.get(username=user)
+
+    bookmarks = get_bookmarked_stories(user)
+    reviews = get_review_by_user(user)
+    # user = get_user_profile(user)
+
+    return bookmarks, reviews

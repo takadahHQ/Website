@@ -39,124 +39,64 @@ Profile
 <!-- end profile -->
 <!-- tabs -->
 <div class="bg-mono-50 rounded shadow-mono-400 p-2 lg:p-8 mt-2 dark:bg-mono-700 dark:text-mono-200">
-    <section>
-    <div x-data="{
-        tabs: [ 'Stories', 'Edited', 'Followed', 'Reviews'],
-        activeTabIndex: 0
-    }">
-        <div class="tabs my-6">
-            <template x-for="(tab, index) in tabs" :key="index">
-                <a class="tab tab-bordered dark:text-mono-200" 
-                    :class="{'tab-active': activeTabIndex == index}"
-                    x-on:click="activeTabIndex = index"
-                    x-text=tab
-                ></a>
-            </template>
-        </div>
-        <div class="my-6 p-6">
-            <div x-show="activeTabIndex == 0">
-                <div class="text-2xl">{{ author.name| capfirst }}'s Stories</div><hr/>
-            <div class="text-mono-300">
-                {% comment %} {{ author.editors.all | pprint }} {% endcomment %}
-                {% for story in author.authors.all %}
-                <div class="flex flex-col scale-98 hover:scale-100 transition duration-300 ease-in-out m-4">
-                    <div class="bg-white shadow-md  rounded-3xl p-4">
-                        <div class="flex-none lg:flex">
-                            <div class=" h-full w-full lg:h-48 lg:w-48   lg:mb-0 mb-3">
-                                <a href="{{ story.get_absolute_url }}">
-                                <img src="{{ story.get_cover }}"
-                                    alt="{{ story.title }}" class="w-full object-scale-down lg:object-cover  lg:h-48 rounded-2xl">
-                                </a>
-                                </div>
-                            <div class="flex-auto ml-3 justify-evenly py-2">
-                                <a href="{{ story.get_absolute_url }}">
-                                    <div class="flex flex-wrap ">
-                                        <a href="{{ story.story_type.get_absolute_url }}" class="w-full flex-none text-xs text-mono-700 font-medium ">
-                                            {{ story.story_type.name }}
-                                        </a>
-                                        <h2><a href="{{ story.get_absolute_url }}" class="flex-auto text-lg font-medium">{{ story.title }}</a></h2>
-                                    </div>
-                                    <p class="flex-auto text-lg font-medium">                          
-                                            Written by:{% for author in story.author.all %}
-                                        <span class="badge badge-accent bg-mono-400"> 
-                                            <a href="{% url 'core:author' author.username %}">{{ author.name }}</a>
-                                        </span>
-                                    {% endfor %}</p>
-                                    <div class="flex pb-2 mt-3 border-t border-mono-500 dark:border-mono-200 "></div>
-                                    <div class="mt-3 flex py-4  text-sm text-mono-500">
-                                        <a href="{{ story.get_absolute_url }}">
-                                        <div class="flex-1 inline-flex items-center">
-                                            {{ story.summary | safe }}
-                                        </div>
-                                    </a>
-                                    </div>
-                                </a>
-                        </div>
+    <section id="tabs">
+        <div x-data="{
+            tabs: [ 'My Stories', 'Edited Stories', 'Followed Stories', 'Reviews',],
+            activeProfile: 0
+        }">
+            <div class="tabs my-6">
+                <template x-for="(tab, index) in tabs" :key="index">
+                    <a class="tab tab-bordered dark:text-mono-200" 
+                        :class="{'tab-active': activeProfile == index}"
+                        x-on:click="activeProfile = index"
+                        x-text=tab
+                    ></a>
+                </template>
+            </div>
+            <div class="my-6 p-6">
+                <div x-show="activeProfile == 0">
+                    <div class="text-2xl">{{ author.name| capfirst }}'s Stories</div><hr/>
+                    <div class="text-mono-300">
+                        {% comment %} {{ author.editors.all | pprint }} {% endcomment %}
+                        {% for story in author.authors.all %}
+                        {% include "core/partials/story.html" %}
+                        {% empty %}
+                        {{ author.name | title }} has not written any story
+                        {% endfor %}
                     </div>
                 </div>
-                {% empty %}
-                {{ author.name | title }} has not written any story
-                {% endfor %}
-            </div>
-            </div>
-                <div x-show="activeTabIndex == 1">
+                <div x-show="activeProfile == 1">
                     <div class="text-2xl">{{ author.name | capfirst }}'s Edited Stories</div><hr/>
-                <div class="text-mono-300">
-                    {% for story in user.editors.all %}
-                    <div class="flex flex-col scale-95 hover:scale-105 transition duration-300 ease-in-out">
-                        <div class="bg-white shadow-md  rounded-3xl p-4">
-                            <div class="flex-none lg:flex">
-                                <div class=" h-full w-full lg:h-48 lg:w-48   lg:mb-0 mb-3">
-                                    <a href="{{ story.get_absolute_url }}">
-                                    <img src="{{ story.get_cover }}"
-                                        alt="{{ story.title }}" class="w-full object-scale-down lg:object-cover  lg:h-48 rounded-2xl">
-                                    </a>
-                                    </div>
-                                <div class="flex-auto ml-3 justify-evenly py-2">
-                                    <a href="{{ story.get_absolute_url }}">
-                                        <div class="flex flex-wrap ">
-                                            {% comment %} <a href="{{ story.story_type.get_absolute_url }}" class="w-full flex-none text-xs text-mono-700 font-medium ">
-                                                {{ story.story_type.name }}
-                                            </a> {% endcomment %}
-                                            <h2><a href="{{ story.get_absolute_url }}" class="flex-auto text-lg font-medium">{{ story.title }}</a></h2>
-                                        </div>
-                                        <p class="flex-auto text-lg font-medium">                          
-                                                Written by:{% for author in story.author.all %}
-                                            <span class="badge badge-accent bg-mono-400"> 
-                                                <a href="{% url 'core:author' author.username %}">{{ author.name }}</a>
-                                            </span>
-                                        {% endfor %}</p>
-                                        <div class="flex pb-2 mt-3 border-t border-mono-500 dark:border-mono-200 "></div>
-                                        <div class="mt-3 flex py-4  text-sm text-mono-500">
-                                            <a href="{{ story.get_absolute_url }}">
-                                            <div class="flex-1 inline-flex items-center">
-                                                {{ story.summary | safe }}
-                                            </div>
-                                        </a>
-                                        </div>
-                                    </a>
-                            </div>
-                        </div>
+                    <div class="text-mono-300">
+                        {% for story in user.editors.all %}
+                        {% include "core/partials/editor.html" %}
+                        {% empty %}
+                        {{ author.name | title }} has not edited any story
+                        {% endfor %}
                     </div>
-                    {% empty %}
-                    {{ author.name | title }} has not edited any story
-                    {% endfor %}
                 </div>
+                <div x-show="activeProfile == 2">
+                    <div class="text-2xl">{{ author.name| capfirst }}'s Followed Stories</div><hr/>
+                    <div class="text-mono-300">
+                        {% for bookmark in bookmarks %}
+                        {% include "core/partials/bookmark.html" %}
+                        {% empty %}
+                        {{ author.name | title }} has not followed any story yet.
+                        {% endfor %}
+                    </div>
                 </div>
-            <div x-show="activeTabIndex == 2">
-                Followed stories： Chapter {{ story.chapters_set.last.position  }}: <a href="{{ story.chapters_set.last.get_absolute_url }}">{{ story.chapters_set.last.title | title }}</a> {{ story.chapters_set.last.created_at | timesince }}<hr class="mt-5">
-                <div class="columns-2">
-                {% for chapter in story.chapters_set.all %}
-                <div class="p-4">
-                {{ chapter.position }} <a class="text-mono-800" href="{{ chapter.get_absolute_url }}">{{ chapter.title | title }}</a> <br>
-                <p class="text-xs text-mono-400"> {{ chapter.created_at | timesince }} ago</p>
+                <div x-show="activeProfile == 3">
+                    <div class="text-2xl">{{ author.name| capfirst }}'s Reviews</div><hr/>
+                    <div class="text-mono-300">
+                        {% for review in reviews %}
+                        {% include "stories/partials/review.html" %}
+                        {% empty %}
+                        {{ author.name | title }} has not written any review yet.
+                        {% endfor %}
+                    </div>
                 </div>
-                {% endfor %}
             </div>
-            </div>
-            <div x-show="activeTabIndex == 3">Reviews<br>Coming Soon</div>
         </div>
-    </div>
 </section>
 </div>
 {% endblock content %}

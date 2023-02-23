@@ -46,6 +46,7 @@ from modules.stories.actions import (
     get_story,
     get_reviews,
     get_chapter,
+    get_story_bookmarks,
 )
 from modules.stories.forms import (
     ReviewForm,
@@ -63,8 +64,12 @@ def storyDisLike(request, id):
 
 
 def storyBookmark(request, id):
-    bookmarks = bookmark_story(user=request.user, slug=id)
-    return render(request, "stories/partials/bookmark.html", {"bookmark": bookmarks})
+    bookmarks, story = bookmark_story(user=request.user, slug=id)
+    return render(
+        request,
+        "stories/partials/bookmark.html",
+        {"bookmark": bookmarks, "story": story},
+    )
 
 
 def storyFollow(request, id):
@@ -80,9 +85,10 @@ def storyFollow(request, id):
 
 def showStory(request, type: str, slug: str):
     story = get_story(slug=slug, type=type)
+    bookmark = get_story_bookmarks(story=story)
     review = ""
     recommendation = ""
-    context = {"story": story}
+    context = {"story": story, "bookmark": bookmark}
     template = "stories/readers/story_detail.html"
     return render(request, template, context)
 
@@ -178,8 +184,6 @@ class ShowLanguage(ListView):
 
     def get_queryset(self):
         return get_language(self.kwargs.get("slug"))
-
-
 
 
 def update_review(request, review):
