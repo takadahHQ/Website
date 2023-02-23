@@ -45,7 +45,7 @@ fonttools>=4.31.2
 geoip2>=4.6.0
 maxminddb>=2.2.0
 phonenumbers>=8.12.50
-pyOpenSSL>=22.0.0
+#pyOpenSSL>=22.0.0
 python-dateutil>=2.8.2
 python-decouple>=3.6
 python-slugify>=6.1.1
@@ -57,4 +57,4 @@ user-agents>=2.2.0
 psycopg2-binary>=2.9.2
 pycountry>=20.7.3
 pillow==8.0.0
-cryptography>=37.0.4
+#cryptography>=37.0.4
