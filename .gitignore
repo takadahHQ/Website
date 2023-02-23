@@ -1,9 +1,19 @@
 # Specify filepatterns you want git to ignore.
 **/__pycache__
 */*/__pycache__
-static/*
-media/*
-cache/*
-node_modules/*
 node_modules
 takadah-venv
+static/*
+media/*
+cache/**/
+node_modules/*
+# Django #
+*.log
+*.pot
+*.pyc
+__pycache__
+db.sqlite3
+media
+
+# Backup files # 
+*.bak 
