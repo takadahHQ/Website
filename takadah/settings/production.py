@@ -13,10 +13,10 @@ INTERNAL_IPS = [
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": "takalqei_server",
-        "USER": "takalqei_admin",
-        "PASSWORD": "Z!nox2018",
-        "HOST": "127.0.0.1",
+        "NAME": "postgres",
+        "USER": "postgres",
+        "PASSWORD": "TakadahZInox",
+        "HOST": "db.dkmexmwmskfjdvuzoxcz.supabase.co",
         "PORT": "5432",
     }
 }
