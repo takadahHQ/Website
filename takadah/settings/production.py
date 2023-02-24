@@ -18,6 +18,7 @@ DATABASES = {
         "PASSWORD": "TakadahZ!nox",
         "HOST": "db.dkmexmwmskfjdvuzoxcz.supabase.co",
         "PORT": "5432",
+        "CERT": "prod-ca-2021.crt",
     }
 }
 
