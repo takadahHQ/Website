@@ -56,5 +56,5 @@ django-ipware>=4.0.2
 user-agents>=2.2.0
 psycopg2-binary==2.8.4
 pycountry>=20.7.3
-pillow==8.0.0
+pillow>=8.0.0
 #cryptography>=37.0.4
