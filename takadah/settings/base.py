@@ -39,7 +39,13 @@ DJSTRIPE_FOREIGN_KEY_TO_FIELD = "id"
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = True
 
-ALLOWED_HOSTS = ["www.takadah.com", "takadah.com", "127.0.0.1", "localhost"]
+ALLOWED_HOSTS = [
+    "www.takadah.com",
+    "takadah.com",
+    "127.0.0.1",
+    "localhost",
+    "18.181.198.69",
+]
 
 HIJACK_ALLOW_GET_REQUESTS = True
 HIJACK_PERMISSION_CHECK = "hijack.permissions.superusers_and_staff"

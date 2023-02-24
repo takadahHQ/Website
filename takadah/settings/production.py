@@ -13,12 +13,12 @@ INTERNAL_IPS = [
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "postgres",
-        "USER": "postgres",
-        "PASSWORD": "TakadahZ!nox",
-        "HOST": "db.dkmexmwmskfjdvuzoxcz.supabase.co",
+        "NAME": "ebdb",
+        "USER": "takadah",
+        "PASSWORD": "Z!nox2018",
+        "HOST": "https://ap-northeast-1.console.aws.amazon.com/rds/home?region=ap-northeast-1#dbinstances:id=awseb-e-8dwr2i3ifw-stack-awsebrdsdatabase-xpxkebkzgtze",
         "PORT": "5432",
-        "CERT": "prod-ca-2021.crt",
+        # "CERT": "prod-ca-2021.crt",
     }
 }
 
