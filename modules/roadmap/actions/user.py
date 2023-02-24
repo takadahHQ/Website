@@ -14,7 +14,7 @@ from modules.stories.models import (
 from modules.core.models import Users
 from modules.subscriptions.models import Sponsors, Packages
 from modules.stories.models.review import Review
-import pandas as pd
+# import pandas as pd
 from itertools import chain
 from django.db.models import CharField, Value as V
 from django.db.models.functions import Concat

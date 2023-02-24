@@ -1,7 +1,7 @@
 from django.core.management.base import BaseCommand
 from modules.stories.models.stories import Stories
-import pandas as pd
-import mindsdb
+# import pandas as pd
+# import mindsdb
   
   
 
@@ -14,9 +14,9 @@ class Command(BaseCommand):
   
     def handle(self, *args, **kwargs):
         query = Stories.objects.values('title', 'slug', 'abbreviation', 'summary',  'story_type', 'following', 'likes', 'dislikes', 'author', 'language', 'genre',  'rating', 'tags')
-        data = pd.DataFrame.from_records(list(query))
-        predictor = mindsdb.Predictor(name='story_recommendation_predictor')
-        predictor.learn(
-        from_data=data,
-        target=['story_type', 'likes', 'genre']
-        )
+        # data = pd.DataFrame.from_records(list(query))
+        # predictor = mindsdb.Predictor(name='story_recommendation_predictor')
+        # predictor.learn(
+        # from_data=data,
+        # target=['story_type', 'likes', 'genre']
+        # )
