@@ -89,7 +89,7 @@ THIRD_PARTY_APPS = [
     "reversion",
     "newsfeed",
     "taggit",
-    "djstripe",
+    # "djstripe",
 ]
 
 LOCAL_APPS = [
