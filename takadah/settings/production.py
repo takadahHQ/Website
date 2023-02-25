@@ -16,7 +16,7 @@ DATABASES = {
         "NAME": "ebdb",
         "USER": "takadah",
         "PASSWORD": "Z!nox2018",
-        "HOST": "https://ap-northeast-1.console.aws.amazon.com/rds/home?region=ap-northeast-1#dbinstances:id=awseb-e-8dwr2i3ifw-stack-awsebrdsdatabase-xpxkebkzgtze",
+        "HOST": "awseb-e-8dwr2i3ifw-stack-awsebrdsdatabase-xpxkebkzgtze.czkumzmsnn55.ap-northeast-1.rds.amazonaws.com",
         "PORT": "5432",
         # "CERT": "prod-ca-2021.crt",
     }
