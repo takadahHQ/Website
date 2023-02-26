@@ -44,7 +44,7 @@ ALLOWED_HOSTS = [
     "takadah.com",
     "127.0.0.1",
     "localhost",
-    "18.181.198.69",
+    "takadalstalk-env.eba-yczwmvqr.ap-northeast-1.elasticbeanstalk.com",
 ]
 
 HIJACK_ALLOW_GET_REQUESTS = True
