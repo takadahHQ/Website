@@ -516,15 +516,15 @@ MAXMIND_ASN_DB = os.getenv("MAXMIND_ASN_DB", "resources/geoip/GeoLite2-ASN.mmdb"
 SERVER_EMAIL = os.getenv("SERVER_EMAIL", "Takadah <noreply@takadah.com>")
 DEFAULT_FROM_EMAIL = SERVER_EMAIL
 
-if DEBUG or os.environ.get("EMAIL_HOST") is None:
-    EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
-else:
-    EMAIL_HOST = os.environ.get("EMAIL_HOST")
-    EMAIL_PORT = int(os.environ.get("EMAIL_PORT", 465))
-    EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER")
-    EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
-    EMAIL_USE_SSL = os.environ.get("EMAIL_USE_SSL")
-    EMAIL_USE_TLS = os.environ.get("EMAIL_USE_TLS")
+# if DEBUG or os.environ.get("EMAIL_HOST") is None:
+#     EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+# else:
+#     EMAIL_HOST = os.environ.get("EMAIL_HOST")
+#     EMAIL_PORT = int(os.environ.get("EMAIL_PORT", 465))
+#     EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER")
+#     EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
+#     EMAIL_USE_SSL = os.environ.get("EMAIL_USE_SSL")
+#     EMAIL_USE_TLS = os.environ.get("EMAIL_USE_TLS")
 
 # Auto fields
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"

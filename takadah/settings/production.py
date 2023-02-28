@@ -16,7 +16,7 @@ DATABASES = {
         "NAME": "ebdb",
         "USER": "takadah",
         "PASSWORD": "Z!nox2018",
-        "HOST": "awseb-e-8dwr2i3ifw-stack-awsebrdsdatabase-xpxkebkzgtze.czkumzmsnn55.ap-northeast-1.rds.amazonaws.com",
+        "HOST": "awseb-e-nm7s3ucz5p-stack-awsebrdsdatabase-6zyucb8ibpm0.czkumzmsnn55.ap-northeast-1.rds.amazonaws.com",
         "PORT": "5432",
         # "CERT": "prod-ca-2021.crt",
     }
