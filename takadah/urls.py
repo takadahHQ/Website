@@ -22,7 +22,7 @@ modules = [
 thirdparty = [
     path("search/", include("watson.urls", namespace="watson")),
     path("newsfeed/", include("newsfeed.urls", namespace="newsfeed")),
-    path("cookies/", include("cookie_consent.urls")),
+    # path("cookies/", include("cookie_consent.urls")),
     path("ckeditor/", include("ckeditor_uploader.urls")),
     path("flag/", include("flag.urls")),
     # path("unicorn/", include("django_unicorn.urls")),

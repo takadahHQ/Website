@@ -44,7 +44,6 @@ ALLOWED_HOSTS = [
     "takadah.com",
     "127.0.0.1",
     "*",
-    "takadalstalk-env.eba-yczwmvqr.ap-northeast-1.elasticbeanstalk.com",
 ]
 
 HIJACK_ALLOW_GET_REQUESTS = True
@@ -71,7 +70,7 @@ THIRD_PARTY_APPS = [
     "flags",
     "tailwind",
     "analytical",
-    "cookie_consent",
+    # "cookie_consent",
     "django_otp",
     "django_otp.plugins.otp_static",
     "django_otp.plugins.otp_totp",
