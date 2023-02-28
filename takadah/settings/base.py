@@ -507,13 +507,13 @@ ANALYTICAL_AUTO_IDENTIFY = True
 
 # GeoIP
 
-MAXMIND_CITY_DB = os.getenv("MAXMIND_CITY_DB", "/etc/GeoLite2-City.mmdb")
-MAXMIND_ASN_DB = os.getenv("MAXMIND_ASN_DB", "/etc/GeoLite2-ASN.mmdb")
+MAXMIND_CITY_DB = os.getenv("MAXMIND_CITY_DB", "resources/geoip/GeoLite2-City.mmdb")
+MAXMIND_ASN_DB = os.getenv("MAXMIND_ASN_DB", "resources/geoip/GeoLite2-ASN.mmdb")
 
 
 # Email
 
-SERVER_EMAIL = os.getenv("SERVER_EMAIL", "Shynet <noreply@shynet.example.com>")
+SERVER_EMAIL = os.getenv("SERVER_EMAIL", "Takadah <noreply@takadah.com>")
 DEFAULT_FROM_EMAIL = SERVER_EMAIL
 
 if DEBUG or os.environ.get("EMAIL_HOST") is None:
