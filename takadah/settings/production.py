@@ -13,10 +13,10 @@ INTERNAL_IPS = [
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "ebdb",
+        "NAME": "postgres",
         "USER": "takadah",
         "PASSWORD": "Z!nox2018",
-        "HOST": "awseb-e-nm7s3ucz5p-stack-awsebrdsdatabase-6zyucb8ibpm0.czkumzmsnn55.ap-northeast-1.rds.amazonaws.com",
+        "HOST": "takadah-test.czkumzmsnn55.ap-northeast-1.rds.amazonaws.com",
         "PORT": "5432",
         # "CERT": "prod-ca-2021.crt",
     }
