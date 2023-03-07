@@ -60,4 +60,5 @@ pillow>=8.0.1
 django-storages==1.13.2
 boto3==1.26.59
 gunicorn==20.1.0
+psycopg[binary]>=2.0
 #cryptography>=37.0.4
