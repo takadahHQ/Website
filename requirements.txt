@@ -31,6 +31,7 @@ django-private-chat2>=1.0.2
 django-reversion>=5.0.1
 django-select2>=7.10.0
 django-tailwind>=3.1.1
+# django-tailwind-cli>=1.2.2
 django-two-factor-auth>=1.14.0
 django-user-accounts>=3.2.0
 django-user-sessions>=1.7.1
@@ -45,12 +46,12 @@ phonenumbers>=8.12.50
 python-dateutil>=2.8.2
 python-decouple>=3.6
 python-slugify>=6.1.1
-PyYAML>=6.0
+# PyYAML>=6.0
 qrcode>=7.3.1
 whitenoise>=6.2.0
 django-ipware>=4.0.2
 user-agents>=2.2.0
-psycopg2-binary==2.8.4
+psycopg2-binary>=2.8.4
 pycountry>=20.7.3
 pillow>=8.0.1
 django-storages==1.13.2
