@@ -4,8 +4,6 @@
 node_modules
 takadah-venv
 static/*
-# media/*
-# cache/**/
 node_modules/*
 # Django #
 *.log
