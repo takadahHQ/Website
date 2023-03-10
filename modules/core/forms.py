@@ -4,7 +4,7 @@ from django.forms.widgets import TextInput
 from django.contrib.auth.forms import UserCreationForm
 from .models import Users, Settings
 
-from modules.stories.models.language import Language
+from modules.core.models.languages import Languages
 
 
 class ColorInput(forms.TextInput):
@@ -86,7 +86,7 @@ class ProfileForm(UserCreationForm):
         help_text="Optional.",
     )
     language_id = forms.ModelChoiceField(
-        queryset=Language.objects.all(), empty_label="(Nothing)", help_text="Optional."
+        queryset=Languages.objects.all(), empty_label="(Nothing)", help_text="Optional."
     )
 
     class Meta:
