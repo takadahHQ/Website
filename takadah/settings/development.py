@@ -5,7 +5,7 @@ SECRET_KEY = "takadah-dev-%$)wg^oewabdu(@&ai^v793brks2q20ehlu(sjn#(x+3+^$*tq"
 
 DEBUG = True
 
-ALLOWED_HOSTS = ["www.takadah.com", "takadah.com", "127.0.0.1", "localhost"]
+ALLOWED_HOSTS = ["*"]
 
 
 INTERNAL_IPS = [
