@@ -36,10 +36,10 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-STATIC_URL = "static/"
-# STATIC_ROOT = '/home/takalqei/takadah-app/static/'
+# STATIC_URL = "static/"
+# # STATIC_ROOT = '/home/takalqei/takadah-app/static/'
 
-MEDIA_URL = "/media/"
+# MEDIA_URL = "/media/"
 # MEDIA_ROOT = '/home/takalqei/takadah-app/media/'
 
 
