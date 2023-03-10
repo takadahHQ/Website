@@ -25,13 +25,17 @@ MIDDLEWARE += [
 # #Local
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": "takadah",
-        "USER": "maximus",
-        "PASSWORD": "Z!nox2018",
-        "HOST": "takadah-test.czkumzmsnn55.ap-northeast-1.rds.amazonaws.com",
-        "PORT": "5432",
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
     }
+    # "default": {
+    #     "ENGINE": "django.db.backends.postgresql",
+    #     "NAME": "takadah",
+    #     "USER": "maximus",
+    #     "PASSWORD": "Z!nox2018",
+    #     "HOST": "takadah-test.czkumzmsnn55.ap-northeast-1.rds.amazonaws.com",
+    #     "PORT": "5432",
+    # }
 }
 
 # Password validation
