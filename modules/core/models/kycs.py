@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from ckeditor.fields import RichTextField
 from modules.core.models.include import (
     idModel,
     statusModel,
