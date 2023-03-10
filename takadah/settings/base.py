@@ -149,8 +149,8 @@ AWS_LOCATION = "static"
 STATIC_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/{AWS_LOCATION}/"
 DEFAULT_FILE_STORAGE = "takadah.backends.StaticStorage"
 # s3 public media settings
-PUBLIC_MEDIA_LOCATION = "media"
-MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/{PUBLIC_MEDIA_LOCATION}/"
+AWS_MEDIA_LOCATION = "media"
+MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/{AWS_MEDIA_LOCATION}/"
 DEFAULT_FILE_STORAGE = "takadah.backends.PublicMediaStorage"
 
 CACHES = {
