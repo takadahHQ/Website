@@ -13,7 +13,7 @@ INTERNAL_IPS = [
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "takadah",
+        "NAME": "postgres",
         "USER": "maximus",
         "PASSWORD": "Z!nox2018",
         "HOST": "takadah-test.czkumzmsnn55.ap-northeast-1.rds.amazonaws.com",
