@@ -137,27 +137,21 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = "takadah.urls"
 
-if "AWS_STORAGE_BUCKET_NAME" in os.environ:
-    STATICFILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
-    DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
-
-    AWS_STORAGE_BUCKET_NAME = os.environ["AWS_STORAGE_BUCKET_NAME"]
-    AWS_S3_REGION_NAME = os.environ["AWS_S3_REGION_NAME"]
-
-    AWS_S3_ACCESS_KEY_ID = os.environ["AWS_ACCESS_KEY_ID"]
-    AWS_S3_SECRET_ACCESS_KEY = os.environ["AWS_SECRET_ACCESS_KEY"]
-    AWS_S3_ADDRESSING_STYLE = "virtual"
-
-    # AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
-    # AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
-    # AWS_STORAGE_BUCKET_NAME = os.getenv("AWS_STORAGE_BUCKET_NAME")
-    # AWS_DEFAULT_ACL = "public-read"
-    # AWS_S3_CUSTOM_DOMAIN = f"{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com"
-    # AWS_S3_OBJECT_PARAMETERS = {"CacheControl": "max-age=86400"}
-    # # s3 static settings
-    # AWS_LOCATION = "static"
-    # STATIC_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/{AWS_LOCATION}/"
-
+AWS_ACCESS_KEY_ID = "AKIA2EEYOQXPHTCPBFVJ"
+AWS_SECRET_ACCESS_KEY = "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"
+AWS_STORAGE_BUCKET_NAME = "takadahmedia"
+AWS_S3_REGION_NAME = "Asia Pacific (Mumbai) ap-south-1"
+AWS_DEFAULT_ACL = None
+AWS_S3_CUSTOM_DOMAIN = f"{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com"
+AWS_S3_OBJECT_PARAMETERS = {"CacheControl": "max-age=86400"}
+# s3 static settings
+AWS_LOCATION = "static"
+STATIC_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/{AWS_LOCATION}/"
+DEFAULT_FILE_STORAGE = "takadah.backends.StaticStorage"
+# s3 public media settings
+PUBLIC_MEDIA_LOCATION = "media"
+MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/{PUBLIC_MEDIA_LOCATION}/"
+DEFAULT_FILE_STORAGE = "takadah.backends.PublicMediaStorage"
 
 CACHES = {
     "default": {
@@ -184,9 +178,9 @@ TEMPLATES = [
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
                 "django.template.context_processors.media",
-                "modules.core.context_processor.settings",
-                "modules.core.context_processor.socials",
-                "modules.core.context_processor.menus",
+                # "modules.core.context_processor.settings",
+                # "modules.core.context_processor.socials",
+                # "modules.core.context_processor.menus",
             ],
         },
     },
@@ -226,13 +220,6 @@ USE_TZ = True
 
 TAILWIND_APP_NAME = "modules.theme"
 TAGGIT_CASE_INSENSITIVE = True
-# MEDIA_URL = '/media/'
-# STATIC_URL = '/static/'
-# MEDIA_ROOT = os.path.join(BASE_DIR, '/media/')
-# STATIC_ROOT = os.path.join(BASE_DIR, '/resources/static/')
-# STATICFILES_DIRS = [
-#    os.path.join(BASE_DIR, "resources/static"),
-#    ]
 
 # ==============================================================================
 # STATIC FILES SETTINGS
@@ -249,7 +236,10 @@ STATICFILES_FINDERS = (
     "django.contrib.staticfiles.finders.AppDirectoriesFinder",
 )
 
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
+DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+STATICFILES_STORAGE = "storages.backends.s3boto3.S3StaticStorage"
+# STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # ==============================================================================
 # MEDIA FILES SETTINGS
