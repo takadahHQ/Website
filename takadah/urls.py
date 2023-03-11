@@ -12,11 +12,11 @@ modules = [
     path("api/", api.urls),
     path("ads/", include("modules.adverts.urls")),
     # path("support/", include("modules.helpdesk.urls")),
-    path("pages/", include("modules.pages.urls")),
-    path("", include("modules.core.urls")),
-    path("", include("modules.blog.urls")),
-    path("", include("modules.stories.urls")),
-    path("", include("modules.subscriptions.urls")),
+    # path("pages/", include("modules.pages.urls")),
+    # path("", include("modules.core.urls")),
+    # path("", include("modules.blog.urls")),
+    # path("", include("modules.stories.urls")),
+    # path("", include("modules.subscriptions.urls")),
 ]
 
 thirdparty = [
