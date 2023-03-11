@@ -33,7 +33,7 @@ DATABASES = {
     #     "NAME": "takadah",
     #     "USER": "maximus",
     #     "PASSWORD": "Z!nox2018",
-    #     "HOST": "takadah-test.czkumzmsnn55.ap-northeast-1.rds.amazonaws.com",
+    #     "HOST": "database-1.czkumzmsnn55.ap-northeast-1.rds.amazonaws.com",
     #     "PORT": "5432",
     # }
 }
