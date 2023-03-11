@@ -8,6 +8,8 @@ DEBUG = False
 
 INTERNAL_IPS = [
     "127.0.0.1",
+    "0.0.0.0",
+    "*",
 ]
 
 DATABASES = {
@@ -18,6 +20,7 @@ DATABASES = {
         "PASSWORD": "Z!nox2018",
         "HOST": "database-1.czkumzmsnn55.ap-northeast-1.rds.amazonaws.com",
         "PORT": "5432",
+        "OPTIONS": {"sslmode": "require"},
     }
 }
 

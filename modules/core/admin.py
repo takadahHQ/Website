@@ -11,6 +11,7 @@ from .models import (
     Kycs,
     KycDocuments,
 )
+
 from .forms import SettingsForm
 from hijack.contrib.admin import HijackUserAdminMixin
 

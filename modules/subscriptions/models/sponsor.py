@@ -13,7 +13,9 @@ class Sponsors(statusModel):
         "Packages", related_name="sponsor", on_delete=models.CASCADE
     )
     payment_date = models.DateField(auto_now_add=True)
-    expire_at = models.DateField(default=expire(), editable=False)
+    expire_at = models.DateField(
+        default=datetime.datetime.today() + datetime.timedelta(days=30), editable=False
+    )
 
     def __str__(self):
         return self.name

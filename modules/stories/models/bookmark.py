@@ -7,7 +7,7 @@ from modules.stories.models.include import (
     statusModel,
     timeStampModel,
     CacheInvalidationMixin,
-    CachedQueryManager
+    CachedQueryManager,
 )
 from modules.stories.models.history import History
 
@@ -21,7 +21,7 @@ class Bookmark(CacheInvalidationMixin, idModel, statusModel, timeStampModel):
     )
     url = models.CharField(max_length=255, blank=True, null=True)
     objects = CachedQueryManager()
-    
+
     def __str__(self):
         return self.story.title
 
@@ -35,4 +35,4 @@ class Bookmark(CacheInvalidationMixin, idModel, statusModel, timeStampModel):
 
     class Meta:
         verbose_name_plural = "bookmarks"
-        # app_label = "modules_stories"
+        app_label = "stories"

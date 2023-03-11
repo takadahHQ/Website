@@ -102,17 +102,18 @@ def invalidate_cache(sender, **kwargs):
 
 
 class CachedQueryManager(models.Manager):
-    def get_queryset(self):
-        # Get the cache key for the queryset
-        cache_key = f"queryset:{self.model._meta.label}_{self.model.id}"
+    # def get_queryset(self):
+    #     # Get the cache key for the queryset
+    #     cache_key = f"queryset:{self.model._meta.label}_{self.model.id}"
 
-        # Try to retrieve the queryset from cache
-        queryset = cache.get(cache_key)
-        if queryset is not None:
-            return queryset
+    #     # Try to retrieve the queryset from cache
+    #     queryset = cache.get(cache_key)
+    #     if queryset is not None:
+    #         return queryset
 
-        # Perform the query and store the result in cache
-        queryset = super().get_queryset()
-        cache.set(cache_key, queryset)
+    #     # Perform the query and store the result in cache
+    #     queryset = super().get_queryset()
+    #     cache.set(cache_key, queryset)
 
-        return queryset
+    #     return queryset
+    pass

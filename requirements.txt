@@ -1,4 +1,4 @@
-celery>=5.2.7
+# celery>=5.2.7
 crispy-tailwind>=0.5.0
 cssselect2>=0.5.0
 device-detector>=5.0.1
@@ -55,5 +55,4 @@ psycopg2-binary>=2.8.4
 pycountry>=20.7.3
 pillow>=8.0.1
 django-storages==1.13.2
-boto3==1.26.59
 gunicorn==20.1.0

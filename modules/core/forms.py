@@ -91,5 +91,16 @@ class ProfileForm(UserCreationForm):
 
     class Meta:
         model = Users
-        fields = "__all__"
-        # fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2', )
+        # fields = "__all__"
+        fields = (
+            "first_name",
+            "last_name",
+            "email",
+            "pseudonym",
+            "bio",
+            "location",
+            "birth_date",
+            "profile_photo",
+            "kyc_verified_at",
+            "language",
+        )
