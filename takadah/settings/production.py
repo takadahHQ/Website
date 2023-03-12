@@ -39,13 +39,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-# STATIC_URL = "static/"
-# # STATIC_ROOT = '/home/takalqei/takadah-app/static/'
-
-# MEDIA_URL = "/media/"
-# MEDIA_ROOT = '/home/takalqei/takadah-app/media/'
-
-
 # SESSION_COOKIE_SECURE = True
 # CSRF_COOKIE_SECURE = True
 # SECURE_SSL_REDIRECT = False

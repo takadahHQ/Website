@@ -1,4 +1,4 @@
-from ninja import NinjaAPI, Router
+from ninja import NinjaAPI
 
 # # accounts
 # from modules.accounts.api.user import router as accounts_user_router
@@ -14,7 +14,7 @@ from modules.blog.api.staff import router as blog_staff_router
 
 api = NinjaAPI(
     title="Takadah API",
-    version="1.0.0",
+    version="1.0.1",
     description="The API for Takadah",
 )
 # # accounts

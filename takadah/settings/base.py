@@ -1,6 +1,7 @@
 import os
 from pathlib import Path
 import diskcache
+from .backends import StaticStorage, PublicMediaStorage
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
@@ -145,13 +146,13 @@ AWS_DEFAULT_ACL = None
 AWS_S3_CUSTOM_DOMAIN = f"{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com"
 AWS_S3_OBJECT_PARAMETERS = {"CacheControl": "max-age=86400"}
 # s3 static settings
-AWS_LOCATION = "static"
-STATIC_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/{AWS_LOCATION}/"
-STATICFILES_STORAGE = "takadah.backends.StaticStorage"
+AWS_STATIC_LOCATION = "static"
+STATIC_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/{AWS_STATIC_LOCATION}/"
+STATICFILES_STORAGE = "StaticStorage"
 # s3 public media settings
 AWS_MEDIA_LOCATION = "media"
 MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/{AWS_MEDIA_LOCATION}/"
-DEFAULT_FILE_STORAGE = "takadah.backends.PublicMediaStorage"
+DEFAULT_FILE_STORAGE = "PublicMediaStorage"
 
 CACHES = {
     "default": {

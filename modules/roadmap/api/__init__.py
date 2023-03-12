@@ -1,5 +1,5 @@
-from .user import *
-from .staff import *
+# from .user import *
+# from .staff import *
 
 
 # from ninja import NinjaAPI, Router
