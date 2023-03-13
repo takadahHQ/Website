@@ -1,7 +1,10 @@
 {% load static tailwind_tags %}
 {% load tailwind_tags %}
 {% load analytical %}
+{% comment %} {% load cookie_consent_tags %} {% endcomment %}
 {% load static %}
+{% load i18n %}
+{% load hijack %}
 {% load humanize %}
 <!DOCTYPE html>
 <html lang="en">
@@ -15,30 +18,82 @@
         {% tailwind_css %}
         <link rel="stylesheet" href="{% static 'css/dist/font.css' %}">
         <link rel="stylesheet" href="{% url 'core:stylesheet' %}" defer>
-<!--         <link rel="stylesheet" href="{% static 'css/daisyui.css' %}">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-
-    <link rel="stylesheet" href="{% static 'css/datatable.min.css' %}" />
-    <script src="{% static 'js/datatable.min.js' %}" defer ></script> -->
         <!-- Our project just needs Font Awesome Free's Solid + Brand files -->
     <link href="{% static 'fontawesomefree/css/fontawesome.css' %}" rel="stylesheet" type="text/css">
     <link href="{% static 'fontawesomefree/css/brands.css' %}" rel="stylesheet" type="text/css">
     <link href="{% static 'fontawesomefree/css/solid.css' %}" rel="stylesheet" type="text/css">
+    {% comment %} <link rel="icon" type="image/svg+xml" href="{% static 'images/favicon.svg' %}">
+    <link rel="icon" type="image/png" href="{% static 'images/favicon.png' %}"> {% endcomment %}
+    
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'images/apple-touch-icon.png' %}">
+<link rel="icon" type="image/png" sizes="32x32" href="{% static 'images/favicon-32x32.png' %}">
+<link rel="icon" type="image/png" sizes="16x16" href="{% static 'images/favicon-16x16.png' %}">
+<link rel="manifest" href="{% static 'images/site.webmanifest' %}">
+<link rel="mask-icon" href="{% static 'images/safari-pinned-tab.svg' %}" color="#5bbad5">
+<meta name="mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-title" content="Takadah"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:site" content="Takadah"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no"/>
+<meta property="og:title" content="Takadah"/>
+<meta property="og:description" content="Takadah"/>
+<meta property="og:image" content="{% static 'images/apple-touch-icon.png' %}"/>
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+    <!-- Matomo Image Tracker-->
+<img referrerpolicy="no-referrer-when-downgrade" src="https://mamoto.takadah.com/matomo.php?idsite=1&amp;rec=1" style="border:0" alt="" />
+<!-- End Matomo -->
     {% analytical_head_bottom %} 
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              clifford: '#da373d',
+            }
+          }
+        }
+      }
+    </script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@2.x.x/dist/cdn.min.js"></script>
 	</head>
-
-	<body class="min-h-screen bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-300 font-serif leading-normal tracking-normal" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+  <style>
+  @import url(https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/5.3.45/css/materialdesignicons.min.css);
+  @-webkit-keyframes fadeIn {
+    from { opacity:0 }
+    to { opacity:1 }
+  }
+  @keyframes fadeIn {
+    from { opacity:0 }
+    to { opacity:1 }
+  }
+  @-webkit-keyframes fadeInUp {
+    from { opacity:0; transform:translate3d(0,10%,0) }
+    to { opacity:1; transform:translate3d(0,0,0) }
+  }
+  @keyframes fadeInUp {
+    from { opacity:0; transform:translate3d(0,10%,0) }
+    to { opacity:1; transform:translate3d(0,0,0) }
+  }
+  
+  dialog[open] { -webkit-animation-duration:0.3s; animation-duration:0.3s; -webkit-animation-fill-mode:both; animation-fill-mode:both; -webkit-animation-name:fadeInUp; animation-name:fadeInUp }
+  dialog::backdrop { background: rgba(0, 0, 0, 0.3); backdrop-filter: blur(3px); -webkit-animation-duration:0.3s; animation-duration:0.3s; -webkit-animation-fill-mode:both; animation-fill-mode:both; -webkit-animation-name:fadeIn; animation-name:fadeIn  }
+  </style>
+	<body class="min-h-screen bg-mono-200 dark:bg-mono-900 text-mono-900 dark:text-mono-300 font-serif leading-normal tracking-normal" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
         {% analytical_body_top %}
         <div class="w-full">
-            <div class="flex justify-between bg-white dark:bg-gray-700">
-                <div class="flex justify-start text-gray-800 dark:text-gray-300 place-content-center pre-nav">
+            <div class="flex justify-between bg-mono-50 dark:bg-mono-700 flex-wrap">
+                <div class="flex justify-start text-mono-800 dark:text-mono-300 place-content-center pre-nav flex-wrap">
                     <!-- Logo -->
+                    {% comment %}
                         <div class="grid grid-flow-col p-2">
                             <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                               </svg><a href="tel:{{ settings.phone }}">{{ settings.phone }}</a>
                         </div>
+                        {% endcomment %}
                         <div class="grid grid-flow-col p-2">
                             <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" />
@@ -47,7 +102,7 @@
                 </div>
                 <!-- Social Links -->
                 <div class="grid justify-end md:flex">
-                    <div class="grid grid-flow-col gap-1">
+                    <div class="grid grid-flow-col gap-1 auto-cols-auto md:auto-cols-min">
                         {% for social in socials %}
                         <a class="btn btn-ghost btn-sm rounded-btn social" href="{{ social.link }}">
                             {% if social.icon %}
@@ -64,11 +119,13 @@
             </div>
             <div class="mb-2 navbar nav-base text-neutral-content">
                 <div class="flex-1 px-2 mx-2">
-                    <span class="text-2xl font-bold">
-                        {{ settings.name }}
+                    <a href="{% url 'core:index' %}">
+                    <span class="inline">
+                        <img class="logo dark:logo-dark"><span class="hidden lg:block text-2xl font-bold self-center">{{ settings.name }}</span>
                     </span>
+                </a>
                 </div>
-                <div class="hidden px-2 mx-2 navbar-center lg:flex">
+                <div class="hidden px-2 mx-2 navbar-center lg:flex items-center justify-end gap-4">
                     <div class="flex items-stretch">
                         <!-- <a class="btn btn-ghost btn-sm rounded-btn">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -107,24 +164,80 @@
         
                         </a>
                     </div>
+                    <form action="{% url 'watson:search' %}" class="flex items-center gap-4">
+                          <div class="relative">
+                            <label class="sr-only" for="search"> Search </label>
+                  
+                            <input
+                              class="w-full h-10 pl-4 pr-10 text-sm bg-white border-none rounded-full shadow-sm sm:w-56"
+                              id="search"
+                              type="search"
+                              placeholder="Search website..."
+                              name="q" value="{{request.GET.q}}"
+                            />
+                  
+                            <button
+                              class="absolute p-2 text-gray-600 rounded-full transition -translate-y-1/2 hover:text-gray-700 bg-gray-50 top-1/2 right-1"
+                              type="button"
+                              aria-label="Submit Search"
+                            >
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="w-4 h-4"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                                stroke-width="2"
+                              >
+                                <path
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                                />
+                              </svg>
+                            </button>
+                          </div>
+                    </form>
                 </div>
                 <div class="navbar-end">
-                <div class="flex-none space-x-2">
+                <div class="flex flex-wrap md:flex-none space-x-2">
                     {% if user.is_authenticated %}
-                    <a class="btn btn-ghost btn-sm rounded-btn" href="{% url 'core:bookmark' %}">
-                        <svg class="inline-block w-5 mr-2 stroke-current" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 4v12l-4-2-4 2V4M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg> Bookmark
+                    <a class="shrink btn btn-ghost btn-sm rounded-btn" href="{% url 'core:bookmark' %}">
+                        <svg class="hidden md:inline-block w-5 mr-2 stroke-current" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 4v12l-4-2-4 2V4M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg> Bookmark
                     </a>
-                    <a class="btn btn-ghost btn-sm rounded-btn" href="{% url 'core:history' %}">
-                        <svg class="inline-block w-5 mr-2 stroke-current" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg> History
+                    <a class="shrink btn btn-ghost btn-sm rounded-btn" href="{% url 'core:history' %}">
+                        <svg class="hidden md:inline-block w-5 mr-2 stroke-current" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg> History
                     </a>
-                    {% if user.is_staff %}
-                    <a class="btn btn-ghost btn-sm rounded-btn" href="{% url 'admin:index' %}">
-                        <svg class="inline-block w-5 mr-2 stroke-current" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg> Admin Dashboard
+                    <div class="dropdown dropdown-end px-4">
+                        <label tabindex="0" class="btn btn-ghost btn-circle avatar space-x-6">
+                          <div class="w-5 rounded-full mr-2">
+                            <img src="https://placeimg.com/80/80/people" />
+                          </div>
+                          <span class="hidden lg:flex">{{ user.name }}</span>
+                        </label>
+                        <ul tabindex="0" class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-mono-700 rounded-box">
+                          <li>
+                            <a class="justify-between" href="{{ user.get_absolute_url }}">
+                              Profile
+                            </a>
+                          </li>
+                          
+                          {% if user.is_staff %}
+                          <hr/>
+                          <li>  
+                    <a class="" href="{% url 'admin:index' %}">
+                        Admin Dashboard
                     </a>
+                </li>
+                    <hr/>
                     {% endif %}
-                    <a class="btn btn-ghost btn-sm rounded-btn" href="{% url 'logout' %}">
-                        <svg class="inline-block w-5 mr-2 stroke-current" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>   Logout
-                    </a>
+                          <li><a>Settings</a></li>
+                          <li><a class="" href="{% url 'logout' %}">
+                              Logout
+                             </a>
+                          </li>
+                        </ul>
+                      </div>
                     {% else %}
                     <a class="btn btn-ghost btn-sm rounded-btn" href="{% url 'core:register' %}">
                         <svg class="inline-block w-5 mr-2 stroke-current" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16v2a2 2 0 01-2 2H5a2 2 0 01-2-2v-7a2 2 0 012-2h2m3-4H9a2 2 0 00-2 2v7a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-1m-1 4l-3 3m0 0l-3-3m3 3V3"></path></svg>  REGISTER
@@ -135,36 +248,66 @@
                     </a>
                     {% endif %}
                 </div>
+
                 </div><!-- navbar-end -->
             </div>
         </div>
-        
+        {% if request.user|can_hijack:another_user %}
+<form action="{% url 'hijack:acquire' %}" method="POST">
+  {% csrf_token %}
+  <input type="hidden" name="user_pk" value="{{ another_user.pk }}">
+  <button type="submit">hijack {{ another_user }}</button>
+  <input type="hidden" name="next" value="{{ request.path }}">
+</form>
+{% endif %}
 		{% csrf_token %}
 		<div class="container mx-auto">
 			<main class="p-2 md:p-8">
-                <h1 class="text-5xl flex items-center justify-center">{% block page-title %}{% endblock %}</h1><br/>
+                <h1 class="text-5xl flex items-center justify-center text-mono-500 dark:text-mono-100 hover:text-mono-50">{% block page-title %}{% endblock %}</h1><br/>
 		   		<section class="content">
-                       <!-- Breadcrumbs -->
-                    <div class="text-sm breadcrumbs">
+                    <section>
+                    <!-- Breadcrumbs -->
+                    {% if request.path != "/" %}
+                      <div class="text-sm breadcrumbs">
                         <ul>
+                        <li><a href="{% url 'core:index' %}">Home</a></li> 
                         {%block breadcrumbs %}
-                          <li><a href="{% url 'core:index' %}">Home</a></li> 
                         {% endblock %}
                         </ul>
                       </div>
                       <!-- end breadcrumbs-->
-                    
+                    {% endif %}
+                    </section>                    
                     {% block content %}
                        Body content
                     {% endblock %}
 		   		</section>
 			</main>
+            <button
+        class="sticky bottom-5 right-5 w-10 h-10 rounded-full bg-mono-800 flex justify-center items-center text-mono-50"
+        id="theme-toggle"
+      >
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M12.2256 2.00253C9.59172 1.94346 6.93894 2.9189 4.92893 4.92891C1.02369 8.83415 1.02369 15.1658 4.92893 19.071C8.83418 22.9763 15.1658 22.9763 19.0711 19.071C21.0811 17.061 22.0565 14.4082 21.9975 11.7743C21.9796 10.9772 21.8669 10.1818 21.6595 9.40643C21.0933 9.9488 20.5078 10.4276 19.9163 10.8425C18.5649 11.7906 17.1826 12.4053 15.9301 12.6837C14.0241 13.1072 12.7156 12.7156 12 12C11.2844 11.2844 10.8928 9.97588 11.3163 8.0699C11.5947 6.81738 12.2094 5.43511 13.1575 4.08368C13.5724 3.49221 14.0512 2.90664 14.5935 2.34046C13.8182 2.13305 13.0228 2.02041 12.2256 2.00253ZM17.6569 17.6568C18.9081 16.4056 19.6582 14.8431 19.9072 13.2186C16.3611 15.2643 12.638 15.4664 10.5858 13.4142C8.53361 11.362 8.73568 7.63895 10.7814 4.09281C9.1569 4.34184 7.59434 5.09193 6.34315 6.34313C3.21895 9.46732 3.21895 14.5326 6.34315 17.6568C9.46734 20.781 14.5327 20.781 17.6569 17.6568Z"
+            fill="currentColor"
+          />
+        </svg>
+      </button>
 		</div>
-		<footer class="px-10 py-4 footer bg-base-200 dark:bg-gray-700 dark:text-gray-200 text-base-content">
+  
+		<footer class="px-10 py-4 footer bg-base-200 dark:bg-mono-700 dark:text-mono-200 text-base-content">
+            
 			<div class="items-center grid-flow-col">
-			  <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd" class="fill-current">
-				<path d="M22.672 15.226l-2.432.811.841 2.515c.33 1.019-.209 2.127-1.23 2.456-1.15.325-2.148-.321-2.463-1.226l-.84-2.518-5.013 1.677.84 2.517c.391 1.203-.434 2.542-1.831 2.542-.88 0-1.601-.564-1.86-1.314l-.842-2.516-2.431.809c-1.135.328-2.145-.317-2.463-1.229-.329-1.018.211-2.127 1.231-2.456l2.432-.809-1.621-4.823-2.432.808c-1.355.384-2.558-.59-2.558-1.839 0-.817.509-1.582 1.327-1.846l2.433-.809-.842-2.515c-.33-1.02.211-2.129 1.232-2.458 1.02-.329 2.13.209 2.461 1.229l.842 2.515 5.011-1.677-.839-2.517c-.403-1.238.484-2.553 1.843-2.553.819 0 1.585.509 1.85 1.326l.841 2.517 2.431-.81c1.02-.33 2.131.211 2.461 1.229.332 1.018-.21 2.126-1.23 2.456l-2.433.809 1.622 4.823 2.433-.809c1.242-.401 2.557.484 2.557 1.838 0 .819-.51 1.583-1.328 1.847m-8.992-6.428l-5.01 1.675 1.619 4.828 5.011-1.674-1.62-4.829z"></path>
-			  </svg>
+			 <img class="logo-dark dark:fill-mono-200" />
 			  <p class="opacity-1 text-sm">
                   <span class="text-2xl">{{ settings.name }}</span>
                   <br/>{{ settings.tagline | safe }}
@@ -186,19 +329,20 @@
 			  </div>
 
 			</div>
-            {% autoescape off %}
+            {% comment %} {% autoescape on %}
             {% analytical_body_bottom %}
-            {% endautoescape %}
+            {% endautoescape %} {% endcomment %}
             <script src="{% static 'js/alpine.min.js' %}" defer ></script>
             <script src="{% static 'js/htmx.min.js' %}" defer ></script>
             <script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
             <script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
             <script src="{% static 'js/site.js' %}"></script>
-            {% comment %} {% if request|cookie_group_accepted:"analytics" %}
+  {% comment %} {% if request|cookie_group_accepted:"analytics" %}
+  {% endif %} {% endcomment %}
             {# load 3rd party analytics #}
-            <script type="text/javascript">
+        {% comment %} <script type="text/javascript">
 (function(f,b){if(!b.__SV){var e,g,i,h;window.mixpanel=b;b._i=[];b.init=function(e,f,c){function g(a,d){var b=d.split(".");2==b.length&&(a=a[b[0]],d=b[1]);a[d]=function(){a.push([d].concat(Array.prototype.slice.call(arguments,0)))}}var a=b;"undefined"!==typeof c?a=b[c]=[]:c="mixpanel";a.people=a.people||[];a.toString=function(a){var d="mixpanel";"mixpanel"!==c&&(d+="."+c);a||(d+=" (stub)");return d};a.people.toString=function(){return a.toString(1)+".people (stub)"};i="disable time_event track track_pageview track_links track_forms track_with_groups add_group set_group remove_group register register_once alias unregister identify name_tag set_config reset opt_in_tracking opt_out_tracking has_opted_in_tracking has_opted_out_tracking clear_opt_in_out_tracking start_batch_senders people.set people.set_once people.unset people.increment people.append people.union people.track_charge people.clear_charges people.delete_user people.remove".split(" ");
-for(h=0;h<i.length;h++)g(a,i[h]);var j="set set_once union unset remove delete".split(" ");a.get_group=function(){function b(c){d[c]=function(){call2_args=arguments;call2=[c].concat(Array.prototype.slice.call(call2_args,0));a.push([e,call2])}}for(var d={},e=["get_group"].concat(Array.prototype.slice.call(arguments,0)),c=0;c<j.length;c++)b(j[c]);return d};b._i.push([e,f,c])};b.__SV=1.2;e=f.createElement("script");e.type="text/javascript";e.async=!0;e.src="undefined"!==typeof MIXPANEL_CUSTOM_LIB_URL?
+for(h=0;h<i.l};b._i.push([e,f,c])};b.__SV=1.2;e=f.createElement("script");e.type="text/javascript";e.async=!0;e.src="undefined"!==typeof MIXPANEL_CUSTOM_LIB_URL?
 MIXPANEL_CUSTOM_LIB_URL:"file:"===f.location.protocol&&"//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js".match(/^\/\//)?"https://cdn.mxpnl.com/libs/mixpanel-2-latest.min.js":"//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js";g=f.getElementsByTagName("script")[0];g.parentNode.insertBefore(e,g)}})(document,window.mixpanel||[]);
 
 // Enabling the debug mode flag is useful during implementation,
@@ -209,7 +353,20 @@ mixpanel.track('Sign Up', {
   'Opted out of email': true,
 });
 
-</script>
-            {% endif %} {% endcomment %}
+</script> {% endcomment %}
+<!-- Matomo Image Tracker-->
+<img referrerpolicy="no-referrer-when-downgrade" src="https://mamoto.takadah.com/matomo.php?idsite=1&amp;rec=1" style="border:0" alt="" />
+<!-- End Matomo -->
+<!-- Matomo Image Tracker-->
+<img referrerpolicy="no-referrer-when-downgrade" src="https://mamoto.takadah.com/matomo.php?idsite=1&amp;rec=1" style="border:0" alt="" />
+<!-- End Matomo -->
+<span class="bg-mono-50 bg-mono-100 bg-mono-200 bg-mono-300 bg-mono-400 bg-mono-500 bg-mono-600 bg-mono-700 bg-mono-800 bg-mono-900"></span>
+<span class="text-mono-50 text-mono-100 text-mono-200 text-mono-300 text-mono-400 text-mono-500 text-mono-600 text-mono-700 text-mono-800 text-mono-900"></span>
+<span class="bg-rebel-50 bg-rebel-100 bg-rebel-200 bg-rebel-300 bg-rebel-400 bg-rebel-500 bg-rebel-600 bg-rebel-700 bg-rebel-800 bg-rebel-900"></span>
+<span class="text-rebel-50 text-rebel-100 text-rebel-200 text-rebel-300 text-rebel-400 text-rebel-500 text-rebel-600 text-rebel-700 text-rebel-800 text-rebel-900"></span>
+<span class="bg-tiber-50 bg-tiber-100 bg-tiber-200 bg-tiber-300 bg-tiber-400 bg-tiber-500 bg-tiber-600 bg-tiber-700 bg-tiber-800 bg-tiber-900"></span>
+<span class="text-tiber-50 text-tiber-100 text-tiber-200 text-tiber-300 text-tiber-400 text-tiber-500 text-tiber-600 text-tiber-700 text-tiber-800 text-tiber-900"></span>
+{% block scripts %}{% endblock scripts %}
 	</body>
 </html>
+
