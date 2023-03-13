@@ -2,6 +2,10 @@ import os
 from pathlib import Path
 import diskcache
 from .backends import StaticStorage, PublicMediaStorage
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
@@ -138,10 +142,10 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = "takadah.urls"
 
-AWS_ACCESS_KEY_ID = "AKIA2EEYOQXPHTCPBFVJ"
-AWS_SECRET_ACCESS_KEY = "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"
-AWS_STORAGE_BUCKET_NAME = "takadahmedia"
-AWS_S3_REGION_NAME = "Asia Pacific (Mumbai) ap-south-1"
+AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID")
+AWS_SECRET_ACCESS_KEY = os.environ.get("SECRET_KEY")
+AWS_STORAGE_BUCKET_NAME = os.environ.get("AWS_STORAGE_BUCKET_NAME")
+AWS_S3_REGION_NAME = os.environ.get("AWS_S3_REGION_NAME")
 AWS_DEFAULT_ACL = None
 AWS_S3_CUSTOM_DOMAIN = f"{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com"
 AWS_S3_OBJECT_PARAMETERS = {"CacheControl": "max-age=86400"}
@@ -481,14 +485,7 @@ CKEDITOR_CONFIGS = {
     }
 }
 
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST = "takadah.com"
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = "mail"
-EMAIL_HOST_PASSWORD = "EmailProvider"
-
-MIXPANEL_API_TOKEN = "dc4537f245806621832017184b5f7d0c"
+MIXPANEL_API_TOKEN = os.environ.get("MIXPANEL_API_TOKEN")
 MATOMO_DOMAIN_PATH = "mamoto.takadah.com"
 MATOMO_SITE_ID = "1"
 # ANALYTICAL_INTERNAL_IPS = ['192.168.1.45', '192.168.1.57']
@@ -505,16 +502,16 @@ MAXMIND_ASN_DB = os.getenv("MAXMIND_ASN_DB", "resources/geoip/GeoLite2-ASN.mmdb"
 
 SERVER_EMAIL = os.getenv("SERVER_EMAIL", "Takadah <noreply@takadah.com>")
 DEFAULT_FROM_EMAIL = SERVER_EMAIL
-
-# if DEBUG or os.environ.get("EMAIL_HOST") is None:
-#     EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
-# else:
-#     EMAIL_HOST = os.environ.get("EMAIL_HOST")
-#     EMAIL_PORT = int(os.environ.get("EMAIL_PORT", 465))
-#     EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER")
-#     EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
-#     EMAIL_USE_SSL = os.environ.get("EMAIL_USE_SSL")
-#     EMAIL_USE_TLS = os.environ.get("EMAIL_USE_TLS")
+if DEBUG or os.environ.get("EMAIL_HOST") is None:
+    EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+else:
+    EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+    EMAIL_HOST = os.environ.get("EMAIL_HOST", "takadah.com")
+    EMAIL_PORT = int(os.environ.get("EMAIL_PORT", 587))
+    EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER")
+    EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
+    EMAIL_USE_SSL = os.environ.get("EMAIL_USE_SSL")
+    EMAIL_USE_TLS = os.environ.get("EMAIL_USE_TLS", True)
 
 # Auto fields
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"

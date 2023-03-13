@@ -17,8 +17,8 @@ DATABASES = {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": "takadah",
         "USER": "maximus",
-        "PASSWORD": "Z!nox2018",
-        "HOST": "database-1.czkumzmsnn55.ap-northeast-1.rds.amazonaws.com",
+        "PASSWORD": os.environ.get("DB_PASS"),
+        "HOST": os.environ.get("DB_HOST"),
         "PORT": "5432",
         "OPTIONS": {"sslmode": "require"},
     }

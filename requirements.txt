@@ -54,5 +54,6 @@ user-agents>=2.2.0
 psycopg2-binary>=2.8.4
 pycountry>=20.7.3
 pillow>=8.0.1
-django-storages==1.13.2
-gunicorn==20.1.0
+django-storages>=1.13.2
+gunicorn>=20.1.0
+python-dotenv>=1.0.0
