@@ -48,7 +48,7 @@ ALLOWED_HOSTS = [
     "www.takadah.com",
     "takadah.com",
     "127.0.0.1",
-    "*",
+    "54.178.81.0",
 ]
 
 HIJACK_ALLOW_GET_REQUESTS = True
