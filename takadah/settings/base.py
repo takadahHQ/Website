@@ -145,18 +145,18 @@ ROOT_URLCONF = "takadah.urls"
 AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID")
 AWS_SECRET_ACCESS_KEY = os.environ.get("SECRET_KEY")
 AWS_STORAGE_BUCKET_NAME = os.environ.get("AWS_STORAGE_BUCKET_NAME")
-AWS_S3_REGION_NAME = os.environ.get("AWS_S3_REGION_NAME")
-AWS_DEFAULT_ACL = None
+# AWS_S3_REGION_NAME = os.environ.get("AWS_S3_REGION_NAME")
+AWS_DEFAULT_ACL = "public-read"
 AWS_S3_CUSTOM_DOMAIN = f"{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com"
 AWS_S3_OBJECT_PARAMETERS = {"CacheControl": "max-age=86400"}
 # s3 static settings
 AWS_STATIC_LOCATION = "static"
 STATIC_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/{AWS_STATIC_LOCATION}/"
-STATICFILES_STORAGE = "StaticStorage"
+STATICFILES_STORAGE = "takadah.backends.StaticStorage"
 # s3 public media settings
 AWS_MEDIA_LOCATION = "media"
 MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/{AWS_MEDIA_LOCATION}/"
-DEFAULT_FILE_STORAGE = "PublicMediaStorage"
+DEFAULT_FILE_STORAGE = "takadah.backends.PublicMediaStorage"
 
 CACHES = {
     "default": {
@@ -276,7 +276,7 @@ JAZZMIN_SETTINGS = {
     # Copyright on the footer
     "copyright": "Takadah",
     # The model admin to search from the search bar, search bar omitted if excluded
-    "search_model": "core.User",
+    "search_model": "core.Users",
     # Field name on user model that contains avatar ImageField/URLField/Charfield or a callable that receives the user
     "user_avatar": None,
     ############

@@ -1,4 +1,4 @@
-{% if request|cookie_group_accepted:"optional" %}
+{% comment %} {% if request|cookie_group_accepted:"optional" %}
       <p>
         "optional" cookies accepted
       </p>
@@ -73,4 +73,4 @@
           });
         </script>
       {% endif %}
-    {% endif %}
+    {% endif %} {% endcomment %}
