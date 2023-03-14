@@ -22,6 +22,7 @@ from django.db.models.functions import Concat
 
 # from timezone import timezone
 from django.utils import timezone
+from django.http import Http404
 
 try:
     mindsdb = __import__("mindsdb")
@@ -166,7 +167,12 @@ def get_story(slug: str, type: str):
                 queryset=Review.objects.filter(parent=None).filter(status="active"),
             ),
             "story__chapters",
-            "chapters",
+            Prefetch(
+                "chapters",
+                queryset=Chapter.objects.filter(
+                    released_at__lte=timezone.now(), status="active"
+                ),
+            ),
         )
         .get(slug=slug)
     )
@@ -174,31 +180,31 @@ def get_story(slug: str, type: str):
 
 
 def get_story_by_id(pk: int):
-    story = (
-        Stories.objects
-        # .filter(~Q(status="pending") | ~Q(status="draft"))
-        # .annotate(chapters_count=Count("chapters"))
-        .prefetch_related(
-            "story_type",
-            "language",
-            "rating",
-            "following",
-            "likes",
-            "dislikes",
-            "author",
-            "bookmarks",
-            "editor",
-            "genre",
-            "characters",
-            "tags",
-            Prefetch(
-                "reviews",
-                queryset=Review.objects.filter(parent=None, status="active"),
-            ),
-            "story__chapters",
+    story = Stories.objects.prefetch_related(
+        "story_type",
+        "language",
+        "rating",
+        "following",
+        "likes",
+        "dislikes",
+        "author",
+        "bookmarks",
+        "editor",
+        "genre",
+        "characters",
+        "tags",
+        Prefetch(
+            "reviews",
+            queryset=Review.objects.filter(parent=None, status="active"),
+        ),
+        "story__chapters",
+        Prefetch(
             "chapters",
-        ).get(pk=pk)
-    )
+            queryset=Chapter.objects.filter(
+                released_at__lte=timezone.now(), status="active"
+            ),
+        ),
+    ).get(pk=pk)
     return story
 
 
@@ -460,9 +466,14 @@ def can_view_chapter(user: int, chapter: str):
 
 def get_chapter(story: any, chapter: any, user: any = None):
     # check if can view the chapter else end it there
+
     if can_view_chapter(user=user, chapter=chapter):
         chapter = Chapter.objects.get(story__slug=story, slug=chapter)
         return chapter
+    else:
+        raise Http404(
+            "This chapter does not exist or your might need to subscribe for access."
+        )
 
 
 def get_chapter_by_id(chapter: int, user: any = None):
