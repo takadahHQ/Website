@@ -12,7 +12,6 @@ class Storyids(object):
         zeros = "0" * num_zeros
         # Concatenate the zeros and the original integer to create the final value
         large_int = zeros + str(num)
-        print(large_int)
         return large_int
 
     def decode(self, large_int: int) -> int:
