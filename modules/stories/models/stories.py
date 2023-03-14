@@ -21,7 +21,8 @@ from modules.stories.models.include import (
     CacheInvalidationMixin,
     CachedQueryManager,
 )
-from modules.stories.models import History
+
+# from modules.stories.models import History
 from django.core.cache import cache
 from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
@@ -103,8 +104,9 @@ class Stories(CacheInvalidationMixin, idModel, timeStampModel):
             return self.chapters.first().get_absolute_url()
 
     def get_read_user(self, request):
-        story = History.objects.filter(user=request.user).get(story=self.story)
-        return story.chapter.get_absolute_url()
+        pass
+        # story = History.objects.filter(user=request.user).get(story=self.story)
+        # return story.chapter.get_absolute_url()
 
     def create_cover(self):
         name = self.author.first().name()

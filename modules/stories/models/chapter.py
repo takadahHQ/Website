@@ -13,11 +13,15 @@ from modules.stories.models.include import (
     statusModel,
     timeStampModel,
     CachedQueryManager,
-    CacheInvalidationMixin
+    CacheInvalidationMixin,
 )
 
+from modules.subscriptions.models import Sponsors, Packages
+from django.urls import reverse
+from django.utils import timezone
 
-class Chapter(CacheInvalidationMixin ,idModel, statusModel, timeStampModel):
+
+class Chapter(CacheInvalidationMixin, idModel, statusModel, timeStampModel):
     story = models.ForeignKey(
         "Stories", related_name="chapters", on_delete=models.CASCADE
     )
@@ -61,36 +65,68 @@ class Chapter(CacheInvalidationMixin ,idModel, statusModel, timeStampModel):
         )
 
     def get_next(self):
-        try:
-            next_post = Chapter.objects.get(pk=self.pk).filter(
-                position=self.position + 1
-            )
-            return reverse(
-                "stories:read",
-                kwargs={
-                    "type": next_post.story.story_type.slug,
-                    "story": next_post.story.slug,
-                    "slug": next_post.slug,
-                },
-            )
-        except:
+        previous_chapter, next_chapter = self.get_previous_and_next_chapters()
+        if next_chapter:
+            return next_chapter.get_absolute_url()
+        else:
             return None
 
     def get_previous(self):
-        try:
-            previous_post = Chapter.objects.get(pk=self.pk).filter(
-                position=self.position - 1
-            )
-            return reverse(
-                "stories:read",
-                kwargs={
-                    "type": previous_post.story.story_type.slug,
-                    "story": previous_post.story.slug,
-                    "slug": previous_post.slug,
-                },
-            )
-        except:
+        previous_chapter, next_chapter = self.get_previous_and_next_chapters()
+        if previous_chapter:
+            return previous_chapter.get_absolute_url()
+        else:
             return None
+
+    def can_view(self, user=None):
+        try:
+            sponsor = Sponsors.objects.get(user=user)
+            package = Packages.objects.get(story=self.story, name=sponsor.package.name)
+        except (Sponsors.DoesNotExist, Packages.DoesNotExist):
+            return self.released_at <= timezone.now()
+
+        # Get all the released chapters for this story
+        released_chapters = Chapter.objects.filter(
+            story=self.story, status="active", released_at__lte=timezone.now()
+        ).order_by("position")
+
+        # Get the position of the chapter in the list of released chapters
+        position = released_chapters.values_list("position", flat=True).index(
+            self.position
+        )
+
+        return position < package.advance or self.released_at <= timezone.now()
+
+    def get_previous_and_next_chapters(self, user=None):
+        # Prefetch all released chapters for this story
+        released_chapters = (
+            Chapter.objects.filter(
+                story=self.story, status="active", released_at__lte=timezone.now()
+            ).order_by("position")
+            # .prefetch_related("user")
+        )
+
+        chapter_positions = released_chapters.values_list("position", flat=True)
+        try:
+            chapter_index = list(chapter_positions).index(self.position)
+        except ValueError:
+            return None, None
+
+        if chapter_index > 0:
+            previous_chapter = released_chapters[chapter_index - 1]
+            if not previous_chapter.can_view(user=user):
+                previous_chapter = None
+        else:
+            previous_chapter = None
+
+        if chapter_index < len(released_chapters) - 1:
+            next_chapter = released_chapters[chapter_index + 1]
+            if not next_chapter.can_view(user=user):
+                next_chapter = None
+        else:
+            next_chapter = None
+
+        return previous_chapter, next_chapter
 
     def get_reviews(self):
         return self.reviews.filter(parent=None).filter(status="active")

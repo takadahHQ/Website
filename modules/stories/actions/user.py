@@ -14,6 +14,7 @@ from modules.stories.models import (
 from modules.core.models import Users
 from modules.subscriptions.models import Sponsors, Packages
 from modules.stories.models.review import Review
+from django.urls import reverse
 
 # import pandas as pd
 from itertools import chain
@@ -465,27 +466,23 @@ def can_view_chapter(user: int, chapter: str):
 
 
 def get_chapter(story: any, chapter: any, user: any = None):
-    # check if can view the chapter else end it there
-
-    if can_view_chapter(user=user, chapter=chapter):
-        chapter = Chapter.objects.get(story__slug=story, slug=chapter)
-        return chapter
-    else:
+    chapter = Chapter.objects.get(story__slug=story, slug=chapter)
+    if not chapter.can_view(user=user):
         raise Http404(
             "This chapter does not exist or your might need to subscribe for access."
         )
+    previous_chapter, next_chapter = chapter.get_previous_and_next_chapters(user=user)
+    return chapter  # , previous_chapter, next_chapter
 
 
 def get_chapter_by_id(chapter: int, user: any = None):
-    chpt = Chapter.objects.only("slug").get(id=chapter)
-    # check if can view the chapter else end it there
-    if can_view_chapter(user=user, chapter=chpt.slug):
-        chapter = Chapter.objects.filter(status="active").get(id=chapter)
-        return chapter
-    else:
+    chapter = Chapter.objects.get(id=chapter)
+    if not chapter.can_view(user=user):
         raise Http404(
             "This chapter does not exist or your might need to subscribe for access."
         )
+    previous_chapter, next_chapter = chapter.get_previous_and_next_chapters(user=user)
+    return chapter  # , previous_chapter, next_chapter
 
 
 def get_user_profile(user):
