@@ -426,17 +426,17 @@ def get_story_chapters(story: int, user: int):
 
     if has_sponsorship:
         released_chapters = Chapter.objects.filter(
-            story=story, released_at__lte=timezone.now()
+            story=story, status="active", released_at__lte=timezone.now()
         )
         unreleased_chapters = Chapter.objects.filter(
-            story=story, released_at__gt=timezone.now()
+            story=story, status="active", released_at__gt=timezone.now()
         )
         advance_chapters = unreleased_chapters[:advance]
         all_chapters = list(chain(released_chapters, advance_chapters))
 
     if not has_sponsorship:
         released_chapters = Chapter.objects.filter(
-            story=story, released_at__lte=timezone.now()
+            story=story, status="active", released_at__lte=timezone.now()
         )
         all_chapters = released_chapters
 
@@ -453,7 +453,7 @@ def can_view_chapter(user: int, chapter: str):
 
     # Get all the released chapters for this story
     released_chapters = Chapter.objects.filter(
-        story=chapter.story, released_at__lte=timezone.now()
+        story=chapter.story, status="active", released_at__lte=timezone.now()
     ).order_by("position")
 
     # Get the position of the chapter in the list of released chapters
@@ -482,6 +482,10 @@ def get_chapter_by_id(chapter: int, user: any = None):
     if can_view_chapter(user=user, chapter=chpt.slug):
         chapter = Chapter.objects.filter(status="active").get(id=chapter)
         return chapter
+    else:
+        raise Http404(
+            "This chapter does not exist or your might need to subscribe for access."
+        )
 
 
 def get_user_profile(user):

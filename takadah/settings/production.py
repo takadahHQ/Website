@@ -7,9 +7,10 @@ SECRET_KEY = "Takadah-%$)wg^oeyeezyu(@&ai^v793brks2q20pweey(sjn#(x+3+^$*tq"
 DEBUG = os.environ.get("DEBUG", False)
 
 INTERNAL_IPS = [
+    "www.takadah.com",
+    "takadah.com",
     "127.0.0.1",
-    "0.0.0.0",
-    "*",
+    "54.178.81.0",
 ]
 
 DATABASES = {
