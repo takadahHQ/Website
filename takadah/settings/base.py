@@ -158,6 +158,8 @@ AWS_MEDIA_LOCATION = "media"
 MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/{AWS_MEDIA_LOCATION}/"
 DEFAULT_FILE_STORAGE = "takadah.backends.PublicMediaStorage"
 
+CSRF_TRUSTED_ORIGINS = ["https://takadah.com", "https://www.takadah.com"]
+
 CACHES = {
     "default": {
         "BACKEND": "diskcache.DjangoCache",
