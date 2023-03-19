@@ -58,3 +58,4 @@ django-storages>=1.13.2
 gunicorn>=20.1.0
 python-dotenv>=1.0.0
 boto3==1.29.94
+stripe==4.2.0
