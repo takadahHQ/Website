@@ -51,6 +51,7 @@ from modules.stories.actions import (
 from modules.stories.forms import (
     ReviewForm,
 )
+from django.contrib.auth.decorators import login_required
 
 
 def storyLike(request, id):
@@ -213,6 +214,7 @@ def delete_review(request, review):
     return HttpResponse("")
 
 
+@login_required
 def save_review(request, story, chapter):
     user = request.user
     story = get_story_by_id(story)
@@ -245,6 +247,7 @@ def save_review(request, story, chapter):
         )
 
 
+@login_required
 def reply_review(request, review):
     review = get_reviews_by_id(review)
     user = request.user
