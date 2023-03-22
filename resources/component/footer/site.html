@@ -1,0 +1,26 @@
+<footer class="px-10 py-4 footer bg-base-200 dark:bg-mono-700 dark:text-mono-200 text-base-content">
+            
+    <div class="items-center grid-flow-col">
+     <img class="logo-dark dark:fill-mono-200" />
+      <p class="opacity-1 text-sm">
+          <span class="text-2xl">{{ settings.name }}</span>
+          <br/>{{ settings.tagline | safe }}
+      </p>
+    </div>
+    <div class="md:place-self-center md:justify-self-end">
+      <div class="grid grid-flow-col gap-4">
+    {% for social in socials %}
+    <a class="social" href="{{ social.link }}">
+        {% if social.icon %}
+        {{ social.icon| safe }}
+        {% elif social.image %}
+        <img src="{{ social.image| safe }}" alt="{{ social.name }}">
+        {% else %}
+        <i class="fa-brands fa-{{ social.name | lower }} fa-2xl {{ social.name | lower }}"></i>
+        {% endif %}
+    </a>
+    {% endfor %}
+      </div>
+
+    </div>
+</footer>
