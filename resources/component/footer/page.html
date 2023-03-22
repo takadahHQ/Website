@@ -78,7 +78,7 @@
             <ul>
               <li>
                 <a
-                  href="{% url 'page' 1 %}"
+                  href="{% url 'page' 'about' %}"
                   class="text-body-color hover:text-primary mb-2 inline-block text-base leading-loose"
                 >
                   About
@@ -86,7 +86,7 @@
               </li>
               <li>
                 <a
-                  href="{% url 'page' 2 %}"
+                  href="{% url 'page' 'contact' %}"
                   class="text-body-color hover:text-primary mb-2 inline-block text-base leading-loose"
                 >
                   Contact & Support
@@ -94,7 +94,7 @@
               </li>
               <li>
                 <a
-                  href="{% url 'page' 3 %}"
+                  href="{% url 'page' "terms-of-service" %}"
                   class="text-body-color hover:text-primary mb-2 inline-block text-base leading-loose"
                 >
                   Terms of Service
@@ -102,7 +102,7 @@
               </li>
               <li>
                 <a
-                  href="{% url 'page' 4 %})"
+                  href="{% url 'page' "privacy-policy" %}"
                   class="text-body-color hover:text-primary mb-2 inline-block text-base leading-loose"
                 >
                   Privacy Policy
@@ -155,13 +155,13 @@
             <h4 class="text-dark mb-9 text-lg font-semibold">Follow Us On</h4>
             <div class="mb-6 flex items-center">
                 {% for social in socials %}
-                <a class="social" href="{{ social.link }}">
+                <a class="social m-2" href="{{ social.link }}">
                     {% if social.icon %}
                     {{ social.icon| safe }}
                     {% elif social.image %}
                     <img src="{{ social.image| safe }}" alt="{{ social.name }}">
                     {% else %}
-                    <i class="fa-brands fa-{{ social.name | lower }} fa-2xl {{ social.name | lower }}"></i>
+                    <i class="fa-brands fa-{{ social.name | lower }} fa-xl hover:{{ social.name | lower }}"></i>
                     {% endif %}
                 </a>
                 {% endfor %}

@@ -8,7 +8,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import views as auth_views
 from django.urls import include
 from django.views.generic import TemplateView
-from rest_framework.routers import DefaultRouter
+
+# from rest_framework.routers import DefaultRouter
 
 from modules.helpdesk.decorators import helpdesk_staff_member_required, protect_view
 from modules.helpdesk.views import feeds, staff, public, login
@@ -173,18 +174,18 @@ urlpatterns += [
 ]
 
 
-# API is added to url conf based on the setting (False by default)
-if helpdesk_settings.HELPDESK_ACTIVATE_API_ENDPOINT:
-    router = DefaultRouter()
-    router.register(r"tickets", TicketViewSet, basename="ticket")
-    router.register(r"followups", FollowUpViewSet, basename="followups")
-    router.register(
-        r"followups-attachments",
-        FollowUpAttachmentViewSet,
-        basename="followupattachments",
-    )
-    router.register(r"users", CreateUserView, basename="user")
-    urlpatterns += [re_path(r"^api/", include(router.urls))]
+# # API is added to url conf based on the setting (False by default)
+# if helpdesk_settings.HELPDESK_ACTIVATE_API_ENDPOINT:
+#     router = DefaultRouter()
+#     router.register(r"tickets", TicketViewSet, basename="ticket")
+#     router.register(r"followups", FollowUpViewSet, basename="followups")
+#     router.register(
+#         r"followups-attachments",
+#         FollowUpAttachmentViewSet,
+#         basename="followupattachments",
+#     )
+#     router.register(r"users", CreateUserView, basename="user")
+#     urlpatterns += [re_path(r"^api/", include(router.urls))]
 
 
 urlpatterns += [

@@ -19,7 +19,7 @@ from markdown.extensions import Extension
 
 import uuid
 
-from rest_framework import serializers
+# from rest_framework import serializers
 
 from modules.helpdesk import settings as helpdesk_settings
 from .lib import convert_value
@@ -2034,43 +2034,43 @@ class CustomField(models.Model):
             choices.insert(0, ("", "---------"))
         return choices
 
-    def build_api_field(self):
-        customfield_to_api_field_dict = {
-            "varchar": serializers.CharField,
-            "text": serializers.CharField,
-            "integer": serializers.IntegerField,
-            "decimal": serializers.DecimalField,
-            "list": serializers.ChoiceField,
-            "boolean": serializers.BooleanField,
-            "date": serializers.DateField,
-            "time": serializers.TimeField,
-            "datetime": serializers.DateTimeField,
-            "email": serializers.EmailField,
-            "url": serializers.URLField,
-            "ipaddress": serializers.IPAddressField,
-            "slug": serializers.SlugField,
-        }
+    # def build_api_field(self):
+    #     customfield_to_api_field_dict = {
+    #         "varchar": serializers.CharField,
+    #         "text": serializers.CharField,
+    #         "integer": serializers.IntegerField,
+    #         "decimal": serializers.DecimalField,
+    #         "list": serializers.ChoiceField,
+    #         "boolean": serializers.BooleanField,
+    #         "date": serializers.DateField,
+    #         "time": serializers.TimeField,
+    #         "datetime": serializers.DateTimeField,
+    #         "email": serializers.EmailField,
+    #         "url": serializers.URLField,
+    #         "ipaddress": serializers.IPAddressField,
+    #         "slug": serializers.SlugField,
+    #     }
 
-        # Prepare attributes for each types
-        attributes = {
-            "label": self.label,
-            "help_text": self.help_text,
-            "required": self.required,
-        }
-        if self.data_type in ("varchar", "text"):
-            attributes["max_length"] = self.max_length
-            if self.data_type == "text":
-                attributes["style"] = {"base_template": "textarea.html"}
-        elif self.data_type == "decimal":
-            attributes["decimal_places"] = self.decimal_places
-            attributes["max_digits"] = self.max_length
-        elif self.data_type == "list":
-            attributes["choices"] = self.get_choices()
+    #     # Prepare attributes for each types
+    #     attributes = {
+    #         "label": self.label,
+    #         "help_text": self.help_text,
+    #         "required": self.required,
+    #     }
+    #     if self.data_type in ("varchar", "text"):
+    #         attributes["max_length"] = self.max_length
+    #         if self.data_type == "text":
+    #             attributes["style"] = {"base_template": "textarea.html"}
+    #     elif self.data_type == "decimal":
+    #         attributes["decimal_places"] = self.decimal_places
+    #         attributes["max_digits"] = self.max_length
+    #     elif self.data_type == "list":
+    #         attributes["choices"] = self.get_choices()
 
-        try:
-            return customfield_to_api_field_dict[self.data_type](**attributes)
-        except KeyError:
-            raise NameError("Unrecognized data_type %s" % self.data_type)
+    #     try:
+    #         return customfield_to_api_field_dict[self.data_type](**attributes)
+    #     except KeyError:
+    #         raise NameError("Unrecognized data_type %s" % self.data_type)
 
 
 class TicketCustomFieldValue(models.Model):
