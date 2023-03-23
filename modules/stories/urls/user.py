@@ -14,11 +14,16 @@ urls = [
     path("story/bookmark/<int:id>/", views.storyBookmark, name="bookmark"),
     path("review/add/<int:story>/<int:chapter>/", views.save_review, name="add-review"),
     path(
+        "review/show/<int:story>/<int:chapter>/",
+        views.refresh_reviews,
+        name="show-review",
+    ),
+    path(
         "review/update/<int:review>/",
         views.update_review,
         name="update-review",
     ),
-    path("review/reply/<int:review>/", views.reply_review, name="detail-review"),
+    path("review/reply/<int:review>/", views.reply_review, name="reply-review"),
     path("review/show/<int:review>/", views.detail_review, name="detail-review"),
     path("review/delete/<int:review>/", views.delete_review, name="delete-review"),
     path(

@@ -203,6 +203,7 @@ def update_review(request, review):
 
 def detail_review(request, review):
     review = get_reviews_by_id(review)
+    # reviewed, reviews_count = get_reviews(story=story, chapter=chapter)
     context = {
         "review": review,
     }
@@ -219,7 +220,8 @@ def save_review(request, story, chapter):
     user = request.user
     story = get_story_by_id(story)
     chapter = get_chapter_by_id(user=request.user, chapter=chapter)
-    reviews, count = get_reviews(story=story, chapter=chapter)
+    reviewed, reviews_count = get_reviews(story=story, chapter=chapter)
+
     form = ReviewForm(request.POST or None)
 
     if request.method == "POST":
@@ -240,11 +242,23 @@ def save_review(request, story, chapter):
             "stories/reviews/form.html",
             context={
                 "reviewform": form,
-                "reviews": reviews,
-                "reviews_count": count,
+                "reviews": reviewed,
+                "reviews_count": reviews_count,
                 "story": story,
             },
         )
+
+
+def refresh_reviews(request, story, chapter):
+    story = get_story_by_id(story)
+    chapter = get_chapter_by_id(user=request.user, chapter=chapter)
+    reviewed, reviews_count = get_reviews(story=story, chapter=chapter)
+    context = {
+        "reviewed": reviewed,
+        "reviews_count": reviews_count,
+        "story": chapter,
+    }
+    return render(request, "stories/includes/comment.html", context)
 
 
 @login_required

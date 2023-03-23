@@ -9,5 +9,8 @@
         }
     ],
     "sqltools.useNodeRuntime": true,
-    "python.analysis.typeCheckingMode": "off"
+    "python.analysis.typeCheckingMode": "off",
+    "editor.autoClosingDelete": "always",
+    "editor.autoClosingOvertype": "always",
+    "editor.bracketPairColorization.independentColorPoolPerBracketType": true
 }

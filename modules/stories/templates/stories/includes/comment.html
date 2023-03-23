@@ -1,0 +1,27 @@
+{% with reviews_count as total_comments %}
+<b class="text-xl dark:text-mono-50 m-2 p-8">{{ total_comments }} Comment{{ total_comments|pluralize }}</b>
+        {% endwith %}
+<div hx-target="#reviews" hx-swap="afterbegin" hx-indicator="#status" hx-swap-oob="true">
+{% if user.is_authenticated %}
+<form hx-post="{% url "stories:add-review" story=story.story.id chapter=story.id %}" class="">
+        <div class="px-3 mb-2 mt-2 w-full">
+        {% csrf_token %}
+                <input type="hidden" name="parent" value="{{ parent.id }}">
+                <textarea name="text" placeholder="comment" class="w-full bg-mono-100 rounded border dark:bg-mono-400 border-mono-400 leading-normal resize-none h-20 py-2 px-3 font-medium placeholder-mono-700 dark:placeholder-mono-100 focus:outline-none focus:bg-white" _="on htmx:afterRequest reset() me"></textarea>
+            </div>
+            <div class="flex justify-end px-4">
+                <button type="submit" class="px-2.5 py-1.5 rounded-md text-white text-md bg-indigo-500">Comment</button>
+            </div>
+
+        </form>
+{% else %}
+<div class="w-full p-8 align-center flex justify-evenly">
+        <p class="text-center ">Please <a href="{% url 'two_factor:login' %}" class="bg-transparent border-transparent btn-link">Login</a> or <a href="{% url 'core:register' %}" class="bg-transparent border-transparent btn-link">Register</a> to comment on this chapter</a>
+</div>
+{% endif %}
+</div>
+<comments id="comments">
+  {% for review in reviewed %}
+    {% include "stories/partials/review.html" %}
+  {% endfor %}
+</comment>

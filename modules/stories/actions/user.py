@@ -189,7 +189,7 @@ def get_story_by_id(pk: int):
         "likes",
         "dislikes",
         "author",
-        "bookmarks",
+        # "bookmarks",
         "editor",
         "genre",
         "characters",
