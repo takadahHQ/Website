@@ -97,6 +97,21 @@ class Chapter(CacheInvalidationMixin, idModel, statusModel, timeStampModel):
 
         return position < package.advance or self.released_at <= timezone.now()
 
+    def is_last(self):
+        # Get all the released chapters for this story
+        released_chapters = Chapter.objects.filter(
+            story=self.story, status="active", released_at__lte=timezone.now()
+        ).order_by("position")
+        # get the latest chapter that has been released
+        last_released = released_chapters.latest("position")
+
+        # Get the position of the chapter in the list of released chapters
+        position = released_chapters.values_list("position", flat=True).index(
+            self.position
+        )
+
+        return position == last_released.position
+
     def get_previous_and_next_chapters(self, user=None):
         # Prefetch all released chapters for this story
         released_chapters = (
