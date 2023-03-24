@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Thank you for sponsoring {{ sponsor.package.story.title }}! you have susbcribed to {{ sponsor.package.name }} plan!</h1>
+<p>Your payment of {{ sponsor.package.amount }} has been received and your subscription is now active.</p>
+<p>Your subscription will expire on {{ sponsor.expire_at|date:"F j, Y" }}.</p>
+{{ status }}
+{% endblock %}

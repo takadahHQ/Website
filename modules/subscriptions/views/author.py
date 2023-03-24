@@ -51,7 +51,12 @@ class PackageCreateView(CreateView):
     model = Packages
     fields = ["name", "amount", "advance", "status"]
     template_name = "sponsorship/package_form.html"
-    success_url = reverse_lazy("sponsor:author:package-list")
+    # success_url = reverse_lazy("sponsor:author:package-list")
+
+    def get_success_url(self) -> str:
+        super().get_success_url()
+        story = self.kwargs.get("story")
+        return reverse_lazy("sponsor:author:package-list", kwargs={"story": story})
 
     def form_valid(self, form):
         story = Stories.objects.get(id=self.kwargs.get("story"))
@@ -64,10 +69,18 @@ class PackageUpdateView(UpdateView):
     model = Packages
     fields = ["name", "amount", "advance", "status"]
     template_name = "sponsorship/package_form.html"
-    success_url = reverse_lazy("sponsor:author:package-list")
+
+    def get_success_url(self) -> str:
+        super().get_success_url()
+        story = self.kwargs.get("story")
+        return reverse_lazy("sponsor:author:package-list", kwargs={"story": story})
 
 
 class PackageDeleteView(DeleteView):
     model = Packages
     template_name = "sponsorship/package_confirm_delete.html"
-    success_url = reverse_lazy("sponsor:author:package-list")
+
+    def get_success_url(self) -> str:
+        super().get_success_url()
+        story = self.kwargs.get("story")
+        return reverse_lazy("sponsor:author:package-list", kwargs={"story": story})

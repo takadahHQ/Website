@@ -5,6 +5,6 @@ from modules.subscriptions.urls import staff, user, author
 app_name = "sponsor"
 urlpatterns = [
     path("staff/sponsorship/", include((staff.urls, "staff"))),
-    path("read/", include(user.urls)),
+    path("sponsor/", include(user.urls)),
     path("author/", include((author.urls, "author"))),
 ]

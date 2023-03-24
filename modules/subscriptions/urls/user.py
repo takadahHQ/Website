@@ -30,7 +30,21 @@ urls = [
                     views.SponsorDeleteView.as_view(),
                     name="sponsor-delete",
                 ),
+                path("sponsor/<slug:slug>/", views.sponsor, name="sponsor"),
+                path(
+                    "sponsor/success/<str:ref>/",
+                    views.sponsor_success,
+                    name="sponsor-success",
+                ),
+                path(
+                    "sponsor/cancel/<str:ref>",
+                    views.sponsor_cancel,
+                    name="sponsor-cancel",
+                ),
             ]
         ),
-    )
+    ),
+    path("<slug:slug>/", views.sponsor, name="sponsor"),
+    path("success/", views.sponsor_success, name="sponsor-success"),
+    path("cancel/", views.sponsor_cancel, name="sponsor-cancel"),
 ]

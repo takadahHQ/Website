@@ -5,6 +5,10 @@ from .backends import StaticStorage, PublicMediaStorage
 from dotenv import load_dotenv
 import os
 
+import stripe
+
+stripe.api_key = os.environ.get("STRIPE_KEY")
+
 load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.

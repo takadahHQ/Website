@@ -16,9 +16,10 @@ class Sponsors(statusModel):
     expire_at = models.DateField(
         default=datetime.datetime.today() + datetime.timedelta(days=30), editable=False
     )
+    reference = models.CharField(max_length=255, null=True, blank=True)
 
     def __str__(self):
-        return self.name
+        return self.reference
 
     class Meta:
         verbose_name = "sponsor"
