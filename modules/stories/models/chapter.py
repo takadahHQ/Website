@@ -80,7 +80,12 @@ class Chapter(CacheInvalidationMixin, idModel, statusModel, timeStampModel):
 
     def can_view(self, user=None):
         try:
-            sponsor = Sponsors.objects.get(user=user)
+            value = (
+                Sponsors.objects.filter(user=user, package__story=self.story)
+                .latest("created_at")
+                .values()
+            )
+            sponsor = Sponsors.objects.get(id=value.id)
             package = Packages.objects.get(story=self.story, name=sponsor.package.name)
         except (Sponsors.DoesNotExist, Packages.DoesNotExist):
             return self.released_at <= timezone.now()

@@ -471,9 +471,10 @@ def get_chapter(story: any, chapter: any, user: any = None):
         raise Http404(
             "This chapter does not exist or your might need to subscribe for access."
         )
-    chapter.prefetch_related(
-        "story__packages",
-    )
+    if chapter.is_last():
+        chapter.prefetch_related(
+            "story__packages",
+        )
     previous_chapter, next_chapter = chapter.get_previous_and_next_chapters(user=user)
     return chapter  # , previous_chapter, next_chapter
 
@@ -483,6 +484,10 @@ def get_chapter_by_id(chapter: int, user: any = None):
     if not chapter.can_view(user=user):
         raise Http404(
             "This chapter does not exist or your might need to subscribe for access."
+        )
+    if chapter.is_last():
+        chapter.prefetch_related(
+            "story__packages",
         )
     previous_chapter, next_chapter = chapter.get_previous_and_next_chapters(user=user)
     return chapter  # , previous_chapter, next_chapter

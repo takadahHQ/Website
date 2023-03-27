@@ -80,6 +80,7 @@
   dialog[open] { -webkit-animation-duration:0.3s; animation-duration:0.3s; -webkit-animation-fill-mode:both; animation-fill-mode:both; -webkit-animation-name:fadeInUp; animation-name:fadeInUp }
   dialog::backdrop { background: rgba(0, 0, 0, 0.3); backdrop-filter: blur(3px); -webkit-animation-duration:0.3s; animation-duration:0.3s; -webkit-animation-fill-mode:both; animation-fill-mode:both; -webkit-animation-name:fadeIn; animation-name:fadeIn  }
   </style>
+  {% block body %}
 	<body class="min-h-screen bg-mono-200 dark:bg-mono-900 text-mono-900 dark:text-mono-300 font-serif leading-normal tracking-normal" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
         {% analytical_body_top %}
         <div class="w-full">
@@ -178,4 +179,5 @@ mixpanel.track('Sign Up', {
 <span class="text-tiber-50 text-tiber-100 text-tiber-200 text-tiber-300 text-tiber-400 text-tiber-500 text-tiber-600 text-tiber-700 text-tiber-800 text-tiber-900"></span>
 {% block scripts %}{% endblock scripts %}
 	</body>
+  {% endblock body %}
 </html>
