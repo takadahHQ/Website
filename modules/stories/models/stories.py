@@ -60,6 +60,9 @@ class Stories(CacheInvalidationMixin, idModel, timeStampModel):
     author = models.ManyToManyField(
         settings.AUTH_USER_MODEL, through="Author", related_name="authors", blank=True
     )
+    translator = models.ManyToManyField(
+        settings.AUTH_USER_MODEL, through="Translator", related_name="translators", blank=True
+    )
     editor = models.ManyToManyField(
         settings.AUTH_USER_MODEL, through="Editor", related_name="editors", blank=True
     )

@@ -44,6 +44,7 @@ from modules.stories.actions import (
 from modules.stories.actions import (
     get_reviews,
 )
+from modules.stories.mixins import AuthorRequiredMixin
 
 
 class CharacterInline(InlineFormSetFactory):
@@ -113,7 +114,7 @@ class storyDashboard(LoginRequiredMixin, TemplateView):
         return stats
 
 
-class viewStory(LoginRequiredMixin, DetailView):
+class viewStory(AuthorRequiredMixin, LoginRequiredMixin, DetailView):
     template_name = "stories/authors/story_detail.html"
     context_object_name = "story"
     model = Stories
@@ -310,7 +311,7 @@ class StoriesCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-class updateStory(LoginRequiredMixin, UpdateView):
+class updateStory(AuthorRequiredMixin, LoginRequiredMixin, UpdateView):
     template_name = "stories/authors/edit_story.html"
     model = Stories
     form_class = StoryForm
@@ -325,13 +326,13 @@ class updateStory(LoginRequiredMixin, UpdateView):
         return context
 
 
-class deleteStory(LoginRequiredMixin, DeleteView):
+class deleteStory(AuthorRequiredMixin, LoginRequiredMixin, DeleteView):
     template_name = "stories/authors/delete_story.html"
     model = Stories
     success_url = reverse_lazy("stories:author:list")
 
 
-class createChapter(LoginRequiredMixin, CreateView):
+class createChapter(AuthorRequiredMixin, LoginRequiredMixin, CreateView):
     model = Chapter
     form_class = ChapterForm
     # success_url = reverse_lazy('login')
@@ -355,7 +356,7 @@ class createChapter(LoginRequiredMixin, CreateView):
         )
 
 
-class updateChapter(LoginRequiredMixin, UpdateView):
+class updateChapter(AuthorRequiredMixin, LoginRequiredMixin, UpdateView):
     template_name = "stories/chapters/edit_chapter.html"
     model = Chapter
     form_class = ChapterForm
@@ -385,7 +386,7 @@ class updateChapter(LoginRequiredMixin, UpdateView):
 #  success_url = reverse_lazy('dashboard')
 
 
-class deleteChapter(LoginRequiredMixin, DeleteView):
+class deleteChapter(AuthorRequiredMixin, LoginRequiredMixin, DeleteView):
     template_name = "stories/chapters/delete_chapter.html"
     model = Chapter
     success_url = reverse_lazy("stories:author:list")
@@ -402,7 +403,7 @@ class deleteChapter(LoginRequiredMixin, DeleteView):
         return context
 
 
-class showChapter(LoginRequiredMixin, DetailView):
+class showChapter(AuthorRequiredMixin, LoginRequiredMixin, DetailView):
     model = Chapter
     template_name = "stories/authors/preview.html"
     context_object_name = "story"

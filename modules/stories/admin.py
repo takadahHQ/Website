@@ -13,6 +13,7 @@ from .models import (
     Author,
     Editor,
     Review,
+    Translator,
 )
 
 from import_export import resources
@@ -35,6 +36,11 @@ class AuthorInline(admin.StackedInline):
     max_num = 3
 
 
+class TranslatorInline(admin.StackedInline):
+    model = Translator
+    max_num = 3
+
+
 class ReviewInline(admin.StackedInline):
     model = Review
     max_num = 5
@@ -50,7 +56,7 @@ class StoriesAdmin(admin.ModelAdmin):
         "created_at",
         "updated_at",
     )
-    inlines = [AuthorInline, EditorInline, ReviewInline]
+    inlines = [AuthorInline, TranslatorInline, EditorInline, ReviewInline]
     resource_class = StoriesResource
 
     # fieldsets = (

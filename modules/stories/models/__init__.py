@@ -9,6 +9,7 @@ from .history import History
 from .language import Language
 from .rating import Rating
 from .review import Review
+from .translators import Translator
 from .stories import Stories
 from .type import Type
 from .universe import Universe
