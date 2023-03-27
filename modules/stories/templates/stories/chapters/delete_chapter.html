@@ -1,13 +1,14 @@
-{% extends 'base.html' %}
+{% extends 'dashboard.html' %}
 {% load tailwind_filters %}
 
 {% block title %}
 Delete: {{ story.title | title }}
 {% endblock title %}
 {% block breadcrumbs %}
-<li><a href="{{ story.story_type.get_absolute_url}}">{{ story.story_type.name }}</a></li> 
+<li><a href="{% url 'stories:author:dashboard' %}">Author</a></li> 
+{% comment %} <li><a href="{{ story.story_type.get_absolute_url}}">{{ story.story_type.name }}</a></li>  {% endcomment %}
 <li><a href="{{ story.get_absolute_url}}">{{ story.title }}</a></li> 
-<li><a>Delete></li> 
+<li><a>Delete Chapter</li> 
 {% endblock %}
 {% block content %}
 <!-- Story Detials -->

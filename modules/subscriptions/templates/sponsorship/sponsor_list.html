@@ -1,9 +1,9 @@
 <!-- list.html -->
-{% extends 'base.html' %}
+{% extends 'dashboard.html' %}
 
 {% block breadcrumbs %}
 <li><a href="{% url "stories:author:dashboard" %}">Author</a></li> 
-<li><a href="{% url "stories:author:show" story %}">Story</a></li> 
+<li><a href="{% url "stories:author:show" story.id %}">Story</a></li> 
 <li><a>Packages</a></li> 
 {% endblock %}
 

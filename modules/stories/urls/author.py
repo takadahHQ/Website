@@ -25,6 +25,11 @@ urls = [
         name="create-chapter",
     ),
     path(
+        "story/<story:pk>/chapter/<slug:slug>/preview/",
+        views.showChapter.as_view(),
+        name="preview-chapter",
+    ),
+    path(
         "story/<story:pk>/chapter/<slug:slug>/update/",
         views.updateChapter.as_view(),
         name="update-chapter",

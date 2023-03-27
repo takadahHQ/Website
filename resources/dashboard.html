@@ -170,7 +170,9 @@
     <div class="ml-auto mb-6 lg:w-[75%] xl:w-[80%] 2xl:w-[85%]">
       <div class="sticky top-0 h-16 border-b bg-mono-50 dark:bg-mono-800 dark:border-mono-900 lg:py-2.5">
         <div class="flex items-center justify-between space-x-4 px-6 2xl:container">
-          <h5 hidden class="text-2xl font-medium text-mono-600 lg:block dark:text-mono-100">Dashboard</h5>
+          <h5 hidden class="text-2xl font-medium text-mono-600 lg:block dark:text-mono-100">{% block page-title %}
+            {{ block.super }}
+          {% endblock page-title %}</h5>
           <button class="-mr-2 h-16 w-12 border-r lg:hidden dark:border-mono-900 dark:text-mono-300">
             <svg
               xmlns="http://www.w3.org/2000/svg"

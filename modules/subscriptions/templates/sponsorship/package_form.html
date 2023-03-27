@@ -1,11 +1,11 @@
-{% extends "base.html" %}
+{% extends "dashboard.html" %}
 {% load tailwind_filters %}
 
 {% block breadcrumbs %}
 <li><a href="{% url "stories:author:dashboard" %}">Author</a></li> 
-<li><a href="{% url "stories:author:show" story %}">Story</a></li> 
+<li><a href="{% url "stories:author:show" story.id %}">Story</a></li> 
 <li><a>Packages</a></li> 
-<li><a>{{ form.name.value }}</a></li>
+<li><a>{{ package.name }}</a></li>
 {% endblock %}
 {% block content %}
   <div class="p-8 rounded bg-mono-50 shadow-mono-400 dark:bg-mono-800 dark:text-mono-50">

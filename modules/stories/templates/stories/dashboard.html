@@ -18,22 +18,22 @@ Dashboard
 <section>
     <div class="flex flex-col space-y-8">
         <!-- First Row -->
-        <div class="grid grid-cols-1 md:grid-cols-4 xl:grid-cols-5 px-4 xl:p-0 gap-y-4 md:gap-6">
-            <div class="md:col-span-2 xl:col-span-3 bg-white p-6 rounded-2xl border border-mono-50">
+        <div class="grid grid-cols-1 md:grid-cols-4 xl:grid-cols-5 px-4 xl:p-0 gap-y-4 md:gap-6 dark:text-mono-200">
+            <div class="md:col-span-2 xl:col-span-3 bg-mono-100 dark:bg-mono-700 p-6 rounded-2xl border border-mono-50 dark:border-mono-600">
                 <div class="flex flex-col space-y-6 md:h-full md:justify-between">
                     <div class="flex justify-between">
-                        <span class="text-xs text-mono-500 font-semibold uppercase tracking-wider">
+                        <span class="text-xs text-mono-500 dark:text-mono-200 font-semibold uppercase tracking-wider">
                             Main Account
                         </span>
-                        <span class="text-xs text-mono-500 font-semibold uppercase tracking-wider">
+                        <span class="text-xs text-mono-500 dark:text-mono-200 font-semibold uppercase tracking-wider">
                             Available Funds
                         </span>
                     </div>
                     <div class="flex gap-2 md:gap-4 justify-between items-center">
                         <div class="flex flex-col space-y-4">
-                            <h2 class="text-mono-800 font-bold tracking-widest leading-tight">{{ user.name }}'s Earning</h2>
+                            <h2 class="text-mono-800 dark:text-mono-100 font-bold tracking-widest leading-tight">{{ user.name }}'s Earning</h2>
                             <div class="flex items-center gap-4">
-                                <p class="text-lg text-mono-600 tracking-wider">**** **** *321</p>
+                                <p class="text-lg text-mono-600 dark:text-mono-300 tracking-wider">**** **** *321</p>
                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none"
                                     viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -41,14 +41,14 @@ Dashboard
                                 </svg>
                             </div>
                         </div>
-                        <h2 class="text-lg md:text-xl xl:text-3xl text-mono-700 font-black tracking-wider">
+                        <h2 class="text-lg md:text-xl xl:text-3xl text-mono-700 dark:text-mono-300 font-black tracking-wider">
                             <span class="md:text-xl">$</span>
                             00,000.00
                         </h2>
                     </div>
                     <div class="flex gap-2 md:gap-4">
                         <a href="#"
-                            class="bg-mono-600 px-5 py-3 w-full text-center md:w-auto rounded-lg text-white text-xs tracking-wider font-semibold hover:bg-mono-800">
+                            class="bg-mono-600 dark:bg-mono-500 px-5 py-3 w-full text-center md:w-auto rounded-lg text-white text-xs tracking-wider font-semibold hover:bg-mono-800">
                             Transfer Money
                         </a>
                         <a href="#"
@@ -59,7 +59,7 @@ Dashboard
                 </div>
             </div>
             <div
-                class="col-span-2 p-6 rounded-2xl bg-gradient-to-r from-mono-500 to-mono-800 flex flex-col justify-between">
+                class="col-span-2 p-6 rounded-2xl bg-gradient-to-r from-mono-500 to-mono-800 dark:bg-gradient-to-r dark:from-mono-200 dark:to-mono-500 flex flex-col justify-between">
                 <div class="flex flex-col">
                     <p class="text-white font-bold">News</p>
                     <p class="mt-1 text-xs md:text-sm text-mono-50 font-light leading-tight max-w-sm">
@@ -71,7 +71,7 @@ Dashboard
                         class="bg-mono-800 px-4 py-3 rounded-lg text-white text-xs tracking-wider font-semibold hover:bg-mono-600 hover:text-white">
                         Learn More
                     </a>
-                    <img src="assets/calendar.png" alt="calendar" class="w-auto h-24 object-cover">
+                    <svg fill="#ffffff" class="w-auto h-24 object-cover" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M960 95.888l-256.224.001V32.113c0-17.68-14.32-32-32-32s-32 14.32-32 32v63.76h-256v-63.76c0-17.68-14.32-32-32-32s-32 14.32-32 32v63.76H64c-35.344 0-64 28.656-64 64v800c0 35.343 28.656 64 64 64h896c35.344 0 64-28.657 64-64v-800c0-35.329-28.656-63.985-64-63.985zm0 863.985H64v-800h255.776v32.24c0 17.679 14.32 32 32 32s32-14.321 32-32v-32.224h256v32.24c0 17.68 14.32 32 32 32s32-14.32 32-32v-32.24H960v799.984zM736 511.888h64c17.664 0 32-14.336 32-32v-64c0-17.664-14.336-32-32-32h-64c-17.664 0-32 14.336-32 32v64c0 17.664 14.336 32 32 32zm0 255.984h64c17.664 0 32-14.32 32-32v-64c0-17.664-14.336-32-32-32h-64c-17.664 0-32 14.336-32 32v64c0 17.696 14.336 32 32 32zm-192-128h-64c-17.664 0-32 14.336-32 32v64c0 17.68 14.336 32 32 32h64c17.664 0 32-14.32 32-32v-64c0-17.648-14.336-32-32-32zm0-255.984h-64c-17.664 0-32 14.336-32 32v64c0 17.664 14.336 32 32 32h64c17.664 0 32-14.336 32-32v-64c0-17.68-14.336-32-32-32zm-256 0h-64c-17.664 0-32 14.336-32 32v64c0 17.664 14.336 32 32 32h64c17.664 0 32-14.336 32-32v-64c0-17.68-14.336-32-32-32zm0 255.984h-64c-17.664 0-32 14.336-32 32v64c0 17.68 14.336 32 32 32h64c17.664 0 32-14.32 32-32v-64c0-17.648-14.336-32-32-32z"></path></g></svg>
                 </div>
             </div>
 
@@ -80,55 +80,55 @@ Dashboard
         <!-- Start Second Row -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 px-4 xl:p-0 gap-4 xl:gap-6">
             <div class="col-span-1 md:col-span-2 lg:col-span-4 flex justify-between">
-                <h2 class="text-xs md:text-sm text-mono-700 font-bold tracking-wide md:tracking-wider">
+                <h2 class="text-xs md:text-sm text-mono-700 dark:text-mono-200 font-bold tracking-wide md:tracking-wider">
                     Lifetime Statistics</h2>
-                <a href="#" class="text-xs text-mono-800 font-semibold uppercase">More</a>
+                <a href="#" class="text-xs text-mono-800 dark:text-mono-300 font-semibold uppercase">More</a>
             </div>
-            <div class="bg-white p-6 rounded-xl border border-mono-50">
+            <div class="bg-mono-100 dark:bg-mono-700 p-6 rounded-xl border border-mono-50 dark:border-mono-600">
                 <div class="flex justify-between items-start">
                     <div class="flex flex-col">
-                        <p class="text-xs text-mono-600 tracking-wide">Views</p>
-                        <h3 class="mt-1 text-lg text-mono-500 font-bold"> {{ stats.views.result }}</h3>
-                        <span class="mt-4 text-xs text-mono-500">Last  {{ stats.views.updated }}</span>
+                        <p class="text-xs text-mono-600 dark:text-mono-200 tracking-wide">Views</p>
+                        <h3 class="mt-1 text-lg text-mono-500 dark:text-mono-100 font-bold"> {{ stats.views.result }}</h3>
+                        <span class="mt-4 text-xs text-mono-500 dark:text-mono-300">Last  {{ stats.views.updated }}</span>
                     </div>
-                    <div class="bg-mono-500 p-1 xl:p-2 rounded-md">
-                        <img src="assets/dish-2.png" alt="icon" class="w-auto h-6 xl:h-8 object-cover">
+                    <div class="bg-mono-500  p-1 xl:p-2 rounded-md">
+                        <svg fill="#fff" class="w-auto h-6 xl:h-8 object-cover" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 442.04 442.04" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <g> <path d="M221.02,341.304c-49.708,0-103.206-19.44-154.71-56.22C27.808,257.59,4.044,230.351,3.051,229.203 c-4.068-4.697-4.068-11.669,0-16.367c0.993-1.146,24.756-28.387,63.259-55.881c51.505-36.777,105.003-56.219,154.71-56.219 c49.708,0,103.207,19.441,154.71,56.219c38.502,27.494,62.266,54.734,63.259,55.881c4.068,4.697,4.068,11.669,0,16.367 c-0.993,1.146-24.756,28.387-63.259,55.881C324.227,321.863,270.729,341.304,221.02,341.304z M29.638,221.021 c9.61,9.799,27.747,27.03,51.694,44.071c32.83,23.361,83.714,51.212,139.688,51.212s106.859-27.851,139.688-51.212 c23.944-17.038,42.082-34.271,51.694-44.071c-9.609-9.799-27.747-27.03-51.694-44.071 c-32.829-23.362-83.714-51.212-139.688-51.212s-106.858,27.85-139.688,51.212C57.388,193.988,39.25,211.219,29.638,221.021z"></path> </g> <g> <path d="M221.02,298.521c-42.734,0-77.5-34.767-77.5-77.5c0-42.733,34.766-77.5,77.5-77.5c18.794,0,36.924,6.814,51.048,19.188 c5.193,4.549,5.715,12.446,1.166,17.639c-4.549,5.193-12.447,5.714-17.639,1.166c-9.564-8.379-21.844-12.993-34.576-12.993 c-28.949,0-52.5,23.552-52.5,52.5s23.551,52.5,52.5,52.5c28.95,0,52.5-23.552,52.5-52.5c0-6.903,5.597-12.5,12.5-12.5 s12.5,5.597,12.5,12.5C298.521,263.754,263.754,298.521,221.02,298.521z"></path> </g> <g> <path d="M221.02,246.021c-13.785,0-25-11.215-25-25s11.215-25,25-25c13.786,0,25,11.215,25,25S234.806,246.021,221.02,246.021z"></path> </g> </g> </g></svg>
                     </div>
                 </div>
             </div>
-            <div class="bg-white p-6 rounded-xl border border-mono-50">
+            <div class="bg-mono-100 dark:bg-mono-700 text-mono-500 dark:text-mono-300 p-6 rounded-xl border border-mono-50 dark:border-mono-600">
                 <div class="flex justify-between items-start">
                     <div class="flex flex-col">
-                        <p class="text-xs text-mono-600 tracking-wide">Likes</p>
+                        <p class="text-xs text-mono-600 dark:text-mono-200 tracking-wide">Likes</p>
                         <h3 class="mt-1 text-lg text-green-500 font-bold">{{ stats.likes.result }}</h3>
-                        <span class="mt-4 text-xs text-mono-500">Last {{ stats.likes.updated }}</span>
+                        <span class="mt-4 text-xs text-mono-500 dark:text-mono-300">Last {{ stats.likes.updated }}</span>
                     </div>
                     <div class="bg-green-500 p-1 xl:p-2 rounded-md">
-                        <img src="assets/grocery.png" alt="icon" class="w-auto h-6 xl:h-8 object-cover">
+                        <svg viewBox="0 0 24 24" fill="none" class="w-auto h-6 xl:h-8 object-cover" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M4.8824 12.9557L10.5021 19.3071C11.2981 20.2067 12.7019 20.2067 13.4979 19.3071L19.1176 12.9557C20.7905 11.0649 21.6596 8.6871 20.4027 6.41967C18.9505 3.79992 16.2895 3.26448 13.9771 5.02375C13.182 5.62861 12.5294 6.31934 12.2107 6.67771C12.1 6.80224 11.9 6.80224 11.7893 6.67771C11.4706 6.31934 10.818 5.62861 10.0229 5.02375C7.71053 3.26448 5.04945 3.79992 3.59728 6.41967C2.3404 8.6871 3.20947 11.0649 4.8824 12.9557Z" stroke="#323232" stroke-width="2" stroke-linejoin="round"></path> </g></svg>
                     </div>
                 </div>
             </div>
-            <div class="bg-white p-6 rounded-xl border border-mono-50">
+            <div class="bg-mono-100 dark:bg-mono-700 p-6 rounded-xl border border-mono-50 dark:border-mono-600">
                 <div class="flex justify-between items-start">
                     <div class="flex flex-col">
-                        <p class="text-xs text-mono-600 tracking-wide">DisLikes</p>
+                        <p class="text-xs text-mono-600 dark:text-mono-200 tracking-wide">DisLikes</p>
                         <h3 class="mt-1 text-lg text-yellow-500 font-bold">{{ stats.dislikes.result }}</h3>
-                        <span class="mt-4 text-xs text-mono-600">Last {{ stats.dislikes.updated }}</span>
+                        <span class="mt-4 text-xs text-mono-600 dark:text-mono-300">Last {{ stats.dislikes.updated }}</span>
                     </div>
                     <div class="bg-yellow-500 p-1 xl:p-2 rounded-md">
-                        <img src="assets/gaming.png" alt="icon" class="w-auto h-6 xl:h-8 object-cover">
+                        <svg viewBox="0 0 24 24" class="w-auto h-6 xl:h-8 object-cover" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M4.79501 5C4.62688 5.13993 4.46746 5.29304 4.31803 5.45838C3.90017 5.92074 3.56869 6.46964 3.34255 7.07374C3.1164 7.67785 3 8.32532 3 8.9792C3 9.63308 3.1164 10.2806 3.34255 10.8847C3.56869 11.4888 3.90017 12.0377 4.31803 12.5L10.5162 19.3582C11.3103 20.2368 12.6897 20.2368 13.4838 19.3582L16.1691 16.3869" stroke="#323232" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M3 3L19 19" stroke="#323232" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M9.22217 4.37901C9.76813 4.62924 10.2642 4.99601 10.6821 5.45837V5.45837C11.3874 6.23883 12.6127 6.23883 13.3181 5.45837V5.45837C14.162 4.52459 15.3066 4 16.5001 4C17.6935 4 18.8381 4.52459 19.682 5.45837C20.526 6.39215 21.0001 7.65863 21.0001 8.97919C21.0001 10.2998 20.526 11.5662 19.682 12.5L18.7783 13.5" stroke="#323232" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
                     </div>
                 </div>
             </div>
-            <div class="bg-white p-6 rounded-xl border border-mono-50">
+            <div class="bg-mono-100 dark:bg-mono-700 p-6 rounded-xl border border-mono-50 dark:border-mono-600">
                 <div class="flex justify-between items-start">
                     <div class="flex flex-col">
-                        <p class="text-xs text-mono-600 tracking-wide">Reviews</p>
+                        <p class="text-xs text-mono-600 dark:text-mono-200 tracking-wide">Reviews</p>
                         <h3 class="mt-1 text-lg text-indigo-500 font-bold">{{ stats.reviews.result }}</h3>
-                        <span class="mt-4 text-xs text-mono-500">Last {{ stats.reviews.updated }}</span>
+                        <span class="mt-4 text-xs text-mono-500 dark:text-mono-300">Last {{ stats.reviews.updated }}</span>
                     </div>
                     <div class="bg-indigo-500 p-1 xl:p-2 rounded-md">
-                        <img src="assets/holiday.png" alt="icon" class="w-auto h-6 xl:h-8 object-cover">
+                        <svg fill="#000000" class="w-auto h-6 xl:h-8 object-cover" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g data-name="37 rating" id="_37_rating"> <path d="M42.83,3.5H21.17a6,6,0,0,0-6,6V28.66a6,6,0,0,0,6,6H23.4l7.84,9.23a1,1,0,0,0,1.1.29.992.992,0,0,0,.66-.94V34.66h9.83a6,6,0,0,0,6-6V9.5A6,6,0,0,0,42.83,3.5Zm4,25.16a4,4,0,0,1-4,4H32a1,1,0,0,0-1,1v6.86l-6.38-7.51a1.011,1.011,0,0,0-.76-.35H21.17a4,4,0,0,1-4-4V9.5a4,4,0,0,1,4-4H42.83a4,4,0,0,1,4,4Z"></path> <path d="M44.66,10.75a1,1,0,0,1-1,1H20.34a1,1,0,0,1,0-2H43.66A1,1,0,0,1,44.66,10.75Z"></path> <path d="M44.66,14.92a1,1,0,0,1-1,1H20.34a1,1,0,0,1,0-2H43.66A.99.99,0,0,1,44.66,14.92Z"></path> <path d="M44.66,19.08a1,1,0,0,1-1,1H20.34a1,1,0,0,1,0-2H43.66A1,1,0,0,1,44.66,19.08Z"></path> <path d="M44.66,23.25a1,1,0,0,1-1,1H28.67a1,1,0,0,1,0-2H43.66A.99.99,0,0,1,44.66,23.25Z"></path> <path d="M44.66,27.41a1,1,0,0,1-1,1H28.67a1,1,0,0,1,0-2H43.66A1,1,0,0,1,44.66,27.41Z"></path> <path d="M18.65,46.55a1.009,1.009,0,0,0-.95-.69H13.57l-1.28-3.93a1,1,0,0,0-1.9,0L9.11,45.86H4.98a1,1,0,0,0-.59,1.81L7.73,50.1,6.46,54.02a1,1,0,0,0,.95,1.31A1.01,1.01,0,0,0,8,55.14l3.34-2.43,3.34,2.43a1,1,0,0,0,1.54-1.11L14.94,50.1l3.35-2.43A1.012,1.012,0,0,0,18.65,46.55Zm-5.83,3.47.55,1.7-1.44-1.05a.99.99,0,0,0-1.18,0L9.31,51.72l.55-1.7a.992.992,0,0,0-.36-1.11L8.06,47.86H9.84a1.009,1.009,0,0,0,.95-.69l.55-1.7.55,1.7a1,1,0,0,0,.95.69h1.78l-1.44,1.05A.977.977,0,0,0,12.82,50.02Z"></path> <path d="M39.31,51.71a1,1,0,0,0-.95-.69H34.23l-1.28-3.93a1,1,0,0,0-1.9,0l-1.28,3.93H25.64a1,1,0,0,0-.59,1.81l3.35,2.43-1.28,3.93a1.012,1.012,0,0,0,.36,1.12,1.022,1.022,0,0,0,1.18,0L32,57.88l3.34,2.43a1.011,1.011,0,0,0,1.18,0,1.012,1.012,0,0,0,.36-1.12L35.6,55.26l3.35-2.43A1,1,0,0,0,39.31,51.71Zm-5.83,3.48.55,1.69-1.44-1.05a1.011,1.011,0,0,0-1.18,0l-1.44,1.05.55-1.69a.992.992,0,0,0-.36-1.12l-1.44-1.05H30.5a1,1,0,0,0,.95-.69L32,50.64l.55,1.69a1,1,0,0,0,.95.69h1.78l-1.44,1.05A.992.992,0,0,0,33.48,55.19Z"></path> <path d="M59.97,46.55a.991.991,0,0,0-.95-.69H54.89l-1.28-3.93a1,1,0,0,0-1.9,0l-1.28,3.93H46.3a1,1,0,0,0-.59,1.81l3.35,2.43-1.28,3.93a1,1,0,0,0,1.54,1.11l3.34-2.43L56,55.14a1.01,1.01,0,0,0,.59.19.967.967,0,0,0,.59-.19.987.987,0,0,0,.36-1.12L56.27,50.1l3.34-2.43A1,1,0,0,0,59.97,46.55Zm-5.83,3.47.55,1.7-1.44-1.05a.988.988,0,0,0-.59-.19,1.01,1.01,0,0,0-.59.19l-1.44,1.05.55-1.7a.977.977,0,0,0-.36-1.11l-1.44-1.05h1.78a1,1,0,0,0,.95-.69l.55-1.7.55,1.7a1.009,1.009,0,0,0,.95.69h1.78L54.5,48.91A.992.992,0,0,0,54.14,50.02Z"></path> </g> </g></svg>
                     </div>
                 </div>
             </div>
@@ -137,60 +137,53 @@ Dashboard
         <!-- Start Third Row -->
         <div class="grid grid-cols-1 md:grid-cols-5 items-start px-4 xl:p-0 gap-y-4 md:gap-6">
             <div class="col-start-1 col-end-5">
-                <h2 class="text-xs md:text-sm text-mono-600 font-bold tracking-wide">Earning Summary Transactions</h2>
+                <h2 class="text-xs md:text-sm text-mono-600 dark:text-mono-200 font-bold tracking-wide">Earning Summary Transactions</h2>
             </div>
-            <div class="col-span-2 bg-white p-6 rounded-xl border border-mono-50 flex flex-col space-y-6">
+            <div class="col-span-2 bg-mono-100 dark:bg-mono-700 p-6 rounded-xl border border-mono-50 dark:border-mono-600 flex flex-col space-y-6">
                 <p class="text-rebel-500">These figures are for demo purposes only and are not yet implemented.</p>
                 <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 flex justify-between items-center">
                     <div class="p-4 cursor-pointer border">
-                        <span class="text-xs text-mono-500 font-semibold">Daily</span>
-                        <h2 class="text-mono-800 font-bold tracking-wider">$ {{ earnings.daily.amount }}</h2>
+                        <span class="text-xs text-mono-500 dark:text-mono-200 font-semibold">Daily</span>
+                        <h2 class="text-mono-800 dark:text-mono-300 font-bold tracking-wider">$ {{ earnings.daily.amount }}</h2>
                     </div>
                     <div class="p-4 cursor-pointer border">
-                        <span class="text-xs text-mono-500 font-semibold">Weekly</span>
-                        <h2 class="text-mono-800 font-bold tracking-wider">$ {{ earnings.weekly.amount }}</h2>
+                        <span class="text-xs text-mono-500 dark:text-mono-200 font-semibold">Weekly</span>
+                        <h2 class="text-mono-800 dark:text-mono-300 font-bold tracking-wider">$ {{ earnings.weekly.amount }}</h2>
                     </div>
                     <div class="p-4 cursor-pointer border">
-                        <span class="text-xs text-mono-500 font-semibold">Monthly</span>
-                        <h2 class="text-mono-800 font-bold tracking-wider">$ {{ earnings.monthly.amount }}</h2>
+                        <span class="text-xs text-mono-500 dark:text-mono-200 font-semibold">Monthly</span>
+                        <h2 class="text-mono-800 dark:text-mono-300 font-bold tracking-wider">$ {{ earnings.monthly.amount }}</h2>
                     </div>
                 </div>
                 <canvas id="myChart"></canvas>
             </div>
-            <div class="col-span-3 bg-white p-6 rounded-xl border border-mono-50 flex flex-col space-y-6">
-                <div class="flex justify-between items-center">
-                    <h2 class="text-sm text-mono-600 font-bold tracking-wide">Published Stories</h2>
+            <div class="col-span-3 bg-mono-100 dark:bg-mono-700 p-6 rounded-xl border border-mono-50 dark:border-mono-600 flex flex-col space-y-6">
+                <div class="flex justify-between items-center text-mono-800 dark:text-mono-200">
+                    <h2 class="text-sm font-bold tracking-wide">Published Stories</h2>
                     <a href="{% url 'stories:author:list' %}"
-                        class="px-4 py-2 text-xs bg-mono-100 text-mono-500 rounded uppercase tracking-wider font-semibold hover:bg-mono-300">More</a>
+                        class="px-4 py-2 text-xs bg-mono-100 dark:bg-mono-700 rounded uppercase tracking-wider font-semibold hover:bg-mono-700">More</a>
                 </div>
                 <ul class="divide-y-2 divide-mono-100 overflow-x-auto w-full">
-                    <li class="py-3 flex justify-between text-sm text-mono-500 font-semibold">
+                    <li class="py-3 flex justify-between text-sm text-mono-500 dark:text-mono-200 font-semibold">
                         <p class="px-4 font-semibold">Last Chapter</p>
-                        <p class="px-4 text-mono-600">Story Title</p>
+                        <p class="px-4 text-mono-600 dark:text-mono-100">Story Title</p>
                         <p class="px-4 tracking-wider">Chapter - Title</p>
-                        <p class="px-4 text-mono-600">Genre</p>
-                        <p class="md:text-base text-mono-800 flex items-center gap-2">
+                        {% comment %} <p class="px-4 text-mono-600">Genre</p> {% endcomment %}
+                        <p class="md:text-base flex items-center gap-2">
                             Actions
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24"
-                                stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M19 9l-7 7-7-7" />
-                            </svg>
                         </p>
                     </li>
                     {% for story in published %}
-                    <li class="py-3 flex justify-between text-sm text-mono-500 font-semibold">
+                    <li class="py-3 flex justify-between text-sm text-mono-500 dark:text-mono-200 font-semibold">
                         <p class="px-4 font-semibold">{{ story.chapters.last.created_at| naturalday |default:"No chapter" }}</p>
-                        <p class="px-4 text-mono-600">{{ story.title }}</p>
+                        <p class="px-4 text-mono-600 dark:text-mono-100">{{ story.title }}</p>
                         <p class="px-4 tracking-wider">{{ story.chapters.last.title|default:"No chapter" }}</p>
-                        <p class="px-4 text-mono-600">{{ story.genre.first.name }}</p>
-                        <p class="md:text-base text-mono-800 flex items-center gap-2">
-                            16.90
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24"
-                                stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M19 9l-7 7-7-7" />
-                            </svg>
+                        {% comment %} <p class="px-4 text-mono-600">{{ story.genre.first.name }}</p> {% endcomment %}
+                        <p class="md:text-base flex items-center gap-2">
+                            <a href="{% url 'stories:author:show'   story.id %}">
+                            <span class="sr-only xl:not-sr-only">View</span>
+                            <svg fill="currentColor" class="w-4 h-4 dark:text-mono-100 text-mono-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 1920 1920" xmlns="http://www.w3.org/2000/svg" stroke="currentColor"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M960 1277.853c-175.297 0-317.951-142.654-317.951-317.951 0-175.297 142.654-317.951 317.951-317.951 175.297 0 317.951 142.654 317.951 317.951 0 175.297-142.654 317.95-317.951 317.95Zm948.342-341.585C1720.645 558.648 1357.332 324 960 324c-397.333 0-760.645 234.648-948.342 612.268L0 959.902l11.658 23.634c187.697 377.62 551.01 612.268 948.342 612.268 397.333 0 760.645-234.648 948.342-612.268L1920 959.902l-11.658-23.634Z" fill-rule="evenodd"></path> </g></svg>
+                        </a>
                         </p>
                     </li>
                     {% endfor %}

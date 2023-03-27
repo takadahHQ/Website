@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'dashboard.html' %}
 
 {% block title %}
 Story
@@ -19,38 +19,38 @@ Story
               <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
                 <div class="overflow-hidden">
                   <table class="min-w-full rounded" id="story" data-replace="jtable" data-component="datatable" data-locale="en" data-search="true">
-                    <thead class="bg-mono-100 border-b font-bold text-lg">
+                    <thead class="border-b font-bold dark:text-mono-200 text-lg">
                       <tr>
-                        <th scope="col" class="text-sm font-medium text-mono-900 px-6 py-4 text-left">
+                        <th scope="col" class="font-medium text-mono-900 dark:text-mono-200 px-6 py-4 text-left">
                           #
                         </th>
-                        <th scope="col" class="text-sm font-medium text-mono-900 px-6 py-4 text-left">
+                        <th scope="col" class="font-medium text-mono-900 dark:text-mono-200 px-6 py-4 text-left">
                           Story
                         </th>
-                        <th scope="col" class="text-sm font-medium text-mono-900 px-6 py-4 text-left">
+                        <th scope="col" class="font-medium text-mono-900 dark:text-mono-200 px-6 py-4 text-left">
                           Chapters
                         </th>
-                        <th scope="col" class="text-sm font-medium text-mono-900 px-6 py-4 text-left">
+                        <th scope="col" class="font-medium text-mono-900 dark:text-mono-200 px-6 py-4 text-left">
                             Status
                           </th>
-                        <th scope="col" class="text-sm font-medium text-mono-900 px-6 py-4 text-left">
+                        <th scope="col" class="font-medium text-mono-900 dark:text-mono-200 px-6 py-4 text-left">
                           Action
                         </th>
                       </tr>
                     </thead>
                     <tbody>
                         {% for story in  stories %}
-                      <tr class="{% cycle 'bg-mono-100' 'bg-mono-200' %} border-b">
-                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-mono-900"> {{forloop.counter0}} </td>
-                        <td class="text-sm text-mono-900 font-light px-6 py-4 whitespace-nowrap">
+                      <tr class="{% cycle 'bg-mono-100 dark:bg-mono-700' 'bg-mono-200 dark:bg-mono-800' %} border-b">
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-mono-900 dark:text-mono-200"> {{forloop.counter0}} </td>
+                        <td class="text-sm text-mono-900 dark:text-mono-200 font-light px-6 py-4 whitespace-nowrap">
                             <a href="{% url 'stories:author:show' story.id %}">
                           {{ story.title }}
                       </a>
                         </td>
-                        <td class="text-sm text-mono-900 font-light px-6 py-4 whitespace-nowrap">
+                        <td class="text-sm text-mono-900 dark:text-mono-200 font-light px-6 py-4 whitespace-nowrap">
                             {{ story.chapters.count }}
                         </td>
-                        <td class="text-sm text-white dark:text-mono-800 font-light px-6 py-4 whitespace-nowrap">
+                        <td class="text-sm text-mono-100 dark:text-mono-800 font-light px-6 py-4 whitespace-nowrap">
                             <span class="badge border-0 p-3 
                             {% if story.status == "prerelease" %}
                              bg-mono-300

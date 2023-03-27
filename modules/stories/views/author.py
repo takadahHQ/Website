@@ -39,6 +39,10 @@ from modules.stories.actions import (
     get_stories_by_author,
     get_author_stories_likes,
     get_author_stories_dislikes,
+    get_chapter,
+)
+from modules.stories.actions import (
+    get_reviews,
 )
 
 
@@ -344,6 +348,12 @@ class createChapter(LoginRequiredMixin, CreateView):
         context["story"] = Stories.objects.get(id=self.kwargs.get("pk"))
         return context
 
+    def get_success_url(self):
+        return reverse_lazy(
+            "stories:author:preview-chapter",
+            kwargs={"pk": self.object.story.id, "slug": self.object.slug},
+        )
+
 
 class updateChapter(LoginRequiredMixin, UpdateView):
     template_name = "stories/chapters/edit_chapter.html"
@@ -365,6 +375,12 @@ class updateChapter(LoginRequiredMixin, UpdateView):
         context["story"] = self.object.story
         return context
 
+    def get_success_url(self):
+        return reverse_lazy(
+            "stories:author:preview-chapter",
+            kwargs={"pk": self.object.story.id, "slug": self.object.slug},
+        )
+
 
 #  success_url = reverse_lazy('dashboard')
 
@@ -383,4 +399,23 @@ class deleteChapter(LoginRequiredMixin, DeleteView):
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
         context["story"] = self.object.story
+        return context
+
+
+class showChapter(LoginRequiredMixin, DetailView):
+    model = Chapter
+    template_name = "stories/authors/preview.html"
+    context_object_name = "story"
+
+    def get_object(self):
+        chapter = get_object_or_404(
+            Chapter, story__id=self.kwargs["pk"], slug=self.kwargs["slug"]
+        )
+        return chapter
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context["reviewed"], context["reviews_count"] = get_reviews(
+            story=self.kwargs.get("story"), chapter=self.kwargs.get("slug")
+        )
         return context

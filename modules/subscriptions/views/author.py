@@ -43,7 +43,7 @@ class PackageListView(ListView):
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
-        context["story"] = self.kwargs.get("story")
+        context["story"] = Stories.objects.get(id=self.kwargs.get("story"))
         return context
 
 
@@ -57,6 +57,11 @@ class PackageCreateView(CreateView):
         super().get_success_url()
         story = self.kwargs.get("story")
         return reverse_lazy("sponsor:author:package-list", kwargs={"story": story})
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context["story"] = Stories.objects.get(id=self.kwargs.get("story"))
+        return context
 
     def form_valid(self, form):
         story = Stories.objects.get(id=self.kwargs.get("story"))
@@ -75,6 +80,11 @@ class PackageUpdateView(UpdateView):
         story = self.kwargs.get("story")
         return reverse_lazy("sponsor:author:package-list", kwargs={"story": story})
 
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context["story"] = Stories.objects.get(id=self.kwargs.get("story"))
+        return context
+
 
 class PackageDeleteView(DeleteView):
     model = Packages
@@ -84,3 +94,8 @@ class PackageDeleteView(DeleteView):
         super().get_success_url()
         story = self.kwargs.get("story")
         return reverse_lazy("sponsor:author:package-list", kwargs={"story": story})
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context["story"] = Stories.objects.get(id=self.kwargs.get("story"))
+        return context

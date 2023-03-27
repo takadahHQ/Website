@@ -95,3 +95,14 @@ def get_weekly_earnings(author):
 def get_monthly_earnings(author):
     earned = author.id
     return earned
+
+
+def get_chapter(story: any, chapter: any, user: any = None):
+    chapter = Chapter.objects.get(story__slug=story, slug=chapter)
+
+    if chapter.is_last():
+        chapter.prefetch_related(
+            "story__packages",
+        )
+    previous_chapter, next_chapter = chapter.get_previous_and_next_chapters(user=user)
+    return chapter  # , previous_chapter, next_chapter

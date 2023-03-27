@@ -1,13 +1,16 @@
-{% extends 'base.html' %}
+{% extends 'dashboard.html' %}
 {% load advert_tags %}
 {% load tailwind_filters %}
 
 {% block title %}
 Delete: {{ object | title }}
 {% endblock title %}
+{% block page-title %}
+Author
+{% endblock page-title %}
 {% block breadcrumbs %}
 <li><a href="{% url 'stories:author:dashboard' %}">Author</a></li> 
-<li><a href="{{ story.story.get_absolute_url}}">{{ object | title }}</a></li> 
+<li><a href="{% url 'stories:author:show' story.id %}">{{ object | title }}</a></li> 
 <li><a>Delete</a></li> 
 {% endblock %}
 {% block content %}

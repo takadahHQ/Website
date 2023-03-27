@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'dashboard.html' %}
 {% load advert_tags %}
 {% load tailwind_filters %}
 
@@ -6,9 +6,10 @@
 Edit: {{ story.title | title }}
 {% endblock title %}
 {% block breadcrumbs %}
-<li><a href="{{ story.story_type.get_absolute_url}}">{{ story.story_type.name }}</a></li> 
-<li><a href="{{ story.get_absolute_url}}">{{ story.title }}</a></li> 
-<li><a>{{ story.title }}</a></li> 
+<li><a href="{% url 'stories:author:dashboard' %}">Author</a></li> 
+{% comment %} <li><a href="{{ story.story_type.get_absolute_url}}">{{ story.story_type.name }}</a></li>  {% endcomment %}
+<li><a href="{% url 'stories:author:show' story.id %}">{{ story.title }}</a></li> 
+<li><a>Edit Chapter</a></li> 
 {% endblock %}
 {% block content %}
 <!-- Story Detials -->

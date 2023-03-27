@@ -1,10 +1,13 @@
-{% extends 'base.html' %}
+{% extends 'dashboard.html' %}
 {% load advert_tags %}
 {% load tailwind_filters %}
 
 {% block title %}
 Publish Story
 {% endblock title %}
+{% block page-title %}
+Publish Story
+{% endblock page-title %}
 {% block breadcrumbs %}
 <li><a href="{% url 'stories:author:dashboard' %}">Author</a></li> 
 <li><a>Publish Story</a></li> 

@@ -1,16 +1,16 @@
 <!-- list.html -->
-{% extends 'base.html' %}
+{% extends 'dashboard.html' %}
 
 {% block breadcrumbs %}
 <li><a href="{% url "stories:author:dashboard" %}">Author</a></li> 
-<li><a href="{% url "stories:author:show" story %}">Story</a></li> 
+<li><a href="{% url "stories:author:show" story.id %}">Story</a></li> 
 <li><a>Packages</a></li> 
 {% endblock %}
 {% block content %}
   <div class="p-8 rounded bg-mono-50 shadow-mono-400 dark:bg-mono-800 dark:text-mono-200">
     <h2 class="text-2xl font-bold leading-7 mb-4">Packages List</h2>
 
-    <a href="{% url 'sponsor:author:package-create' story %}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-2">Create Package</a>
+    <a href="{% url 'sponsor:author:package-create' story.id %}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-2">Create Package</a>
     <table class="table-auto w-full">
       <thead>
         <tr>
