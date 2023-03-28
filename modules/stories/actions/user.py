@@ -494,7 +494,7 @@ def get_chapter_by_id(chapter: int, user: any = None):
 
 
 def get_user_profile(user):
-    user = Users.objects.filter(username=user).prefetch_related(
+    user = Users.objects.filter(username__iexact=user).prefetch_related(
         "authors", "editors", "authors__story"
     )
     return user

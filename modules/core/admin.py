@@ -30,9 +30,6 @@ class UserAdmin(HijackUserAdminMixin, admin.ModelAdmin):
     list_filter = ["language"]
     search_fields = ["pseudonym"]
 
-    def get_hijack_user(self, obj):
-        return obj.id
-
 
 # admin.site.register(Users, UserAdmin)
 admin.site.register(Menus)

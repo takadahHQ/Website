@@ -67,7 +67,7 @@ class PostAdmin(admin.ModelAdmin):
             "Publish",
             {
                 "classes": ("collapse",),
-                "fields": ("status", "published_at", "deleted_at"),
+                "fields": ("status", "deleted_at"),
             },
         ),
     )

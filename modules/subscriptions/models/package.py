@@ -15,7 +15,7 @@ class Packages(statusModel):
     amount = models.IntegerField(help_text="The Amount to charge in USD")
 
     def __str__(self):
-        return self.story.title + "-" + self.name
+        return "{} ({})".format(self.story.title, self.name)
 
     class Meta:
         verbose_name = "package"

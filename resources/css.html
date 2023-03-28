@@ -21,6 +21,11 @@ h1:hover, .h2:hover, .h3:hover{
 	background-color: {{ settings.color }};
 }
 
+.btn-secondary{
+	background-color: {{ settings.color }};
+	filter: saturate(0.5);
+	{% comment %} filter: sepia(1); {% endcomment %}
+}
 .badge-outline {
 	border-color: {{ settings.color }};
 	color: {{ settings.color }};
