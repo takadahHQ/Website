@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 
 from modules.stories.models import History
 from .forms import SignUpForm, ProfileForm
@@ -94,7 +94,13 @@ class AuthorView(DetailView):
         context["reviews"] = reviews
         return context
 
-    def get_queryset(self):
-        # user = get_object_or_404(Users, username=self.kwargs['username'])
-        user = get_users_profile(user=self.kwargs.get("username", None))
-        return user
+    def get_object(self):
+        slug = self.kwargs.get("username")
+        # query = get_object_or_404(
+        #     Users,
+        #     username__iexact=slug,
+        # )
+        query = Users.objects.filter(
+            username__iexact=slug,
+        )  # .prefetch_related("authors", "editors", "authors__story")
+        return Users.objects.get_by_natural_key(username=slug)

@@ -2,27 +2,27 @@
     <div class="bg-mono-50 dark:bg-mono-700 shadow-md  rounded-3xl p-4">
         <div class="flex-none lg:flex">
             <div class="md:w-1/8 h-auto lg:mb-0 mb-">
-                <img src="{{bookmark.story.get_cover }}"
-                    alt="{{bookmark.story.title }}" class="w-full h-auto object-scale-down lg:object-cover rounded-2xl">
+                <img src="{{story.get_cover }}"
+                    alt="{{story.title }}" class="w-full h-auto object-scale-down lg:object-cover rounded-2xl">
             </div>
             <div class="flex-auto md:w-3/4  ml-3 justify-evenly py-2">
-                <a href="{{bookmark.story.get_absolute_url}}">
+                <a href="{{story.get_absolute_url}}">
                     <div class="flex flex-wrap ">
                         <div class="w-full flex-none text-xs text-mono-700 dark:text-mono-200 font-medium ">
-                            {{bookmark.story.story_type.name }}
+                            {{story.story_type.name }}
                         </div>
-                        <h2 class="flex-auto text-lg font-medium dark:text-mono-100">{{bookmark.story.title }}</h2>
+                        <h2 class="flex-auto text-lg font-medium dark:text-mono-100">{{story.title }}</h2>
                     </div>
                     <p class="mt-3"></p>
                     <div class="flex py-4  text-sm text-mono-500 dark:text-mono-200">
                         <div class="flex-1 inline-flex items-center">
-                            {{bookmark.story.summary | safe }}
+                            {{story.summary | safe }}
                         </div>
                     </div>
                 </a>
                 <div class="flex p-4 pb-2 border-t border-mono-300 "></div>
                 <div class="flex space-x-3 text-sm font-medium">
-                    Written by:{% for author in bookmark.story.author.all %}
+                    Written by: {% for author in story.author.all %}
                     <span class="badge badge-accent bg-mono-400"> 
                         <a href="{% url 'core:author' author.username %}">{{ author.name }}</a>
                     </span>

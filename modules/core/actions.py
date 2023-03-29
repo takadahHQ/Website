@@ -46,7 +46,7 @@ def get_profile(user):
     if test:
         pass
     else:
-        user = Users.objects.get(username=user)
+        user = Users.objects.get_by_natural_key(username=user)
 
     bookmarks = get_bookmarked_stories(user)
     reviews = get_review_by_user(user)

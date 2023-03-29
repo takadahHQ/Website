@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block body %}
-<body class="bg-mono-200 dark:bg-mono-900 text-mono-900 dark:text-mono-300 font-serif leading-normal tracking-normal" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+<body class="bg-mono-200 dark:bg-mono-900 text-mono-900 dark:text-mono-300 font-serif leading-normal tracking-normal h-screen" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
     <aside
       class="fixed top-0 z-10 ml-[-100%] flex h-screen w-full flex-col justify-between border-r bg-mono-50 text-mono-900 dark:text-mono-200 px-6 pb-3 transition duration-300 md:w-4/12 lg:ml-0 lg:w-[25%] xl:w-[20%] 2xl:w-[15%] dark:bg-mono-700 dark:border-mono-900"
     >
@@ -15,7 +15,7 @@
         <div class="mt-8 text-center">
           <img
             src="{{ user.get_profile_image }}"
-            alt=""
+            alt="{{ user.name | capfirst }}"
             class="m-auto h-10 w-10 rounded-full object-cover lg:h-28 lg:w-28"
           />
           <h5 class="mt-4 hidden text-xl font-semibold text-mono-600 lg:block dark:text-mono-300">{{ user.name | capfirst }}</h5>
@@ -45,6 +45,32 @@
               </svg>
               <span class="-mr-1 font-medium">Dashboard</span>
             </a>
+          </li>
+          <li>
+            <button
+              class="group flex items-center space-x-4 rounded-md px-4 py-3 text-mono-600 dark:text-mono-300"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-5 w-5"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  class="fill-current text-mono-300 group-hover:text-cyan-300"
+                  fill-rule="evenodd"
+                  d="M2 6a2 2 0 012-2h4l2 2h4a2 2 0 012 2v1H8a3 3 0 00-3 3v1.5a1.5 1.5 0 01-3 0V6z"
+                  clip-rule="evenodd"
+                />
+                <path
+                  class="fill-current text-mono-600 group-hover:text-cyan-600 dark:group-hover:text-sky-400"
+                  d="M6 12a2 2 0 012-2h8a2 2 0 012 2v2a2 2 0 01-2 2H2h2a2 2 0 002-2v-2z"
+                />
+              </svg>
+              <span class="group-hover:text-mono-700 dark:group-hover:text-mono-100">User</span>
+            </button>
+            <ul class="mt-2 space-y-2 tracking-wide">
+              <li><a href="">Auccounts</a></li>
           </li>
           <li>
             <a
@@ -163,16 +189,18 @@
               d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
             />
           </svg>
-          <span class="group-hover:text-mono-700 dark:group-hover:text-mono-100">Logout</span>
+          <a href="{% url 'logout' %}">
+          <span class="group-hover:text-mono-700 dark:group-hover:text-mono-100">Logout</span></a>
         </button>
       </div>
     </aside>
     <div class="ml-auto mb-6 lg:w-[75%] xl:w-[80%] 2xl:w-[85%]">
       <div class="sticky top-0 h-16 border-b bg-mono-50 dark:bg-mono-800 dark:border-mono-900 lg:py-2.5">
         <div class="flex items-center justify-between space-x-4 px-6 2xl:container">
-          <h5 hidden class="text-2xl font-medium text-mono-600 lg:block dark:text-mono-100">{% block page-title %}
-            {{ block.super }}
-          {% endblock page-title %}</h5>
+          <h5 hidden class="text-2xl font-medium text-mono-600 lg:block dark:text-mono-100">
+            {% block page-title %}
+              {{ block.super }}
+            {% endblock page-title %}</h5>
           <button class="-mr-2 h-16 w-12 border-r lg:hidden dark:border-mono-900 dark:text-mono-300">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -275,7 +303,7 @@
         </div>
       </div>
   
-      <div class="px-6 pt-6 2xl:container">
+      <div class="px-6 pt-6 2xl:container min-h-screen">
         <section>
             <!-- Breadcrumbs -->
             {% if request.path != "/" %}
@@ -288,7 +316,7 @@
               </div>
               <!-- end breadcrumbs-->
             {% endif %}
-            </section> 
+        </section> 
         {% block content %}
         {{ block.super }}
         {% endblock content %}
@@ -301,6 +329,7 @@
             {% endblock content %}
           </span>
         </div> {% endcomment %}
+        <section>
         <button
         class="sticky bottom-5 right-5 z-10 w-10 h-10 rounded-full bg-mono-800 flex justify-center items-center text-mono-100"
         id="theme-toggle"

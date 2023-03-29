@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'dashboard.html' %}
 {% load tailwind_filters %}
 
 {% block title %}
@@ -16,25 +16,25 @@ Bookmarks
     <div class="flex flex-wrap -mx-1 lg:-mx-4">
 {% for bookmark in bookmarks %}
     <!-- Column -->
-    <div class="bg-mono-50 rounded dark:bg-mono-700 my-1 p-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/6">
+    <div class="rounded-lg bg-mono-100 dark:bg-mono-700 w-full md:w-1/2  lg:w-1/6 m-2 hover:scale-105">
 
         <!-- Article -->
-        <article class="mt-2 overflow-hidden hover:scale-110 transition duration-300 ease-in-out">
+        <article class="overflow-hidden transition duration-300 ease-in-out">
 
-            <a href="{{ bookmark.story.get_absolute_url}}">
-                <img alt="Placeholder" class="block h-auto w-full hover:scale-105 transition duration-300 ease-in-out rounded-lg shadow-lg " src="{{ bookmark.story.get_cover }}">
+            <a href="{{ bookmark.story.get_absolute_url}}" class="md:w-1/8 h-auto lg:mb-0 mb-">
+                <img alt="{ bookmark.story.title }}" class="block h-auto w-full hover:scale-105 hover:rounded transition duration-300 ease-in-out rounded-lg shadow-lg " src="{{ bookmark.story.get_cover }}">
             </a>
 
             <header class="flex items-center justify-between leading-tight p-2 md:p-4">
                 <p class="text-sm font-bold">
-                    <a class="no-underline hover:underline text-black" href="{{ bookmark.story.get_absolute_url}}">
+                    <a class="no-underline hover:underline text-black dark:text-mono-200" href="{{ bookmark.story.get_absolute_url}}">
                         {{ bookmark.story.title | title }}
                     </a>
                 </p>
             </header>
             <footer class="flex items-center justify-between leading-none p-2 md:p-4">
-                <a class="flex items-center no-underline hover:text-mono-400 text-black" href="{{ bookmark.get_read }}">
-                    <p class="text-sm text-mono-200">Progress {{ bookmark.get_read_position }} of {{ bookmark.story.chapters_set.count }}</p>
+                <a class="flex items-center no-underline hover:text-mono-400 text-black dark:text-mono-300" href="{{ bookmark.get_read }}">
+                    <p class="text-sm text-mono-500 dark:text-mono-200">Read {{ bookmark.get_read_position }} of {{ bookmark.story.chapters.count }} Chapters.</p>
                 </a>
             </footer>
 
@@ -44,7 +44,7 @@ Bookmarks
     </div>
     <!-- END Column -->
 {% empty %}
-<h3 class="flex justify-center">No Novel read yet, do you need help?</h3>
+<h3 class="flex justify-center">No book has bookmarked  yet, do you need help?</h3>
 {% endfor %}
 </div>
 </div>
