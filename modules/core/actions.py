@@ -47,7 +47,6 @@ def get_profile(user):
         pass
     else:
         user = Users.objects.get(username=user)
-        print(user)
 
     bookmarks = get_bookmarked_stories(user)
     reviews = get_review_by_user(user)

@@ -146,7 +146,9 @@ MIDDLEWARE = [
 ROOT_URLCONF = "takadah.urls"
 
 AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID")
-AWS_SECRET_ACCESS_KEY = os.environ.get("SECRET_KEY")
+AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY")
+AWS_SES_REGION_NAME = "ap-northeast-1"
+AWS_SES_REGION_ENDPOINT = "email-smtp.ap-northeast-1.amazonaws.com"
 AWS_STORAGE_BUCKET_NAME = os.environ.get("AWS_STORAGE_BUCKET_NAME")
 # AWS_S3_REGION_NAME = os.environ.get("AWS_S3_REGION_NAME")
 AWS_DEFAULT_ACL = "public-read"
@@ -508,9 +510,9 @@ MAXMIND_ASN_DB = os.getenv("MAXMIND_ASN_DB", "resources/geoip/GeoLite2-ASN.mmdb"
 SERVER_EMAIL = os.getenv("SERVER_EMAIL", "Takadah <noreply@takadah.com>")
 DEFAULT_FROM_EMAIL = SERVER_EMAIL
 if DEBUG or os.environ.get("EMAIL_HOST") is None:
-    EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+    EMAIL_BACKEND = "django_ses.SESBackend"
 else:
-    EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+    EMAIL_BACKEND = "django_ses.SESBackend"
     EMAIL_HOST = os.environ.get("EMAIL_HOST", "takadah.com")
     EMAIL_PORT = int(os.environ.get("EMAIL_PORT", 587))
     EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER")
