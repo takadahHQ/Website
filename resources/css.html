@@ -34,19 +34,27 @@ h1:hover, .h2:hover, .h3:hover{
 
 .logo {
 	content: url({% static 'images/logo-colored.svg' %});
-	width: 2vw;
-	min-width: 25px;
+	width: 6vw;
+	height: 6vw;
+	min-width: 50px;
 	color: {{ settings.color }};
 }
 
+.dark-logo {
+	content: url({% static 'images/logo-colored-dark.svg' %});
+	width: 4vw;
+	height: 4vw;
+	min-width: 25px;
+	color: {{ settings.color }};
+}
 .logo-dark{
 	content: url({% static 'images/logo-light.svg' %});
-	width: 2vw;
+	width: 4vw;
 	min-width: 25px;
 }
 
 .dark .logo-dark{
-	width: 2vw;
+	width: 4vw;
 	min-width: 25px;
 	content: url({% static 'images/logo-dark.svg' %});
 } 

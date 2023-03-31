@@ -1,9 +1,7 @@
 <div class="mb-2 navbar nav-base text-neutral-content">
     <div class="flex-1 px-2 mx-2">
-      <a href="{% url 'core:index' %}">
-        <span class="inline">
-            <img class="logo dark:logo-dark"><span class="hidden lg:block text-2xl font-bold self-center">{{ settings.name }}</span>
-        </span>
+      <a href="{% url 'core:index' %}" class="h-full w-full">
+            <img class="scale-125 logo dark:logo-dark">
       </a>
     </div>
     <div class="hidden px-2 mx-2 navbar-center lg:flex items-center justify-end gap-4">
@@ -90,14 +88,17 @@
             <svg class="hidden md:inline-block w-5 mr-2 stroke-current" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg> History
         </a>
         <div class="dropdown dropdown-end px-4">
-            <label tabindex="0" class="btn btn-ghost btn-circle avatar space-x-6 inline">
+            <label tabindex="0" class="btn btn-ghost btn-circle avatar space-x-6">
+              <span class="hidden lg:flex">
               <div class="w-5 rounded-full mr-2">
                 <img src="{{ user.get_profile_image }}" />
               </div>
-              <span class="hidden lg:flex">{{ user.name }}</span>
+              </span>
             </label>
             <ul tabindex="0" class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-mono-700 rounded-box">
               <li>
+                <div class="text-xs">Signed in as <br/><span>{{ user.name }}</span></div>
+                <hr/>
                 <a class="justify-between" href="{{ user.get_absolute_url }}">
                   Profile
                 </a>
