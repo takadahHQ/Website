@@ -111,9 +111,11 @@ class Chapter(CacheInvalidationMixin, idModel, statusModel, timeStampModel):
         last_released = released_chapters.latest("position")
 
         # Get the position of the chapter in the list of released chapters
-        position = released_chapters.values_list("position", flat=True).index(
-            self.position
-        )
+        # position = released_chapters.values_list("position", flat=True).index(
+        #     self.position
+        # )
+        positions = released_chapters.values_list("position", flat=True)
+        position = list(positions).index(self.position)
 
         return position == last_released.position
 
