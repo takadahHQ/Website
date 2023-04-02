@@ -33,3 +33,7 @@ class Packages(statusModel):
             "sponsor:author:package-update",
             kwargs={"story": story, "pk": self.pk},
         )
+
+    def get_sponsor_link(self):
+        story = self.story.id
+        return reverse("sponsor:sponsor", kwargs={"story": story, "slug": self.slug})

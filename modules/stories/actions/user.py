@@ -566,6 +566,15 @@ def remove_review(id: int):
     return True
 
 
+def get_packages(story, chapter):
+    packages = (
+        Packages.objects.filter(story__slug=story)
+        .select_related("story")
+        .annotate(counts=Count("sponsor"))
+    )
+    return packages
+
+
 def train_recommendation():
     query = Stories.objects.values(
         "title",

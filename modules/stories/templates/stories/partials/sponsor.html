@@ -1,19 +1,19 @@
-<section class="m-4 md:m-8 dark:bg-gray-800 dark:text-gray-100">
+<section class="m-4 md:m-8 dark:bg-gray-800 dark:text-gray-100 w-full">
 	<div class="container mx-auto p-4 my-6 space-y-2 text-center">
-        <h2 class="text-5xl font-bold">Select from one of the package</h2>
+        <h2 class="text-5xl font-bold">Access advanced chapters</h2>
         <p class="dark:text-gray-400">each package last for a month</p>
 	</div>
-	<div class="container mx-auto grid justify-center gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {% for pacakages in package %}
+	<div class="container mx-auto grid justify-center gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {% for package in packages %}
         <div class="flex flex-col items-center p-4">
 			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-8 h-8 dark:.text-neutral-content">
 				<path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd"></path>
 			</svg>
-			<h3 class="my-3 text-3xl font-semibold">Package Name</h3>
+			<h3 class="my-3 text-3xl font-semibold">{{ package.name }}</h3>
 			<div class="space-y-1 leading-tight">
-				<p>12 Chapters Advance</p>
-				<p>$3 Monthly</p>
-				<p><button class="btn btn-primary rounded">Subscribe</button> </p>
+				<p>{{ package.advance }} Chapters Advance</p>
+				<p>${{ package.amount }} Monthly</p>
+				<p><a href="{{ package.get_sponsor_link }}" class="btn btn-primary rounded">Subscribe</a> </p>
 			</div>
 		</div>
         {% endfor %}

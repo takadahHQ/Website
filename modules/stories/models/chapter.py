@@ -80,11 +80,9 @@ class Chapter(CacheInvalidationMixin, idModel, statusModel, timeStampModel):
 
     def can_view(self, user=None):
         try:
-            value = (
-                Sponsors.objects.filter(user=user, package__story=self.story)
-                .latest("created_at")
-                .values()
-            )
+            value = Sponsors.objects.filter(
+                user=user, package__story=self.story
+            ).latest("created_at")
             sponsor = Sponsors.objects.get(id=value.id)
             package = Packages.objects.get(story=self.story, name=sponsor.package.name)
         except (Sponsors.DoesNotExist, Packages.DoesNotExist):
@@ -96,9 +94,8 @@ class Chapter(CacheInvalidationMixin, idModel, statusModel, timeStampModel):
         ).order_by("position")
 
         # Get the position of the chapter in the list of released chapters
-        position = released_chapters.values_list("position", flat=True).index(
-            self.position
-        )
+        positions = released_chapters.values_list("position", flat=True)
+        position = list(positions).index(self.position)
 
         return position < package.advance or self.released_at <= timezone.now()
 

@@ -16,6 +16,7 @@ from modules.stories.actions.user import (
     get_all_ratings,
     get_chapter_by_id,
     get_language,
+    get_packages,
     get_reviews_by_id,
     get_story_by_id,
     remove_review,
@@ -121,6 +122,9 @@ class ShowChapter(HistoryMixin, DetailView):
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
         context["reviewed"], context["reviews_count"] = get_reviews(
+            story=self.kwargs.get("story"), chapter=self.kwargs.get("slug")
+        )
+        context["packages"] = get_packages(
             story=self.kwargs.get("story"), chapter=self.kwargs.get("slug")
         )
         return context
