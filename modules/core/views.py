@@ -10,6 +10,7 @@ from django.views.generic import (
     DetailView,
     ListView,
     DeleteView,
+    TemplateView,
 )
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .actions import (
@@ -104,3 +105,19 @@ class AuthorView(DetailView):
             username__iexact=slug,
         )  # .prefetch_related("authors", "editors", "authors__story")
         return Users.objects.get_by_natural_key(username=slug)
+
+
+class FeeView(TemplateView):
+    template_name = "pages/pricing.html"
+
+
+class ContactView(TemplateView):
+    template_name = "pages/contact.html"
+
+
+class CareersView(TemplateView):
+    template_name = "pages/careers.html"
+
+
+class AboutView(TemplateView):
+    template_name = "pages/about.html"

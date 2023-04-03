@@ -46,7 +46,7 @@
               </li>
               <li>
                 <a
-                  href="careers"
+                  href="{% url 'core:careers' %}"
                   class="text-body-color hover:text-primary mb-2 inline-block text-base leading-loose"
                 >
                   Careers
@@ -54,7 +54,7 @@
               </li>
               <li>
                 <a
-                  href="/pricing"
+                  href="{% url 'core:pricing' %}"
                   class="text-body-color hover:text-primary mb-2 inline-block text-base leading-loose"
                 >
                   Pricing
@@ -85,7 +85,7 @@
               </li>
               <li>
                 <a
-                  href="{% url 'page' 'contact' %}"
+                  href="{% url 'core:contact' %}"
                   class="text-body-color hover:text-primary mb-2 inline-block text-base leading-loose"
                 >
                   Contact & Support

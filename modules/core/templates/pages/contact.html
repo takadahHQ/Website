@@ -1,11 +1,14 @@
 {% extends 'base.html' %}
+{% block breadcrumbs %}
+  <li>Contact Us</li>
+{% endblock breadcrumbs %}
 {% block content %}
     <!-- ====== Contact Section Start -->
-<section class="relative z-10 overflow-hidden bg-white py-20 lg:py-[120px]">
+<section class="relative z-10 overflow-hidden bg-mono-100 dark:bg-mono-800 py-20 lg:py-[120px]">
     <div class="container mx-auto">
       <div class="-mx-4 flex flex-wrap lg:justify-between">
         <div class="w-full px-4 lg:w-1/2 xl:w-6/12">
-          <div class="mb-12 max-w-[570px] lg:mb-0">
+          <div class="mb-12 max-w-[570px] lg:mb-0 p-2">
             <span class="text-primary mb-4 block text-base font-semibold">
               Contact Us
             </span>
@@ -15,9 +18,7 @@
               GET IN TOUCH WITH US
             </h2>
             <p class="text-body-color mb-9 text-base leading-relaxed">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eius
-              tempor incididunt ut labore et dolore magna aliqua. Ut enim adiqua
-              minim veniam quis nostrud exercitation ullamco
+              Your feedback is valuable to us.
             </p>
             <div class="mb-8 flex w-full max-w-[370px]">
               <div
@@ -37,7 +38,7 @@
               <div class="w-full">
                 <h4 class="text-dark mb-1 text-xl font-bold">Our Location</h4>
                 <p class="text-body-color text-base">
-                  99 S.t Jomblo Park Pekanbaru 28292. Indonesia
+                  30 N Gould St Ste R, Sheridan, WY 82801
                 </p>
               </div>
             </div>
@@ -64,7 +65,7 @@
               </div>
               <div class="w-full">
                 <h4 class="text-dark mb-1 text-xl font-bold">Phone Number</h4>
-                <p class="text-body-color text-base">(+62)81 414 257 9980</p>
+                <p class="text-body-color text-base">(+61)485 842 167</p>
               </div>
             </div>
             <div class="mb-8 flex w-full max-w-[370px]">
@@ -84,13 +85,13 @@
               </div>
               <div class="w-full">
                 <h4 class="text-dark mb-1 text-xl font-bold">Email Address</h4>
-                <p class="text-body-color text-base">info@yourdomain.com</p>
+                <p class="text-body-color text-base">info@takadah.com</p>
               </div>
             </div>
           </div>
         </div>
         <div class="w-full px-4 lg:w-1/2 xl:w-5/12">
-          <div class="relative rounded-lg bg-white p-8 shadow-lg sm:p-12">
+          <div class="relative rounded-lg bg-mono-100 p-8 shadow-lg sm:p-12">
             <form>
               <div class="mb-6">
                 <input
@@ -123,7 +124,7 @@
               <div>
                 <button
                   type="submit"
-                  class="bg-primary border-primary w-full rounded border p-3 text-white transition hover:bg-opacity-90"
+                  class="btn btn-primary border-primary w-full rounded border p-3 text-mono-300 transition hover:bg-opacity-90"
                 >
                   Send Message
                 </button>

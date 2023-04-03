@@ -13,4 +13,9 @@ urlpatterns = [
     path("a/<str:username>/", views.AuthorView.as_view(), name="author"),
     path("generated.css", views.generatedCss, name="stylesheet"),
     path("", views.index, name="index"),
+    path("pricing/", views.FeeView.as_view(), name="pricing"),
+    path("about/", views.AboutView.as_view(), name="about"),
+    path("contact/", views.ContactView.as_view(), name="contact"),
+    path("careers/", views.CareersView.as_view(), name="careers"),
+    # path("history/", views.ShowHistory.as_view(), name="history"),
 ]
