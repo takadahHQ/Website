@@ -160,7 +160,8 @@ def title(image, title):
 
 
 def save(image, title):
-    path = str(settings.MEDIA_ROOT) + "/generated/" + title + ".png"
+    # path = str(settings.MEDIA_ROOT) + "/generated/" + title + ".png"
+    path = title + ".png"
     # image.save(path, "PNG")
     buffer = BytesIO()
     image.save(buffer, format="PNG")
