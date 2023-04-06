@@ -6,7 +6,7 @@ Edit: {{ form.title.value | title }}
 {% endblock title %}
 {% block breadcrumbs %}
 <li><a href="{% url 'stories:author:dashboard' %}">Author</a></li> 
-<li><a href="{% url 'stories:author:show' story.id %}">{{ form.title.value | title }}{{ story.id}}</a></li> 
+<li><a href="{% url 'stories:author:show' story.id %}">{{ form.title.value | title }}</a></li> 
 <li><a>Update</a></li> 
 {% endblock %}
 {% block content %}

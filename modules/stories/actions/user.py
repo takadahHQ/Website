@@ -270,7 +270,7 @@ def get_profile(user):
     if test:
         pass
     else:
-        user = Users.objects.get(username=user)
+        user = Users.objects.get(username__iexact=user)
 
     bookmarks = get_bookmarked_stories(user)
     reviews = get_review_by_user(user)
@@ -280,11 +280,11 @@ def get_profile(user):
 
 
 def get_bookmarked_stories(user):
-    test = isinstance(user, int)
-    if test:
-        pass
-    else:
-        user = Users.objects.get(username=user)
+    # test = isinstance(user, int)
+    # if test:
+    #     pass
+    # else:
+    #     user = Users.objects.get(username=user)
     bookmarks = (
         Bookmark.objects.filter(user=user)
         .filter(status="active")
