@@ -26,7 +26,7 @@ STORIES_MODEL = "stories.Stories"
 LOGIN_URL = "two_factor:login"
 
 # this one is optional
-LOGIN_REDIRECT_URL = "two_factor:profile"
+LOGIN_REDIRECT_URL = "stories:index"
 LOGOUT_REDIRECT_URL = "core:index"
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "tailwind"

@@ -288,3 +288,54 @@ def reply_review(request, review):
         return redirect(
             "stories:read", type=story.story_type, story=story, slug=chapter.slug
         )
+
+
+class userDashboard(LoginRequiredMixin, TemplateView):
+    template_name = "stories/user.html"
+    model = Stories
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context["total_likes"] = self.total_likes()
+        context["published"] = self.story_list()
+        context["stats"] = self.story_stats()
+        context["earnings"] = self.story_earnings()
+        return context
+
+    def total_likes(self):
+        # liked = Stories.objects.filter(authors=self.request.user).annotate(total_likes=Sum(likes))
+        likes = Stories.objects.filter(author=self.request.user).aggregate(
+            total_likes=Count("likes")
+        )["total_likes"]
+        # all_stories = self.request.user.authors.all()
+        # stotal_likes_received = all_stories.aggregate(total_likes=Count('likes'))['total_likes']
+        return likes
+
+    # def story_list(self):
+    #     #    story =  Stories.objects.exclude(status='pending').exclude(status='draft').filter(author__user__in=self.request.user)
+    #     story = get_stories_by_author(user=self.request.user)
+    #     return story
+
+    def story_stats(self):
+        likes = get_author_stories_likes(author=self.request.user)
+        dislikes = get_author_stories_dislikes(author=self.request.user)
+        reviews = get_author_stories_reviews(author=self.request.user)
+        views = get_author_stories_views(author=self.request.user)
+        stats = {
+            "views": {"result": views, "updated": "2 hours ago"},
+            "likes": {"result": likes, "updated": "2 minutes ago"},
+            "dislikes": {"result": dislikes, "updated": "21 days ago"},
+            "reviews": {"result": reviews, "updated": "2 seconds ago"},
+        }
+        return stats
+
+    # def story_earnings(self):
+    #     daily = get_daily_earnings(author=self.request.user)
+    #     weekly = get_weekly_earnings(author=self.request.user)
+    #     monthly = get_monthly_earnings(author=self.request.user)
+    #     stats = {
+    #         "daily": {"amount": daily},
+    #         "weekly": {"amount": weekly},
+    #         "monthly": {"amount": monthly},
+    #     }
+    #     return stats
