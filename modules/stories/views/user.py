@@ -296,10 +296,10 @@ class userDashboard(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
-        context["total_likes"] = self.total_likes()
-        context["published"] = self.story_list()
-        context["stats"] = self.story_stats()
-        context["earnings"] = self.story_earnings()
+        # context["total_likes"] = self.total_likes()
+        # context["published"] = self.story_list()
+        # context["stats"] = self.story_stats()
+        # context["earnings"] = self.story_earnings()
         return context
 
     def total_likes(self):
