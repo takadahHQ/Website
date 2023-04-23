@@ -104,6 +104,7 @@ THIRD_PARTY_APPS = [
     "taggit",
     # "djstripe",
     "storages",
+    "versatileimagefield",
 ]
 
 LOCAL_APPS = [
@@ -610,3 +611,59 @@ IPWARE_META_PRECEDENCE_ORDER = (
     "HTTP_VIA",
     "REMOTE_ADDR",
 )
+
+
+ADS_ZONES = {
+    "header": {
+        "name": "Header",
+        "ad_size": {
+            "xs": "720x150",
+            "sm": "800x90",
+            "md": "800x90",
+            "lg": "800x90",
+            "xl": "800x90",
+        },
+        "google_adsense_slot": None,  # 'xxxxxxxxx',
+        "google_adsense_format": None,  # 'auto'
+    },
+    "content": {
+        "name": "Content",
+        "ad_size": {
+            "xs": "720x150",
+            "sm": "800x90",
+            "md": "800x90",
+            "lg": "800x90",
+            "xl": "800x90",
+        },
+        "google_adsense_slot": None,  # 'xxxxxxxxx',
+        "google_adsense_format": None,  # 'auto'
+    },
+    "sidebar": {
+        "name": "Sidebar",
+        "ad_size": {
+            "xs": "720x150",
+            "sm": "800x90",
+            "md": "800x90",
+            "lg": "800x90",
+            "xl": "800x90",
+        },
+    },
+}
+
+ADS_DEFAULT_AD_SIZE = "720x150"
+
+ADS_DEVICES = (
+    ("xs", "Extra small devices"),
+    ("sm", "Small devices"),
+    ("md", "Medium devices (Tablets)"),
+    ("lg", "Large devices (Desktops)"),
+    ("xl", "Extra large devices (Large Desktops)"),
+)
+
+ADS_VIEWPORTS = {
+    "xs": "block object-contain sm:hidden",
+    "sm": "hidden object-contain sm:block md:hidden",
+    "md": "hidden object-contain md:block lg:hidden",
+    "lg": "hidden object-contain lg:block xl:hidden",
+    "xl": "hidden object-contain xl:block",
+}
