@@ -2,6 +2,7 @@ from django.db import models
 from django.urls import reverse
 from ckeditor.fields import RichTextField
 from ckeditor_uploader.fields import RichTextUploadingField
+from versatileimagefield.fields import VersatileImageField
 
 
 class Page(models.Model):
@@ -36,7 +37,6 @@ class Page(models.Model):
         return self.title
 
     def get_parent_path(self, list=None):
-
         parenturl = []
 
         if list is not None:
@@ -49,7 +49,6 @@ class Page(models.Model):
         return parenturl
 
     def get_absolute_url(self):
-
         path = ""
 
         if self.parent is not None:

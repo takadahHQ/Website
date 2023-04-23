@@ -8,6 +8,7 @@ from modules.core.models.include import (
     CacheInvalidationMixin,
     CachedQueryManager,
 )
+from versatileimagefield.fields import VersatileImageField
 
 
 class Kycs(CacheInvalidationMixin, idModel, statusModel, timeStampModel):
@@ -17,7 +18,7 @@ class Kycs(CacheInvalidationMixin, idModel, statusModel, timeStampModel):
     middle_name = models.CharField(max_length=70, blank=True, null=True)
     country_id = models.PositiveIntegerField()
     document_type = models.CharField(max_length=15)
-    selfie = models.ImageField(blank=True, null=True)
+    selfie = VersatileImageField(blank=True, null=True)
     rejected_reason = RichTextField(blank=True, null=True)
     approved_at = models.DateTimeField(blank=True, null=True)
     rejected_at = models.DateTimeField(blank=True, null=True)

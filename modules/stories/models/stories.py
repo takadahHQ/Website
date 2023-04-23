@@ -8,6 +8,7 @@ from django.core.files import File
 from django.contrib.contenttypes.fields import GenericRelation
 from taggit.managers import TaggableManager
 from modules.stories.converter import h_encode
+from versatileimagefield.fields import VersatileImageField
 
 try:
     mindsdb = __import__("mindsdb")
@@ -43,7 +44,7 @@ class Stories(CacheInvalidationMixin, idModel, timeStampModel):
     slug = models.SlugField(null=True, unique=True)
     abbreviation = models.CharField(max_length=15, unique=True)
     summary = RichTextField("synopsis")
-    cover = models.ImageField(max_length=255, blank=True, null=True)
+    cover = VersatileImageField(max_length=255, blank=True, null=True)
     story_type = models.ForeignKey("Type", on_delete=models.CASCADE)
     following = models.ManyToManyField(
         settings.AUTH_USER_MODEL,
@@ -61,7 +62,10 @@ class Stories(CacheInvalidationMixin, idModel, timeStampModel):
         settings.AUTH_USER_MODEL, through="Author", related_name="authors", blank=True
     )
     translator = models.ManyToManyField(
-        settings.AUTH_USER_MODEL, through="Translator", related_name="translators", blank=True
+        settings.AUTH_USER_MODEL,
+        through="Translator",
+        related_name="translators",
+        blank=True,
     )
     editor = models.ManyToManyField(
         settings.AUTH_USER_MODEL, through="Editor", related_name="editors", blank=True

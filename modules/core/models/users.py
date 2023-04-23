@@ -4,6 +4,7 @@ from django.urls import reverse_lazy
 from ckeditor.fields import RichTextField
 from django.contrib.auth.models import AbstractUser, UserManager
 import secrets
+from versatileimagefield.fields import VersatileImageField
 
 
 def create_token():
@@ -33,7 +34,7 @@ class Users(AbstractUser):
     bio = RichTextField(null=True, blank=True)
     location = models.CharField(max_length=30, blank=True)
     birth_date = models.DateField(null=True, blank=True)
-    profile_photo = models.ImageField(max_length=2048, blank=True, null=True)
+    profile_photo = VersatileImageField(max_length=2048, blank=True, null=True)
     following = models.ManyToManyField(
         "self", blank=True, related_name="followers", symmetrical=False
     )
