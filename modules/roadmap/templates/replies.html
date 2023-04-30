@@ -1,0 +1,12 @@
+<!-- replies.html -->
+{% for reply in replies %}
+  <div class="reply">
+    <p>{{ reply.content }}</p>
+    <div class="meta">
+      <span class="author">{{ reply.user.username }}</span>
+      <span class="date">{{ reply.created_at }}</span>
+    </div>
+  </div>
+{% empty %}
+  <p>No replies yet.</p>
+{% endfor %}

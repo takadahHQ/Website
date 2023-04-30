@@ -10,6 +10,7 @@ from .models import (
     Languages,
     Kycs,
     KycDocuments,
+    ContactUs,
 )
 
 from .forms import SettingsForm
@@ -36,6 +37,7 @@ admin.site.register(Menus)
 admin.site.register(Transactions)
 admin.site.register(Transfers)
 admin.site.register(Wallets)
+admin.site.register(ContactUs)
 
 
 @admin.register(Settings)
