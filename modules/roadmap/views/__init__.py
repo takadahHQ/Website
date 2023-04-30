@@ -1,2 +1,2 @@
-from .author import *
+from .staff import *
 from .user import *

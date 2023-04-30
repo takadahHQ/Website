@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="card mb-4">
+    <div class="card-header">
+      <h5 class="card-title">{{ object.title }}</h5>
+      <div class="card-subtitle text-gray-500">
+        <span>Created by {{ object.creator }} on {{ object.created_at|date:'F j, Y' }}</span>
+        <span class="ml-3">Votes: <span class="vote-count">{{ object.votes }}</span></span>
+      </div>
+    </div>
+    <div class="card-body">
+      <p class="card-text">{{ object.description }}</p>
+    </div>
+  </div>
+
+  <h4 class="text-xl font-bold mb-2">Comments</h4>
+  <ul class="mb-4">
+    {% for comment in comments %}
+      <li class="comment border-t border-gray-300 py-4" id="comment-{{ comment.id }}">
+        <div class="flex justify-between items-center">
+          <span class="text-gray-700">{{ comment.author }}</span>
+          <span class="text-sm text-gray-500">{{ comment.created_at|date:'F j, Y' }}</span>
+        </div>
+        <p class="my-3">{{ comment.body }}</p>
+        <div class="flex justify-between items-center">
+          <div>
+            <button class="btn btn-sm btn-outline-primary" hx-post="{% url 'vote' pk=comment.id %}" hx-trigger="click" hx-target="#comment-{{ comment.id }} .vote-count">{{ comment.votes }} <i class="bi bi-caret-up"></i></button>
+            <button class="btn btn-sm btn-outline-secondary" hx-post="{% url 'vote' pk=comment.id %}" hx-trigger="click" hx-target="#comment-{{ comment.id }} .vote-count">{{ comment.votes }} <i class="bi bi-caret-down"></i></button>
+            <button class="btn btn-sm btn-outline-secondary" hx-get="{% url 'replies' comment_id=comment.id %}" hx-trigger="click" hx-target="#comment-{{ comment.id }} .replies">{{ comment.replies.count }} Replies</button>
+            <button class="btn btn-sm btn-outline-secondary" hx-get="{% url 'reply' %}" hx-trigger="click" hx-target="#comment-{{ comment.id }} .reply-form">Reply</button>
+          </div>
+          <div class="text-sm text-gray-500">
+            #{{ comment.id }}
+          </div>
+        </div>
+        <div class="mt-4 replies"></div>
+        <div class="mt-4 reply-form"></div>
+      </li>
+    {% empty %}
+      <p>No comments yet.</p>
+    {% endfor %}
+  </ul>
+{% endblock %}

@@ -1,7 +1,9 @@
+from django.conf import settings
 from django.db import models
 from django.urls import reverse
 from ckeditor.fields import RichTextField
 from ckeditor_uploader.fields import RichTextUploadingField
+
 
 # Create your models here.
 class Category(models.Model):
@@ -87,7 +89,6 @@ class Post(models.Model):
         return self.title
 
     def get_parent_path(self, list=None):
-
         parenturl = []
 
         if list is not None:
@@ -100,7 +101,6 @@ class Post(models.Model):
         return parenturl
 
     def get_absolute_url(self):
-
         path = ""
 
         if self.parent is not None:
@@ -123,6 +123,39 @@ class Post(models.Model):
         verbose_name_plural = "Blog Posts"
         unique_together = (("slug", "user_id"),)
         app_label = "blog"
+
+
+class Comments(models.Model):
+    RATINGS = (
+        (1, "1 star"),
+        (2, "2 stars"),
+        (3, "3 stars"),
+        (4, "4 stars"),
+        (5, "5 stars"),
+    )
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    name = models.CharField(max_length=255, blank=True, null=True)
+    email = models.EmailField(blank=True, null=True)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="reviews")
+    parent_review = models.ForeignKey(
+        "self",
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        related_name="child_reviews",
+    )
+    content = models.TextField()
+    rating = models.IntegerField(choices=RATINGS)
+    is_guest = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ("-created_at",)
+        app_label = "blog"
+
+    def __str__(self):
+        return f"{self.author} - {self.post.title}"
 
 
 # class PostViews(models.Model):

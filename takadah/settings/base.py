@@ -116,7 +116,7 @@ LOCAL_APPS = [
     "modules.adverts",
     "modules.subscriptions",
     # "modules.helpdesk",
-    # "modules.roadmap",
+    "modules.roadmap",
     # "modules.stats",
     "modules.theme",
 ]

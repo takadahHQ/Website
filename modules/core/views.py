@@ -1,8 +1,10 @@
+from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render
+from django.views import View
 
 from modules.stories.models import History
 from .forms import SignUpForm, ProfileForm
-from .models import Users
+from .models import Users, ContactUs
 from django.urls import reverse_lazy
 from django.views.generic import (
     CreateView,
@@ -113,6 +115,23 @@ class FeeView(TemplateView):
 
 class ContactView(TemplateView):
     template_name = "pages/contact.html"
+
+
+# @method_decorator(csrf_exempt, name="dispatch")
+class ContactUsView(View):
+    def post(self, request):
+        name = request.POST.get("name")
+        phone = request.POST.get("phone")
+        message = request.POST.get("message")
+
+        # create a new ContactUs object with the received data
+        contact = ContactUs.objects.create(name=name, phone=phone, message=message)
+
+        # return a response indicating successful submission
+        return HttpResponse("Thank you for your message!")
+
+    def get(self, request):
+        return render(request, "pages/contact.html")
 
 
 class CareersView(TemplateView):

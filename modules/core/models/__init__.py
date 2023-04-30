@@ -10,4 +10,5 @@ from .transactions import Transactions
 from .transfers import Transfers
 from .users import Users
 from .wallets import Wallets
+from .contact import ContactUs
 from .include import *

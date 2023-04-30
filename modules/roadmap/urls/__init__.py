@@ -1,10 +1,9 @@
 from django.urls import path
 from django.conf.urls import include
-from modules.stories.urls import staff, user, author
+from modules.roadmap.urls import staff, user, author
 
-app_name = "stories"
+app_name = "roadmap"
 urlpatterns = [
-    path("staff/stories/", include((staff.urls, "staff"))),
-    path("read/", include(user.urls)),
-    path("author/", include((author.urls, "author"))),
+    path("staff/roadmap/", include((staff.urls, "staff"))),
+    path("", include(user.urls)),
 ]

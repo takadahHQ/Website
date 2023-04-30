@@ -1,0 +1,58 @@
+<!-- roadmap.html -->
+
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>Road map</h1> 
+  <ul>
+    {% for feature in features %}
+      <feature>
+        <div class="bg-mono-50 dark:bg-mono-800 rounded dark:shadow-mono-100 dark:text-mono-100 shadow-mono-400 p-8">
+        <h2 class="text-md">{{ feature.title }}</h2>
+        <div class="md:flex w-full">
+          <div class="votes w-1/8 flex flex-col mx-auto">
+            <button class="upvote btn" hx_vals='{"feature": "{{ feature.id }}", "type": "upvote"}' hx-get="{% url 'roadmap:vote' feature.id "upvote" %}" hx-trigger="click" hx-target=".score">+</button>
+            <span class="score mx-auto" data-feature="{{ feature.id }}">{{ feature.get_votes }}</span>
+            <button class="downvote btn" data-type="downvote" data-feature="{{ feature.id }}" hx-post="{% url 'roadmap:vote' feature.id "downvote" %}" hx-trigger="click" hx-target=".score">-</button>
+          </div>
+          <div class="w-7/8 p-2">
+            <p class="">{{ feature.description }}</p>
+          </div>
+        </div>
+        <form class="comment-form" data-feature="{{ feature.id }}" hx-post="{% url 'roadmap:reply' %}" hx-trigger="submit" hx-target=".comments[data-feature={{ feature.id }}]">
+          <textarea name="content" class="w-full rounded"></textarea>
+          <button type="submit" class="btn btn-primary bg-primary">Post</button>
+        </form>
+        <div class="comments" data-feature="{{ feature.id }}" hx-get="{% url 'roadmap:comments' feature.id %}" hx-trigger="load">
+          {% for comment in feature.comments.all %}
+            <div class="comment">
+              <p>{{ comment.content }}</p>
+              <div class="meta">
+                <span class="author">{{ comment.user.username }}</span>
+                <span class="date">{{ comment.created_at }}</span>
+              </div>
+              <form class="reply-form"  hx-post="{% url 'roadmap:reply' feature.id %}" hx-trigger="submit" hx-target=".comments[data-feature={{ feature.id }}]">
+                <textarea name="content" class="w-full rounded"></textarea>
+                <button type="submit" class="btn dark:bg-secondary">Reply</button>
+              </form>
+              <div class="replies" data-comment="{{ comment.id }}" hx-get="{% url 'roadmap:replies' comment.id %}" hx-trigger="load">
+                {% for reply in comment.replies.all %}
+                  <div class="reply">
+                    <p>{{ reply.content }}</p>
+                    <div class="meta">
+                      <span class="author">{{ reply.user.username }}</span>
+                      <span class="date">{{ reply.created_at }}</span>
+                    </div>
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
+          {% empty %}
+            <p>No comments yet.</p>
+          {% endfor %}
+        </div>
+        </div>
+      </feature>
+    {% endfor %}
+  </ul>
+{% endblock %}
