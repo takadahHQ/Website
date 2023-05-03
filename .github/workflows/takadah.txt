@@ -1,0 +1,20 @@
+server {
+    listen 80;
+    server_name _;
+
+    # to avoid any error while fetching fevicon
+    location = /favicon.ico { access_log off; log_not_found off; }
+
+    location /static/ {
+        root /home/ubuntu/Website;
+    }
+
+    location / {
+        include proxy_params;
+        # communicate via socket file created by Gunicorn
+        proxy_pass http://unix:/run/takadah.sock;
+    }
+}
+sudo ln -s /etc/nginx/sites-available/takadah /etc/nginx/sites-enabled
+gunicorn --workers 3 --bind 0.0.0.0:8000 takadah.wsgi:application
+gunicorn --workers 3 --bind unix:/run/takadah.sock takadah.wsgi:application
