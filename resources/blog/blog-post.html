@@ -13,12 +13,94 @@
 {% endblock %}
 
 {% block content %}
-{% if blog.updated_at %}
-<span class="flex justify-end text-mono-200">Last Updated: {{ blog.updated_at | timesince}}</span>
-{% endif %}
-<div class="p-8 rounded bg-mono-50 text-mono-400 dark:bg-mono-800 dark:text-mono-200">
-    <article class="post">
-        <p class="indent-4 hover:indent-8">{{ blog.content |safe }}</p>
-    </article>
+<div class="overflow-x-hidden border-b border-gray-100 pt-36 dark:border-gray-800 sm:pt-40 md:pt-48 lg:pt-56">
+    <div class="mx-auto px-4 sm:px-12 xl:max-w-6xl xl:px-0">
+        <div class="z-10">
+            <h1 class="relative text-center text-4xl font-bold text-gray-900 dark:text-white sm:text-5xl md:text-6xl xl:mx-auto xl:w-4/5">{{ blog.title }}</h1>
+            <div class="mt-12 flex flex-wrap items-center justify-center gap-6 sm:mt-16 lg:mt-20">
+                <div class="flex h-12 w-12 rounded-xl border border-primary/20 bg-white shadow-md shadow-primary/10 dark:border-gray-700 dark:bg-gray-800">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="m-auto h-6 w-6 text-primary dark:text-blue-300">
+                        <path class="text-primaryLight" fill-rule="evenodd" d="M7.5 5.25a3 3 0 013-3h3a3 3 0 013 3v.205c.933.085 1.857.197 2.774.334 1.454.218 2.476 1.483 2.476 2.917v3.033c0 1.211-.734 2.352-1.936 2.752A24.726 24.726 0 0112 15.75c-2.73 0-5.357-.442-7.814-1.259-1.202-.4-1.936-1.541-1.936-2.752V8.706c0-1.434 1.022-2.7 2.476-2.917A48.814 48.814 0 017.5 5.455V5.25zm7.5 0v.09a49.488 49.488 0 00-6 0v-.09a1.5 1.5 0 011.5-1.5h3a1.5 1.5 0 011.5 1.5zm-3 8.25a.75.75 0 100-1.5.75.75 0 000 1.5z" clip-rule="evenodd" />
+                        <path d="M3 18.4v-2.796a4.3 4.3 0 00.713.31A26.226 26.226 0 0012 17.25c2.892 0 5.68-.468 8.287-1.335.252-.084.49-.189.713-.311V18.4c0 1.452-1.047 2.728-2.523 2.923-2.12.282-4.282.427-6.477.427a49.19 49.19 0 01-6.477-.427C4.047 21.128 3 19.852 3 18.4z" />
+                    </svg>
+                </div>
+                <div class="flex items-center gap-4">
+                    <img class="h-10 w-10 rounded-full" src="./../images/avatars/avatar-2.webp" alt="user avatar" width="200" height="200" loading="lazy" />
+                    <div>
+                        <h2 class="leading-0 text-lg font-medium text-gray-700 dark:text-white">Randy Doe</h2>
+                        <p class="leading-0 -mt-0.5 text-sm text-gray-500 dark:text-gray-400">{{ blog.updated_at | timesince }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="-mx-4 mt-12 sm:-mx-12 sm:mt-16 md:mx-0 md:mt-20">
+            <img class="md:rounded-3xl" src="./../images/blog/blog-cover2.webp" alt="blog cover" width="1556" height="778" />
+            <div class="flex items-center justify-center gap-4 py-6">
+                <span class="font-medium text-gray-500 dark:text-gray-400">Share on :</span>
+                <a href="#" class="flex h-10 w-10 text-gray-600 hover:text-primary dark:text-gray-400 dark:hover:text-primaryLight">
+                    <svg aria-label="twitter" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="m-auto w-5" viewBox="0 0 16 16">
+                        <path d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z" />
+                    </svg>
+                </a>
+                <a href="#" aria-label="instagram" class="flex h-10 w-10 text-gray-600 hover:text-primary dark:text-gray-400 dark:hover:text-primaryLight">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-5" viewBox="0 0 16 16">
+                        <path
+                            d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.917 3.917 0 0 0-1.417.923A3.927 3.927 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.916 3.916 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.926 3.926 0 0 0-.923-1.417A3.911 3.911 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0h.003zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599.28.28.453.546.598.92.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.47 2.47 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.478 2.478 0 0 1-.92-.598 2.48 2.48 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233 0-2.136.008-2.388.046-3.231.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92.28-.28.546-.453.92-.598.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045v.002zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92zm-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217zm0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334z"
+                        />
+                    </svg>
+                </a>
+                <a href="#" aria-label="facebook" class="flex h-10 w-10 text-gray-600 hover:text-primary dark:text-gray-400 dark:hover:text-primaryLight">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-5" viewBox="0 0 16 16">
+                        <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+        <div class="-mx-4 border-y border-gray-100 dark:border-gray-800 sm:-mx-12 lg:mx-0">
+            <div class="mx-auto max-w-3xl space-y-12 py-12 px-4 text-gray-600 dark:text-gray-400 sm:px-12 xl:px-0">
+                <div class="space-y-4 prose md:prose-lg lg:prose-xl dark:prose-invert">
+                    {{ blog.content |safe }}
+                </div>
+            </div>
+        </div>
+        <div class="border-b border-gray-100 py-20 dark:border-gray-800">
+            <h3 class="text-center text-2xl font-semibold text-gray-800 dark:text-white">Don't miss an article</h3>
+            <form action="" method="post" class="relative z-10 mx-auto mt-8 flex items-center gap-4 dark:text-white sm:w-4/5 md:w-3/5 lg:w-2/5">
+                <div class="relative flex w-full items-center sm:w-4/5">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="absolute left-4 h-5 w-5 text-gray-500 dark:text-gray-300">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"></path>
+                    </svg>
+                    <input name="email" aria-label="your email" type="email" placeholder="Your email to get all updates" autocomplete="username" class="w-full rounded-full border border-gray-200 bg-white py-2.5 pl-12 pr-5 text-sm placeholder-gray-500 shadow shadow-gray-600/10 invalid:border-red-500 dark:border-gray-700 dark:bg-gray-900 dark:placeholder-gray-200 dark:shadow-blue-900/20" />
+                </div>
+                <button type="submit" aria-label="send" name="subscribe" class="relative flex h-11 w-16 items-center justify-center px-6 before:absolute before:inset-0 before:rounded-full before:bg-primary before:transition-transform before:duration-300 active:duration-75 active:before:scale-95 dark:before:bg-primaryLight sm:w-max">
+                    <span class="relative hidden text-base font-semibold leading-3 text-white dark:text-gray-900 sm:block">Subscribe</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="relative mx-auto h-6 w-6 text-white dark:text-gray-900 sm:hidden">
+                        <path d="M3.478 2.405a.75.75 0 00-.926.94l2.432 7.905H13.5a.75.75 0 010 1.5H4.984l-2.432 7.905a.75.75 0 00.926.94 60.519 60.519 0 0018.445-8.986.75.75 0 000-1.218A60.517 60.517 0 003.478 2.405z" />
+                    </svg>
+                </button>
+            </form>
+        </div>
+
+        <div class="mx-auto py-20 lg:w-3/5">
+            <h3 class="text-center text-2xl font-semibold text-gray-800 dark:text-white">Next article</h3>
+            <div class="mt-8">
+                <a href="./blog_single.html">
+                    <div class="rounded-3xl border border-gray-100 bg-white p-6 shadow-2xl shadow-gray-600/10 dark:border-gray-700 dark:bg-gray-800 dark:shadow-none sm:grid sm:grid-cols-3 sm:gap-8 sm:p-8">
+                        <img class="h-56 w-full rounded-lg object-cover object-top transition duration-500 group-hover:scale-105 sm:col-span-1 sm:h-full" src="./../images/blog/blog-cover2.webp" alt="blog cover" width="1556" height="778" />
+                        <div class="sm:col-span-2 sm:p-2 sm:pl-0">
+                            <span class="mt-4 mb-2 inline-block font-medium text-gray-400 dark:text-gray-500 sm:mt-0">Jul 27 2022</span>
+                            <h3 class="text-2xl font-semibold text-gray-800 dark:text-white">Provident de illo eveniet commodi fuga fugiat laboriosam expedita.</h3>
+                            <p class="my-6 text-gray-600 dark:text-gray-300">Laudantium in, voluptates ex placeat quo harum aliquam totam, doloribus eum impedit atque...</p>
+
+                            <div class="flex justify-start gap-4">
+                                <span class="rounded-full border border-gray-100 px-3 py-1 text-sm font-medium text-primary transition duration-300 hover:border-transparent hover:bg-primary hover:text-white dark:border-gray-700 dark:text-gray-300"> Tailwindcss </span>
+                                <span href="#" class="rounded-full border border-gray-100 px-3 py-1 text-sm font-medium text-primary transition duration-300 hover:border-transparent hover:bg-primary hover:text-white dark:border-gray-700 dark:text-gray-300"> VueJS </span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock content %}

@@ -14,9 +14,8 @@
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta http-equiv="X-UA-Compatible" content="ie=edge">
-        {% tailwind_preload_css %}
-        {% tailwind_css %}
         <link rel="stylesheet" href="{% static 'css/dist/font.css' %}">
+        
         <link rel="stylesheet" href="{% url 'core:stylesheet' %}" defer>
         <!-- Our project just needs Font Awesome Free's Solid + Brand files -->
         <link href="{% static 'fontawesomefree/css/all.min.css' %}" rel="stylesheet" type="text/css">
@@ -39,11 +38,13 @@
 <meta property="og:image" content="{% static 'images/apple-touch-icon.png' %}"/>
 <meta name="msapplication-TileColor" content="#da532c">
 <meta name="theme-color" content="#ffffff">
-    <!-- Matomo Image Tracker-->
-<img referrerpolicy="no-referrer-when-downgrade" src="https://mamoto.takadah.com/matomo.php?idsite=1&amp;rec=1" style="border:0" alt="" />
+{% tailwind_preload_css %}
+{% tailwind_css %}
+    {% comment %} <!-- Matomo Image Tracker-->
+<img referrerpolicy="no-referrer-when-downgrade" src="https://mamoto.takadah.com/matomo.php?idsite=1&amp;rec=1" style="border:0" alt="" /> {% endcomment %}
 <!-- End Matomo -->
     {% analytical_head_bottom %} 
-    <script src="https://cdn.tailwindcss.com"></script>
+    {% comment %} <script src="https://cdn.tailwindcss.com"></script>
     <script>
       tailwind.config = {
         theme: {
@@ -54,7 +55,7 @@
           }
         }
       }
-    </script>
+    </script> {% endcomment %}
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@2.x.x/dist/cdn.min.js"></script>
     <script src="https://unpkg.com/hyperscript.org@0.9.8"></script>
 	</head>
@@ -82,11 +83,13 @@
   </style>
   {% block body %}
 	<body class="min-h-screen bg-mono-200 dark:bg-mono-900 text-mono-900 dark:text-mono-300 font-serif leading-normal tracking-normal" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+
         {% analytical_body_top %}
         <div class="w-full">
             {% include 'component/header/topbar.html' %}
             {% include 'component/header/navbar.html' %}
         </div>
+        {% include 'component/header/header.html' %}
 {% if request.user|can_hijack:another_user %}
 <form action="{% url 'hijack:acquire' %}" method="POST">
   {% csrf_token %}
