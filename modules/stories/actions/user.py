@@ -353,6 +353,37 @@ def get_weekly_stories(count):
     return stories
 
 
+# get list of stories type
+def get_story_types():
+    story_types = Type.objects.filter(status="active")
+    return story_types
+
+
+# get stories seperated by the type of story
+def get_stories_by_type(story_type, count):
+    exclude = ["draft", "prerelease"]
+    stories = (
+        Stories.objects.filter(story_type__slug=story_type)
+        .order_by("created_at")
+        .exclude(status__in=exclude)
+        .prefetch_related(
+            "story_type",
+            "language",
+            "rating",
+            "flags",
+            "following",
+            "likes",
+            "dislikes",
+            "author",
+            "editor",
+            "genre",
+            "characters",
+            "tags",
+        )[:count]
+    )
+    return stories
+
+
 def get_fresh_stories(count):
     exclude = ["draft", "prerelease"]
     stories = (

@@ -7,6 +7,7 @@ from modules.stories.actions.user import (
     get_user_histories,
     get_user_profile,
     get_weekly_stories,
+    get_stories_by_type,
     get_profile,
     get_review_by_user,
 )
@@ -22,6 +23,12 @@ def homepage(count):
         "completed": get_completed_stories(count=count),
         "featured": get_featured_stories(count=count),
         "updated": get_updated_stories(count=count),
+        "peotry": get_stories_by_type("poetry", count=count),
+        "fanfiction": get_stories_by_type("fan-fiction", count=count),
+        "nonfiction": get_stories_by_type("non-fiction", count=count),
+        "fiction": get_stories_by_type("fiction", count=count),
+        "plays": get_stories_by_type("plays", count=count),
+        "webnovel": get_stories_by_type("web-novel", count=count),
     }
     return stories
 
