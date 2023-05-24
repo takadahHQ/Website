@@ -4,44 +4,34 @@
 Blogs
 {% endblock title %}
 
-{% block page-title %}
-Blogs
-{% endblock page-title %}
 {% block breadcrumbs %}
-<li><a href="{% url 'core:index' %}">Home</a></li>
 <li><a>Blog</a></li> 
 {% endblock %}
 {% block content %}
-<div class="p-8 rounded bg-gray-50 shadow-blue-400">
-    <main class="container">
-        <div class="row">
-            <div class="col">
-                {% for post in blogs %}
-                    <article class="p-4 md:p-8">
-                        <time class="date">
-                            {{ post.published_date }}
-                        </time>
-                        <h2 class="text-2xl font-bold"><a href="{% url 'blog:post' category=post.category.slug slug=post.slug %}">{{ post.title }}</a></h2>
-                        <p class="indent-4 hover:indent-8">{{ post.content | safe |truncatewords_html:50 }}</p>
-                    </article>
-                {% endfor %}
+<section class="mt-32">
+    <div class="mx-auto px-4 sm:px-12 xl:max-w-6xl xl:px-0">
+        <div class="grid gap-y-20 md:grid-cols-2 md:gap-x-6 lg:gap-x-12">
+        {% for post in blogs %}
+            <div>
+                <a href="{{ post.get_absolute_url }}" class="group block">
+                    <img class="rounded-3xl shadow-2xl shadow-transparent transition-shadow duration-300 group-hover:shadow-mono-600/20" src="{{ post.get_featured_image }}" alt="{{ post.slug }}" loading="lazy" width="1556" height="778" />
+                    <div class="mt-8">
+                        <h2 class="text-2xl font-bold text-mono-800 dark:text-mono-100">{{ post.title }}.</h2>
+                        <p class="mt-4 text-mono-600 dark:text-mono-400">{{ post.content | safe |truncatewords_html:25 }}</p>
+
+                        <div class="mt-8 flex items-center gap-4">
+                            <img class="h-10 w-10 rounded-full" src="{{ post.user.get_profile_image }}" alt="user avatar" width="200" height="200" loading="lazy" />
+                            <div>
+                                <h3 class="leading-0 text-lg font-medium text-mono-700 dark:text-mono-100">{{ post.user.name }}</h3>
+                                <p class="leading-0 -mt-0.5 text-sm text-mono-500 dark:text-mono-400">Staff</p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
             </div>
-        </div>
-    </main>
-    <div class="pagination flex justify-center">
-        <span class="step-links">
-            {% if page_obj.has_previous %}
-                <a href="?page={{ page_obj.previous_page_number }}">previous</a>
-            {% endif %}
-
-            <span class="current">
-                Page {{ page_obj.number }} of {{ paginator.num_pages }}.
-            </span>
-
-            {% if page_obj.has_next %}
-                <a href="?page={{ page_obj.next_page_number }}">next</a>
-            {% endif %}
-        </span>
+        {% endfor %}
     </div>
-</div>
+    </div>
+    </section>
+{% include 'component/footer/pagination.html' %}
 {% endblock content %}

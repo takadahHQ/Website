@@ -3,6 +3,7 @@ from django.db import models
 from django.urls import reverse
 from ckeditor.fields import RichTextField
 from ckeditor_uploader.fields import RichTextUploadingField
+from versatileimagefield.fields import VersatileImageField
 
 
 # Create your models here.
@@ -25,7 +26,7 @@ class Category(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse("category", kwargs={"category": self.name})
+        return reverse("blog:category", kwargs={"category": self.slug})
 
 
 class Tags(models.Model):
@@ -36,6 +37,9 @@ class Tags(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse("tag", kwargs={"tag": self.name})
 
     class Meta:
         verbose_name_plural = "Blog Tags"
@@ -74,9 +78,14 @@ class Post(models.Model):
     seo_description = RichTextField(max_length=255, blank=True, null=True)
     seo_keywords = models.TextField(blank=True, null=True)
     status = models.CharField(max_length=100, choices=status_choices, default="Draft")
-    featured_image = models.CharField(max_length=255, blank=True, null=True)
+    featured_image = VersatileImageField(max_length=255, blank=True, null=True)
     featured_image_caption = models.CharField(max_length=255, blank=True, null=True)
-    user_id = models.CharField(max_length=36)
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        null=True,
+        verbose_name="Created By",
+        on_delete=models.DO_NOTHING,
+    )
     meta = models.JSONField(blank=True, null=True)
     tags = models.ManyToManyField(Tags, blank=True, related_name="posts_tags")
     topics = models.ManyToManyField(Topics, related_name="posts_topics", blank=True)
@@ -100,24 +109,57 @@ class Post(models.Model):
 
         return parenturl
 
-    def get_absolute_url(self):
-        path = ""
-
-        if self.parent is not None:
-            parentlisting = self.get_parent_path()
-            for parent in parentlisting:
-                # path = path + parent + '/'
-                if self.parent == parentlisting[-1]:
-                    path = path + parent + "/"
-                else:
-                    path = path + parent
-            return reverse("page", kwargs={"path": path, "slug": self.slug})
+    # display the featured image or a default image
+    def get_featured_image(self):
+        if self.featured_image:
+            return self.featured_image.url
         else:
-            return reverse("page", kwargs={"slug": self.slug})
+            return settings.MEDIA_URL + "author-suzy-hazelwood.jpg"
 
-        path = path
+    def get_absolute_url(self):
+        # path = ""
 
-        return reverse("page", kwargs={"path": path, "slug": self.slug})
+        # if self.parent is not None:
+        #     parentlisting = self.get_parent_path()
+        #     for parent in parentlisting:
+        #         # path = path + parent + '/'
+        #         if self.parent == parentlisting[-1]:
+        #             path = path + parent + "/"
+        #         else:
+        #             path = path + parent
+        #     return reverse("page", kwargs={"path": path, "slug": self.slug})
+        # else:
+        #     return reverse("page", kwargs={"slug": self.slug})
+
+        # path = path
+
+        # return reverse("page", kwargs={"path": path, "slug": self.slug})
+        return reverse(
+            "blog:post", kwargs={"category": self.category.slug, "slug": self.slug}
+        )
+
+    def get_previous_post(self):
+        return (
+            Post.objects.filter(published_at__lt=self.published_at)
+            .exclude(id=self.id)
+            .order_by("-published_at")
+            .first()
+        )
+
+    def get_next_post(self):
+        return (
+            Post.objects.filter(published_at__gt=self.published_at)
+            .exclude(id=self.id)
+            .order_by("published_at")
+            .first()
+        )
+
+    # get the recommended blog post
+    def get_recommended_post(self):
+        if self.get_next_post() is not None:
+            return self.get_next_post()
+        else:
+            return self.get_previous_post()
 
     class Meta:
         verbose_name_plural = "Blog Posts"
@@ -156,6 +198,12 @@ class Comments(models.Model):
 
     def __str__(self):
         return f"{self.author} - {self.post.title}"
+
+    def get_absolute_url(self):
+        return reverse(
+            "blog:post",
+            kwargs={"category": self.post.category.slug, "slug": self.post.slug},
+        )
 
 
 # class PostViews(models.Model):

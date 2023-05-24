@@ -56,8 +56,47 @@ i.forEach(t => {
         })
     })
 });
+
 const f = document.querySelector("#hamburger"),
     g = document.querySelector("#navbar");
 f.addEventListener("click", () => {
     g.classList.toggle("navbar-active")
 });
+(function() {
+  const r = document.createElement("link").relList;
+  if (r && r.supports && r.supports("modulepreload")) return;
+  for (const e of document.querySelectorAll('link[rel="modulepreload"]')) c(e);
+  new MutationObserver(e => {
+      for (const l of e)
+          if (l.type === "childList")
+              for (const n of l.addedNodes) n.tagName === "LINK" && n.rel === "modulepreload" && c(n)
+  }).observe(document, {
+      childList: !0,
+      subtree: !0
+  });
+
+  function o(e) {
+      const l = {};
+      return e.integrity && (l.integrity = e.integrity), e.referrerpolicy && (l.referrerPolicy = e.referrerpolicy), e.crossorigin === "use-credentials" ? l.credentials = "include" : e.crossorigin === "anonymous" ? l.credentials = "omit" : l.credentials = "same-origin", l
+  }
+
+  function c(e) {
+      if (e.ep) return;
+      e.ep = !0;
+      const l = o(e);
+      fetch(e.href, l)
+  }
+})();
+let s = document.querySelectorAll(".faq");
+for (let t = 0; t < s.length; t++) {
+  let r = s[t].querySelector(".faq-answer"),
+      o = s[t].querySelector(".arrow-down");
+  s[t].addEventListener("click", () => {
+      for (let c = 0; c < s.length; c++) {
+          let e = s[c].querySelector(".faq-answer"),
+              l = s[c].querySelector(".arrow-down");
+          s[t] != s[c] && (e.style.maxHeight = "0px", l.classList.replace("rotate-180", "rotate-0"))
+      }
+      o.classList.contains("rotate-180") ? (r.style.maxHeight = 0 + "px", o.classList.replace("rotate-180", "rotate-0")) : (r.style.maxHeight = r.scrollHeight + "px", o.classList.replace("rotate-0", "rotate-180"))
+  })
+}
