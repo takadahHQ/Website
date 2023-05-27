@@ -384,6 +384,38 @@ def get_stories_by_type(story_type, count):
     return stories
 
 
+# get unpublished/upcoming stories
+def get_unpublished_stories(count):
+    exclude = [
+        "abandoned",
+        "complete",
+        "hiatus",
+        "published",
+        "oneshot",
+        "ongoing",
+        "draft",
+    ]
+    stories = (
+        Stories.objects.order_by("created_at")
+        .exclude(status__in=exclude)
+        .prefetch_related(
+            "story_type",
+            "language",
+            "rating",
+            "flags",
+            "following",
+            "likes",
+            "dislikes",
+            "author",
+            "editor",
+            "genre",
+            "characters",
+            "tags",
+        )[:count]
+    )
+    return stories
+
+
 def get_fresh_stories(count):
     exclude = ["draft", "prerelease"]
     stories = (

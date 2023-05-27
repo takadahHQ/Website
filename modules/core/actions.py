@@ -8,6 +8,7 @@ from modules.stories.actions.user import (
     get_user_profile,
     get_weekly_stories,
     get_stories_by_type,
+    get_unpublished_stories,
     get_profile,
     get_review_by_user,
 )
@@ -29,6 +30,7 @@ def homepage(count):
         "fiction": get_stories_by_type("fiction", count=count),
         "plays": get_stories_by_type("plays", count=count),
         "webnovel": get_stories_by_type("web-novel", count=count),
+        "prerelease": get_unpublished_stories(count=count),
     }
     return stories
 
