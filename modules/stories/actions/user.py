@@ -360,7 +360,7 @@ def get_story_types():
 
 
 # get stories seperated by the type of story
-def get_stories_by_type(story_type, count):
+def get_stories_by_type(story_type, count=12):
     exclude = ["draft", "prerelease"]
     stories = (
         Stories.objects.filter(story_type__slug=story_type)
@@ -385,7 +385,7 @@ def get_stories_by_type(story_type, count):
 
 
 # get unpublished/upcoming stories
-def get_unpublished_stories(count):
+def get_unpublished_stories(count=12):
     exclude = [
         "abandoned",
         "complete",
@@ -416,7 +416,7 @@ def get_unpublished_stories(count):
     return stories
 
 
-def get_fresh_stories(count):
+def get_fresh_stories(count=12):
     exclude = ["draft", "prerelease"]
     stories = (
         Stories.objects.order_by("created_at")
@@ -439,7 +439,7 @@ def get_fresh_stories(count):
     return stories
 
 
-def get_completed_stories(count):
+def get_completed_stories(count=12):
     stories = Stories.objects.filter(status="completed").prefetch_related(
         "story_type",
         "language",
@@ -457,7 +457,7 @@ def get_completed_stories(count):
     return stories
 
 
-def get_updated_stories(count):
+def get_updated_stories(count=12):
     stories = (
         Stories.objects.order_by("updated_at")
         .filter(status="active")
