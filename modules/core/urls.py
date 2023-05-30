@@ -18,4 +18,5 @@ urlpatterns = [
     path("contact/", views.ContactView.as_view(), name="contact"),
     path("careers/", views.CareersView.as_view(), name="careers"),
     # path("history/", views.ShowHistory.as_view(), name="history"),
+    path("populate", views.populate_model, name="populate"),
 ]

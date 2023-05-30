@@ -8,72 +8,26 @@ Takadah
 
 {% block content %}
 <div class="">
-{% if weekly %}
-<!-- Weekly Featured -->
+    {% if weekly %}
+    <!-- Weekly Featured -->
     <section id="weekly" class="block min-w-full max-w-full">
         <div class="text-2xl border-b-2 border-mono-600">Weekly Featured</div><br>
         <div class="flex flex-wrap -mx-1 lg:-mx-4">
             {% for story in weekly %}
-                <!-- Column -->
-                <div class="my-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/4">
-            
-                    <!-- Article -->
-                    <article class="overflow-hidden hover:monoscale transition duration-300 ease-in-out">
-            
-                        <a href="{{ story.get_absolute_url}}">
-                            <img alt="{{ story.title | lower }}" class="block h-auto w-full hover:scale-80 hover:saturate-200 transition duration-300 ease-in-out rounded-lg shadow-lg " src="{{ story.get_cover }}">
-                        </a>
-            
-                        <header class="flex items-start justify-start leading-tight p-2 md:p-4">
-                            <p class="text-sm font-bold">
-                                <a class="no-underline hover:underline text-black" href="{{ story.get_absolute_url}}">
-                                    {{ story.title | title }}
-                                </a>
-                            </p>
-                        </header>
-                        <footer class="leading-none md:-mt-7 p-1 md:p-4">
-                            <a class="no-underline hover:text-mono-400 text-mono-400" href="{{ story.genre.first.get_absolute_url }}">
-                                <p class="text-sm text-mono-300">
-                                {{ story.genre.first.name }}
-                                </p>
-                            </a>
-                        </footer>
-            
-                    </article>
-                    <!-- END Article -->
-            
-                </div>
-                <!-- END Column -->
-            {% empty %}
-            <h3 class="flex justify-center">No Novel read yet, do you need help?</h3>
-            {% endfor %}
-            </div>
-    </section>    
-<!-- end Weekly Featured -->
-{% endif %}
-{% if potential %}
-<!-- Potential -->
-<section id="potential">
-    <div class="text-2xl border-b-2 border-mono-600">Pontential Stars</div><br>
-</section>    
-<!-- end Potential -->
-{% endif %}
-{% if fresh %}
-<!-- new -->
-{% comment %} <section id="fresh">
-    <div class="text-2xl border-b-2 border-mono-600">New Stories</div><br>
-    <div class="flex flex-wrap -mx-1 lg:-mx-4">
-        {% for story in fresh %}
             <!-- Column -->
-            <div class="my-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/4 space-x-2 h-20">
-        
+            <div class="my-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/4">
+
                 <!-- Article -->
-                <article class="absolute h-20 w-50 hover:scale-80 transition duration-300 ease-in-out">
-        
+                <article class="overflow-hidden hover:monoscale transition duration-300 ease-in-out">
+
                     <a href="{{ story.get_absolute_url}}">
-                        <img alt="{{ story.title | lower }}" class="hover:scale-105 hover:saturate-200 hover:rounded-lg transition duration-300 ease-in-out rounded-lg shadow-lg object-cover" src="{{ story.get_cover }}">
+                        <img alt="{{ story.title | lower }}"
+                            class="block h-auto w-full {% if forloop.counter == 1 %}
+                                object-contain items-center
+                            {% endif %} hover:scale-80 hover:saturate-200 transition duration-300 ease-in-out rounded-lg shadow-lg "
+                            src="{% if forloop.first %}{{ story.get_first_cover }} {% else %} {{ story.get_cover }} {% endif %}">
                     </a>
-        
+
                     <header class="flex items-start justify-start leading-tight p-2 md:p-4">
                         <p class="text-sm font-bold">
                             <a class="no-underline hover:underline text-black" href="{{ story.get_absolute_url}}">
@@ -82,41 +36,50 @@ Takadah
                         </p>
                     </header>
                     <footer class="leading-none md:-mt-7 p-1 md:p-4">
-                        <a class="no-underline hover:text-mono-400 text-mono-400" href="{{ story.genre.first.get_absolute_url }}">
-                            <p class="text-sm text-mono-500">
-                            {{ story.genre.first.name }}
+                        <a class="no-underline hover:text-mono-400 text-mono-400"
+                            href="{{ story.genre.first.get_absolute_url }}">
+                            <p class="text-sm text-mono-300">
+                                {{ story.genre.first.name }}
                             </p>
                         </a>
                     </footer>
-        
+
                 </article>
                 <!-- END Article -->
-        
+
             </div>
             <!-- END Column -->
-        {% empty %}
-        <h3 class="flex justify-center">No Novel read yet, do you need help?</h3>
-        {% endfor %}
+            {% empty %}
+            <h3 class="flex justify-center">No Novel read yet, do you need help?</h3>
+            {% endfor %}
         </div>
-</section>     {% endcomment %}
-<!-- end new -->
-<section class="bg-mono-100 dark:bg-mono-700 text-mono-800 dark:text-mono-100 py-10 px-12" id="fresh">
-    <!-- Card Grid -->
-    <h3>Fresh Stories</h3>
-    <div
-        class="grid grid-flow-row gap-2 text-neutral-600 grid-cols-1 md:grid-cols-3 lg:grid-cols-6 m-2">
-        {% for story in fresh %}
+    </section>
+    <!-- end Weekly Featured -->
+    {% endif %}
+
+    {% if potential %}
+    <!-- Potential -->
+    <section id="potential">
+        <div class="text-2xl border-b-2 border-mono-600">Pontential Stars</div><br>
+    </section>
+    <!-- end Potential -->
+    {% endif %}
+    {% if fresh %}
+     <div class="">
+    <section class="bg-mono-100 dark:bg-mono-700 text-mono-800 dark:text-mono-100 py-10 px-12" id="fresh">
+        <!-- Card Grid -->
+        <h3>Fresh Stories</h3>
+        <div class="grid grid-flow-row gap-2 text-neutral-600 grid-cols-1 md:grid-cols-3 lg:grid-cols-6 m-2">
+            {% for story in fresh %}
             <!-- Card Item -->
-            <div
-                class="h-80 m-4 {% if forloop.first %}col-span-auto md:col-span-2 {% endif %}
+            <div class="h-80 m-4 {% if forloop.first %}col-span-auto md:col-span-2 {% endif %}
                 {% if forloop.last %}col-end-auto {%  endif %}  my-8">
                 <!-- Clickable Area -->
                 <a href="{{ story.get_absolute_url}}" class="cursor-pointer">
                     <figure class="h-64">
                         <!-- Image -->
-                        <img alt="{{ story.title | lower }}"
-                        src="{{ story.get_cover }}"
-                            class="rounded-t h-64 w-full hover:scale-95 object-cover hover:saturate-200 hover:rounded-lg transition duration-300 ease-in-out rounded-lg shadow-lg" />
+                        <img alt="{{ story.title | lower }}" src="{% if forloop.first %}{{ story.get_first_cover }} {% else %} {{ story.get_cover }} {% endif %}"
+                            class="rounded-t h-64 w-full hover:scale-95 {% if forloop.first %}object-contain object-fill items-center{% else %}object-fill {% endif %}  hover:saturate-200 hover:rounded-lg transition duration-300 ease-in-out rounded-lg shadow-lg" />
 
                         <figcaption class="p-2 md:p-4 object-contain">
                             <!-- Title -->
@@ -126,56 +89,76 @@ Takadah
                             </p>
 
                             <!-- Genre -->
-                            <small
-                                class="mt-4 leading-5 text-mono-500 dark:text-mono-400">
+                            <small class="mt-4 leading-5 text-mono-500 dark:text-mono-400">
                                 {{ story.genre.first.name }}
                             </small>
                         </figcaption>
                     </figure>
                 </a>
             </div>
-            {% comment %} <div class="bg-grey-50 shadow rounded m-2">
-            <figure class="md:flex bg-slate-100 rounded-xl p-8 md:p-0 dark:bg-slate-800">
-                <img class="w-24 h-48 md:w-48 md:h-auto md:rounded-none mx-auto" src="{{ story.get_cover }}" alt="" width="384" height="512">
-                <div class="pt-6 md:p-8 text-center md:text-left space-y-4">
-                  <blockquote>
-                    <p class="text-lg font-medium">
-                        {{ story.title | title }}
-                    </p>
-                  </blockquote>
-                  <figcaption class="font-medium">
-                    <div class="text-sky-500 dark:text-sky-400">
-                        {{ story.genre.first.name }}
-                    </div>
-                    <div class="text-slate-700 dark:text-slate-500">
-                      Staff Engineer, Algolia
-                    </div>
-                  </figcaption>
-                </div>
-              </figure>
-            </div> {% endcomment %}
             {% empty %}
             <h3 class="flex justify-center">No Novel read yet, do you need help?</h3>
             {% endfor %}
-    </div>
-</section>
-{% endif %}
-{% if completed %}
-<!-- Completed -->
-<section id="completed" class="block min-w-full max-w-full">
-    <div class="text-2xl border-b-2 border-mono-600">Completed</div><br>
-    <div class="flex flex-wrap -mx-1 lg:mx-4">
-        {% for story in completed %}
+        </div>
+    </section>
+</div>
+    {% endif %}
+    {% if prerelease %}
+
+    <section class="bg-mono-100 dark:bg-mono-700 text-mono-800 dark:text-mono-100 py-10 px-12" id="upcoming">
+        <!-- Card Grid -->
+        <h3>Upcoming Stories</h3>
+        <div class="grid grid-flow-row gap-2 text-neutral-600 grid-cols-1 md:grid-cols-3 lg:grid-cols-6 m-2">
+            {% for story in prerelease %}
+            <!-- Card Item -->
+            <div class="h-80 m-4 {% if forloop.first %}col-span-auto md:col-span-2 {% endif %}
+                {% if forloop.last %}col-end-auto {%  endif %}  my-8">
+                <!-- Clickable Area -->
+                <a href="{{ story.get_absolute_url}}" class="cursor-pointer">
+                    <figure class="h-64">
+                        <!-- Image -->
+                        <img alt="{{ story.title | lower }}" src="{% if forloop.first %}{{ story.get_first_cover }} {% else %} {{ story.get_cover }} {% endif %}"
+                            class="rounded-t h-64 w-full hover:scale-95 {% if forloop.first %}object-contain object-fill items-center{% else %}object-fill {% endif %}  hover:saturate-200 hover:rounded-lg transition duration-300 ease-in-out rounded-lg shadow-lg" />
+
+                        <figcaption class="p-2 md:p-4 object-contain">
+                            <!-- Title -->
+                            <p
+                                class="text-xs md:text-md lg:text-lg font-bold leading-relaxed text-mono-800 dark:text-mono-200">
+                                {{ story.title | title }}
+                            </p>
+
+                            <!-- Genre -->
+                            <small class="mt-4 leading-5 text-mono-500 dark:text-mono-400">
+                                {{ story.genre.first.name }}
+                            </small>
+                        </figcaption>
+                    </figure>
+                </a>
+            </div>
+            {% empty %}
+            <h3 class="flex justify-center">No Novel read yet, do you need help?</h3>
+            {% endfor %}
+        </div>
+    </section>
+    {% endif %}
+    {% if completed %}
+    <!-- Completed -->
+    <section id="completed" class="block min-w-full max-w-full">
+        <div class="text-2xl border-b-2 border-mono-600">Completed</div><br>
+        <div class="flex flex-wrap -mx-1 lg:mx-4">
+            {% for story in completed %}
             <!-- Column -->
             <div class="my-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/4">
-        
+
                 <!-- Article -->
                 <article class="overflow-hidden hover:scale-110 transition duration-300 ease-in-out">
-        
+
                     <a href="{{ story.get_absolute_url}}">
-                        <img alt="{{ story.title | lower }}" class="block h-48 w-full hover:scale-110 transition duration-300 ease-in-out rounded-lg shadow-lg " src="{{ story.get_cover }}">
+                        <img alt="{{ story.title | lower }}"
+                            class="block h-48 w-full hover:scale-110 transition duration-300 ease-in-out rounded-lg shadow-lg "
+                            src="{% if forloop.first %}{{ story.get_first_cover }} {% else %} {{ story.get_cover }} {% endif %}">
                     </a>
-        
+
                     <header class="flex items-start justify-start leading-tight p-2 md:p-4">
                         <p class="text-sm font-bold">
                             <a class="no-underline hover:underline text-black" href="{{ story.get_absolute_url}}">
@@ -184,55 +167,295 @@ Takadah
                         </p>
                     </header>
                     <footer class="leading-none md:-mt-7 p-1 md:p-4">
-                        <a class="no-underline hover:text-mono-400 text-mono-400" href="{{ story.genre.first.get_absolute_url }}">
+                        <a class="no-underline hover:text-mono-400 text-mono-400"
+                            href="{{ story.genre.first.get_absolute_url }}">
                             <p class="text-sm text-mono-300">
-                            {{ story.genre.first.name }}
+                                {{ story.genre.first.name }}
                             </p>
                         </a>
                     </footer>
-        
+
                 </article>
                 <!-- END Article -->
-        
+
             </div>
             <!-- END Column -->
-        {% empty %}
-        <h3 class="flex justify-center">No Novel read yet, do you need help?</h3>
-        {% endfor %}
+            {% empty %}
+            <h3 class="flex justify-center">No Novel read yet, do you need help?</h3>
+            {% endfor %}
         </div>
-</section>    
-<!-- end Completed -->
-{% endif %}
-{% if tags %}
-<!-- Tags -->
-<section id="potential">
-    <div class="text-2xl border-b-2 border-mono-600">Popular Tags</div><br>
-</section>    
-<!-- end Tags -->
-{% endif %}
-{% comment %} <section>
-    <a href="{{ story.get_absolute_url}}">
-        <div class="relative h-0 pb-[146%]">
-            <div>
-                <span class="MuiSkeleton-root MuiSkeleton-rectangular MuiSkeleton-wave MuiSkeleton-withChildren MuiSkeleton-fitContent MuiSkeleton-heightAuto absolute top-0 left-0 w-full h-full max-w-none rounded-[6px] bg-[#e9e9e9] dark:bg-[#2a2a2a] ww-4bfvrx">
-                    <div class="absolute top-0 left-0 w-full h-full bg-skins-bookcover rounded-r-5">
-                    </div>
-                    <div class="absolute top-0 left-0 w-full h-full bg-[url('{{ story.get_cover }}')] bg-[length:100%_100%]">
-                    </div>
+    </section>
+    <!-- end Completed -->
+    {% endif %}
+    {% if tags %}
+    <!-- Tags -->
+    <section id="potential">
+        <div class="text-2xl border-b-2 border-mono-600">Popular Tags</div><br>
+    </section>
+    <!-- end Tags -->
+    {% endif %}
+    {% comment %} <section>
+        <a href="{{ story.get_absolute_url}}">
+            <div class="relative h-0 pb-[146%]">
+                <div>
+                    <span
+                        class="MuiSkeleton-root MuiSkeleton-rectangular MuiSkeleton-wave MuiSkeleton-withChildren MuiSkeleton-fitContent MuiSkeleton-heightAuto absolute top-0 left-0 w-full h-full max-w-none rounded-[6px] bg-[#e9e9e9] dark:bg-[#2a2a2a] ww-4bfvrx">
+                        <div class="absolute top-0 left-0 w-full h-full bg-skins-bookcover rounded-r-5">
+                        </div>
+                        <div
+                            class="absolute top-0 left-0 w-full h-full bg-[url('{{ story.get_cover }}')] bg-[length:100%_100%]">
+                        </div>
+                    </span>
+                </div>
+            </div>
+        </a>
+        <div class="px-4 pt-4 text-mono-800 dark:text-mono-300">
+            <div class="flex flex-col">
+                <span
+                    class="MuiSkeleton-root MuiSkeleton-rectangular MuiSkeleton-wave MuiSkeleton-withChildren MuiSkeleton-fitContent MuiSkeleton-heightAuto max-w-[100%] bg-transparent bg-[#e9e9e9] bg-gradient-to-r from-[#f1f1f1] to-[#e9e9e9] dark:bg-[#2a2a2a] dark:from-[#333] dark:to-[#2a2a2a] sm:mx-0 mt-4 h-12 last:w-96 md:h-14 ww-4bfvrx">
+                    <a class="line-clamp-2 font-set-sb13 md:font-set-sb15" href="{{ story.get_absolute_url}}">{{
+                        story.title | title }}</a>
+                </span>
+                <span
+                    class="MuiSkeleton-root MuiSkeleton-rectangular MuiSkeleton-wave max-w-[100%] bg-transparent bg-[#e9e9e9] bg-gradient-to-r from-[#f1f1f1] to-[#e9e9e9] dark:bg-[#2a2a2a] dark:from-[#333] dark:to-[#2a2a2a] sm:mx-0 mt-4 h-12 last:w-96 md:h-14 ww-1cuzdvz">
+                    {{ story.genre.first.name }}
                 </span>
             </div>
         </div>
-    </a>
-    <div class="px-4 pt-4 text-mono-800 dark:text-mono-300">
-        <div class="flex flex-col">
-            <span class="MuiSkeleton-root MuiSkeleton-rectangular MuiSkeleton-wave MuiSkeleton-withChildren MuiSkeleton-fitContent MuiSkeleton-heightAuto max-w-[100%] bg-transparent bg-[#e9e9e9] bg-gradient-to-r from-[#f1f1f1] to-[#e9e9e9] dark:bg-[#2a2a2a] dark:from-[#333] dark:to-[#2a2a2a] sm:mx-0 mt-4 h-12 last:w-96 md:h-14 ww-4bfvrx">
-                <a class="line-clamp-2 font-set-sb13 md:font-set-sb15" href="{{ story.get_absolute_url}}">{{ story.title | title }}</a>
-            </span>
-            <span class="MuiSkeleton-root MuiSkeleton-rectangular MuiSkeleton-wave max-w-[100%] bg-transparent bg-[#e9e9e9] bg-gradient-to-r from-[#f1f1f1] to-[#e9e9e9] dark:bg-[#2a2a2a] dark:from-[#333] dark:to-[#2a2a2a] sm:mx-0 mt-4 h-12 last:w-96 md:h-14 ww-1cuzdvz">
-                {{ story.genre.first.name }}
-            </span>
-        </div>
-    </div>
-</section>  {% endcomment %}
+    </section> {% endcomment %}
 </div>
+<!-- fan fiction -->
+{% if fanfiction %}
+<section class="bg-mono-100 dark:bg-mono-700 text-mono-800 dark:text-mono-100 py-10 px-12"
+    id="{{ fanfiction.first.story_type.slug }}">
+    <!-- Card Grid -->
+    <h3>{{ fanfiction.first.story_type.name|title }}</h3>
+    <div class="grid grid-flow-row gap-2 text-neutral-600 grid-cols-1 md:grid-cols-3 lg:grid-cols-6 m-2">
+        {% for story in fanfiction %}
+        <!-- Card Item -->
+        <div class="h-80 m-4 {% if forloop.first %}col-span-auto md:col-span-2 {% endif %}
+                {% if forloop.last %}col-end-auto {%  endif %}  my-8">
+            <!-- Clickable Area -->
+            <a href="{{ story.get_absolute_url}}" class="cursor-pointer">
+                <figure class="h-64">
+                    <!-- Image -->
+                    <img alt="{{ story.title | lower }}" src="{% if forloop.first %}{{ story.get_first_cover }} {% else %} {{ story.get_cover }} {% endif %}"
+                        class="rounded-t h-64 w-full hover:scale-95 {% if forloop.first %}object-contain object-fill items-center{% else %}object-fill {% endif %}  hover:saturate-200 hover:rounded-lg transition duration-300 ease-in-out rounded-lg shadow-lg" />
+
+                    <figcaption class="p-2 md:p-4 object-contain">
+                        <!-- Title -->
+                        <p
+                            class="text-xs md:text-md lg:text-lg font-bold leading-relaxed text-mono-800 dark:text-mono-200">
+                            {{ story.title | title }}
+                        </p>
+
+                        <!-- Genre -->
+                        <small class="mt-4 leading-5 text-mono-500 dark:text-mono-400">
+                            {{ story.genre.first.name }}
+                        </small>
+                    </figcaption>
+                </figure>
+            </a>
+        </div>
+        {% empty %}
+        <h3 class="flex justify-center">No Novel read yet, do you need help?</h3>
+        {% endfor %}
+    </div>
+</section>
+{% endif %}
+<!-- fiction -->
+{% if fiction %}
+<section class="bg-mono-100 dark:bg-mono-700 text-mono-800 dark:text-mono-100 py-10 px-12"
+    id="{{ fiction.first.story_type.slug }}">
+    <!-- Card Grid -->
+    <h3>{{ fiction.first.story_type.name|title }}</h3>
+    <div class="grid grid-flow-row gap-2 text-neutral-600 grid-cols-1 md:grid-cols-3 lg:grid-cols-6 m-2">
+        {% for story in fiction %}
+        <!-- Card Item -->
+        <div class="h-80 m-4 {% if forloop.first %}col-span-auto md:col-span-2 {% endif %}
+                {% if forloop.last %}col-end-auto {%  endif %}  my-8">
+            <!-- Clickable Area -->
+            <a href="{{ story.get_absolute_url}}" class="cursor-pointer">
+                <figure class="h-64">
+                    <!-- Image -->
+                    <img alt="{{ story.title | lower }}" src="{% if forloop.first %}{{ story.get_first_cover }} {% else %} {{ story.get_cover }} {% endif %}"
+                        class="rounded-t h-64 w-full hover:scale-95 {% if forloop.first %}object-contain object-fill items-center{% else %}object-fill {% endif %}  hover:saturate-200 hover:rounded-lg transition duration-300 ease-in-out rounded-lg shadow-lg" />
+
+                    <figcaption class="p-2 md:p-4 object-contain">
+                        <!-- Title -->
+                        <p
+                            class="text-xs md:text-md lg:text-lg font-bold leading-relaxed text-mono-800 dark:text-mono-200">
+                            {{ story.title | title }}
+                        </p>
+
+                        <!-- Genre -->
+                        <small class="mt-4 leading-5 text-mono-500 dark:text-mono-400">
+                            {{ story.genre.first.name }}
+                        </small>
+                    </figcaption>
+                </figure>
+            </a>
+        </div>
+        {% empty %}
+        <h3 class="flex justify-center">No Novel read yet, do you need help?</h3>
+        {% endfor %}
+    </div>
+</section>
+{% endif %}
+<!-- non fiction -->
+{% if nonfiction %}
+<section class="bg-mono-100 dark:bg-mono-700 text-mono-800 dark:text-mono-100 py-10 px-12"
+    id="{{ nonfiction.first.story_type.slug }}">
+    <!-- Card Grid -->
+    <h3>{{ nonfiction.first.story_type.name|title }}</h3>
+    <div class="grid grid-flow-row gap-2 text-neutral-600 grid-cols-1 md:grid-cols-3 lg:grid-cols-6 m-2">
+        {% for story in nonfiction %}
+        <!-- Card Item -->
+        <div class="h-80 m-4 {% if forloop.first %}col-span-auto md:col-span-2 {% endif %}
+                {% if forloop.last %}col-end-auto {%  endif %}  my-8">
+            <!-- Clickable Area -->
+            <a href="{{ story.get_absolute_url}}" class="cursor-pointer">
+                <figure class="h-64">
+                    <!-- Image -->
+                    <img alt="{{ story.title | lower }}" src="{% if forloop.first %}{{ story.get_first_cover }} {% else %} {{ story.get_cover }} {% endif %}"
+                        class="rounded-t h-64 w-full hover:scale-95 {% if forloop.first %}object-contain object-fill items-center{% else %}object-fill {% endif %}  hover:saturate-200 hover:rounded-lg transition duration-300 ease-in-out rounded-lg shadow-lg" />
+
+                    <figcaption class="p-2 md:p-4 object-contain">
+                        <!-- Title -->
+                        <p
+                            class="text-xs md:text-md lg:text-lg font-bold leading-relaxed text-mono-800 dark:text-mono-200">
+                            {{ story.title | title }}
+                        </p>
+
+                        <!-- Genre -->
+                        <small class="mt-4 leading-5 text-mono-500 dark:text-mono-400">
+                            {{ story.genre.first.name }}
+                        </small>
+                    </figcaption>
+                </figure>
+            </a>
+        </div>
+        {% empty %}
+        <h3 class="flex justify-center">No Novel read yet, do you need help?</h3>
+        {% endfor %}
+    </div>
+</section>
+{% endif %}
+<!-- peotry -->
+{% if peotry %}
+<section class="bg-mono-100 dark:bg-mono-700 text-mono-800 dark:text-mono-100 py-10 px-12"
+    id="{{ peotry.first.story_type.slug }}">
+    <!-- Card Grid -->
+    <h3>{{ peotry.first.story_type.name|title }}</h3>
+    <div class="grid grid-flow-row gap-2 text-neutral-600 grid-cols-1 md:grid-cols-3 lg:grid-cols-6 m-2">
+        {% for story in peotry %}
+        <!-- Card Item -->
+        <div class="h-80 m-4 {% if forloop.first %}col-span-auto md:col-span-2 {% endif %}
+                {% if forloop.last %}col-end-auto {%  endif %}  my-8">
+            <!-- Clickable Area -->
+            <a href="{{ story.get_absolute_url}}" class="cursor-pointer">
+                <figure class="h-64">
+                    <!-- Image -->
+                    <img alt="{{ story.title | lower }}" src="{% if forloop.first %}{{ story.get_first_cover }} {% else %} {{ story.get_cover }} {% endif %}"
+                        class="rounded-t h-64 w-full hover:scale-95 {% if forloop.first %}object-contain object-fill items-center{% else %}object-fill {% endif %}  hover:saturate-200 hover:rounded-lg transition duration-300 ease-in-out rounded-lg shadow-lg" />
+
+                    <figcaption class="p-2 md:p-4 object-contain">
+                        <!-- Title -->
+                        <p
+                            class="text-xs md:text-md lg:text-lg font-bold leading-relaxed text-mono-800 dark:text-mono-200">
+                            {{ story.title | title }}
+                        </p>
+
+                        <!-- Genre -->
+                        <small class="mt-4 leading-5 text-mono-500 dark:text-mono-400">
+                            {{ story.genre.first.name }}
+                        </small>
+                    </figcaption>
+                </figure>
+            </a>
+        </div>
+        {% empty %}
+        <h3 class="flex justify-center">No Novel read yet, do you need help?</h3>
+        {% endfor %}
+    </div>
+</section>
+{% endif %}
+<!-- plays -->
+{% if plays %}
+<section class="bg-mono-100 dark:bg-mono-700 text-mono-800 dark:text-mono-100 py-10 px-12"
+    id="{{ plays.first.story_type.slug }}">
+    <!-- Card Grid -->
+    <h3>{{ plays.first.story_type.name|title }}</h3>
+    <div class="grid grid-flow-row gap-2 text-neutral-600 grid-cols-1 md:grid-cols-3 lg:grid-cols-6 m-2">
+        {% for story in plays %}
+        <!-- Card Item -->
+        <div class="h-80 m-4 {% if forloop.first %}col-span-auto md:col-span-2 {% endif %}
+                {% if forloop.last %}col-end-auto {%  endif %}  my-8">
+            <!-- Clickable Area -->
+            <a href="{{ story.get_absolute_url}}" class="cursor-pointer">
+                <figure class="h-64">
+                    <!-- Image -->
+                    <img alt="{{ story.title | lower }}" src="{% if forloop.first %}{{ story.get_first_cover }} {% else %} {{ story.get_cover }} {% endif %}"
+                        class="rounded-t h-64 w-full hover:scale-95 {% if forloop.first %}object-contain object-fill items-center{% else %}object-fill {% endif %}  hover:saturate-200 hover:rounded-lg transition duration-300 ease-in-out rounded-lg shadow-lg" />
+
+                    <figcaption class="p-2 md:p-4 object-contain">
+                        <!-- Title -->
+                        <p
+                            class="text-xs md:text-md lg:text-lg font-bold leading-relaxed text-mono-800 dark:text-mono-200">
+                            {{ story.title | title }}
+                        </p>
+
+                        <!-- Genre -->
+                        <small class="mt-4 leading-5 text-mono-500 dark:text-mono-400">
+                            {{ story.genre.first.name }}
+                        </small>
+                    </figcaption>
+                </figure>
+            </a>
+        </div>
+        {% empty %}
+        <h3 class="flex justify-center">No Novel read yet, do you need help?</h3>
+        {% endfor %}
+    </div>
+</section>
+{% endif %}
+<!-- web novel -->
+{% if webnovel %}
+<section class="bg-mono-100 dark:bg-mono-700 text-mono-800 dark:text-mono-100 py-10 px-12"
+    id="{{ webnovel.first.story_type.slug }}">
+    <!-- Card Grid -->
+    <h3>{{ webnovel.first.story_type.name|title }}</h3>
+    <div class="grid grid-flow-row gap-2 text-neutral-600 grid-cols-1 md:grid-cols-3 lg:grid-cols-6 m-2">
+        {% for story in webnovel %}
+        <!-- Card Item -->
+        <div class="h-80 m-4 {% if forloop.first %}col-span-auto md:col-span-2 {% endif %}
+                {% if forloop.last %}col-end-auto {%  endif %}  my-8">
+            <!-- Clickable Area -->
+            <a href="{{ story.get_absolute_url}}" class="cursor-pointer">
+                <figure class="h-64">
+                    <!-- Image -->
+                    <img alt="{{ story.title | lower }}" src="{% if forloop.first %}{{ story.get_first_cover }} {% else %} {{ story.get_cover }} {% endif %}"
+                        class="rounded-t h-64 w-full hover:scale-95 {% if forloop.first %}object-contain object-fill items-center{% else %}object-fill {% endif %}  hover:saturate-200 hover:rounded-lg transition duration-300 ease-in-out rounded-lg shadow-lg" />
+
+                    <figcaption class="p-2 md:p-4 object-contain">
+                        <!-- Title -->
+                        <p
+                            class="text-xs md:text-md lg:text-lg font-bold leading-relaxed text-mono-800 dark:text-mono-200">
+                            {{ story.title | title }}
+                        </p>
+
+                        <!-- Genre -->
+                        <small class="mt-4 leading-5 text-mono-500 dark:text-mono-400">
+                            {{ story.genre.first.name }}
+                        </small>
+                    </figcaption>
+                </figure>
+            </a>
+        </div>
+        {% empty %}
+        <h3 class="flex justify-center">No Novel read yet, do you need help?</h3>
+        {% endfor %}
+    </div>
+</section>
+{% endif %}
 {% endblock content %}

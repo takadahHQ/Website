@@ -1,183 +1,245 @@
-{% load static tailwind_tags %}
-{% load tailwind_tags %}
-{% load analytical %}
-{% comment %} {% load cookie_consent_tags %} {% endcomment %}
-{% load static %}
-{% load i18n %}
-{% load hijack %}
-{% load humanize %}
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-        {% analytical_head_top %}
-    	<title>{% block title %}{{ settings.name }}{% endblock %}</title>
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta http-equiv="X-UA-Compatible" content="ie=edge">
-        {% tailwind_preload_css %}
-        {% tailwind_css %}
-        <link rel="stylesheet" href="{% static 'css/dist/font.css' %}">
-        <link rel="stylesheet" href="{% url 'core:stylesheet' %}" defer>
-        <!-- Our project just needs Font Awesome Free's Solid + Brand files -->
-        <link href="{% static 'fontawesomefree/css/all.min.css' %}" rel="stylesheet" type="text/css">
-    {% comment %} <link rel="icon" type="image/svg+xml" href="{% static 'images/favicon.svg' %}">
-    <link rel="icon" type="image/png" href="{% static 'images/favicon.png' %}"> {% endcomment %}
-    
-    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'images/apple-touch-icon.png' %}">
-<link rel="icon" type="image/png" sizes="32x32" href="{% static 'images/favicon-32x32.png' %}">
-<link rel="icon" type="image/png" sizes="16x16" href="{% static 'images/favicon-16x16.png' %}">
-<link rel="manifest" href="{% static 'images/site.webmanifest' %}">
-<link rel="mask-icon" href="{% static 'images/safari-pinned-tab.svg' %}" color="#5bbad5">
-<meta name="mobile-web-app-capable" content="yes"/>
-<meta name="apple-mobile-web-app-capable" content="yes"/>
-<meta name="apple-mobile-web-app-title" content="Takadah"/>
-<meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:site" content="Takadah"/>
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no"/>
-<meta property="og:title" content="Takadah"/>
-<meta property="og:description" content="Takadah"/>
-<meta property="og:image" content="{% static 'images/apple-touch-icon.png' %}"/>
-<meta name="msapplication-TileColor" content="#da532c">
-<meta name="theme-color" content="#ffffff">
-    <!-- Matomo Image Tracker-->
-<img referrerpolicy="no-referrer-when-downgrade" src="https://mamoto.takadah.com/matomo.php?idsite=1&amp;rec=1" style="border:0" alt="" />
-<!-- End Matomo -->
-    {% analytical_head_bottom %} 
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            colors: {
-              clifford: '#da373d',
-            }
+  {% load static tailwind_tags %}
+  {% load tailwind_tags %}
+  {% load analytical %}
+  {% comment %} {% load cookie_consent_tags %} {% endcomment %}
+  {% load static %}
+  {% load i18n %}
+  {% load hijack %}
+  {% load humanize %}
+<head>
+  {% analytical_head_top %}
+  <title>{% block title %}{{ settings.name }}{% endblock %}</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="{% static 'css/dist/font.css' %}">
+
+  <link rel="stylesheet" href="{% url 'core:stylesheet' %}" defer>
+  <!-- Our project just needs Font Awesome Free's Solid + Brand files -->
+  <link href="{% static 'fontawesomefree/css/all.min.css' %}" rel="stylesheet" type="text/css">
+  {% comment %}
+  <link rel="icon" type="image/svg+xml" href="{% static 'images/favicon.svg' %}">
+  <link rel="icon" type="image/png" href="{% static 'images/favicon.png' %}"> {% endcomment %}
+
+  <link rel="apple-touch-icon" sizes="180x180" href="{% static 'images/apple-touch-icon.png' %}">
+  <link rel="icon" type="image/png" sizes="32x32" href="{% static 'images/favicon-32x32.png' %}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{% static 'images/favicon-16x16.png' %}">
+  <link rel="manifest" href="{% static 'images/site.webmanifest' %}">
+  <link rel="mask-icon" href="{% static 'images/safari-pinned-tab.svg' %}" color="{{ settings.color }}">
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-title" content="Takadah" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="Takadah" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no" />
+  <meta property="og:title" content="Takadah" />
+  <meta property="og:description" content="Takadah" />
+  <meta property="og:image" content="{% static 'images/apple-touch-icon.png' %}" />
+  <meta name="msapplication-TileColor" content="{{ settings.color }}">
+  <meta name="theme-color" content="#ffffff">
+  {% tailwind_preload_css %}
+  {% tailwind_css %}
+  <script src="https://cdn.tailwindcss.com"></script>
+  {% comment %} <!-- Matomo Image Tracker-->
+  <img referrerpolicy="no-referrer-when-downgrade" src="https://mamoto.takadah.com/matomo.php?idsite=1&amp;rec=1"
+    style="border:0" alt="" /> {% endcomment %}
+  <!-- End Matomo -->
+  {% analytical_head_bottom %}
+  {% comment %}
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            clifford: '#da373d',
           }
         }
       }
-    </script>
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@2.x.x/dist/cdn.min.js"></script>
-    <script src="https://unpkg.com/hyperscript.org@0.9.8"></script>
-	</head>
-  <style>
+    }
+  </script> {% endcomment %}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/3.12.1/cdn.min.js"
+    integrity="sha512-aAki0RxJG+kdhKY+1E/hoHY46cOlpnMshmQBgZo1LIk2uY1+kLY4uB6W0DMNHpIr1nQ5qkdaCSakw7fcMfO+zg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://unpkg.com/hyperscript.org@0.9.8"></script>
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "h9vp7pr28o");
+</script>
+</head>
+<style>
   @import url(https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/5.3.45/css/materialdesignicons.min.css);
+
   @-webkit-keyframes fadeIn {
-    from { opacity:0 }
-    to { opacity:1 }
+    from {
+      opacity: 0
+    }
+
+    to {
+      opacity: 1
+    }
   }
+
   @keyframes fadeIn {
-    from { opacity:0 }
-    to { opacity:1 }
+    from {
+      opacity: 0
+    }
+
+    to {
+      opacity: 1
+    }
   }
+
   @-webkit-keyframes fadeInUp {
-    from { opacity:0; transform:translate3d(0,10%,0) }
-    to { opacity:1; transform:translate3d(0,0,0) }
+    from {
+      opacity: 0;
+      transform: translate3d(0, 10%, 0)
+    }
+
+    to {
+      opacity: 1;
+      transform: translate3d(0, 0, 0)
+    }
   }
+
   @keyframes fadeInUp {
-    from { opacity:0; transform:translate3d(0,10%,0) }
-    to { opacity:1; transform:translate3d(0,0,0) }
+    from {
+      opacity: 0;
+      transform: translate3d(0, 10%, 0)
+    }
+
+    to {
+      opacity: 1;
+      transform: translate3d(0, 0, 0)
+    }
   }
-  
-  dialog[open] { -webkit-animation-duration:0.3s; animation-duration:0.3s; -webkit-animation-fill-mode:both; animation-fill-mode:both; -webkit-animation-name:fadeInUp; animation-name:fadeInUp }
-  dialog::backdrop { background: rgba(0, 0, 0, 0.3); backdrop-filter: blur(3px); -webkit-animation-duration:0.3s; animation-duration:0.3s; -webkit-animation-fill-mode:both; animation-fill-mode:both; -webkit-animation-name:fadeIn; animation-name:fadeIn  }
-  </style>
-  {% block body %}
-	<body class="min-h-screen bg-mono-200 dark:bg-mono-900 text-mono-900 dark:text-mono-300 font-serif leading-normal tracking-normal" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
-        {% analytical_body_top %}
-        <div class="w-full">
-            {% include 'component/header/topbar.html' %}
-            {% include 'component/header/navbar.html' %}
-        </div>
-{% if request.user|can_hijack:another_user %}
-<form action="{% url 'hijack:acquire' %}" method="POST">
+
+  dialog[open] {
+    -webkit-animation-duration: 0.3s;
+    animation-duration: 0.3s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+    -webkit-animation-name: fadeInUp;
+    animation-name: fadeInUp
+  }
+
+  dialog::backdrop {
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(3px);
+    -webkit-animation-duration: 0.3s;
+    animation-duration: 0.3s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+    -webkit-animation-name: fadeIn;
+    animation-name: fadeIn
+  }
+</style>
+{% block body %}
+
+<body
+  class="min-h-screen bg-mono-200 dark:bg-mono-900 text-mono-900 dark:text-mono-300 font-serif leading-normal tracking-normal"
+  hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+
+  {% analytical_body_top %}
+  <div class="w-full">
+    {% include 'component/header/topbar.html' %}
+    {% comment %} {% include 'component/header/navbar.html' %} {% endcomment %}
+  </div>
+  {% include 'component/header/header2.html' %}
+  {% if request.user|can_hijack:another_user %}
+  <form action="{% url 'hijack:acquire' %}" method="POST">
+    {% csrf_token %}
+    <input type="hidden" name="user_pk" value="{{ another_user.pk }}">
+    <button type="submit">hijack {{ another_user }}</button>
+    <input type="hidden" name="next" value="{{ request.path }}">
+  </form>
+  {% endif %}
   {% csrf_token %}
-  <input type="hidden" name="user_pk" value="{{ another_user.pk }}">
-  <button type="submit">hijack {{ another_user }}</button>
-  <input type="hidden" name="next" value="{{ request.path }}">
-</form>
-{% endif %}
-		{% csrf_token %}
-		<div class="container mx-auto">
-			<main class="p-2 md:p-8">
-                <h1 class="text-5xl flex items-center justify-center text-mono-500 dark:text-mono-100 hover:text-mono-50">{% block page-title %}{% endblock %}</h1><br/>
-		   		<section class="content">
-                    <section>
-                    <!-- Breadcrumbs -->
-                    {% if request.path != "/" %}
-                      <div class="text-sm breadcrumbs">
-                        <ul>
-                        <li><a href="{% url 'core:index' %}">Home</a></li> 
-                        {%block breadcrumbs %}
-                        {% endblock %}
-                        </ul>
-                      </div>
-                      <!-- end breadcrumbs-->
-                    {% endif %}
-                    </section>                    
-                    {% block content %}
-                       Body content
-                    {% endblock %}
-		   		</section>
-			</main>
-            <button
-        class="sticky bottom-5 right-5 z-10 w-10 h-10 rounded-full bg-mono-800 flex justify-center items-center text-mono-50"
-        id="theme-toggle"
-      >
-        <svg
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            fill-rule="evenodd"
-            clip-rule="evenodd"
-            d="M12.2256 2.00253C9.59172 1.94346 6.93894 2.9189 4.92893 4.92891C1.02369 8.83415 1.02369 15.1658 4.92893 19.071C8.83418 22.9763 15.1658 22.9763 19.0711 19.071C21.0811 17.061 22.0565 14.4082 21.9975 11.7743C21.9796 10.9772 21.8669 10.1818 21.6595 9.40643C21.0933 9.9488 20.5078 10.4276 19.9163 10.8425C18.5649 11.7906 17.1826 12.4053 15.9301 12.6837C14.0241 13.1072 12.7156 12.7156 12 12C11.2844 11.2844 10.8928 9.97588 11.3163 8.0699C11.5947 6.81738 12.2094 5.43511 13.1575 4.08368C13.5724 3.49221 14.0512 2.90664 14.5935 2.34046C13.8182 2.13305 13.0228 2.02041 12.2256 2.00253ZM17.6569 17.6568C18.9081 16.4056 19.6582 14.8431 19.9072 13.2186C16.3611 15.2643 12.638 15.4664 10.5858 13.4142C8.53361 11.362 8.73568 7.63895 10.7814 4.09281C9.1569 4.34184 7.59434 5.09193 6.34315 6.34313C3.21895 9.46732 3.21895 14.5326 6.34315 17.6568C9.46734 20.781 14.5327 20.781 17.6569 17.6568Z"
-            fill="currentColor"
-          />
-        </svg>
-      </button>
-		</div>
-  
-{% include "component/footer/page.html" %}
-            {% comment %} {% autoescape on %}
-            {% analytical_body_bottom %}
-            {% endautoescape %} {% endcomment %}
-            <script src="{% static 'js/alpine.min.js' %}" defer ></script>
-            <script src="{% static 'js/htmx.min.js' %}" defer ></script>
-            <script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
-            <script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
-            <script src="{% static 'js/site.js' %}"></script>
+  <div class="container mx-auto">
+    <main class="p-2 md:p-8">
+      <h1 class="text-5xl flex items-center justify-center text-mono-500 dark:text-mono-100 hover:text-mono-50"> 
+        {% block page-title %}{% endblock %}</h1><br />
+      <section class="content">
+        <section>
+          <!-- Breadcrumbs -->
+          {% if request.path != "/" %}
+          <div class="text-sm breadcrumbs">
+            <ul>
+              <li><a href="{% url 'core:index' %}">Home</a></li>
+              {%block breadcrumbs %}
+              {% endblock %}
+            </ul>
+          </div>
+          <!-- end breadcrumbs-->
+          {% endif %}
+        </section>
+        {% block content %}
+        Body content
+        {% endblock %}
+      </section>
+    </main>
+    <button
+      class="sticky bottom-5 right-5 md:right-10 z-10 w-10 h-10 rounded-full bg-mono-800 flex justify-center items-center text-mono-50"
+      id="theme-toggle">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd" clip-rule="evenodd"
+          d="M12.2256 2.00253C9.59172 1.94346 6.93894 2.9189 4.92893 4.92891C1.02369 8.83415 1.02369 15.1658 4.92893 19.071C8.83418 22.9763 15.1658 22.9763 19.0711 19.071C21.0811 17.061 22.0565 14.4082 21.9975 11.7743C21.9796 10.9772 21.8669 10.1818 21.6595 9.40643C21.0933 9.9488 20.5078 10.4276 19.9163 10.8425C18.5649 11.7906 17.1826 12.4053 15.9301 12.6837C14.0241 13.1072 12.7156 12.7156 12 12C11.2844 11.2844 10.8928 9.97588 11.3163 8.0699C11.5947 6.81738 12.2094 5.43511 13.1575 4.08368C13.5724 3.49221 14.0512 2.90664 14.5935 2.34046C13.8182 2.13305 13.0228 2.02041 12.2256 2.00253ZM17.6569 17.6568C18.9081 16.4056 19.6582 14.8431 19.9072 13.2186C16.3611 15.2643 12.638 15.4664 10.5858 13.4142C8.53361 11.362 8.73568 7.63895 10.7814 4.09281C9.1569 4.34184 7.59434 5.09193 6.34315 6.34313C3.21895 9.46732 3.21895 14.5326 6.34315 17.6568C9.46734 20.781 14.5327 20.781 17.6569 17.6568Z"
+          fill="currentColor" />
+      </svg>
+    </button>
+  </div>
+
+  {% include "component/footer/page.html" %}
+  {% comment %} {% autoescape on %}
+  {% analytical_body_bottom %}
+  {% endautoescape %} {% endcomment %}
+  <script src="{% static 'js/alpine.min.js' %}" defer></script>
+  <script src="{% static 'js/htmx.min.js' %}" defer></script>
+  <script type="text/javascript" src="{% static " ckeditor/ckeditor-init.js" %}"></script>
+  <script type="text/javascript" src="{% static " ckeditor/ckeditor/ckeditor.js" %}"></script>
+  <script src="{% static 'js/site.js' %}"></script>
   {% comment %} {% if request|cookie_group_accepted:"analytics" %}
   {% endif %} {% endcomment %}
-            {# load 3rd party analytics #}
-        {% comment %} <script type="text/javascript">
-(function(f,b){if(!b.__SV){var e,g,i,h;window.mixpanel=b;b._i=[];b.init=function(e,f,c){function g(a,d){var b=d.split(".");2==b.length&&(a=a[b[0]],d=b[1]);a[d]=function(){a.push([d].concat(Array.prototype.slice.call(arguments,0)))}}var a=b;"undefined"!==typeof c?a=b[c]=[]:c="mixpanel";a.people=a.people||[];a.toString=function(a){var d="mixpanel";"mixpanel"!==c&&(d+="."+c);a||(d+=" (stub)");return d};a.people.toString=function(){return a.toString(1)+".people (stub)"};i="disable time_event track track_pageview track_links track_forms track_with_groups add_group set_group remove_group register register_once alias unregister identify name_tag set_config reset opt_in_tracking opt_out_tracking has_opted_in_tracking has_opted_out_tracking clear_opt_in_out_tracking start_batch_senders people.set people.set_once people.unset people.increment people.append people.union people.track_charge people.clear_charges people.delete_user people.remove".split(" ");
-for(h=0;h<i.l};b._i.push([e,f,c])};b.__SV=1.2;e=f.createElement("script");e.type="text/javascript";e.async=!0;e.src="undefined"!==typeof MIXPANEL_CUSTOM_LIB_URL?
-MIXPANEL_CUSTOM_LIB_URL:"file:"===f.location.protocol&&"//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js".match(/^\/\//)?"https://cdn.mxpnl.com/libs/mixpanel-2-latest.min.js":"//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js";g=f.getElementsByTagName("script")[0];g.parentNode.insertBefore(e,g)}})(document,window.mixpanel||[]);
+  {# load 3rd party analytics #}
+  {% comment %}
+  <script type="text/javascript">
+      (function (f, b) {
+        if (!b.__SV) {
+          var e, g, i, h; window.mixpanel = b; b._i = []; b.init = function (e, f, c) {
+            function g(a, d) { var b = d.split("."); 2 == b.length && (a = a[b[0]], d = b[1]); a[d] = function () { a.push([d].concat(Array.prototype.slice.call(arguments, 0))) } } var a = b; "undefined" !== typeof c ? a = b[c] = [] : c = "mixpanel"; a.people = a.people || []; a.toString = function (a) { var d = "mixpanel"; "mixpanel" !== c && (d += "." + c); a || (d += " (stub)"); return d }; a.people.toString = function () { return a.toString(1) + ".people (stub)" }; i = "disable time_event track track_pageview track_links track_forms track_with_groups add_group set_group remove_group register register_once alias unregister identify name_tag set_config reset opt_in_tracking opt_out_tracking has_opted_in_tracking has_opted_out_tracking clear_opt_in_out_tracking start_batch_senders people.set people.set_once people.unset people.increment people.append people.union people.track_charge people.clear_charges people.delete_user people.remove".split(" ");
+            for (h = 0; h < i.l}; b._i.push([e, f, c])
+        }; b.__SV = 1.2; e = f.createElement("script"); e.type = "text/javascript"; e.async = !0; e.src = "undefined" !== typeof MIXPANEL_CUSTOM_LIB_URL ?
+          MIXPANEL_CUSTOM_LIB_URL : "file:" === f.location.protocol && "//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js".match(/^\/\//) ? "https://cdn.mxpnl.com/libs/mixpanel-2-latest.min.js" : "//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js"; g = f.getElementsByTagName("script")[0]; g.parentNode.insertBefore(e, g)
+      }})(document, window.mixpanel || []);
 
-// Enabling the debug mode flag is useful during implementation,
-// but it's recommended you remove it for production
-mixpanel.init('dc4537f245806621832017184b5f7d0c', {debug: true}); 
-mixpanel.track('Sign Up', {
-  'source': "Pat's affiliate site",
-  'Opted out of email': true,
-});
+    // Enabling the debug mode flag is useful during implementation,
+    // but it's recommended you remove it for production
+    mixpanel.init('dc4537f245806621832017184b5f7d0c', { debug: true });
+    mixpanel.track('Sign Up', {
+      'source': "Pat's affiliate site",
+      'Opted out of email': true,
+    });
 
-</script> {% endcomment %}
-<!-- Matomo Image Tracker-->
-<img referrerpolicy="no-referrer-when-downgrade" src="https://mamoto.takadah.com/matomo.php?idsite=1&amp;rec=1" style="border:0" alt="" />
-<!-- End Matomo -->
-<!-- Matomo Image Tracker-->
-<img referrerpolicy="no-referrer-when-downgrade" src="https://mamoto.takadah.com/matomo.php?idsite=1&amp;rec=1" style="border:0" alt="" />
-<!-- End Matomo -->
-<span class="bg-mono-50 bg-mono-100 bg-mono-200 bg-mono-300 bg-mono-400 bg-mono-500 bg-mono-600 bg-mono-700 bg-mono-800 bg-mono-900"></span>
-<span class="text-mono-50 text-mono-100 text-mono-200 text-mono-300 text-mono-400 text-mono-500 text-mono-600 text-mono-700 text-mono-800 text-mono-900"></span>
-<span class="bg-rebel-50 bg-rebel-100 bg-rebel-200 bg-rebel-300 bg-rebel-400 bg-rebel-500 bg-rebel-600 bg-rebel-700 bg-rebel-800 bg-rebel-900"></span>
-<span class="text-rebel-50 text-rebel-100 text-rebel-200 text-rebel-300 text-rebel-400 text-rebel-500 text-rebel-600 text-rebel-700 text-rebel-800 text-rebel-900"></span>
-<span class="bg-tiber-50 bg-tiber-100 bg-tiber-200 bg-tiber-300 bg-tiber-400 bg-tiber-500 bg-tiber-600 bg-tiber-700 bg-tiber-800 bg-tiber-900"></span>
-<span class="text-tiber-50 text-tiber-100 text-tiber-200 text-tiber-300 text-tiber-400 text-tiber-500 text-tiber-600 text-tiber-700 text-tiber-800 text-tiber-900"></span>
-{% block scripts %}{% endblock scripts %}
-	</body>
-  {% endblock body %}
+  </script> {% endcomment %}
+  <span
+    class="bg-mono-50 bg-mono-100 bg-mono-200 bg-mono-300 bg-mono-400 bg-mono-500 bg-mono-600 bg-mono-700 bg-mono-800 bg-mono-900"></span>
+  <span
+    class="text-mono-50 text-mono-100 text-mono-200 text-mono-300 text-mono-400 text-mono-500 text-mono-600 text-mono-700 text-mono-800 text-mono-900"></span>
+  <span
+    class="bg-rebel-50 bg-rebel-100 bg-rebel-200 bg-rebel-300 bg-rebel-400 bg-rebel-500 bg-rebel-600 bg-rebel-700 bg-rebel-800 bg-rebel-900"></span>
+  <span
+    class="text-rebel-50 text-rebel-100 text-rebel-200 text-rebel-300 text-rebel-400 text-rebel-500 text-rebel-600 text-rebel-700 text-rebel-800 text-rebel-900"></span>
+  <span
+    class="bg-tiber-50 bg-tiber-100 bg-tiber-200 bg-tiber-300 bg-tiber-400 bg-tiber-500 bg-tiber-600 bg-tiber-700 bg-tiber-800 bg-tiber-900"></span>
+  <span
+    class="text-tiber-50 text-tiber-100 text-tiber-200 text-tiber-300 text-tiber-400 text-tiber-500 text-tiber-600 text-tiber-700 text-tiber-800 text-tiber-900"></span>
+  {% block scripts %}{% endblock scripts %}
+</body>
+{% endblock body %}
+
 </html>

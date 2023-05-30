@@ -353,7 +353,70 @@ def get_weekly_stories(count):
     return stories
 
 
-def get_fresh_stories(count):
+# get list of stories type
+def get_story_types():
+    story_types = Type.objects.filter(status="active")
+    return story_types
+
+
+# get stories seperated by the type of story
+def get_stories_by_type(story_type, count=12):
+    exclude = ["draft", "prerelease"]
+    stories = (
+        Stories.objects.filter(story_type__slug=story_type)
+        .order_by("created_at")
+        .exclude(status__in=exclude)
+        .prefetch_related(
+            "story_type",
+            "language",
+            "rating",
+            "flags",
+            "following",
+            "likes",
+            "dislikes",
+            "author",
+            "editor",
+            "genre",
+            "characters",
+            "tags",
+        )[:count]
+    )
+    return stories
+
+
+# get unpublished/upcoming stories
+def get_unpublished_stories(count=12):
+    exclude = [
+        "abandoned",
+        "complete",
+        "hiatus",
+        "published",
+        "oneshot",
+        "ongoing",
+        "draft",
+    ]
+    stories = (
+        Stories.objects.order_by("created_at")
+        .exclude(status__in=exclude)
+        .prefetch_related(
+            "story_type",
+            "language",
+            "rating",
+            "flags",
+            "following",
+            "likes",
+            "dislikes",
+            "author",
+            "editor",
+            "genre",
+            "characters",
+            "tags",
+        )[:count]
+    )
+    return stories
+
+
+def get_fresh_stories(count=12):
     exclude = ["draft", "prerelease"]
     stories = (
         Stories.objects.order_by("created_at")
@@ -376,7 +439,7 @@ def get_fresh_stories(count):
     return stories
 
 
-def get_completed_stories(count):
+def get_completed_stories(count=12):
     stories = Stories.objects.filter(status="completed").prefetch_related(
         "story_type",
         "language",
@@ -394,7 +457,7 @@ def get_completed_stories(count):
     return stories
 
 
-def get_updated_stories(count):
+def get_updated_stories(count=12):
     stories = (
         Stories.objects.order_by("updated_at")
         .filter(status="active")

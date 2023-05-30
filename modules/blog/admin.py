@@ -39,6 +39,7 @@ class PostAdmin(admin.ModelAdmin):
                     "title",
                     "slug",
                     "category",
+                    "user",
                     "featured_image",
                     "featured_image_caption",
                     "content",

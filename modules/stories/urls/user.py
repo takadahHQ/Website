@@ -29,4 +29,5 @@ urls = [
     path(
         "<str:type>/<slug:story>/<slug:slug>/", views.ShowChapter.as_view(), name="read"
     ),
+    path("populate-model", views.populate_model, name="populate"),
 ]

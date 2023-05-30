@@ -1,0 +1,14 @@
+<div class="pagination flex justify-center mt-2">
+    <div class="btn-group">
+        {% if page_obj.has_previous %}
+        <button class="btn">
+            <a href="?page={{ page_obj.previous_page_number }}">«</a>
+        </button>
+        {% endif %}
+        <button class="btn">Page {{ page_obj.number }} of {{ paginator.num_pages }}</button>
+        {% if page_obj.has_next %}
+        <button class="btn" >
+            <a href="?page={{ page_obj.next_page_number }}">»</a>
+        </button>{% endif %}
+      </div>
+</div>

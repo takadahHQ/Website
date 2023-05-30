@@ -25,7 +25,7 @@ def make(img_author, img_title, img_slug):
 def background():
     startColor = (
         random.randrange(1, 66),
-        random.randrange(1, 138),
+        random.randrange(1, 255),
         random.randrange(1, 255),
     )
     endColorX = (
@@ -34,11 +34,11 @@ def background():
         random.randrange(1, 255),
     )
     endColorY = (
-        random.randrange(1, 118),
+        random.randrange(1, 255),
         random.randrange(1, 65),
         random.randrange(1, 255),
     )
-    size = (150, 250)
+    size = (372, 512)
 
     im = Image.new("RGB", size, "black")
     pixels = im.load()
@@ -118,16 +118,23 @@ def text_wrap(text, font, max_width):
 def author(image, name):
     # image = Image.open(image)
     draw = ImageDraw.Draw(image)
-    font_file_path = settings.BASE_DIR.__str__() + "/static/fonts/YesevaOne.ttf"
-    # font_file_path = BASE_DIR.__str__() +'/static/fonts/JosefinSans-SemiBold.ttf'
-    # font_file_path = 'static/fonts/YesevaOne.ttf'
-    # font = ImageFont.truetype(font_file_path, size=30, encoding="utf-8")
-    # font = ImageFont.truetype(font_file_path, size=30)
     truetype_url = "https://github.com/googlefonts/josefinsans/blob/master/fonts/ttf/JosefinSans-Bold.ttf?raw=true"
-    font = ImageFont.truetype(urlopen(truetype_url), size=15)
-    (x, y) = (75, 240)
+    # font = ImageFont.truetype(urlopen(truetype_url), size=15)
+    font = ImageFont.truetype(urlopen(truetype_url), size=0)
+    while font.getsize(name)[0] > image.size[0]:
+        font = ImageFont.truetype(urlopen(truetype_url), size=font.size - 1)
+    (x, y) = (186, 490)
     color = "rgb(255, 055,05)"  # white color
-    draw.text((x, y), name, fill=color, font=font, anchor="md")
+    border = "black"
+    draw.text(
+        (x, y),
+        name,
+        fill=color,
+        stroke_width=2,
+        stroke_fill=border,
+        font=font,
+        anchor="md",
+    )
     return image
 
 
@@ -138,19 +145,29 @@ def title(image, title):
     truetype_url = (
         "https://github.com/googlefonts/Fira/blob/main/ttf/FiraSans-Bold.ttf?raw=true"
     )
-    font = ImageFont.truetype(urlopen(truetype_url), size=12)
-    # font_file_path = 'static/fonts/FiraCode-SemiBold.ttf'
-    # font = ImageFont.truetype(font_file_path, size=25)
+    font = ImageFont.truetype(urlopen(truetype_url), size=0)
+    # Automatically get the font size
+    while font.getsize(title)[0] > image.size[0]:
+        font = ImageFont.truetype(urlopen(truetype_url), size=font.size - 1)
     color = "rgb(255, 255, 255)"  # white color
+    border = "black"
     image_size = image.size
     lines = text_wrap(title, font, image_size[0] - 10)
     line_height = font.getsize("hg")[1]
 
-    x = 75
-    y = 200
+    x = 186
+    y = 400
     for line in lines:
         # draw the line on the image
-        draw.text((x, y), line, fill=color, font=font, anchor="ms")
+        draw.text(
+            (x, y),
+            line,
+            fill=color,
+            stroke_width=2,
+            stroke_fill=border,
+            font=font,
+            anchor="ms",
+        )
 
         # update the y position so that we can use it for next line
         y = y + line_height
