@@ -17,7 +17,7 @@ Edit: {{ story.title | title }}
     <form method="post">
         {% csrf_token %}
         {{ form|crispy }}
-        <button type="submit" class="btn border-none bg-mono-500 text-mono-50">Update</button>
+        <button type="submit" class="btn bg-[{{ settings.color }}] opacity-80">Update</button>
     </form>
 </section>
 {% endblock content %}

@@ -3,6 +3,6 @@
     <form method="POST">
         {% csrf_token %}
         {{ aform|crispy }}
-        <button hx-post="{% url 'stories:author:add-author' story.id %}" class="btn border-none bg-mono-800 text-mono-50">Save</button>
+        <button hx-post="{% url 'stories:author:add-author' story.id %}" class="btn bg-[{{ settings.color }}] opacity-80">Save</button>
     </form>
 </div>

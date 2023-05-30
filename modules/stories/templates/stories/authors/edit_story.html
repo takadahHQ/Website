@@ -16,7 +16,7 @@ Edit: {{ form.title.value | title }}
         {% csrf_token %}
         {{ form|crispy }}
         {% include 'stories/includes/add_reference.html' with story=story %}
-        <button type="submit" class="btn border-none bg-green-500 text-mono-50">Update Story</button>
+        <button type="submit" class="btn btn-[{{ settings.color}}] opacity-80">Update Story</button>
     </form>
 </section>
 {% endblock content %}

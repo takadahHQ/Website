@@ -46,21 +46,25 @@ def get_genre(slug):
 def get_stories_by_genre(slug):
     genre = get_genre(slug=slug)
     test = stories = Stories.objects.filter(~Q(status="pending") | ~Q(status="draft"))
-    stories = Stories.objects.filter(
-        ~Q(status="pending") | ~Q(status="draft"), genre__slug=genre.slug
-    ).prefetch_related(
-        "story_type",
-        "language",
-        "rating",
-        "flags",
-        "following",
-        "likes",
-        "dislikes",
-        "author",
-        "editor",
-        "genre",
-        "characters",
-        "tags",
+    stories = (
+        Stories.objects.filter(
+            ~Q(status="pending") | ~Q(status="draft"), genre__slug=genre.slug
+        )
+        .filter(released_at__lte=timezone.now())
+        .prefetch_related(
+            "story_type",
+            "language",
+            "rating",
+            "flags",
+            "following",
+            "likes",
+            "dislikes",
+            "author",
+            "editor",
+            "genre",
+            "characters",
+            "tags",
+        )
     )
     return stories
 
@@ -72,21 +76,25 @@ def get_tag(slug):
 
 def get_stories_by_tag(slug):
     tag = get_tag(slug=slug)
-    stories = Stories.objects.filter(
-        ~Q(status="pending") | ~Q(status="draft"), tags__slug__in=[tag.slug]
-    ).prefetch_related(
-        "story_type",
-        "language",
-        "rating",
-        "flags",
-        "following",
-        "likes",
-        "dislikes",
-        "author",
-        "editor",
-        "genre",
-        "characters",
-        "tags",
+    stories = (
+        Stories.objects.filter(
+            ~Q(status="pending") | ~Q(status="draft"), tags__slug__in=[tag.slug]
+        )
+        .filter(released_at__lte=timezone.now())
+        .prefetch_related(
+            "story_type",
+            "language",
+            "rating",
+            "flags",
+            "following",
+            "likes",
+            "dislikes",
+            "author",
+            "editor",
+            "genre",
+            "characters",
+            "tags",
+        )
     )
     return stories
 
@@ -98,21 +106,25 @@ def get_type(slug):
 
 def get_stories_by_type(slug):
     types = get_type(slug=slug)
-    stories = Stories.objects.filter(
-        ~Q(status="pending") | ~Q(status="draft"), story_type__slug__in=[types.slug]
-    ).prefetch_related(
-        "story_type",
-        "language",
-        "rating",
-        "flags",
-        "following",
-        "likes",
-        "dislikes",
-        "author",
-        "editor",
-        "genre",
-        "characters",
-        "tags",
+    stories = (
+        Stories.objects.filter(
+            ~Q(status="pending") | ~Q(status="draft"), story_type__slug__in=[types.slug]
+        )
+        .filter(released_at__lte=timezone.now())
+        .prefetch_related(
+            "story_type",
+            "language",
+            "rating",
+            "flags",
+            "following",
+            "likes",
+            "dislikes",
+            "author",
+            "editor",
+            "genre",
+            "characters",
+            "tags",
+        )
     )
     return stories
 
@@ -312,6 +324,7 @@ def get_featured_stories(count):
     stories = (
         Stories.objects.filter(featured=True)
         .select_related("story_type", "language", "rating", "flags")
+        .filter(released_at__lte=timezone.now())
         .filter(status="active")
         .prefetch_related(
             "story_type",
@@ -335,6 +348,7 @@ def get_weekly_stories(count):
     stories = (
         Stories.objects.filter(featured=True)
         .filter(status="active")
+        .filter(released_at__lte=timezone.now())
         .prefetch_related(
             "story_type",
             "language",
@@ -364,6 +378,7 @@ def get_stories_by_type(story_type, count=12):
     exclude = ["draft", "prerelease"]
     stories = (
         Stories.objects.filter(story_type__slug=story_type)
+        .filter(released_at__lte=timezone.now())
         .order_by("created_at")
         .exclude(status__in=exclude)
         .prefetch_related(
@@ -398,6 +413,7 @@ def get_unpublished_stories(count=12):
     stories = (
         Stories.objects.order_by("created_at")
         .exclude(status__in=exclude)
+        .filter(released_at__gte=timezone.now())
         .prefetch_related(
             "story_type",
             "language",
@@ -420,6 +436,7 @@ def get_fresh_stories(count=12):
     exclude = ["draft", "prerelease"]
     stories = (
         Stories.objects.order_by("created_at")
+        .filter(released_at__lte=timezone.now())
         .exclude(status__in=exclude)
         .prefetch_related(
             "story_type",

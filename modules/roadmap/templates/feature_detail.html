@@ -25,7 +25,7 @@
         <p class="my-3">{{ comment.body }}</p>
         <div class="flex justify-between items-center">
           <div>
-            <button class="btn btn-sm btn-outline-primary" hx-post="{% url 'vote' pk=comment.id %}" hx-trigger="click" hx-target="#comment-{{ comment.id }} .vote-count">{{ comment.votes }} <i class="bi bi-caret-up"></i></button>
+            <button class="btn btn-sm btn-outline-[{{ settings.color }}]" hx-post="{% url 'vote' pk=comment.id %}" hx-trigger="click" hx-target="#comment-{{ comment.id }} .vote-count">{{ comment.votes }} <i class="bi bi-caret-up"></i></button>
             <button class="btn btn-sm btn-outline-secondary" hx-post="{% url 'vote' pk=comment.id %}" hx-trigger="click" hx-target="#comment-{{ comment.id }} .vote-count">{{ comment.votes }} <i class="bi bi-caret-down"></i></button>
             <button class="btn btn-sm btn-outline-secondary" hx-get="{% url 'replies' comment_id=comment.id %}" hx-trigger="click" hx-target="#comment-{{ comment.id }} .replies">{{ comment.replies.count }} Replies</button>
             <button class="btn btn-sm btn-outline-secondary" hx-get="{% url 'reply' %}" hx-trigger="click" hx-target="#comment-{{ comment.id }} .reply-form">Reply</button>

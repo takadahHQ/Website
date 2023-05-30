@@ -5944,7 +5944,7 @@ dialog::backdrop {
   background-color: rgb(247 247 247 / var(--tw-bg-opacity));
 }
 
-.bg-primary {
+.bg-[{{ settings.color }}] {
   --tw-bg-opacity: 1;
   background-color: hsl(var(--p) / var(--tw-bg-opacity));
 }
@@ -6681,7 +6681,7 @@ dialog::backdrop {
   border-radius: 9999px;
 }
 
-.before\:bg-primary::before {
+.before\:bg-[{{ settings.color }}]::before {
   content: var(--tw-content);
   --tw-bg-opacity: 1;
   background-color: hsl(var(--p) / var(--tw-bg-opacity));
@@ -6747,7 +6747,7 @@ dialog::backdrop {
   border-color: transparent;
 }
 
-.hover\:bg-primary:hover {
+.hover\:bg-[{{ settings.color }}]:hover {
   --tw-bg-opacity: 1;
   background-color: hsl(var(--p) / var(--tw-bg-opacity));
 }
