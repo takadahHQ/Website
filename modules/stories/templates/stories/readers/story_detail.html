@@ -24,20 +24,20 @@
             </div>
             <!-- genre status chapter views-->
             <div class="md:flex space-x-2 flex-wrap justify justify-space">
-                <div class="p-2">
+                <div class="p-0">
                     {% for genre in story.genre.all %}
-                    <span class="badge badge-accent bg-rebel-300 p-3 border-0"> 
+                    <span class="badge badge-accent bg-rebel-300 p-3 border-0 md:mb-2"> 
                         <a href="{{ genre.get_absolute_url }}">{{ genre.name }}</a>
                     </span>
                 {% endfor %}
                 </div>
-                <div class="p-2">
+                <div class="badge p-3">
                     {{ story.status | title }}
                 </div>
-                <div class="p-2">
+                <div class="badge p-3">
                     {{ story.chapters_count  }} Chapter{{ story.chapters_count |pluralize }} Released
                 </div>
-               <div class="p-2">
+               <div class="badge p-3">
                    {{ story.review_count  }} Review{{ story.review_count |pluralize }}
                 </div>
             </div>
@@ -49,12 +49,12 @@
                             <a href="{% url 'core:author' author.username %}">{{ author.name }}</a>
                         </span>
                     {% empty %}
-                        <span class="badge-accent"> 
+                        <span class="badge badge-accent"> 
                             Ghost Author
                         </span>
                     {% endfor %}
                 </div>
-                <div class="">
+                <div class="badge badge-accent bg-primary/70">
                     Editor{{ story.editors_count |pluralize }}: {{ story.editor.name | default:"Ghost" }}
                 </div>
             </div>
@@ -133,7 +133,7 @@
     <section>
         <div class="text-2xl dark:text-mono-100 text-mono-700">Tags</div>
         {% for tag in story.tags.all %}
-        <div class="badge bg-mono-300 border-none p-4">
+        <div class="badge bg-mono-300 border-none p-4 space-y-2 mb-2">
             <a href="{% url 'stories:tag' tag.slug %}">{{ tag.name | title }}</a>
         </div>
         {% endfor %}
