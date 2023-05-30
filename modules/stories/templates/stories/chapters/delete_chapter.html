@@ -16,7 +16,7 @@ Delete: {{ story.title | title }}
     <form method="post">
         {% csrf_token %}
         <p>Are you sure you want to delete "{{ object }}"?</p>
-            <input type="submit" value="Confirm" class="btn border-none bg-mono-500 text-mono-50">
+            <input type="submit" value="Confirm" class="btn btn bg-[{{ settings.color }}] opacity-80">
         </form>
 </section>
 {% endblock content %}
