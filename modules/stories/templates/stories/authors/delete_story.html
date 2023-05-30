@@ -20,7 +20,7 @@ Author
     <form method="post">
         {% csrf_token %}
 <p>Are you sure you want to delete "{{ object }}"?</p>
-        <button type="submit" class="btn border-none bg-mono-500 text-mono-50">Delete Story</button>
+        <button type="submit" class="btn btn-[{{ settings.color}}] opacity-80">Delete Story</button>
     </form>
 </section>
 {% endblock content %}

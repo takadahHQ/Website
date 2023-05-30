@@ -2,10 +2,10 @@
 <div class="flex inline space-x-2" hx-target="this" hx-swap="outerHTML">
     <h1 class="p-2 text-2xl mt-2 text-mono-900 dark:text-mono-100"> {{ author.user.name }} </h1>
     {% if author %}
-    <button hx-get="{% url 'stories:author:update-author' author.story.id %}" class="btn border-none bg-tiber-800 text-mono-50">Update</button>
-    <button hx-get="{% url 'stories:author:delete-author' author.story.id %}" class="btn border-none bg-mono-500 text-tiber-50">Delete</button>
+    <button hx-get="{% url 'stories:author:update-author' author.story.id %}" class="btn bg-[{{ settings.color }}] opacity-80">Update</button>
+    <button hx-get="{% url 'stories:author:delete-author' author.story.id %}" class="btn bg-[{{ settings.color }}] opacity-50">Delete</button>
     {% else %}
-    <button hx-get="{% url 'stories:author:update-author' story.id %}" class="btn border-none bg-mono-800 text-mono-50">Update</button>
-    <button hx-get="{% url 'stories:author:delete-author' story.id %}" class="btn border-none bg-mono-500 text-mono-50">Delete</button>
+    <button hx-get="{% url 'stories:author:update-author' story.id %}" class="btn bg-[{{ settings.color }}] opacity-80">Update</button>
+    <button hx-get="{% url 'stories:author:delete-author' story.id %}" class="btn bg-[{{ settings.color }}] opacity-50">Delete</button>
     {% endif %}
 </div>

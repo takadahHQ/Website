@@ -121,8 +121,12 @@ def author(image, name):
     truetype_url = "https://github.com/googlefonts/josefinsans/blob/master/fonts/ttf/JosefinSans-Bold.ttf?raw=true"
     # font = ImageFont.truetype(urlopen(truetype_url), size=15)
     font = ImageFont.truetype(urlopen(truetype_url), size=0)
-    while font.getsize(name)[0] > image.size[0]:
-        font = ImageFont.truetype(urlopen(truetype_url), size=font.size - 1)
+    print("font size:")
+    print(font.getsize(name)[0])
+    print("image size:")
+    print(image.size[0])
+    while font.getsize(name)[0] < image.size[0]:
+        font = ImageFont.truetype(urlopen(truetype_url), size=font.size + 1)
     (x, y) = (186, 490)
     color = "rgb(255, 055,05)"  # white color
     border = "black"
@@ -147,8 +151,8 @@ def title(image, title):
     )
     font = ImageFont.truetype(urlopen(truetype_url), size=0)
     # Automatically get the font size
-    while font.getsize(title)[0] > image.size[0]:
-        font = ImageFont.truetype(urlopen(truetype_url), size=font.size - 1)
+    while font.getsize(title)[0] < image.size[0]:
+        font = ImageFont.truetype(urlopen(truetype_url), size=font.size + 1)
     color = "rgb(255, 255, 255)"  # white color
     border = "black"
     image_size = image.size
