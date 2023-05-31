@@ -38,65 +38,68 @@ Profile
 </div>
 <!-- end profile -->
 <!-- tabs -->
-<div class="bg-mono-50 rounded shadow-mono-400 p-2 lg:p-8 mt-2 dark:bg-mono-700 dark:text-mono-200">
-    <section id="tabs">
-        <div x-data="{
-            tabs: [ 'My Stories', 'Edited Stories', 'Followed Stories', 'Reviews',],
-            activeProfile: 0
-        }">
-            <div class="tabs my-6">
-                <template x-for="(tab, index) in tabs" :key="index">
-                    <a class="tab tab-bordered dark:text-mono-200" 
-                        :class="{'tab-active': activeProfile == index}"
-                        x-on:click="activeProfile = index"
-                        x-text=tab
-                    ></a>
-                </template>
+<div class="">
+    <section>
+        <div x-data="{ activeTab: 'mine' }">
+            <div class="tabs my-6 bg-mono-50 rounded shadow-mono-400 p-2 lg:p-8 mt-2 dark:bg-mono-700 dark:text-mono-200">
+              <a class="tab tab-bordered dark:text-mono-100" :class="{ 'tab-active': activeTab === 'mine' }" x-on:click="activeTab = 'mine'">My Stories</a>
+              <a class="tab tab-bordered dark:text-mono-100" :class="{ 'tab-active': activeTab === 'edited' }" x-on:click="activeTab = 'edited'">Edited Stories</a>
+              <a class="tab tab-bordered dark:text-mono-100" :class="{ 'tab-active': activeTab === 'followed' }" x-on:click="activeTab = 'followed'">Followed Stories</a>
+              <a class="tab tab-bordered dark:text-mono-100" :class="{ 'tab-active': activeTab === 'reviews' }" x-on:click="activeTab = 'reviews'">Reviews</a>
+              {% comment %} <a class="tab tab-bordered dark:text-mono-100" :class="{ 'tab-active': activeTab === 'reviews' }" x-on:click="activeTab = 'reviews'">Reviews</a> {% endcomment %}
             </div>
+          
             <div class="my-6 p-6">
-                <div x-show="activeProfile == 0">
-                    <div class="text-2xl">{{ author.name| capfirst }}'s Stories</div><hr/>
-                    <div class="text-mono-300">
-                        {% comment %} {{ author.editors.all | pprint }} {% endcomment %}
-                        {% for story in author.authors.all %}
-                        {% include "core/partials/story.html" %}
-                        {% empty %}
-                        {{ author.name | title }} has not written any story
-                        {% endfor %}
-                    </div>
+              <div x-show="activeTab === 'mine'">
+                <div class="text-2xl">{{ author.name| capfirst }}'s Stories</div><hr/>
+                <div class="mt-1 text-mono-300">
+                    {% comment %} {{ author.editors.all | pprint }} {% endcomment %}
+                    {% for story in author.authors.all %}
+                    {% include "core/partials/story.html" %}
+                    {% empty %}
+                    {{ author.name | title }} has not written any story
+                    {% endfor %}
                 </div>
-                <div x-show="activeProfile == 1">
-                    <div class="text-2xl">{{ author.name | capfirst }}'s Edited Stories</div><hr/>
-                    <div class="text-mono-300">
-                        {% for story in user.editors.all %}
-                        {% include "core/partials/editor.html" %}
-                        {% empty %}
-                        {{ author.name | title }} has not edited any story
-                        {% endfor %}
-                    </div>
+              </div>
+              <div x-show="activeTab === 'edited'">
+                <div class="text-2xl">{{ author.name | capfirst }}'s Edited Stories</div><hr/>
+                <div class="text-mono-300">
+                    {% for story in user.editors.all %}
+                    {% include "core/partials/editor.html" %}
+                    {% empty %}
+                    {{ author.name | title }} has not edited any story
+                    {% endfor %}
                 </div>
-                <div x-show="activeProfile == 2">
-                    <div class="text-2xl">{{ author.name| capfirst }}'s Followed Stories</div><hr/>
-                    <div class="text-mono-300">
-                        {% for bookmark in bookmarks %}
-                        {% include "core/partials/bookmark.html" %}
-                        {% empty %}
-                        {{ author.name | title }} has not followed any story yet.
-                        {% endfor %}
-                    </div>
+              </div>
+              <div x-show="activeTab === 'followed'">
+                <div class="text-2xl">{{ author.name| capfirst }}'s Followed Stories</div><hr/>
+                <div class="text-mono-300">
+                    {% for bookmark in bookmarks %}
+                    {% include "core/partials/bookmark.html" %}
+                    {% empty %}
+                    {{ author.name | title }} has not followed any story yet.
+                    {% endfor %}
                 </div>
-                <div x-show="activeProfile == 3">
-                    <div class="text-2xl">{{ author.name| capfirst }}'s Reviews</div><hr/>
-                    <div class="text-mono-300">
-                        {% for review in reviews %}
-                        {% include "stories/partials/review.html" %}
-                        {% empty %}
-                        {{ author.name | title }} has not written any review yet.
-                        {% endfor %}
-                    </div>
+              </div>
+              <div x-show="activeTab === 'reviews'">
+                <div class="text-2xl">{{ author.name| capfirst }}'s Reviews</div><hr/>
+                <div class="text-mono-300">
+                    {% for review in reviews %}
+                    {% include "stories/partials/review.html" %}
+                    {% empty %}
+                    {{ author.name | title }} has not written any review yet.
+                    {% endfor %}
                 </div>
+              </div>
+              {% comment %} <div x-show="activeTab === 'reviews'">
+                <div class="dark:text-mono-100 text-mono-700">
+                  <h3 class="mt-2">Reviews</h3>
+                  <!-- Reviews tab edited -->
+                </div>
+              </div> {% endcomment %}
             </div>
-        </div>
-</section>
+          </div>
+          
+    </section>
 </div>
 {% endblock content %}

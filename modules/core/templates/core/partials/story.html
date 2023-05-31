@@ -14,14 +14,15 @@
                         <h2 class="flex-auto text-lg font-medium dark:text-mono-100">{{story.title }}</h2>
                     </div>
                     <p class="mt-1"></p>
-                    <div class="flex py-4  text-sm text-mono-500 dark:text-mono-200 max-h-24 overflow-hidden">
-                        <div class="flex-1 inline-flex items-center break-normal truncate ">
-                            {{story.summary | safe |truncatechars:255 }}
+                    <div class="py-4 text-sm text-mono-500 dark:text-mono-200 max-h-24 overflow-hidden">
+                        <div class="items-center wordwrap break-normal truncate">
+                            <p style="word-wrap: break-word;">{{ story.summary | safe | truncatechars:255 }}</p>
                         </div>
                     </div>
+                    
                 </a>
                 <div class="flex p-4 pb-2 border-t border-mono-300 "></div>
-                <div class="flex space-x-3 text-sm font-medium">
+                <div class="flex space-x-3 text-sm font-medium space-y-3">
                     Written by:{% for author in story.author.all %}
                     <span class="badge badge-accent bg-mono-400"> 
                         <a href="{% url 'core:author' author.username %}">{{ author.name }}</a>

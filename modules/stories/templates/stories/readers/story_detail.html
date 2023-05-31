@@ -54,7 +54,7 @@
                         </span>
                     {% endfor %}
                 </div>
-                <div class="badge badge-accent bg-[{{ settings.color }}]/70">
+                <div class="badge badge-accent bg-primary/70">
                     Editor{{ story.editors_count |pluralize }}: {{ story.editor.name | default:"Ghost" }}
                 </div>
             </div>
@@ -83,53 +83,58 @@
 </section>
 <div class="bg-mono-50 rounded shadow-mono-600 p-2 lg:p-8 mt-2 dark:bg-mono-700">
     <section>
-    <div x-data="{
-        tabs: [ 'About', 'Table of Content', 'Reviews'],
-        activeTabIndex: 0
-    }">
-        <div class="tabs my-6">
-            <template x-for="(tab, index) in tabs" :key="index">
-                <a class="tab tab-bordered dark:text-mono-100" 
-                    :class="{'tab-active': activeTabIndex == index}"
-                    x-on:click="activeTabIndex = index"
-                    x-text=tab
-                ></a>
-            </template>
-        </div>
-        <div class="my-6 p-6">
-            <div x-show="activeTabIndex == 0">
+        <div x-data="{ activeTab: 'about' }">
+            <div class="tabs my-6">
+              <a class="tab tab-bordered dark:text-mono-100" :class="{ 'tab-active': activeTab === 'about' }" x-on:click="activeTab = 'about'">About</a>
+              <a class="tab tab-bordered dark:text-mono-100" :class="{ 'tab-active': activeTab === 'content' }" x-on:click="activeTab = 'content'">Table of Content</a>
+              <a class="tab tab-bordered dark:text-mono-100" :class="{ 'tab-active': activeTab === 'reviews' }" x-on:click="activeTab = 'reviews'">Reviews</a>
+            </div>
+          
+            <div class="my-6 p-6">
+              <div x-show="activeTab === 'about'">
                 <div class="text-2xl dark:text-mono-100 text-mono-700">Synopsis</div>
-            <div class="text-mono-600 dark:text-mono-200">
-                {{ story.summary | safe }}
-            </div>
-            </div>
-            <div x-show="activeTabIndex == 1">
-                Latest Release： Chapter {{ story.chapters.last.position  }}: <a href="{{ story.chapter_set.last.get_absolute_url }}">{{ story.chapters.last.title | title }}</a> <div class="badge bg-mono-200 border-none p-4 text-mono-50">{{ story.chapter_set.last.created_at | timesince }}</div><hr class="mt-5">
-                <div class="columns-2">
-                {% for chapter in story.chapters.all %}
-                <div class="p-4 block">
-                    <div>
-                        {{ chapter.position }} <a class="text-mono-800 dark:text-mono-200" href="{{ chapter.get_absolute_url }}">{{ chapter.title | title }}</a>
-                    </div>
-                    {% if user in story.author.all %}
-                    <a class="btn btn-sm hover:bg-tiber-600 dark:bg-mono-400 border-none text-mono-100 m-2" href="{% url 'stories:author:update-chapter' story.id chapter.slug %}">Edit</a>
-                    <a class="btn btn-sm hover:bg-rebel-500 dark:bg-mono-400 border-none text-mono-100 m-2" href="{% url 'stories:author:delete-chapter' story.id chapter.slug %}">Delete</a><br>
+                <div class="text-mono-600 dark:text-mono-200">
+                    {{ story.summary | safe }}
+                    {% if user.is_authenticated %}
+                    <a href="{{ story.get_read_user }}" class="btn btn-lg  btn-[{{ settings.color }}] border-none rounded">Continue Reading</a>
+                    {% else %}
+                    <a href="{{ story.get_read_guest }}" class="btn btn-lg btn-[{{ settings.color }}] border-none rounded">Read the book</a>
                     {% endif %}
-                    <p class="text-xs text-tiber-400"> {{ chapter.released_at | timesince }} ago</p>
                 </div>
-                {% endfor %}
-            </div>
-            </div>
-            <div x-show="activeTabIndex == 2">
+              </div>
+              <div x-show="activeTab === 'content'">
+                Latest Release: Chapter {{ story.chapters.last.position }}: <a href="{{ story.chapter_set.last.get_absolute_url }}">{{ story.chapters.last.title | title }}</a>
+                <div class="badge bg-mono-200 border-none p-4 text-mono-50">{{ story.chapters.last.created_at | timesince }}</div>
+                <hr class="mt-5">
+                <div class="columns-2">
+                    {% for chapter in story.chapters.all %}
+                    <div class="p-4 block">
+                        <div>
+                            {{ chapter.position }} <a class="text-mono-800 dark:text-mono-200" href="{{ chapter.get_absolute_url }}">{{ chapter.title | title }}</a>
+                        </div>
+                        {% if user in story.author.all %}
+                        <a class="btn btn-sm hover:bg-tiber-600 dark:bg-mono-400 border-none text-mono-100 m-2" href="{% url 'stories:author:update-chapter' story.id chapter.slug %}">Edit</a>
+                        <a class="btn btn-sm hover:bg-rebel-500 dark:bg-mono-400 border-none text-mono-100 m-2" href="{% url 'stories:author:delete-chapter' story.id chapter.slug %}">Delete</a><br>
+                        {% endif %}
+                        <p class="text-xs text-tiber-400"> {{ chapter.released_at | timesince }} ago</p>
+                    </div>
+                    {% endfor %}
+                </div>
+              </div>
+              <div x-show="activeTab === 'reviews'">
                 <div class="dark:text-mono-100 text-mono-700">
-                   <h3 class="mt-2"> Reviews</h3>
-                {% for review in story.reviews.all %}
+                    <h3 class="mt-2">Reviews</h3>
+                    {% for review in story.reviews.all %}
                     {% include "stories/partials/review.html" %}
-                {% endfor %}
-        </div>
-    </div>
-</section>
-
+                    {% endfor %}
+                </div>
+              </div>
+            </div>
+          </div>
+               
+    </section>
+    <!-- End Main Tabs -->
+    <!-- Tags Section-->
     <section>
         <div class="text-2xl dark:text-mono-100 text-mono-700">Tags</div>
         {% for tag in story.tags.all %}
@@ -138,9 +143,13 @@
         </div>
         {% endfor %}
     </section>
+    <!-- End Tags Section -->
+    <!-- Recommendation Section -->
     <section>
         
         <div class="text-2xl dark:text-mono-100 text-mono-700 mt-2">Recommendation</div>
         Recommendation
     </section>
+    <!-- End Recommendation Section -->
+</div>
 {% endblock content %}
