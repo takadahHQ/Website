@@ -4,8 +4,21 @@
 {% load tailwind_filters %}
 
 {% block title %}
-{{ story.title | title }}
+{{ story.story.title | title }}
 {% endblock title %}
+
+{% block meta_title %}
+{{ story.story.title | title }}: Chapter {{ story.position }}: {{ story.title }}
+{% endblock meta_title %}
+
+{% block meta_image %}
+{{ story.story.get_meta_cover }}
+{% endblock meta_image %}
+
+{% block description %}
+{{ story.text |striptags }}
+{% endblock description %}
+
 {% block breadcrumbs %}
 <li><a href="{{ story.story.story_type.get_absolute_url}}">{{ story.story.story_type.name }}</a></li> 
 <li><a href="{{ story.story.get_absolute_url}}">{{ story.story.title }}</a></li> 
@@ -33,7 +46,7 @@
         </div>
         </div>
         
-        <div class="flex flex-col md:p-8">
+        <div class="flex flex-col md:p-8 mt-2 md:mt-0">
             <div class="w-full  h-full bg-mono-50 dark:bg-mono-700 shadow-md card">
                 <div class="card-body">
                   <h1 class="text-xl text-mono-800 card-title dark:text-mono-200">Chapter - {{ story.position }}: {{ story.title }}</h1>

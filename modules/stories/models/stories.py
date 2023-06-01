@@ -146,6 +146,22 @@ class Stories(CacheInvalidationMixin, idModel, timeStampModel):
         else:
             return self.cover.thumbnail["400x200"].url
 
+    def get_meta_cover(self):
+        if not self.cover:
+            self.cover = self.create_cover()
+            test = self.cover.url
+            return self.cover.thumbnail["400x209"].url
+        else:
+            return self.cover.thumbnail["400x209"].url
+
+    def get_story_cover(self):
+        if not self.cover:
+            self.cover = self.create_cover()
+            test = self.cover.url
+            return self.cover.url
+        else:
+            return self.cover.url
+
     def id(self):
         id = h_encode(self.id)
         print(id)

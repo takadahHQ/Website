@@ -29,14 +29,6 @@ themeToggleButton.addEventListener("click", () => {
   }
 });
 
-
-let d = document.querySelectorAll(".switcher");
-localStorage.getItem("color-theme") === "dark" || !("color-theme" in localStorage) && window.matchMedia("(prefers-color-scheme: dark)").matches ? document.documentElement.classList.add("dark") : document.documentElement.classList.remove("dark");
-d.forEach(t => {
-    t.addEventListener("click", function() {
-        localStorage.getItem("color-theme") ? localStorage.getItem("color-theme") === "light" ? (document.documentElement.classList.add("dark"), localStorage.setItem("color-theme", "dark")) : (document.documentElement.classList.remove("dark"), localStorage.setItem("color-theme", "light")) : document.documentElement.classList.contains("dark") ? (document.documentElement.classList.remove("dark"), localStorage.setItem("color-theme", "light")) : (document.documentElement.classList.add("dark"), localStorage.setItem("color-theme", "dark"))
-    })
-});
 let i = document.querySelectorAll(".tab"),
     a = document.querySelector(".tab-indicator"),
     u = document.querySelectorAll(".panel"),
