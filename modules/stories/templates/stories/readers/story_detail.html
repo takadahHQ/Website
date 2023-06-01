@@ -3,6 +3,16 @@
 {% block title %}
 {{ story.title | title }}
 {% endblock title %}
+
+{% block meta_title %}
+{{ story.title | title }}
+{% endblock meta_title %}
+{% block meta_image %}
+{{ story.get_meta_cover }}
+{% endblock meta_image %}
+{% block description %}
+{{ story.summary |striptags }}
+{% endblock description %}
 {% block breadcrumbs %}
 <li><a href="{{ story.story_type.get_absolute_url}}">{{ story.story_type.name }}</a></li> 
 <li><a>{{ story.title }}</a></li> 

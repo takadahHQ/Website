@@ -1,4 +1,5 @@
 #!/bin/sh   
+git fetch origin master
 git pull origin master
 source ~/env/bin/activate
 pip install -r requirements.txt

@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block body %}
-<body class="bg-mono-200 dark:bg-mono-900 text-mono-900 dark:text-mono-300 font-serif" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+<body class="bg-mono-200 dark:bg-mono-900 text-mono-900 dark:text-mono-300 font-serif" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' x-data="{ sideBar: false }">
 {% include "component/sidebar/base.html" %}
     <div class="ml-auto mb-6 lg:w-[75%] xl:w-[80%] 2xl:w-[85%]">
       <div class="sticky top-0 h-16 border-b bg-mono-50 dark:bg-mono-800 dark:border-mono-900 lg:py-2.5">
@@ -10,7 +10,7 @@
             {% block page-title %}
               {{ block.super }}
             {% endblock page-title %}</h5>
-          <button class="-mr-2 h-16 w-12 border-r lg:hidden dark:border-mono-900 dark:text-mono-300">
+          <button class="-mr-2 h-16 w-12 border-r lg:hidden dark:border-mono-900 dark:text-mono-300" @click.stop="sideBar = true">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               class="my-auto h-6 w-6"
@@ -167,6 +167,9 @@
     <script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
     <script src="{% static 'js/site.js' %}"></script>
     {% block scripts %}{% endblock scripts %}
+      <!-- Sidebar Backdrop -->
+  <div class="fixed inset-0 z-10 w-screen h-screen bg-black bg-opacity-25 lg:hidden" x-show.transition="sideBar"
+  x-cloak></div>
   </body>
                   
 {% endblock body %}
