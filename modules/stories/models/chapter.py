@@ -6,6 +6,7 @@ from ckeditor_uploader.fields import RichTextUploadingField
 from django.urls import reverse
 from django.utils.text import slugify
 from django.contrib.contenttypes.fields import GenericRelation
+from django.utils.html import strip_tags
 
 from flag.models import Flag
 from modules.stories.models.include import (
@@ -50,8 +51,10 @@ class Chapter(CacheInvalidationMixin, idModel, statusModel, timeStampModel):
             self.slug = slugify(
                 self.story.abbreviation + "- chapter-" + f"{self.position}"
             )
-            self.words = self.text.count(self.text)
-        self.words = self.text.count(self.text)
+        # self.words = self.text.count(self.text)
+        # self.words = self.text.count(self.text)
+        text_without_tags = strip_tags(self.text)
+        self.words = len(text_without_tags.split())
         super(Chapter, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
@@ -149,6 +152,13 @@ class Chapter(CacheInvalidationMixin, idModel, statusModel, timeStampModel):
 
     def get_reviews(self):
         return self.reviews.filter(parent=None).filter(status="active")
+
+    def updateWords(self):
+        chapters = Chapter.objects.all()
+        for chapter in chapters:
+            text_without_tags = strip_tags(chapter.text)
+            chapter.words = len(text_without_tags.split())
+            chapter.save()
 
     class Meta:
         verbose_name_plural = "chapters"

@@ -1,6 +1,7 @@
  {% extends 'base.html' %}
 {% load flag_tags %}
 {% block title %}
+{% load humanize %}
 {{ story.title | title }}
 {% endblock title %}
 
@@ -49,6 +50,9 @@
                 </div>
                <div class="badge p-3">
                    {{ story.review_count  }} Review{{ story.review_count |pluralize }}
+                </div>
+                <div class="badge p-3">
+                    {% if story.get_word_count < 1000000 %}{{ story.get_word_count|intcomma }}{% else %}{{ story.get_word_count|intword }}{% endif %} Words
                 </div>
             </div>
             <div class="flex space-x-2 flex-wrap">

@@ -1,5 +1,6 @@
 {% extends 'dashboard.html' %}
 {% load flag_tags %}
+{% load humanize %}
 {% block title %}
 {{ story.title | title }}
 {% endblock title %}
@@ -25,17 +26,24 @@
             </div>
             <!-- genre status chapter views-->
             <div class="flex space-x-2 flex-wrap justify justify-space">
-                <div class="p-2">
-                    {{ story.genre.first.name }}
+                <div class="p-0">
+                    {% for genre in story.genre.all %}
+                    <span class="badge badge-accent bg-rebel-300 p-3 border-0 md:mb-2"> 
+                        <a href="{{ genre.get_absolute_url }}">{{ genre.name }}</a>
+                    </span>
+                {% endfor %}
                 </div>
-                <div class="p-2">
+                <div class="badge p-3">
                     {{ story.status | title }}
                 </div>
-                <div class="p-2">
-                    {{ story.chapter_count  }} Chapter{{ story.chapter_count |pluralize }}
+                <div class="badge p-3">
+                    {{ story.chapters_count  }} Chapter{{ story.chapters_count |pluralize }} Released
                 </div>
-                <div class="p-2">
-                    123M Views
+               <div class="badge p-3">
+                   {{ story.review_count  }} Review{{ story.review_count |pluralize }}
+                </div>
+                <div class="badge p-3">
+                    {% if story.get_word_count < 1000000 %}{{ story.get_word_count|intcomma }}{% else %}{{ story.get_word_count|intword }}{% endif %} Words
                 </div>
             </div>
             <div class="flex space-x-2 flex-wrap">
@@ -92,6 +100,7 @@
             <div class="columns-2">
             {% for chapter in story.chapters.all %}
             <div class="p-4">
+                {{ chapter.updateWords }}
             {{ chapter.position }} <a class="text-mono-800 dark:text-mono-200" href="{{ chapter.get_absolute_url }}">{{ chapter.title | title }} </a> 
             <a class="btn btn-sm hover:bg-tiber-600 dark:bg-mono-400 border-none text-mono-100 m-2" href="{% url 'stories:author:preview-chapter' story.id chapter.slug %}">
                 <span class="sr-only 2xl:not-sr-only"> Preview</span>
