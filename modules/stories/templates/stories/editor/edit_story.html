@@ -1,0 +1,22 @@
+{% extends 'dashboard.html' %}
+{% load advert_tags %}
+{% load tailwind_filters %}
+{% block title %}
+Edit: {{ form.title.value | title }}
+{% endblock title %}
+{% block breadcrumbs %}
+<li><a href="{% url 'stories:author:dashboard' %}">Author</a></li> 
+<li><a href="{% url 'stories:author:show' story.id %}">{{ form.title.value | title }}</a></li> 
+<li><a>Update</a></li> 
+{% endblock %}
+{% block content %}
+<!-- Story Detials -->
+<section class="w-full">
+    <form method="post">
+        {% csrf_token %}
+        {{ form|crispy }}
+        {% include 'stories/includes/add_reference.html' with story=story %}
+        <button type="submit" class="btn btn-[{{ settings.color}}] opacity-80">Update Story</button>
+    </form>
+</section>
+{% endblock content %}

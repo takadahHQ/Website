@@ -1,0 +1,84 @@
+{% extends 'dashboard.html' %}
+
+{% block title %}
+Story
+{% endblock title %}
+
+{% block page-title %}
+Story
+{% endblock page-title %}
+{% block breadcrumbs %}
+<li><a href="{% url 'stories:author:dashboard' %}">Author</a></li> 
+<li><a>{{ user.name}}'s Stories</a></li> 
+{% endblock %}
+{% block content %}
+<div class="p-8 rounded bg-mono-50 shadow-mono-400 dark:bg-mono-800 dark:text-mono-200">
+    <main class="container">
+        <div class="flex flex-col">
+            <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
+              <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
+                <div class="overflow-hidden">
+                  <table class="min-w-full rounded" id="story" data-replace="jtable" data-component="datatable" data-locale="en" data-search="true">
+                    <thead class="border-b font-bold dark:text-mono-200 text-lg">
+                      <tr>
+                        <th scope="col" class="font-medium text-mono-900 dark:text-mono-200 px-6 py-4 text-left">
+                          #
+                        </th>
+                        <th scope="col" class="font-medium text-mono-900 dark:text-mono-200 px-6 py-4 text-left">
+                          Story
+                        </th>
+                        <th scope="col" class="font-medium text-mono-900 dark:text-mono-200 px-6 py-4 text-left">
+                          Chapters
+                        </th>
+                        <th scope="col" class="font-medium text-mono-900 dark:text-mono-200 px-6 py-4 text-left">
+                            Status
+                          </th>
+                        <th scope="col" class="font-medium text-mono-900 dark:text-mono-200 px-6 py-4 text-left">
+                          Action
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        {% for story in  stories %}
+                      <tr class="{% cycle 'bg-mono-100 dark:bg-mono-700' 'bg-mono-200 dark:bg-mono-800' %} border-b">
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-mono-900 dark:text-mono-200"> {{forloop.counter0}} </td>
+                        <td class="text-sm text-mono-900 dark:text-mono-200 font-light px-6 py-4 whitespace-nowrap">
+                            <a href="{% url 'stories:author:show' story.id %}">
+                          {{ story.title }}
+                      </a>
+                        </td>
+                        <td class="text-sm text-mono-900 dark:text-mono-200 font-light px-6 py-4 whitespace-nowrap">
+                            {{ story.chapters.count }}
+                        </td>
+                        <td class="text-sm text-mono-100 dark:text-mono-800 font-light px-6 py-4 whitespace-nowrap">
+                            <span class="badge border-0 p-3 
+                            {% if story.status == "prerelease" %}
+                             bg-mono-300
+                            {% elif story.status == "published" %}
+                             bg-mono-400
+                            {% elif story.status == "complete" %}
+                             bg-mono-500 
+                            {% elif story.status == "draft" %}
+                             bg-mono-600
+                             {% elif story.status == "haitus" %}
+                             bg-mono-700  
+                            {% else %}
+                             bg-mono-800  
+                             {% endif %}">{{ story.status }}</span>  
+                          </td>
+                        <td class="text-sm text-mono-900 font-light px-6 py-4 whitespace-nowrap">
+                          <a href="{% url 'stories:author:show' story.id %}" class="btn btn-sm bg-mono-600 border-0">View</a>
+                          <a href="{% url 'stories:author:update' story.id %}" class="btn btn-sm bg-mono-400 border-0">Update</a>
+                          <a href="{% url 'stories:author:delete' story.id %}" class="btn btn-sm bg-mono-300 border-0">Delete</a>
+                        </td>
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+    </main>
+</div>
+{% endblock content %}

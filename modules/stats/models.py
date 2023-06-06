@@ -466,6 +466,7 @@ class Hit(models.Model):
         verbose_name = _("Hit")
         verbose_name_plural = _("Hits")
         ordering = ["-start_time"]
+        app_label = "stats"
         indexes = [
             models.Index(fields=["session", "-start_time"]),
             models.Index(fields=["service", "-start_time"]),

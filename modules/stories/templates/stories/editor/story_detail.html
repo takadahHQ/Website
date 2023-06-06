@@ -1,0 +1,153 @@
+{% extends 'dashboard.html' %}
+{% load flag_tags %}
+{% load humanize %}
+{% block title %}
+{{ story.title | title }}
+{% endblock title %}
+{% block breadcrumbs %}
+<li><a href="{% url 'stories:author:dashboard' %}">Author</a></li> 
+<li><a href="{% url 'stories:author:list' %}">Stories</a></li> 
+<li><a>{{ story.title }}</a></li> 
+{% endblock %}
+{% block content %}
+<!-- Story Detials -->
+<section class="w-full">
+    <div class="flex hover:flex-auto">
+        <div class="md:w-1/6 w-full">
+            <img class="aspect-square hover:saturate-200 transition duration-300 ease-in-out shadow-lg rounded max-w-50 h-auto align-middle border-none" src="{{ story.get_cover }}"/>
+        </div>
+        <div class="w-full md:5/6 p-2 mx-auto">
+            <span>
+                {% render_flag_form story user request %}
+                </span>
+            <div class="flex space-x-2 flex-wrap">
+                <h1 class="text-2xl md:text-5xl dark:text-mono-100">{{ story.title | title }}</h1>
+                <span class="badge p-4 bg-black">{{ story.abbreviation }}</span>
+            </div>
+            <!-- genre status chapter views-->
+            <div class="flex space-x-2 flex-wrap justify justify-space">
+                <div class="p-0">
+                    {% for genre in story.genre.all %}
+                    <span class="badge badge-accent bg-rebel-300 p-3 border-0 md:mb-2"> 
+                        <a href="{{ genre.get_absolute_url }}">{{ genre.name }}</a>
+                    </span>
+                {% endfor %}
+                </div>
+                <div class="badge p-3">
+                    {{ story.status | title }}
+                </div>
+                <div class="badge p-3">
+                    {{ story.chapters_count  }} Chapter{{ story.chapters_count |pluralize }} Released
+                </div>
+               <div class="badge p-3">
+                   {{ story.review_count  }} Review{{ story.review_count |pluralize }}
+                </div>
+                <div class="badge p-3">
+                    {% if story.get_word_count < 1000000 %}{{ story.get_word_count|intcomma }}{% else %}{{ story.get_word_count|intword }}{% endif %} Words
+                </div>
+            </div>
+            <div class="flex space-x-2 flex-wrap">
+                <div class="">
+                    Author{{ story.authors_count |pluralize }}:
+                    {% for author in story.author.all %}
+                        <span class="badge bg-tiber-400"> 
+                            {{ author.name }}
+                        </span>
+                    {% empty %}
+                        <span class="badge-accent"> 
+                            Ghost Author
+                        </span>
+                    {% endfor %}
+                </div>
+                {% comment %} <div class="">
+                    Editor{{ story.editors_count |pluralize }}: {{ story.editor.name | default:"Ghost" }}
+                </div> {% endcomment %}
+            </div>
+            <div class="flex space-x-2 flex-wrap">
+                {% include "stories/partials/following.html" %}
+                {% include "stories/partials/like.html" %}
+                {% include "stories/partials/dislike.html" %}
+            </div>
+            <div class="w-full flex flex-wrap space-x-2">
+                <a href="{% url 'stories:author:update' story.id %}" class="btn hover:bg-rebel-500 border-none rounded">Edit the Story</a>
+                <a href="{% url 'stories:author:create-chapter' story.id %}" class="btn hover:bg-rebel-500 border-none rounded">Add New Chapter</a>
+                <a href="{% url 'sponsor:author:package-list' story.id %}" class="btn hover:bg-rebel-500 border-none rounded">Sponsorship Packages</a>
+            </div>
+            
+        </div>
+    </div>
+</section>
+<div class="bg-mono-50 rounded shadow-mono-600 p-2 lg:p-8 mt-2 dark:bg-mono-700 text-mono-700 dark:text-mono-200">
+    <!-- Main Tabs -->
+    <section>
+        <div x-data="{ activeTab: 'about' }">
+            <div class="tabs my-6">
+              <a class="tab tab-bordered dark:text-mono-100" :class="{ 'tab-active': activeTab === 'about' }" x-on:click="activeTab = 'about'">About</a>
+              <a class="tab tab-bordered dark:text-mono-100" :class="{ 'tab-active': activeTab === 'content' }" x-on:click="activeTab = 'content'">Table of Content</a>
+              <a class="tab tab-bordered dark:text-mono-100" :class="{ 'tab-active': activeTab === 'reviews' }" x-on:click="activeTab = 'reviews'">Reviews</a>
+            </div>
+          
+            <div class="my-6 p-6">
+              <div x-show="activeTab === 'about'">
+                <div class="dark:text-mono-100 text-mono-700 text-2xl">Synopsis</div>
+                <div class="text-mono-600 dark:text-mono-200">
+                    {{ story.summary | safe }}
+                </div>
+              </div>
+              <div x-show="activeTab === 'content'">
+                Latest Release： Chapter {{ story.chapters.last.position  }}: <a href="{{ story.chapter_set.last.get_absolute_url }}">{{ story.chapter_set.last.title | title }}</a> <div class="badge bg-mono-300 border-none p-4 text-mono-50">{{ story.chapter_set.last.created_at | timesince }}</div>
+                <hr class="mt-5">
+            <div class="columns-2">
+            {% for chapter in story.chapters.all %}
+            <div class="p-4">
+                {{ chapter.updateWords }}
+            {{ chapter.position }} <a class="text-mono-800 dark:text-mono-200" href="{{ chapter.get_absolute_url }}">{{ chapter.title | title }} </a> 
+            <a class="btn btn-sm hover:bg-tiber-600 dark:bg-mono-400 border-none text-mono-100 m-2" href="{% url 'stories:author:preview-chapter' story.id chapter.slug %}">
+                <span class="sr-only 2xl:not-sr-only"> Preview</span>
+                <svg fill="currentColor" class="w-4 h-4 dark:text-mono-100 text-mono-100" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 1920 1920" xmlns="http://www.w3.org/2000/svg" stroke="currentColor"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M960 1277.853c-175.297 0-317.951-142.654-317.951-317.951 0-175.297 142.654-317.951 317.951-317.951 175.297 0 317.951 142.654 317.951 317.951 0 175.297-142.654 317.95-317.951 317.95Zm948.342-341.585C1720.645 558.648 1357.332 324 960 324c-397.333 0-760.645 234.648-948.342 612.268L0 959.902l11.658 23.634c187.697 377.62 551.01 612.268 948.342 612.268 397.333 0 760.645-234.648 948.342-612.268L1920 959.902l-11.658-23.634Z" fill-rule="evenodd"></path> </g></svg>
+            </a>
+            <a class="btn btn-sm hover:bg-tiber-600 dark:bg-mono-400 border-none text-mono-100 m-2" href="{% url 'stories:author:update-chapter' story.id chapter.slug %}">
+                <span class="sr-only 2xl:not-sr-only"> Edit</span>
+                <svg viewBox="0 0 24 24" fill="none" class="w-4 h-4 dark:text-mono-100 text-mono-100" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g id="Edit / Edit_Pencil_Line_02"> <path id="Vector" d="M4 20.0001H20M4 20.0001V16.0001L14.8686 5.13146L14.8704 5.12976C15.2652 4.73488 15.463 4.53709 15.691 4.46301C15.8919 4.39775 16.1082 4.39775 16.3091 4.46301C16.5369 4.53704 16.7345 4.7346 17.1288 5.12892L18.8686 6.86872C19.2646 7.26474 19.4627 7.46284 19.5369 7.69117C19.6022 7.89201 19.6021 8.10835 19.5369 8.3092C19.4628 8.53736 19.265 8.73516 18.8695 9.13061L18.8686 9.13146L8 20.0001L4 20.0001Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g> </g></svg>
+            </a>
+            <a class="btn btn-sm hover:bg-rebel-500 dark:bg-mono-400 border-none text-mono-100 m-2" href="{% url 'stories:author:delete-chapter' story.id chapter.slug %}">
+                <span class="sr-only 2xl:not-sr-only">Delete </span>
+                <svg viewBox="0 0 24 24" fill="none" class="w-4 h-4 dark:text-mono-100 text-mono-100" xmlns="http://www.w3.org/2000/svg" stroke="currentColor"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M10 11V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M14 11V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M4 7H20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M6 7H12H18V18C18 19.6569 16.6569 21 15 21H9C7.34315 21 6 19.6569 6 18V7Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M9 5C9 3.89543 9.89543 3 11 3H13C14.1046 3 15 3.89543 15 5V7H9V5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+                
+            </a><br>
+            <p class="text-xs text-red-400">Updated: {{ chapter.created_at | timesince }} ago</p>
+            <p class="text-xs text-green-500">Released: {{ chapter.released_at | date }}</p>
+            </div>
+            {% endfor %}
+        </div>
+              </div>
+              <div x-show="activeTab === 'reviews'">
+                <div class="dark:text-mono-100 text-mono-700">
+                    <h3 class="mt-2">Reviews</h3>
+                    {% for review in story.reviews.all %}
+                    {% include "stories/partials/review.html" %}
+                    {% endfor %}
+                </div>
+            </div>
+          </div>
+          
+    </section>
+    <!-- End Main Tabs -->
+    <!-- Tags Section-->
+    <section>
+        <div class="text-2xl dark:text-mono-100 text-mono-700">Tags</div>
+        {% for tag in story.tags.all %}
+        <div class="badge bg-mono-300 border-none p-4 text-mono-50">
+        <a href="{% url 'stories:tag' tag.slug %}">{{ tag.name | title }}</a>
+        </div>
+        {% endfor %}
+    </section>
+    <!-- End Tags Section -->
+    <!-- Recommendation Section -->
+    <section>
+        <div class="text-2xl dark:text-mono-100 text-mono-700">Recommendation</div>
+        Recommendation
+    </section>
+    <!-- End Recommendation Section -->
+</div>
+{% endblock content %}
