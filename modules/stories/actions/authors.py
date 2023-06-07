@@ -1,5 +1,6 @@
 from django.db.models import Q, Count
 from django.shortcuts import render, get_object_or_404
+from modules.core.models.users import Users
 from modules.stories.actions.user import get_genre
 from modules.stories.models import (
     Chapter,
@@ -23,9 +24,9 @@ def get_stories_by_genre(slug):
 
 
 def get_author_stories_likes(author):
-    likes = Stories.objects.filter(author=author.id).aggregate(
-        total_likes=Count("likes")
-    )["total_likes"]
+    queryset = Users.objects.exclude(Q(status="pending") | Q(status="draft"))
+    user = get_object_or_404(Users, pk=author)
+    likes = user.total_stories_liked_by_other()
     return likes
 
 

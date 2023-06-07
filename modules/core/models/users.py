@@ -5,6 +5,7 @@ from ckeditor.fields import RichTextField
 from django.contrib.auth.models import AbstractUser, UserManager
 import secrets
 from versatileimagefield.fields import VersatileImageField
+from modules.stories.models import Review
 
 
 def create_token():
@@ -97,6 +98,36 @@ class Users(AbstractUser):
 
     def get_absolute_url(self):
         return reverse_lazy("core:author", kwargs={"username": self.username.lower()})
+
+    def total_stories_liked_by_other(self):
+        return self.story_likes.exclude(author_user__user=self).count()
+
+    def total_stories_disliked_by_other(self):
+        return self.story_dislike.exclude(author_user__user=self).count()
+
+    def total_stories_commented_by_other(self):
+        return (
+            Review.objects.filter(user=self, story__author_stories__user=self)
+            .exclude(user=self)
+            .count()
+        )
+
+    def total_stories_followed_by_other(self):
+        return self.story_followers.exclude(author_user__user=self).count()
+
+    def total_stories_followed_by_me(self):
+        return self.story_followers.filter(author_user__user=self).count()
+
+    def total_stories_disliked_by_me(self):
+        return self.story_likes.filter(author_user__user=self).count()
+
+    def total_stories_disliked_by_me(self):
+        return self.story_dislike.filter(author_user__user=self).count()
+
+    def total_stories_commented_by_me(self):
+        return Review.objects.filter(
+            user=self, story__author_stories__user=self
+        ).count()
 
     class Meta:
         verbose_name_plural = "users"

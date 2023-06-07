@@ -101,9 +101,9 @@ def ingress_middleware(get_response):
         response = get_response(request)
 
         if request.method == "GET":
-            service_uuid = request.resolver_match.kwargs.get("service_uuid")
+            service_uuid = "de0dc5ca-e70d-480a-82db-003bb4f42992"
             identifier = request.resolver_match.kwargs.get("identifier", "")
-            tracker = "PIXEL"
+            tracker = "BACK"
             payload = {}
             time = timezone.now()
             client_ip, is_routable = get_client_ip(request)
