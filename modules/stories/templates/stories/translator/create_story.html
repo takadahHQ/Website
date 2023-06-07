@@ -1,0 +1,24 @@
+{% extends 'dashboard.html' %}
+{% load advert_tags %}
+{% load tailwind_filters %}
+
+{% block title %}
+Publish Story
+{% endblock title %}
+{% block page-title %}
+Publish Story
+{% endblock page-title %}
+{% block breadcrumbs %}
+<li><a href="{% url 'stories:author:dashboard' %}">Author</a></li> 
+<li><a>Publish Story</a></li> 
+{% endblock %}
+{% block content %}
+<!-- Add Story -->
+<section class="w-full">
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form |crispy }}
+        <button type ="submit" class="btn btn-[{{ settings.color}}] opacity-80">Publish</button>
+    </form>
+</section>
+{% endblock content %}

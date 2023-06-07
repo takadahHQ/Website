@@ -10,9 +10,7 @@ from django.core.cache import cache
 from django.db.models import Q
 from django.utils import timezone
 
-from modules.stats.models import Service
-
-from .models import Hit, Session
+from modules.stats.models import Service, Hit, Session
 
 log = logging.getLogger(__name__)
 

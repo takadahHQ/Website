@@ -1,0 +1,27 @@
+{% extends 'dashboard.html' %}
+{% load advert_tags %}
+{% load tailwind_filters %}
+
+{% block title %}
+Delete: {{ object | title }}
+{% endblock title %}
+{% block page-title %}
+Author
+{% endblock page-title %}
+{% block breadcrumbs %}
+<li><a href="{% url 'stories:author:dashboard' %}">Author</a></li> 
+<li><a href="{% url 'stories:author:show' story.id %}">{{ object | title }}</a></li> 
+<li><a>Delete</a></li> 
+{% endblock %}
+{% block content %}
+<!-- Story Detials -->
+<section class="w-full m-2 p-8 bg-mono-50 dark:bg-mono-700 rounded shadow">
+    <h1 class="dark:text-mono-100">Do You want to Delete this story.</h1>
+    <form method="post">
+        {% csrf_token %}
+<p>Are you sure you want to delete "{{ object }}"?</p>
+        <button type="submit" class="btn btn-[{{ settings.color}}] opacity-80">Delete Story</button>
+    </form>
+</section>
+{% endblock content %}
+

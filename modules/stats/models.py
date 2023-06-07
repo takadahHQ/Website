@@ -1,6 +1,6 @@
 import uuid
 
-from django.db import models
+from django.db import NotSupportedError, models
 from django.shortcuts import reverse
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
@@ -450,7 +450,12 @@ class Hit(models.Model):
     last_seen = models.DateTimeField(default=timezone.now, db_index=True)
     heartbeats = models.IntegerField(default=0)
     tracker = models.TextField(
-        choices=[("BACK", "Backend"), ("API", "Api (noscript)")]
+        choices=[
+            ("BACK", "Backend"),
+            ("PIXEL", "Image"),
+            ("JS", "JavaScript"),
+            ("API", "Api (noscript)"),
+        ]
     )  # Tracking backend or API
 
     # Advanced page information
@@ -466,6 +471,7 @@ class Hit(models.Model):
         verbose_name = _("Hit")
         verbose_name_plural = _("Hits")
         ordering = ["-start_time"]
+        app_label = "stats"
         indexes = [
             models.Index(fields=["session", "-start_time"]),
             models.Index(fields=["service", "-start_time"]),

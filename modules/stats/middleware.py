@@ -1,9 +1,11 @@
+from django.urls import reverse
 from django.utils.functional import SimpleLazyObject
 import time
 import json
 from modules.stats.utils import getUserAgent
 from modules.stats.tasks import ingress_request
 from ipware import get_client_ip
+from django.utils import timezone
 
 
 def ingress(request, service_uuid, identifier, tracker, payload):
@@ -92,3 +94,49 @@ class AnalyticsMiddleware:
     def process_response(self, request, response):
         costed = time.time() - self.start_time
         return response
+
+
+def ingress_middleware(get_response):
+    def middleware(request):
+        response = get_response(request)
+
+        if request.method == "GET":
+            service_uuid = "de0dc5ca-e70d-480a-82db-003bb4f42992"
+            identifier = request.resolver_match.kwargs.get("identifier", "")
+            tracker = "BACK"
+            payload = {}
+            time = timezone.now()
+            client_ip, is_routable = get_client_ip(request)
+            location = request.META.get("HTTP_REFERER", "").strip()
+            user_agent = request.META.get("HTTP_USER_AGENT", "").strip()
+            dnt = request.META.get("HTTP_DNT", "0").strip() == "1"
+            gpc = request.META.get("HTTP_SEC_GPC", "0").strip() == "1"
+            if gpc or dnt:
+                dnt = True
+
+            # ingress_request.delay(
+            #     service_uuid,
+            #     tracker,
+            #     time,
+            #     payload,
+            #     client_ip,
+            #     location,
+            #     user_agent,
+            #     dnt=dnt,
+            #     identifier=identifier,
+            # )
+            ingress_request(
+                service_uuid,
+                tracker,
+                time,
+                payload,
+                client_ip,
+                location,
+                user_agent,
+                dnt=dnt,
+                identifier=identifier,
+            )
+
+        return response
+
+    return middleware

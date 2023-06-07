@@ -166,7 +166,20 @@
     <script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
     <script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
     <script src="{% static 'js/site.js' %}"></script>
-    {% block scripts %}{% endblock scripts %}
+    <script src="{% static 'js/demo.js' %}"></script>
+    
+    {% block scripts %}
+    <script type="text/javascript">
+      (function () {
+    // The DOM element you wish to replace with Tagify
+    var input = document.querySelector('input[name=tags]');
+    
+    // initialize Tagify on the above input node reference
+    new Tagify(input)
+      
+      })()
+    </script>
+    {% endblock scripts %}
       <!-- Sidebar Backdrop -->
   <div class="fixed inset-0 z-10 w-screen h-screen bg-black bg-opacity-25 lg:hidden" x-show.transition="sideBar"
   x-cloak></div>

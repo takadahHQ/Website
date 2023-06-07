@@ -9,6 +9,8 @@ from django.contrib.contenttypes.fields import GenericRelation
 from taggit.managers import TaggableManager
 from modules.stories.converter import h_encode
 from versatileimagefield.fields import VersatileImageField
+from django.utils import timezone
+
 
 try:
     mindsdb = __import__("mindsdb")
@@ -173,6 +175,13 @@ class Stories(CacheInvalidationMixin, idModel, timeStampModel):
             "stories:show",
             kwargs={"type": story_type, "slug": self.slug},
         )
+
+    def get_word_count(self):
+        active_chapters = self.chapters.filter(
+            status="active", released_at__lte=timezone.now()
+        )
+        total_word_count = sum(chapter.words for chapter in active_chapters)
+        return total_word_count
 
     @property
     def prediction(self):

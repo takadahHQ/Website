@@ -105,6 +105,7 @@ THIRD_PARTY_APPS = [
     # "djstripe",
     "storages",
     "versatileimagefield",
+    "django_celery_beat",
 ]
 
 LOCAL_APPS = [
@@ -117,7 +118,7 @@ LOCAL_APPS = [
     "modules.subscriptions",
     # "modules.helpdesk",
     "modules.roadmap",
-    # "modules.stats",
+    "modules.stats",
     "modules.theme",
 ]
 
@@ -141,6 +142,7 @@ MIDDLEWARE = [
     "hijack.middleware.HijackUserMiddleware",
     # "djstripe.middleware.SubscriptionPaymentMiddleware",
     # "modules.stats.middleware.AnalyticsMiddleware",
+    "modules.stats.middleware.ingress_middleware",
     # 'auditlog.middleware.AuditlogMiddleware',
 ]
 
@@ -440,10 +442,10 @@ CKEDITOR_CONFIGS = {
                     "JustifyCenter",
                     "JustifyRight",
                     "JustifyBlock",
-                    "-",
-                    "BidiLtr",
-                    "BidiRtl",
-                    "Language",
+                    # "-",
+                    # "BidiLtr",
+                    # "BidiRtl",
+                    # "Language",
                 ],
             },
             {"name": "links", "items": ["Link", "Unlink", "Anchor"]},
@@ -667,3 +669,14 @@ ADS_VIEWPORTS = {
     "lg": "hidden object-contain lg:block xl:hidden",
     "xl": "hidden object-contain xl:block",
 }
+
+# CELERY_BROKER_REDIS_URL = (
+#     "redis://ec2-54-249-146-66.ap-northeast-1.compute.amazonaws.com:6379"
+# )
+
+# Celery configuration
+CELERY_BROKER_URL = "redis://54.249.146.66:6379/0"
+CELERY_RESULT_BACKEND = "redis://54.249.146.66:6379/0"
+
+# this allows you to schedule items in the Django admin.
+CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers.DatabaseScheduler"
