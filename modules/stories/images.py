@@ -121,24 +121,27 @@ def author(image, name):
     truetype_url = "https://github.com/googlefonts/josefinsans/blob/master/fonts/ttf/JosefinSans-Bold.ttf?raw=true"
     # font = ImageFont.truetype(urlopen(truetype_url), size=15)
     font = ImageFont.truetype(urlopen(truetype_url), size=0)
-    print("font size:")
-    print(font.getsize(name)[0])
-    print("image size:")
-    print(image.size[0])
-    while font.getsize(name)[0] < image.size[0]:
+    while font.getsize(name)[0] < (image.size[0] - 40):
         font = ImageFont.truetype(urlopen(truetype_url), size=font.size + 1)
     (x, y) = (186, 490)
     color = "rgb(255, 055,05)"  # white color
     border = "black"
-    draw.text(
-        (x, y),
-        name,
-        fill=color,
-        stroke_width=2,
-        stroke_fill=border,
-        font=font,
-        anchor="md",
-    )
+    image_size = image.size
+    lines = text_wrap(name, font, image_size[0] - 40)
+    line_height = font.getsize("hg")[1]
+
+    for line in lines:
+        # draw the line on the image
+        draw.text(
+            (x, y),
+            line,
+            fill=color,
+            stroke_width=2,
+            stroke_fill=border,
+            font=font,
+            anchor="ms",
+        )
+        y = y + line_height
     return image
 
 
@@ -160,7 +163,7 @@ def title(image, title):
     line_height = font.getsize("hg")[1]
 
     x = 186
-    y = 400
+    y = 112
     for line in lines:
         # draw the line on the image
         draw.text(
@@ -175,8 +178,6 @@ def title(image, title):
 
         # update the y position so that we can use it for next line
         y = y + line_height
-    # save the image
-    # img.save('word2.png', optimize=True)
     return image
 
 
