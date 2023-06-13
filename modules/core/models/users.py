@@ -76,7 +76,7 @@ class Users(AbstractUser):
         return self.ref_code
 
     def get_profile_image(self):
-        image = "https://avatars.dicebear.com/api/open-peeps/%s.svg" % (self.username)
+        image = "https://api.dicebear.com/6.x/notionists/svg?seed=%s" % (self.username)
         return image
 
     def following_count(self):
@@ -100,10 +100,10 @@ class Users(AbstractUser):
         return reverse_lazy("core:author", kwargs={"username": self.username.lower()})
 
     def total_stories_liked_by_other(self):
-        return self.story_likes.exclude(author_user__user=self).count()
+        return self.story_likes.exclude(author__author_user_in=self).count()
 
     def total_stories_disliked_by_other(self):
-        return self.story_dislike.exclude(author_user__user=self).count()
+        return self.story_dislike.exclude(author__author_user_in=self).count()
 
     def total_stories_commented_by_other(self):
         return (
@@ -113,16 +113,16 @@ class Users(AbstractUser):
         )
 
     def total_stories_followed_by_other(self):
-        return self.story_followers.exclude(author_user__user=self).count()
+        return self.story_followers.exclude(author__author_user_in=self).count()
 
     def total_stories_followed_by_me(self):
-        return self.story_followers.filter(author_user__user=self).count()
+        return self.story_followers.filter(author__author_user_in=self).count()
 
     def total_stories_disliked_by_me(self):
-        return self.story_likes.filter(author_user__user=self).count()
+        return self.story_likes.filter(author__author_user_in=self).count()
 
     def total_stories_disliked_by_me(self):
-        return self.story_dislike.filter(author_user__user=self).count()
+        return self.story_dislike.filter(author__author_user_in=self).count()
 
     def total_stories_commented_by_me(self):
         return Review.objects.filter(

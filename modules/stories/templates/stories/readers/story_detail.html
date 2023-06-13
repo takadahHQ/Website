@@ -81,7 +81,7 @@
                 {% if user.is_authenticated %}
                 <a href="{{ story.get_read_user }}" class="btn btn-[{{ settings.color }}] border-none rounded">Continue Reading</a>
                 {% else %}
-                <a href="{{ story.get_read_guest }}" class="btn btn-[{{ settings.color }}] border-none rounded">Read</a>
+                <a href="{{ story.get_read_guest }}" class="btn btn-[{{ settings.color }}] border-none rounded">Read The Book</a>
                 {% endif %}
 
                 {% include "stories/partials/bookmark.html" %}

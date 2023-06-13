@@ -1,11 +1,8 @@
 from PIL import Image, ImageEnhance, ImageDraw, ImageFont
-from . import tupleFunctions as tf
+import tupleFunctions as tf
 import random
 from urllib.request import urlopen
-from django.conf import settings
 from io import BytesIO
-from django.core.files.base import ContentFile
-from django.core.files.storage import default_storage
 
 # from django.contrib.staticfiles.storage import staticfiles_storage
 
@@ -16,9 +13,8 @@ def make(img_author, img_title, img_slug):
     cover = author(bg, name)
     titles = title(cover, img_title)
     cover_image = save(titles, img_slug)
-    name = img_slug + ".png"
-    # file = open(cover_image, "rb")
-    file = default_storage.open(cover_image, "rb")
+    file = open(cover_image, "rb")
+    # file = default_storage.open(cover_image, "rb")
     return file
 
 
@@ -200,14 +196,10 @@ def title(image, title):
 
 
 def save(image, title):
-    # path = str(settings.MEDIA_ROOT) + "/generated/" + title + ".png"
     path = title + ".png"
-    # image.save(path, "PNG")
-    buffer = BytesIO()
-    image.save(buffer, format="PNG")
-    # write straight to the system path
-    f = default_storage.open(path, "wb")
-    f.write(buffer.getvalue())
-    f.close()
+    img = image.save(path, format="PNG")
+    print(path)
+    print(img)
 
-    return path
+
+make("netesy", "Uzumaki Love", "uzumaki")

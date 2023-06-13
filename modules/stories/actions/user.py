@@ -508,17 +508,17 @@ def get_story_chapters(story: int, user: int):
     if has_sponsorship:
         released_chapters = Chapter.objects.filter(
             story=story, status="active", released_at__lte=timezone.now()
-        )
+        ).order_by("position")
         unreleased_chapters = Chapter.objects.filter(
             story=story, status="active", released_at__gt=timezone.now()
-        )
+        ).order_by("position")
         advance_chapters = unreleased_chapters[:advance]
         all_chapters = list(chain(released_chapters, advance_chapters))
 
     if not has_sponsorship:
         released_chapters = Chapter.objects.filter(
             story=story, status="active", released_at__lte=timezone.now()
-        )
+        ).order_by("position")
         all_chapters = released_chapters
 
     return all_chapters

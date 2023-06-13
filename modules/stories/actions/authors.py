@@ -24,8 +24,8 @@ def get_stories_by_genre(slug):
 
 
 def get_author_stories_likes(author):
-    queryset = Users.objects.exclude(Q(status="pending") | Q(status="draft"))
-    user = get_object_or_404(Users, pk=author)
+    # queryset = Users.objects.exclude(Q(status="pending") | Q(status="draft"))
+    user = get_object_or_404(Users, pk=author.pk)
     likes = user.total_stories_liked_by_other()
     return likes
 
