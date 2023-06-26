@@ -92,18 +92,25 @@ def background():
     # logo = logo.resize(size)
 
     # Calculate the position to paste the logo
-    x = 20
-    y = 50
+    x = 0
+    y = 0
 
-    # Reduce the opacity of the logo by 70%
-    factor = 0.3
+    # Reduce the opacity of the logo by 60%
+    factor = 0.4
     faded_logo = logo.copy()
     faded_logo.putalpha(int(255 * factor))
-    # Blend the logo with the image using alpha blending
-    # blended = Image.alpha_composite(im, faded_logo)
+    # Create a blank image with the same size as the logo
+    logo_bg = Image.new("RGBA", faded_logo.size, (0, 0, 0, 0))
+
+    # Paste the transparent logo onto the logo background
+    logo_bg.paste(faded_logo, (0, 0), mask=faded_logo)
 
     # Paste the blended logo onto the image
-    im.paste(faded_logo, (x, y), mask=faded_logo)
+    im.paste(logo_bg, (x, y), mask=logo_bg)
+    # Remove the black overlay look on the image
+    enhancer = ImageEnhance.Brightness(im)
+    factor = 1.2  # Increase the brightness factor to make the image brighter
+    im = enhancer.enhance(factor)
     return im
 
 
@@ -112,7 +119,7 @@ def text_wrap(text, font, max_width):
     # If the width of the text is smaller than image width
     # we don't need to split it, just add it to the lines array
     # and return
-    if font.getsize(text)[0] <= max_width:
+    if font.getbbox(text)[2] <= max_width - 10:
         lines.append(text)
     else:
         # split the line by spaces to get words
@@ -121,7 +128,7 @@ def text_wrap(text, font, max_width):
         # append every word to a line while its width is shorter than image width
         while i < len(words):
             line = ""
-            while i < len(words) and font.getsize(line + words[i])[0] <= max_width:
+            while i < len(words) and font.getbbox(line + words[i])[2] <= max_width:
                 line = line + words[i] + " "
                 i += 1
             if not line:
@@ -139,14 +146,14 @@ def author(image, name):
     truetype_url = "https://github.com/googlefonts/josefinsans/blob/master/fonts/ttf/JosefinSans-Bold.ttf?raw=true"
     # font = ImageFont.truetype(urlopen(truetype_url), size=15)
     font = ImageFont.truetype(urlopen(truetype_url), size=0)
-    while font.getsize(name)[0] < (image.size[0] - 40):
+    while font.getbbox(name)[2] < (image.size[0] - 40):
         font = ImageFont.truetype(urlopen(truetype_url), size=font.size + 1)
     (x, y) = (186, 490)
     color = "rgb(255, 055,05)"  # white color
     border = "black"
     image_size = image.size
     lines = text_wrap(name, font, image_size[0] - 40)
-    line_height = font.getsize("hg")[1]
+    line_height = font.getbbox("hg")[3] - font.getbbox("hg")[1]
 
     for line in lines:
         # draw the line on the image
@@ -172,17 +179,19 @@ def title(image, title):
     )
     font = ImageFont.truetype(urlopen(truetype_url), size=0)
     # Automatically get the font size
-    while font.getsize(title)[0] < image.size[0]:
+    while font.getbbox(title)[2] < image.size[0] + 20:
         font = ImageFont.truetype(urlopen(truetype_url), size=font.size + 1)
     color = "rgb(255, 255, 255)"  # white color
     border = "black"
     image_size = image.size
     lines = text_wrap(title, font, image_size[0] - 10)
-    line_height = font.getsize("hg")[1]
+    line_height = font.getbbox("hg")[3] - font.getbbox("hg")[1]
 
     x = 186
     y = 112
     for line in lines:
+        while font.getbbox(line)[2] < image.size[0] + 20:
+            font = ImageFont.truetype(urlopen(truetype_url), size=font.size + 1)
         # draw the line on the image
         draw.text(
             (x, y),
@@ -200,7 +209,6 @@ def title(image, title):
 
 
 def save(image, title):
-    # path = str(settings.MEDIA_ROOT) + "/generated/" + title + ".png"
     path = title + ".png"
     # image.save(path, "PNG")
     buffer = BytesIO()
