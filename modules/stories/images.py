@@ -125,7 +125,7 @@ def title(image, title):
             fill=color,
             stroke_width=2,
             stroke_fill=border,
-            font=width,
+            font=font,
             anchor="ms",
         )
 
