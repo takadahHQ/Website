@@ -322,10 +322,10 @@ class userDashboard(LoginRequiredMixin, TemplateView):
         reviews = get_author_stories_reviews(author=self.request.user)
         views = get_author_stories_views(author=self.request.user)
         stats = {
-            "views": {"result": views, "updated": "2 hours ago"},
-            "likes": {"result": likes, "updated": "2 minutes ago"},
-            "dislikes": {"result": dislikes, "updated": "21 days ago"},
-            "reviews": {"result": reviews, "updated": "2 seconds ago"},
+            "views": {"result": views, "updated": "10 seconds ago"},
+            "likes": {"result": likes, "updated": "10 seconds ago"},
+            "dislikes": {"result": dislikes, "updated": "10 seconds ago"},
+            "reviews": {"result": reviews, "updated": "10 seconds ago"},
         }
         return stats
 

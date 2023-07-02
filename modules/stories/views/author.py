@@ -15,6 +15,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 # from django.db.models import Count
 from django.db.models import Avg, Count
 from modules.stories.actions.authors import (
+    get_author_stories_followers,
     get_author_stories_reviews,
     get_author_stories_views,
     get_daily_earnings,
@@ -91,13 +92,15 @@ class storyDashboard(LoginRequiredMixin, TemplateView):
 
     def story_stats(self):
         likes = get_author_stories_likes(author=self.request.user)
+        followers = get_author_stories_followers(author=self.request.user)
         dislikes = get_author_stories_dislikes(author=self.request.user)
         reviews = get_author_stories_reviews(author=self.request.user)
         views = get_author_stories_views(author=self.request.user)
         stats = {
-            "views": {"result": views, "updated": "2 hours ago"},
-            "likes": {"result": likes, "updated": "2 minutes ago"},
-            "dislikes": {"result": dislikes, "updated": "21 days ago"},
+            "views": {"result": views, "updated": "10 seconds ago"},
+            "followers": {"result": followers, "updated": "10 seconds ago"},
+            "likes": {"result": likes, "updated": "10 seconds ago"},
+            "dislikes": {"result": dislikes, "updated": "10 seconds ago"},
             "reviews": {"result": reviews, "updated": "2 seconds ago"},
         }
         return stats

@@ -31,23 +31,20 @@ def get_author_stories_likes(author):
 
 
 def get_author_stories_dislikes(author):
-    dislikes = Stories.objects.filter(author=author.id).aggregate(
-        total_dislikes=Count("dislikes")
-    )["total_dislikes"]
+    user = get_object_or_404(Users, pk=author.pk)
+    dislikes = user.total_stories_disliked_by_other()
     return dislikes
 
 
 def get_author_stories_followers(author):
-    followers = Stories.objects.filter(author=author.id).aggregate(
-        total_followers=Count("following")
-    )["total_followers"]
+    user = get_object_or_404(Users, pk=author.pk)
+    followers = user.total_stories_followed_by_other()
     return followers
 
 
 def get_author_stories_reviews(author):
-    reviews = Stories.objects.filter(author=author.id).aggregate(
-        total_followers=Count("following")
-    )["total_followers"]
+    user = get_object_or_404(Users, pk=author.pk)
+    reviews = user.total_stories_commented_by_me()
     return reviews
 
 

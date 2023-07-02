@@ -100,34 +100,34 @@ class Users(AbstractUser):
         return reverse_lazy("core:author", kwargs={"username": self.username.lower()})
 
     def total_stories_liked_by_other(self):
-        return self.story_likes.exclude(author__author_user_in=self).count()
+        return self.author_user.values_list("story__likes", flat=True).count()
 
     def total_stories_disliked_by_other(self):
-        return self.story_dislike.exclude(author__author_user_in=self).count()
+        return self.author_user.values_list("story__dislikes", flat=True).count()
 
     def total_stories_commented_by_other(self):
-        return (
-            Review.objects.filter(user=self, story__author_stories__user=self)
-            .exclude(user=self)
-            .count()
-        )
+        authored_stories = self.author_user.values_list("story", flat=True)
+        return Review.objects.filter(story__in=authored_stories).count()
 
     def total_stories_followed_by_other(self):
-        return self.story_followers.exclude(author__author_user_in=self).count()
+        return self.author_user.values_list("story__following", flat=True).count()
 
     def total_stories_followed_by_me(self):
-        return self.story_followers.filter(author__author_user_in=self).count()
+        return self.story_followers.count()
 
     def total_stories_disliked_by_me(self):
-        return self.story_likes.filter(author__author_user_in=self).count()
+        return self.story_likes.count()
 
     def total_stories_disliked_by_me(self):
-        return self.story_dislike.filter(author__author_user_in=self).count()
+        return self.story_dislike.count()
 
     def total_stories_commented_by_me(self):
-        return Review.objects.filter(
-            user=self, story__author_stories__user=self
-        ).count()
+        # return Review.objects.filter(story__in=authored_stories, user=self).count()
+        return Review.objects.filter(user=self).count()
+
+    def total_comments_by_author(self):
+        authored_stories = self.author_user.values_list("author_stories", flat=True)
+        return Review.objects.filter(story__in=authored_stories, user=self).count()
 
     class Meta:
         verbose_name_plural = "users"

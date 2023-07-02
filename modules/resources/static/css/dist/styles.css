@@ -1420,12 +1420,6 @@ html {
     --tw-bg-opacity: 1;
     background-color: hsl(var(--b2) / var(--tw-bg-opacity));
   }
-
-  .table-zebra tr.hover:hover,
-  .table-zebra tr.hover:nth-child(even):hover {
-    --tw-bg-opacity: 1;
-    background-color: hsl(var(--b3) / var(--tw-bg-opacity));
-  }
 }
 
 .btn {
@@ -3063,11 +3057,6 @@ details.collapse summary::-webkit-details-marker {
           mask-image: url("data:image/svg+xml,%3Csvg width='24' height='24' stroke='%23000' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cstyle%3E.spinner_V8m1%7Btransform-origin:center;animation:spinner_zKoa 2s linear infinite%7D.spinner_V8m1 circle%7Bstroke-linecap:round;animation:spinner_YpZS 1.5s ease-in-out infinite%7D%40keyframes spinner_zKoa%7B100%25%7Btransform:rotate(360deg)%7D%7D%40keyframes spinner_YpZS%7B0%25%7Bstroke-dasharray:0 150;stroke-dashoffset:0%7D47.5%25%7Bstroke-dasharray:42 150;stroke-dashoffset:-16%7D95%25%2C100%25%7Bstroke-dasharray:42 150;stroke-dashoffset:-59%7D%7D%3C%2Fstyle%3E%3Cg class='spinner_V8m1'%3E%3Ccircle cx='12' cy='12' r='9.5' fill='none' stroke-width='3'%3E%3C%2Fcircle%3E%3C%2Fg%3E%3C%2Fsvg%3E");
 }
 
-.mask-squircle {
-  -webkit-mask-image: url("data:image/svg+xml,%3csvg width='200' height='200' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M100 0C20 0 0 20 0 100s20 100 100 100 100-20 100-100S180 0 100 0Z'/%3e%3c/svg%3e");
-          mask-image: url("data:image/svg+xml,%3csvg width='200' height='200' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M100 0C20 0 0 20 0 100s20 100 100 100 100-20 100-100S180 0 100 0Z'/%3e%3c/svg%3e");
-}
-
 :where(.menu li:empty) {
   background-color: hsl(var(--bc) / 0.1);
   margin: 0.5rem 1rem;
@@ -3701,6 +3690,49 @@ details.collapse summary::-webkit-details-marker {
   border-bottom-color: hsl(var(--bc) / 20%);
 }
 
+.glass,
+  .glass.btn-active {
+  border: none;
+  -webkit-backdrop-filter: blur(var(--glass-blur, 40px));
+          backdrop-filter: blur(var(--glass-blur, 40px));
+  background-color: transparent;
+  background-image: linear-gradient(
+        135deg,
+        rgb(255 255 255 / var(--glass-opacity, 30%)) 0%,
+        rgb(0 0 0 / 0%) 100%
+      ),
+      linear-gradient(
+        var(--glass-reflex-degree, 100deg),
+        rgb(255 255 255 / var(--glass-reflex-opacity, 10%)) 25%,
+        rgb(0 0 0 / 0%) 25%
+      );
+  box-shadow: 0 0 0 1px rgb(255 255 255 / var(--glass-border-opacity, 10%)) inset,
+      0 0 0 2px rgb(0 0 0 / 5%);
+  text-shadow: 0 1px rgb(0 0 0 / var(--glass-text-shadow-opacity, 5%));
+}
+
+@media (hover: hover) {
+  .glass.btn-active {
+    border: none;
+    -webkit-backdrop-filter: blur(var(--glass-blur, 40px));
+            backdrop-filter: blur(var(--glass-blur, 40px));
+    background-color: transparent;
+    background-image: linear-gradient(
+          135deg,
+          rgb(255 255 255 / var(--glass-opacity, 30%)) 0%,
+          rgb(0 0 0 / 0%) 100%
+        ),
+        linear-gradient(
+          var(--glass-reflex-degree, 100deg),
+          rgb(255 255 255 / var(--glass-reflex-opacity, 10%)) 25%,
+          rgb(0 0 0 / 0%) 25%
+        );
+    box-shadow: 0 0 0 1px rgb(255 255 255 / var(--glass-border-opacity, 10%)) inset,
+        0 0 0 2px rgb(0 0 0 / 5%);
+    text-shadow: 0 1px rgb(0 0 0 / var(--glass-text-shadow-opacity, 5%));
+  }
+}
+
 .artboard.phone {
   width: 320px;
 }
@@ -3743,6 +3775,10 @@ details.collapse summary::-webkit-details-marker {
   padding-right: 1.5rem;
   min-height: 4rem;
   font-size: 1.125rem;
+}
+
+.btn-wide {
+  width: 16rem;
 }
 
 .btn-block {
@@ -4597,16 +4633,8 @@ dialog::backdrop {
   height: 20rem;
 }
 
-.h-\[278px\] {
-  height: 278px;
-}
-
 .h-\[60px\] {
   height: 60px;
-}
-
-.h-\[667px\] {
-  height: 667px;
 }
 
 .h-auto {
@@ -4671,14 +4699,6 @@ dialog::backdrop {
 
 .w-8 {
   width: 2rem;
-}
-
-.w-\[1450px\] {
-  width: 1450px;
-}
-
-.w-\[663px\] {
-  width: 663px;
 }
 
 .w-auto {
@@ -5398,11 +5418,6 @@ dialog::backdrop {
   padding-right: 14px;
 }
 
-.px-\[382px\] {
-  padding-left: 382px;
-  padding-right: 382px;
-}
-
 .py-1 {
   padding-top: 0.25rem;
   padding-bottom: 0.25rem;
@@ -5463,21 +5478,12 @@ dialog::backdrop {
   padding-bottom: 10px;
 }
 
-.py-\[155px\] {
-  padding-top: 155px;
-  padding-bottom: 155px;
-}
-
 .pb-12 {
   padding-bottom: 3rem;
 }
 
 .pb-2 {
   padding-bottom: 0.5rem;
-}
-
-.pb-4 {
-  padding-bottom: 1rem;
 }
 
 .pb-\[146\%\] {
@@ -5566,16 +5572,8 @@ dialog::backdrop {
   line-height: 1;
 }
 
-.text-\[28px\] {
-  font-size: 28px;
-}
-
 .text-\[32px\] {
   font-size: 32px;
-}
-
-.text-\[96px\] {
-  font-size: 96px;
 }
 
 .text-base {
@@ -5621,10 +5619,6 @@ dialog::backdrop {
 
 .font-medium {
   font-weight: 500;
-}
-
-.font-normal {
-  font-weight: 400;
 }
 
 .font-semibold {
@@ -6527,7 +6521,7 @@ dialog::backdrop {
   --tw-bg-opacity: 0.9;
 }
 
-.hover\:text-\[\#e3e3e3\]:hover {
+.hover\:text-\[\#E3E3E3\]:hover {
   --tw-text-opacity: 1;
   color: rgb(227 227 227 / var(--tw-text-opacity));
 }
@@ -6545,11 +6539,6 @@ dialog::backdrop {
 .hover\:text-mono-50:hover {
   --tw-text-opacity: 1;
   color: rgb(247 247 247 / var(--tw-text-opacity));
-}
-
-.hover\:text-\[\#E3E3E3\]:hover {
-  --tw-text-opacity: 1;
-  color: rgb(227 227 227 / var(--tw-text-opacity));
 }
 
 .hover\:underline:hover {
@@ -7136,11 +7125,6 @@ dialog::backdrop {
     line-height: 1.75rem;
   }
 
-  .md\:text-7xl {
-    font-size: 4.5rem;
-    line-height: 1;
-  }
-
   .md\:tracking-wider {
     letter-spacing: 0.05em;
   }
@@ -7151,10 +7135,6 @@ dialog::backdrop {
 }
 
 @media (min-width: 1024px) {
-  .lg\:visible {
-    visibility: visible;
-  }
-
   .lg\:col-span-4 {
     grid-column: span 4 / span 4;
   }
@@ -7336,11 +7316,6 @@ dialog::backdrop {
   .lg\:text-lg {
     font-size: 1.125rem;
     line-height: 1.75rem;
-  }
-
-  .lg\:text-7xl {
-    font-size: 4.5rem;
-    line-height: 1;
   }
 }
 
