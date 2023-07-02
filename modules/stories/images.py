@@ -23,93 +23,15 @@ def make(img_author, img_title, img_slug):
 
 
 def background():
-    startColor = (
-        random.randrange(1, 66),
-        random.randrange(1, 255),
-        random.randrange(1, 255),
-    )
-    endColorX = (
-        random.randrange(1, 65),
-        random.randrange(1, 255),
-        random.randrange(1, 255),
-    )
-    endColorY = (
-        random.randrange(1, 255),
-        random.randrange(1, 65),
-        random.randrange(1, 255),
-    )
-    size = (372, 512)
-
-    im = Image.new("RGB", size, "black")
-    pixels = im.load()
-
-    deltaX = (
-        (endColorX[0] - startColor[0]) / float(size[0]),
-        (endColorX[1] - startColor[1]) / float(size[0]),
-        (endColorX[2] - startColor[2]) / float(size[0]),
-    )
-    deltaY = (
-        (endColorY[0] - startColor[0]) / float(size[0]),
-        (endColorY[1] - startColor[1]) / float(size[0]),
-        (endColorY[2] - startColor[2]) / float(size[0]),
-    )
-
-    thisPixelX = ()
-    thisPixelY = ()
-
-    for j in range(im.size[1]):  # for every pixel:
-        if j != 0:
-            thisPixelY = tf.addTuples(thisPixelY, deltaY)
-        else:
-            thispixelY = startColor
-
-        for i in range(im.size[0]):
-            if i == 0 and j == 0:
-                thisPixelX = startColor
-                thisPixelY = startColor
-                pixels[i, j] = startColor
-                continue
-            if i != 0:
-                thisPixelX = tf.addTuples(thisPixelX, deltaX)
-            else:
-                thisPixelX = startColor
-            add = tf.divTuple(tf.addTuples(thisPixelY, thisPixelX), 2)
-            pixels[i, j] = tf.roundTuple(add)
-
+    bg = "https://takadahmedia.s3.amazonaws.com/static/img/book_cover.png"
+    im = Image.open(urlopen(bg))
     # blur the background
     enhancer = ImageEnhance.Sharpness(im)
     factor = 0.05
     im = enhancer.enhance(factor)
     # brighten the colour
     enhancer = ImageEnhance.Brightness(im)
-    factor = 1.5
-    im = enhancer.enhance(factor)
-    # Load and paste the logo onto the image
-    logo_url = (
-        "https://takadahmedia.s3.amazonaws.com/static/images/android-chrome-512x512.png"
-    )
-    logo = Image.open(urlopen(logo_url)).convert("RGBA")
-    # logo = logo.resize(size)
-
-    # Calculate the position to paste the logo
-    x = 0
-    y = 0
-
-    # Reduce the opacity of the logo by 60%
-    factor = 0.4
-    faded_logo = logo.copy()
-    faded_logo.putalpha(int(255 * factor))
-    # Create a blank image with the same size as the logo
-    logo_bg = Image.new("RGBA", faded_logo.size, (0, 0, 0, 0))
-
-    # Paste the transparent logo onto the logo background
-    logo_bg.paste(faded_logo, (0, 0), mask=faded_logo)
-
-    # Paste the blended logo onto the image
-    im.paste(logo_bg, (x, y), mask=logo_bg)
-    # Remove the black overlay look on the image
-    enhancer = ImageEnhance.Brightness(im)
-    factor = 1.2  # Increase the brightness factor to make the image brighter
+    factor = 1.0
     im = enhancer.enhance(factor)
     return im
 
@@ -149,8 +71,8 @@ def author(image, name):
     while font.getbbox(name)[2] < (image.size[0] - 40):
         font = ImageFont.truetype(urlopen(truetype_url), size=font.size + 1)
     (x, y) = (186, 490)
-    color = "rgb(255, 055,05)"  # white color
-    border = "black"
+    color = "rgb(31, 69,60)"  # color
+    border = "white"
     image_size = image.size
     lines = text_wrap(name, font, image_size[0] - 40)
     line_height = font.getbbox("hg")[3] - font.getbbox("hg")[1]
@@ -189,9 +111,13 @@ def title(image, title):
 
     x = 186
     y = 112
+    # todo: Increase the font size each line of the text
+    # this is supposed to increase the font size but whill check it later
+    # while font.getbbox(lines[0])[2] < image_size[0] - 40:
+    #     width = ImageFont.truetype(urlopen(truetype_url), size=font.size + 1)
     for line in lines:
-        while font.getbbox(line)[2] < image.size[0] + 20:
-            font = ImageFont.truetype(urlopen(truetype_url), size=font.size + 1)
+        # while font.getbbox(line)[2] < image.size[0] + 20:
+        #     font = ImageFont.truetype(urlopen(truetype_url), size=font.size + 1)
         # draw the line on the image
         draw.text(
             (x, y),
@@ -199,7 +125,7 @@ def title(image, title):
             fill=color,
             stroke_width=2,
             stroke_fill=border,
-            font=font,
+            font=width,
             anchor="ms",
         )
 
