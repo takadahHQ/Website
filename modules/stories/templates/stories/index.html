@@ -7,6 +7,22 @@ Takadah
 {% endblock %}
 
 {% block content %}
+
+<section id="hero">
+    {% comment %} <div class="hero min-h-screen bg-[#415F58] rounded" style="background-image: url(/images/stock/photo-1507358522600-9f71e620c44e.jpg);"> {% endcomment %}
+        <div class="hero min-h-screen bg-[#415F58] rounded">
+        {% comment %} <div class="hero-overlay bg-opacity-60"></div> {% endcomment %}
+        <div class="hero-content text-center">
+          <div class="max-w-md">
+            <h1 class="mb-5 text-2xl md:text-6xl  font-bold text-[#E3E3E3]  text-center hover:text-[#E3E3E3]">Where stories <br/>take flight</h1>
+            <p class="mb-5 text-[#E3E3E3]">Empowering authors, connecting readers, and building a vibrant community for storytelling</p>
+            {% comment %} <button class="btn btn-primary">Get Started</button> {% endcomment %}
+            <a href="{% url 'core:register' %}" class="btn glass btn-wide bg-white bg-[#415F58] text-[#415F58] glass">Start Creating</a>
+          </div>
+        </div>
+      </div>
+</section>
+
 <div class="">
     {% if weekly %}
     <!-- Weekly Featured -->
@@ -66,9 +82,9 @@ Takadah
     {% endif %}
     {% if fresh %}
      <div class="">
-    <section class="bg-mono-100 dark:bg-mono-700 text-mono-800 dark:text-mono-100 py-10 px-12" id="fresh">
+    <section class="bg-mono-100 dark:bg-mono-700 text-mono-800 dark:text-mono-100 py-10 px-12 mt-2 rounded" id="fresh">
         <!-- Card Grid -->
-        <h3>Fresh Stories</h3>
+        <h3 class="text-md mb-2 font-bold ">Fresh Stories</h3>
         <div class="grid grid-flow-row gap-2 text-neutral-600 grid-cols-1 md:grid-cols-3 lg:grid-cols-6 m-2">
             {% for story in fresh %}
             <!-- Card Item -->
@@ -107,7 +123,7 @@ Takadah
 
     <section class="bg-mono-100 dark:bg-mono-700 text-mono-800 dark:text-mono-100 py-10 px-12" id="upcoming">
         <!-- Card Grid -->
-        <h3>Upcoming Stories</h3>
+        <h3 class="text-md mb-2 font-bold ">Upcoming Stories</h3>
         <div class="grid grid-flow-row gap-2 text-neutral-600 grid-cols-1 md:grid-cols-3 lg:grid-cols-6 m-2">
             {% for story in prerelease %}
             <!-- Card Item -->
@@ -143,7 +159,7 @@ Takadah
     {% endif %}
     {% if completed %}
     <!-- Completed -->
-    <section id="completed" class="block min-w-full max-w-full">
+    <section id="completed" class="block min-w-full max-w-full mt-2 mb-2 rounded">
         <div class="text-2xl border-b-2 border-mono-600">Completed</div><br>
         <div class="flex flex-wrap -mx-1 lg:mx-4">
             {% for story in completed %}
@@ -226,10 +242,10 @@ Takadah
 </div>
 <!-- fan fiction -->
 {% if fanfiction %}
-<section class="bg-mono-100 dark:bg-mono-700 text-mono-800 dark:text-mono-100 py-10 px-12"
+<section class="bg-mono-100 dark:bg-mono-700 text-mono-800 dark:text-mono-100 py-10 px-12 mt-2 mb-2 rounded"
     id="{{ fanfiction.first.story_type.slug }}">
     <!-- Card Grid -->
-    <h3>{{ fanfiction.first.story_type.name|title }}</h3>
+    <h3 class="text-md mb-2 font-bold ">{{ fanfiction.first.story_type.name|title }}</h3>
     <div class="grid grid-flow-row gap-2 text-neutral-600 grid-cols-1 md:grid-cols-3 lg:grid-cols-6 m-2">
         {% for story in fanfiction %}
         <!-- Card Item -->
@@ -265,10 +281,10 @@ Takadah
 {% endif %}
 <!-- fiction -->
 {% if fiction %}
-<section class="bg-mono-100 dark:bg-mono-700 text-mono-800 dark:text-mono-100 py-10 px-12"
+<section class="bg-mono-100 dark:bg-mono-700 text-mono-800 dark:text-mono-100 py-10 px-12 mt-2 mb-2 rounded"
     id="{{ fiction.first.story_type.slug }}">
     <!-- Card Grid -->
-    <h3>{{ fiction.first.story_type.name|title }}</h3>
+    <h3 class="text-md mb-2 font-bold ">{{ fiction.first.story_type.name|title }}</h3>
     <div class="grid grid-flow-row gap-2 text-neutral-600 grid-cols-1 md:grid-cols-3 lg:grid-cols-6 m-2">
         {% for story in fiction %}
         <!-- Card Item -->
@@ -304,10 +320,10 @@ Takadah
 {% endif %}
 <!-- non fiction -->
 {% if nonfiction %}
-<section class="bg-mono-100 dark:bg-mono-700 text-mono-800 dark:text-mono-100 py-10 px-12"
+<section class="bg-mono-100 dark:bg-mono-700 text-mono-800 dark:text-mono-100 py-10 px-12 mt-2 mb-2 rounded"
     id="{{ nonfiction.first.story_type.slug }}">
     <!-- Card Grid -->
-    <h3>{{ nonfiction.first.story_type.name|title }}</h3>
+    <h3 class="text-md mb-2 font-bold ">{{ nonfiction.first.story_type.name|title }}</h3>
     <div class="grid grid-flow-row gap-2 text-neutral-600 grid-cols-1 md:grid-cols-3 lg:grid-cols-6 m-2">
         {% for story in nonfiction %}
         <!-- Card Item -->
@@ -343,10 +359,10 @@ Takadah
 {% endif %}
 <!-- peotry -->
 {% if peotry %}
-<section class="bg-mono-100 dark:bg-mono-700 text-mono-800 dark:text-mono-100 py-10 px-12"
+<section class="bg-mono-100 dark:bg-mono-700 text-mono-800 dark:text-mono-100 py-10 px-12 mt-2 mb-2 rounded"
     id="{{ peotry.first.story_type.slug }}">
     <!-- Card Grid -->
-    <h3>{{ peotry.first.story_type.name|title }}</h3>
+    <h3 class="text-md mb-2 font-bold ">{{ peotry.first.story_type.name|title }}</h3>
     <div class="grid grid-flow-row gap-2 text-neutral-600 grid-cols-1 md:grid-cols-3 lg:grid-cols-6 m-2">
         {% for story in peotry %}
         <!-- Card Item -->
@@ -382,10 +398,10 @@ Takadah
 {% endif %}
 <!-- plays -->
 {% if plays %}
-<section class="bg-mono-100 dark:bg-mono-700 text-mono-800 dark:text-mono-100 py-10 px-12"
+<section class="bg-mono-100 dark:bg-mono-700 text-mono-800 dark:text-mono-100 py-10 px-12 mt-2 mb-2 rounded"
     id="{{ plays.first.story_type.slug }}">
     <!-- Card Grid -->
-    <h3>{{ plays.first.story_type.name|title }}</h3>
+    <h3 class="text-md mb-2 font-bold ">{{ plays.first.story_type.name|title }}</h3>
     <div class="grid grid-flow-row gap-2 text-neutral-600 grid-cols-1 md:grid-cols-3 lg:grid-cols-6 m-2">
         {% for story in plays %}
         <!-- Card Item -->
@@ -421,10 +437,10 @@ Takadah
 {% endif %}
 <!-- web novel -->
 {% if webnovel %}
-<section class="bg-mono-100 dark:bg-mono-700 text-mono-800 dark:text-mono-100 py-10 px-12"
+<section class="bg-mono-100 dark:bg-mono-700 text-mono-800 dark:text-mono-100 py-10 px-12 mt-2 mb-2 rounded"
     id="{{ webnovel.first.story_type.slug }}">
     <!-- Card Grid -->
-    <h3>{{ webnovel.first.story_type.name|title }}</h3>
+    <h3 class="text-md mb-2 font-bold ">{{ webnovel.first.story_type.name|title }}</h3>
     <div class="grid grid-flow-row gap-2 text-neutral-600 grid-cols-1 md:grid-cols-3 lg:grid-cols-6 m-2">
         {% for story in webnovel %}
         <!-- Card Item -->
@@ -435,7 +451,7 @@ Takadah
                 <figure class="h-64">
                     <!-- Image -->
                     <img alt="{{ story.title | lower }}" src="{% if forloop.first %}{{ story.get_first_cover }} {% else %} {{ story.get_cover }} {% endif %}"
-                        class="rounded-t h-64 w-full hover:scale-95 {% if forloop.first %}object-contain object-fill items-center{% else %}object-fill {% endif %}  hover:saturate-200 hover:rounded-lg transition duration-300 ease-in-out rounded-lg shadow-lg" />
+                        class="rounded-t h-64 w-full hover:scale-95 {% if forloop.first %}object-contain object-fill items-center{% else %}object-fill {% endif %}  hover:saturate-200 /hhover:rounded-lg transition duration-300 ease-in-out rounded-lg shadow-lg" />
 
                     <figcaption class="p-2 md:p-4 object-contain">
                         <!-- Title -->
@@ -458,4 +474,53 @@ Takadah
     </div>
 </section>
 {% endif %}
+
+<section id="updated m-2" class="bg-mono-100 dark:bg-mono-700 text-mono-800 dark:text-mono-100 py-10 px-12 mt-2 mb-2 rounded">
+    <h2 class="text-md mb-2 font-bold ">Most Recently Updated</h2>
+    <div class="overflow-x-auto">
+        <table class="table table-xs">
+          {% comment %} <!-- head -->
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Chapter</th>
+              <th>Time</th>
+            </tr>
+          </thead>
+          {% endcomment %}
+          <tbody> 
+            {% for story in updated %}
+            <!-- row 1 -->
+            <tr class="bg-mono-100 dark:bg-mono-700 dark:text-mono-100">
+                <td class="bg-mono-100 dark:bg-mono-700 dark:text-mono-100">
+                <div class="flex items-center space-x-3">
+                    <div class="avatar">
+                        <div class="mask w-12 h-12">
+                        <img src="{{ story.story.get_cover }}" alt="{{ story.story.title }}" />
+                        </div>
+                    </div>
+                    <!-- Mobile view -->
+                    <div class="visible lg:hidden w-full">
+                        <div class="font-bold"><a href="{{ story.story.get_absolute_url }}">{{ story.story.title }}</a></div>
+                        <div class="text-sm opacity-75"><a href="{{ story.get_absolute_url }}">Chapter: {{ story.position }} {{ story.title }}</a></div>
+                        <div class="text-xs opacity-50">{{ story.released_at|timesince }}</div>
+                    </div>
+                    <!-- Pc View-->
+                    <div class="hidden lg:block">
+                        <div class="font-bold"><a href="{{ story.story.get_absolute_url }}">{{ story.story.title }}</a></div>
+                        <div class="text-sm opacity-75">{{ story.user.name }}</div>
+                        <div class="text-xs opacity-50">{{ story.story.story_type.name }}</div>
+                      </div>
+                </div>
+            </td>
+            <a href="{{ story.get_absolute_url }}" class="hidden lg:block">
+                <td class="bg-mono-100 dark:bg-mono-700 dark:text-mono-100"> <a href="{{ story.get_absolute_url }}" class="hidden lg:block"> Chapter: {{ story.position }} {{ story.title }}</a></td>
+                <td class="bg-mono-100 dark:bg-mono-700 dark:text-mono-100"> <a href="{{ story.get_absolute_url }}" class="hidden lg:block"> {{ story.released_at|timesince }}</a></td>
+            </a>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+</section>
 {% endblock content %}

@@ -7,6 +7,23 @@
 
 module.exports = {
     darkMode: 'class',
+    daisyui: {
+        themes: [
+           {
+            mytheme: {
+              "primary": "#415f58",
+              "secondary": "#212121",
+              "accent": "#0d9488",
+              "neutral": "#f7f7f7",
+              "base-100": "#e3e3e3",
+              "info": "#00b6d5",
+              "success": "#36d399",
+              "warning": "#fbbd23",
+              "error": "#ff2a2a",
+              },
+          },
+        ],
+      },
     content: [
         /**
          * HTML. Paths to Django template files that will contain Tailwind CSS classes.

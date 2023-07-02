@@ -476,21 +476,12 @@ def get_completed_stories(count=12):
 
 def get_updated_stories(count=12):
     stories = (
-        Stories.objects.order_by("updated_at")
+        Chapter.objects.order_by("-released_at", "-position")
         .filter(status="active")
+        .filter(released_at__lte=timezone.now())
         .prefetch_related(
-            "story_type",
-            "language",
-            "rating",
-            "flags",
-            "following",
-            "likes",
-            "dislikes",
-            "author",
-            "editor",
-            "genre",
-            "characters",
-            "tags",
+            "story",
+            "user",
         )[:count]
     )
     return stories
