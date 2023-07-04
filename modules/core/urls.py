@@ -9,7 +9,7 @@ urlpatterns = [
     path(
         "history/<int:id>/delete/", views.DeleteHistory.as_view(), name="stop-reading"
     ),
-    path("accounts/register/", views.SignUpView.as_view(), name="register"),
+    path("account/register/", views.SignUpView.as_view(), name="register"),
     path("a/<str:username>/", views.AuthorView.as_view(), name="author"),
     path("generated.css", views.generatedCss, name="stylesheet"),
     path("", views.index, name="index"),

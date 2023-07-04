@@ -16,7 +16,7 @@ Edit: {{ story.title | title }}
 <section class="w-full">
     <form method="post">
         {% csrf_token %}
-        {{ form|crispy }}
+        {{ form }}
         <button type="submit" class="btn bg-[{{ settings.color }}] opacity-80">Update</button>
     </form>
 </section>

@@ -14,7 +14,7 @@
       {% comment %} <form class="w-full " method="POST" action="{{ action_url }}" hx-post="{{ post_url }}"> {% endcomment %}
         <form class="w-full " method="POST">
         {% csrf_token %}
-        {{ form | crispy }}
+        {{ form  }}
         <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
           Create Package
         </button>
