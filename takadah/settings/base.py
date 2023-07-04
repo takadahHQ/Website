@@ -6,6 +6,14 @@ from dotenv import load_dotenv
 import os
 
 import stripe
+from django.forms.renderers import TemplatesSetting
+
+
+class FormRenderer(TemplatesSetting):
+    form_template_name = "form_snippet.html"
+
+
+FORM_RENDERER = "takadah.settings.base.FormRenderer"
 
 stripe.api_key = os.environ.get("STRIPE_KEY")
 
@@ -67,7 +75,8 @@ DJANGO_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
-    "django.contrib.sessions",
+    # "django.contrib.sessions",
+    "user_sessions",  # replacing the sessions above
     "django.contrib.messages",
     "django.contrib.humanize",
     "django.contrib.staticfiles",
@@ -104,6 +113,7 @@ THIRD_PARTY_APPS = [
     "taggit",
     # "djstripe",
     "storages",
+    "widget_tweaks",
     "versatileimagefield",
     "django_celery_beat",
 ]
@@ -133,6 +143,7 @@ MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     # "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "user_sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -145,6 +156,8 @@ MIDDLEWARE = [
     "modules.stats.middleware.ingress_middleware",
     # 'auditlog.middleware.AuditlogMiddleware',
 ]
+
+SESSION_ENGINE = "user_sessions.backends.db"
 
 ROOT_URLCONF = "takadah.urls"
 

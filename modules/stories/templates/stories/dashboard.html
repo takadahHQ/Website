@@ -7,8 +7,7 @@
 Dashboard
 {% endblock title %}
 {% block breadcrumbs %}
-<li><a href="{% url 'stories:author:dashboard' %}">Author</a></li> 
-<li><a>Dashboard</a></li> 
+<li><a href="{% url 'stories:author:dashboard' %}">Author Dashboard</a></li> 
 {% endblock %}
 {% block content %}
 <!-- Add Story -->
@@ -19,7 +18,7 @@ Dashboard
     <div class="flex flex-col space-y-8">
         <!-- First Row -->
         <div class="grid grid-cols-1 md:grid-cols-4 xl:grid-cols-5 px-4 xl:p-0 gap-y-4 md:gap-6 dark:text-mono-200">
-            <div class="md:col-span-2 xl:col-span-3 bg-mono-100 dark:bg-mono-700 p-6 rounded-2xl border border-mono-50 dark:border-mono-600">
+            <div class="md:col-span-2 xl:col-span-3 bg-mono-100 dark:bg-mono-700 p-6 rounded-2xl   ">
                 <div class="flex flex-col space-y-6 md:h-full md:justify-between">
                     <div class="flex justify-between">
                         <span class="text-xs text-mono-500 dark:text-mono-200 font-semibold uppercase tracking-wider">
@@ -84,7 +83,7 @@ Dashboard
                     Lifetime Statistics</h2>
                 <a href="#" class="text-xs text-mono-800 dark:text-mono-300 font-semibold uppercase">More</a>
             </div>
-            <div class="bg-mono-100 dark:bg-mono-700 p-6 rounded-xl border border-mono-50 dark:border-mono-600">
+            <div class="bg-mono-100 dark:bg-mono-700 p-6 rounded-xl   ">
                 <div class="flex justify-between items-start">
                     <div class="flex flex-col">
                         <p class="text-xs text-mono-600 dark:text-mono-200 tracking-wide">Watchers</p>
@@ -96,7 +95,7 @@ Dashboard
                     </div>
                 </div>
             </div>
-            <div class="bg-mono-100 dark:bg-mono-700 text-mono-500 dark:text-mono-300 p-6 rounded-xl border border-mono-50 dark:border-mono-600">
+            <div class="bg-mono-100 dark:bg-mono-700 text-mono-500 dark:text-mono-300 p-6 rounded-xl   ">
                 <div class="flex justify-between items-start">
                     <div class="flex flex-col">
                         <p class="text-xs text-mono-600 dark:text-mono-200 tracking-wide">Likes</p>
@@ -108,7 +107,7 @@ Dashboard
                     </div>
                 </div>
             </div>
-            <div class="bg-mono-100 dark:bg-mono-700 p-6 rounded-xl border border-mono-50 dark:border-mono-600">
+            <div class="bg-mono-100 dark:bg-mono-700 p-6 rounded-xl   ">
                 <div class="flex justify-between items-start">
                     <div class="flex flex-col">
                         <p class="text-xs text-mono-600 dark:text-mono-200 tracking-wide">DisLikes</p>
@@ -120,7 +119,7 @@ Dashboard
                     </div>
                 </div>
             </div>
-            <div class="bg-mono-100 dark:bg-mono-700 p-6 rounded-xl border border-mono-50 dark:border-mono-600">
+            <div class="bg-mono-100 dark:bg-mono-700 p-6 rounded-xl   ">
                 <div class="flex justify-between items-start">
                     <div class="flex flex-col">
                         <p class="text-xs text-mono-600 dark:text-mono-200 tracking-wide">Reviews</p>
@@ -139,25 +138,25 @@ Dashboard
             <div class="col-start-1 col-end-5">
                 <h2 class="text-xs md:text-sm text-mono-600 dark:text-mono-200 font-bold tracking-wide">Earning Summary Transactions</h2>
             </div>
-            <div class="col-span-2 bg-mono-100 dark:bg-mono-700 p-6 rounded-xl border border-mono-50 dark:border-mono-600 flex flex-col space-y-6">
+            <div class="col-span-2 bg-mono-100 dark:bg-mono-700 p-6 rounded-xl    flex flex-col space-y-6">
                 <p class="text-rebel-500">These figures are for demo purposes only and are not yet implemented.</p>
                 <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 flex justify-between items-center">
-                    <div class="p-4 cursor-pointer border">
+                    <div class="p-4 cursor-pointer ">
                         <span class="text-xs text-mono-500 dark:text-mono-200 font-semibold">Daily</span>
                         <h2 class="text-mono-800 dark:text-mono-300 font-bold tracking-wider">$ {{ earnings.daily.amount }}</h2>
                     </div>
-                    <div class="p-4 cursor-pointer border">
+                    <div class="p-4 cursor-pointer ">
                         <span class="text-xs text-mono-500 dark:text-mono-200 font-semibold">Weekly</span>
                         <h2 class="text-mono-800 dark:text-mono-300 font-bold tracking-wider">$ {{ earnings.weekly.amount }}</h2>
                     </div>
-                    <div class="p-4 cursor-pointer border">
+                    <div class="p-4 cursor-pointer ">
                         <span class="text-xs text-mono-500 dark:text-mono-200 font-semibold">Monthly</span>
                         <h2 class="text-mono-800 dark:text-mono-300 font-bold tracking-wider">$ {{ earnings.monthly.amount }}</h2>
                     </div>
                 </div>
                 <canvas id="myChart"></canvas>
             </div>
-            <div class="col-span-3 bg-mono-100 dark:bg-mono-700 p-6 rounded-xl border border-mono-50 dark:border-mono-600 flex flex-col space-y-6">
+            <div class="col-span-3 bg-mono-100 dark:bg-mono-700 p-6 rounded-xl    flex flex-col space-y-6">
                 <div class="flex justify-between items-center text-mono-800 dark:text-mono-200">
                     <h2 class="text-sm font-bold tracking-wide">Published Stories</h2>
                     <a href="{% url 'stories:author:list' %}"

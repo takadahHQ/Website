@@ -3031,6 +3031,10 @@ details.collapse summary::-webkit-details-marker {
   margin-left: -1px;
 }
 
+.join-item:focus {
+  isolation: isolate;
+}
+
 .link:focus {
   outline: 2px solid transparent;
   outline-offset: 2px;
@@ -4274,6 +4278,10 @@ dialog::backdrop {
   top: 90px;
 }
 
+.left-10 {
+  left: 2.5rem;
+}
+
 .z-0 {
   z-index: 0;
 }
@@ -4532,6 +4540,10 @@ dialog::backdrop {
 
 .mt-8 {
   margin-top: 2rem;
+}
+
+.mt-6 {
+  margin-top: 1.5rem;
 }
 
 .line-clamp-2 {
@@ -5679,6 +5691,10 @@ dialog::backdrop {
 
 .tracking-widest {
   letter-spacing: 0.1em;
+}
+
+.tracking-tight {
+  letter-spacing: -0.025em;
 }
 
 .text-\[\#415F58\] {
@@ -7316,6 +7332,16 @@ dialog::backdrop {
   .lg\:text-lg {
     font-size: 1.125rem;
     line-height: 1.75rem;
+  }
+
+  .lg\:text-6xl {
+    font-size: 3.75rem;
+    line-height: 1;
+  }
+
+  .lg\:text-7xl {
+    font-size: 4.5rem;
+    line-height: 1;
   }
 }
 

@@ -62,6 +62,7 @@ stripe==4.2.0
 markdown==3.4.2
 django-ses>=3.3.0
 django-versatileimagefield>=3.0
+django-widget-tweaks>=1.4.12
 django-celery-beat
 redis
 flower

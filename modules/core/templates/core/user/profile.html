@@ -28,11 +28,13 @@ Profile
     {% else %}
     <p class="flex ">Writing is the secret technique to exploring worlds yet undiscovered.</p>
     {% endif %}
-    <div class="flex ">
-        {{ author.followers_count }} Followers  {% if author.website %}| {{ author.website| safe }} {% endif %} {% if author.location %}| {{ author.location| safe }}  {% endif %} {% if author.birth_date %}| {{ author.birth_date| safe }} {% endif %} | Earned | Views 
+    <div class="flex">
+        {{ author.followers_count }} Watchers  | {{ author.following_count }} Watching {% if author.website %}| {{ author.website| safe }} {% endif %} {% if author.location %}| {{ author.location| safe }}  {% endif %} {% if author.birth_date %}| {{ author.birth_date| safe }} {% endif %} 
+        {% comment %} | Earned | Views  {% endcomment %}
     </div>
     <div class="flex ">
-       Joined {{ author.date_joined|date:'d, M' }}   {% if author.updated_at != author.date_joined %}| Updated Profile: {{ author.updated_at|naturaltime }} {% endif %} {% if author.location %}| {{ author.location| safe }}  {% endif %} {% if author.birth_date %}| {{ author.birthdate|date:'d, M' }} {% endif %} | {% if author.referral_id %}|  Introduced By: {{ author.referral_id.name | safe }}  {% endif %} | Views 
+       Joined {{ author.date_joined|date:'d, M' }}   {% if author.updated_at != author.date_joined %}| Updated Profile: {{ author.updated_at|naturaltime }} {% endif %} {% if author.location %}| {{ author.location| safe }}  {% endif %} {% if author.birth_date %}| {{ author.birthdate|date:'d, M' }} {% endif %} | {% if author.referral_id %}|  Introduced By: {{ author.referral_id.name | safe }}  {% endif %} 
+       {% comment %} | Views  {% endcomment %}
     </div>
     </div>
 </div>
@@ -44,7 +46,7 @@ Profile
             <div class="tabs my-6 bg-mono-50 rounded shadow-mono-400 p-2 lg:p-8 mt-2 dark:bg-mono-700 dark:text-mono-200">
               <a class="tab tab-bordered dark:text-mono-100" :class="{ 'tab-active': activeTab === 'mine' }" x-on:click="activeTab = 'mine'">My Stories</a>
               <a class="tab tab-bordered dark:text-mono-100" :class="{ 'tab-active': activeTab === 'edited' }" x-on:click="activeTab = 'edited'">Edited Stories</a>
-              <a class="tab tab-bordered dark:text-mono-100" :class="{ 'tab-active': activeTab === 'followed' }" x-on:click="activeTab = 'followed'">Followed Stories</a>
+              <a class="tab tab-bordered dark:text-mono-100" :class="{ 'tab-active': activeTab === 'followed' }" x-on:click="activeTab = 'followed'">Watched Stories</a>
               <a class="tab tab-bordered dark:text-mono-100" :class="{ 'tab-active': activeTab === 'reviews' }" x-on:click="activeTab = 'reviews'">Reviews</a>
               {% comment %} <a class="tab tab-bordered dark:text-mono-100" :class="{ 'tab-active': activeTab === 'reviews' }" x-on:click="activeTab = 'reviews'">Reviews</a> {% endcomment %}
             </div>
@@ -72,7 +74,7 @@ Profile
                 </div>
               </div>
               <div x-show="activeTab === 'followed'">
-                <div class="text-2xl">{{ author.name| capfirst }}'s Followed Stories</div><hr/>
+                <div class="text-2xl">{{ author.name| capfirst }}'s Watched Stories</div><hr/>
                 <div class="text-mono-300">
                     {% for bookmark in bookmarks %}
                     {% include "core/partials/bookmark.html" %}

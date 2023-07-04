@@ -1,0 +1,46 @@
+{% load widget_tweaks %}
+<!-- Checkbox -->
+{% if field|field_type == 'booleanfield' %}
+{{ field|add_class:"rounded border-mono-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50 relative w-[3.25rem] h-7 bg-mono-100 checked:bg-none checked:bg-blue-600 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 border border-transparent ring-1 ring-transparent focus:border-blue-600 focus:ring-blue-600 ring-offset-mono-50 focus:outline-none appearance-none dark:bg-mono-700 dark:checked:bg-blue-600 dark:focus:ring-offset-mono-800 before:inline-block before:w-6 before:h-6 before:bg-mono-50 checked:before:bg-blue-200 before:translate-x-0 checked:before:translate-x-full before:shadow before:rounded-full before:transform before:ring-0 before:transition before:ease-in-out before:duration-200 dark:before:bg-mono-400 dark:checked:before:bg-blue-200" }}
+<!-- Date -->
+{% elif field|field_type == 'datefield' %} 
+{{ field|add_class:"mt-1 block w-full rounded-md border-mono-300 bg-mono-50 dark:bg-mono-800 dark:border-mono-700 dark:text-mono-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:bg-mono-500"}}
+<!-- DateTime -->
+{% elif field|field_type == 'datetimefield' %} 
+{{ field|add_class:"mt-1 block w-full rounded-md border-mono-300 bg-mono-50 dark:bg-mono-800 dark:border-mono-700 dark:text-mono-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:bg-mono-500"}}
+<!-- DateTimeLocal -->
+{% elif field|field_type == 'datetimelocalfield' %} 
+{{ field|add_class:"mt-1 block w-full rounded-md border-mono-300 bg-mono-50 dark:bg-mono-800 dark:border-mono-700 dark:text-mono-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:bg-mono-500"}}
+<!-- Email -->
+{% elif field|field_type == 'emailfield' %} 
+{{ field|add_class:"mt-1 block w-full rounded-md border-mono-300 bg-mono-50 dark:bg-mono-800 dark:border-mono-700 dark:text-mono-300 shadow-sm focus:border-indigo-300 focus:ring  focus:ring-indigo-200 focus:ring-opacity-50 dark:bg-mono-500"|attr:"placeholder:" }}
+<!-- Password -->
+{% elif field|field_type == 'passwordfield' %}
+{{ field|add_class:"mt-1 block w-full rounded-md border-mono-300 bg-mono-50 dark:bg-mono-800 dark:border-mono-700 dark:text-mono-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:bg-mono-500"|attr:"placeholder:" }}
+<!-- Char -->
+{% elif field|field_type == 'charfield' %}
+{{ field|add_class:"mt-1 block w-full rounded-md border-mono-300 bg-mono-50 dark:bg-mono-800 dark:border-mono-700 dark:text-mono-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:bg-mono-500"|attr:"placeholder:" }}
+<!-- RichText -->
+{% elif field|field_type == 'richtextformfield' %}
+{{ field|add_class:"mt-1 block w-full rounded-md border-mono-300 bg-mono-50 dark:bg-mono-800 dark:border-mono-700 dark:text-mono-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:bg-mono-500"|attr:"placeholder:" }}
+<!-- Text -->
+{% elif field|field_type == 'textfield' %}
+{{ field|add_class:"mt-1 block w-full rounded-md border-mono-300 bg-mono-50 dark:bg-mono-800 dark:border-mono-700 dark:text-mono-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:bg-mono-500"|attr:"placeholder:" }}
+<!-- File -->
+{% elif field|field_type == 'filefield' %}
+{{ field|add_class:"mt-1 block w-full rounded-md border-mono-300 bg-mono-50 dark:bg-mono-800 dark:border-mono-700 dark:text-mono-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 file:bg-mono-700 file:border-0 file:text-mono-100 file:mr-4 file:py-3 file:px-4 dark:file:bg-mono-500 dark:file:text-mono-400"|attr:"placeholder:" }}
+<!-- Image -->
+{% elif field|field_type == 'imagefield' %}
+{{ field|add_class:"mt-1 block w-full rounded-md border-mono-300 bg-mono-50 dark:bg-mono-800 dark:border-mono-700 dark:text-mono-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 file:bg-mono-700 file:border-0 file:text-mono-100 file:mr-4 file:py-3 file:px-4 dark:file:bg-mono-500 dark:file:text-mono-400"|attr:"placeholder:" }}
+<!-- TypedChoice -->
+{% elif field|field_type == 'typedchoicefield' %}
+{{ field|add_class:"mt-1 py-2 px-4 pr-9 block w-full rounded-md border-mono-300 bg-mono-50 dark:bg-mono-800 dark:border-mono-700 dark:text-mono-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"|attr:"placeholder:" }}
+<!-- MultimodelChoice -->
+{% elif field|field_type == 'modelmultiplechoicefield' %}
+{{ field|add_class:"mt-1 py-2 px-4 pr-9 block w-full rounded-md border-mono-300 bg-mono-50 dark:bg-mono-800 dark:border-mono-700 dark:text-mono-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"|attr:"placeholder:" }}
+<!-- ModelChoice -->
+{% elif field|field_type == 'modelchoicefield' %}
+{{ field|add_class:"mt-1 py-2 px-4 pr-9 block w-full rounded-md border-mono-300 bg-mono-50 dark:bg-mono-800 dark:border-mono-700 dark:text-mono-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"|attr:"placeholder:" }}
+{% else %}
+<!-- Fallback -->
+{{ field|add_class:"mt-1 block w-full rounded-md bg-mono-50 dark:bg-mono-800 dark:border-mono-700 dark:text-mono-300 border-mono-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:bg-mono-500"|attr:"placeholder:" }} {% endif %}

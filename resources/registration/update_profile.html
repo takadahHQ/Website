@@ -14,7 +14,7 @@ Update Profile
 <div class="bg-mono-50 dark:bg-mono-700 rounded shadow-blue-400 p-2 lg:p-8 max-w-md space-y-4 dark:text-gray-200">
     <form method="post">
         {% csrf_token %}
-        {{ form | crispy }}
+        {{ form  }}
         <button type="submit" class="btn bg-green-500 text-gray-50">Update</button>
     </form>
 </div>

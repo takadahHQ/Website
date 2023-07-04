@@ -4,7 +4,7 @@
 <body class="bg-mono-200 dark:bg-mono-900 text-mono-900 dark:text-mono-300 font-serif" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' x-data="{ sideBar: false }">
 {% include "component/sidebar/base.html" %}
     <div class="ml-auto mb-6 lg:w-[78%]">
-      <div class="sticky top-0 h-16 border-b bg-mono-50 dark:bg-mono-800 dark:border-mono-900 lg:py-2.5">
+      <div class="sticky top-0 h-16  bg-mono-50 dark:bg-mono-800 dark:border-mono-900 lg:py-2.5">
         <div class="flex items-center justify-between space-x-4 px-6 2xl:container">
           <h5 hidden class="text-2xl font-medium text-mono-600 lg:block dark:text-mono-100">
             {% block page-title %}

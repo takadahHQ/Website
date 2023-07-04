@@ -30,6 +30,7 @@ thirdparty = [
     path("hijack/", include("hijack.urls")),
     path("__reload__/", include("django_browser_reload.urls")),
     path("accounts/", include("django.contrib.auth.urls")),
+    path("", include("user_sessions.urls", "user_sessions")),
     # path("stripe/", include("djstripe.urls", namespace="djstripe")),
     path("", include(tf_urls)),
 ]

@@ -129,5 +129,5 @@ def save(image, title):
 
 make("netesy", "Uzumaki Love", "uzumaki2")
 make("netesy", "Legend of the Seeker, he who seeks, finds", "uzumaki-legend")
-make("netesy", "Uzumaki Love", "uzumaki2")
+make("netesy", "Like A Virgin Touched For The Very First Time", "uzumaki2")
 make("netesy", "tested", "tested")

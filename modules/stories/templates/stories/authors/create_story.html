@@ -17,7 +17,7 @@ Publish Story
 <section class="w-full">
     <form action="" method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        {{ form |crispy }}
+        {{ form  }}
         <button type ="submit" class="btn btn-[{{ settings.color}}] opacity-80">Publish</button>
     </form>
 </section>

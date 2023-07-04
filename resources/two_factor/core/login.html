@@ -1,19 +1,17 @@
 {% extends "two_factor/_base_focus.html" %}
 {% load i18n %}
-{% load tailwind_filters %}
 {% load two_factor_tags %}
 
 {% block extra_media %}
-  {{ form.media | crispy }}
+  {{ form.media }}
 {% endblock %}
-{% block title %}{% trans "Login" %}{% endblock %}
-{% block page-title %}
-Login
-{% endblock page-title %}
 
 {% block content %}
-<div class="bg-mono-50 dark:bg-mono-700 rounded shadow-blue-400 p-2 lg:p-8 max-w-md space-y-4 dark:text-mono-200">
-  {% if wizard.steps.current == 'token' %}
+  <h1>{% block title %}{% trans "Login" %}{% endblock %}</h1>
+
+  {% if wizard.steps.current == 'auth' %}
+    <p>{% blocktrans %}Enter your credentials.{% endblocktrans %}</p>
+  {% elif wizard.steps.current == 'token' %}
     <p>{{ device|as_verbose_action }}</p>
   {% elif wizard.steps.current == 'backup' %}
     <p>{% blocktrans trimmed %}Use this form for entering backup tokens for logging in.
@@ -21,7 +19,7 @@ Login
       enter one of these backup tokens to login to your account.{% endblocktrans %}</p>
   {% endif %}
 
-  <form action="" method="post" class="dark:text-mono-200">{% csrf_token %}
+  <form action="" method="post">{% csrf_token %}
     {% include "two_factor/_wizard_forms.html" %}
 
     {# hidden submit button to enable [enter] key #}
@@ -56,5 +54,4 @@ Login
        </div>
     {% endif %}
   {% endblock %}
-    </div>
 {% endblock %}
