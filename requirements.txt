@@ -1,5 +1,4 @@
 celery>=5.2.7
-crispy-tailwind>=0.5.0
 cssselect2>=0.5.0
 device-detector>=5.0.1
 diskcache>=5.4.0
