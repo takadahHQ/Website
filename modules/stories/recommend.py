@@ -16,7 +16,7 @@ def get_user_genre_preferences(user_id):
 
     # Calculate the user's genre preferences based on their interactions
     user_genre_preferences = (
-        Stories.objects.filter(id__in=Subquery(input_stories.values("id")))
+        Stories.objects.filter(id__in=[story.id for story in input_stories])
         .values("genre")
         .annotate(count=Count("genre"))
     )
@@ -26,29 +26,23 @@ def get_user_genre_preferences(user_id):
 def get_similar_users(user_id):
     # Find users with similar interests based on genre preferences and reviewed stories
     user_genre_preferences = get_user_genre_preferences(user_id)
-    similar_users = []
-    for genre_preference in user_genre_preferences:
-        genre_stories = Stories.objects.filter(genre=genre_preference["genre"]).exclude(
-            reviews__user=user_id
-        )
-        similar_users.extend(
-            Review.objects.filter(story__in=genre_stories).values_list(
-                "user", flat=True
-            )
-        )
+    similar_users = Review.objects.filter(
+        story__genre__in=[genre["genre"] for genre in user_genre_preferences]
+    )
+    similar_users = (
+        similar_users.exclude(user=user_id).values_list("user", flat=True).distinct()
+    )
 
-    return list(set(similar_users))
+    return list(similar_users)
 
 
 def get_content_based_recommendations(user_id):
-    # Get the user's reviewed, bookmarked and read stories
-    reviewed_stories = get_reviewed_stories(user_id)
-    bookmarked_stories = get_bookmarked_stories(user_id)
-    historical_stories = get_historical_stories(user_id)
+    # Get the user's reviewed, bookmarked, and read stories
     input_stories = (
-        list(reviewed_stories) + list(bookmarked_stories) + list(historical_stories)
+        get_reviewed_stories(user_id)
+        | get_bookmarked_stories(user_id)
+        | get_historical_stories(user_id)
     )
-    random.shuffle(input_stories)
 
     # Calculate average story length and number of reviews by genre
     genre_avg_length = (
@@ -62,12 +56,7 @@ def get_content_based_recommendations(user_id):
         .order_by("genre")
     )
 
-    # Calculate user's average review tone
-    user_avg_tone = Review.objects.filter(user=user_id).aggregate(avg_tone=Avg("tone"))[
-        "avg_tone"
-    ]
-
-    # Filter stories based on content-based criteria (length, reviews, tone)
+    # Filter stories based on content-based criteria (length, reviews, !tone)
     content_based_recommendations = (
         Stories.objects.filter(
             genre__in=input_stories.values("genre"),
@@ -77,7 +66,6 @@ def get_content_based_recommendations(user_id):
             reviews__user__gte=genre_avg_reviews.filter(genre=OuterRef("genre")).values(
                 "avg_reviews"
             )[:1],
-            tone__gte=user_avg_tone,
         )
         .exclude(reviews__user=user_id)
         .order_by("?")[:10]
@@ -117,8 +105,8 @@ def tiktok_style_recommendation(user_id):
     content_based_recommendations = get_content_based_recommendations(user_id)
 
     # Step 3: Get personalized recommendations based on bookmarks and history
-    bookmarked_stories = get_bookmarked_stories(user_id)
-    historical_stories = get_historical_stories(user_id)
+    bookmarked_stories = get_bookmarked_stories(user_id)[:3]
+    historical_stories = get_historical_stories(user_id)[:3]
 
     # Combine and shuffle the recommendations for final personalized recommendations
     combined_recommendations = (
