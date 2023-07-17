@@ -28,7 +28,7 @@ from .actions import (
 
 def index(request):
     context = homepage(count=12)
-    return render(request, "stories/index.html", context)
+    return render(request, "stories/landing.html", context)
 
 
 def error_500(request):

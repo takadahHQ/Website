@@ -57,6 +57,12 @@ class StoriesAdmin(admin.ModelAdmin):
         "updated_at",
     )
     inlines = [AuthorInline, TranslatorInline, EditorInline, ReviewInline]
+    prepopulated_fields = {
+        "slug": (
+            "abbreviation",
+            "title",
+        )
+    }
     resource_class = StoriesResource
 
     # fieldsets = (

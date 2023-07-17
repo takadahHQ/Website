@@ -13,10 +13,12 @@ Takadah
         <div class="hero min-h-screen bg-[#415F58] rounded">
         {% comment %} <div class="hero-overlay bg-opacity-60"></div> {% endcomment %}
         <div class="hero-content text-center">
-          <div class="max-w-lg">
-            <h1 class="mb-5 text-5xl font-extrabold leading-none tracking-tight md:text-6xl lg:text-7xl text-[#E3E3E3]  text-center hover:text-[#E3E3E3] max-w-lg">Where stories <br/>take flight</h1>
-            <p class="mb-5 text-[#E3E3E3] max-w-md">Empowering authors, connecting readers, and building a vibrant community for storytelling</p>
-            <a href="{% url 'core:register' %}" class="btn glass btn-wide bg-white bg-[#415F58] text-[#415F58] glass">Start Creating</a>
+          <div class="">
+            <h1 class="mb-5 text-4xl font-extrabold leading-none tracking-tight md:text-5xl lg:text-6xl text-[#E3E3E3]  text-center hover:text-[#E3E3E3]">Unleash your writing potential</h1>
+            <p class="text-[#E3E3E3] text-sm"><b>Before Takadah:</b> Authors struggle to connect, lack support, and miss out on earning opportunities.</p>
+            <p class="mb-5 text-[#E3E3E3] text-sm"><b>After Takadah:</b> Harness the power of community, boost your earning, and experience writing bliss.</p>
+            <a href="{% url 'core:register' %}" class="btn btn-wide bg-white bg-[#415F58] text-[#415F58]">See the Difference</a>
+            <p class="mb-5 text-[#E3E3E3] text-xs">100 authors, signed up in the last week alone!</p>
           </div>
         </div>
       </div>
@@ -473,53 +475,39 @@ Takadah
     </div>
 </section>
 {% endif %}
+<!-- FAQ -->
+<section id="faq" class="bg-mono-100 dark:bg-mono-700 text-mono-800 dark:text-mono-100 py-10 px-12 mt-2 mb-2 rounded space-x-2 space-y-2">
+    <h2 class="text-md mb-2 font-bold ">Questions You Might Have?</h2>
 
-<section id="updated" class="bg-mono-100 dark:bg-mono-700 text-mono-800 dark:text-mono-100 py-10 px-12 mt-2 mb-2 rounded">
-    <h2 class="text-md mb-2 font-bold ">Most Recently Updated</h2>
-    <div class="overflow-x-auto">
-        <table class="table table-xs">
-          {% comment %} <!-- head -->
-          <thead>
-            <tr>
-              <th>Title</th>
-              <th>Chapter</th>
-              <th>Time</th>
-            </tr>
-          </thead>
-          {% endcomment %}
-          <tbody> 
-            {% for story in updated %}
-            <!-- row 1 -->
-            <tr class="bg-mono-100 dark:bg-mono-700 dark:text-mono-100">
-                <td class="bg-mono-100 dark:bg-mono-700 dark:text-mono-100">
-                <div class="flex items-center space-x-3">
-                    <div class="avatar">
-                        <div class="mask w-12 h-12">
-                        <img src="{{ story.story.get_cover }}" alt="{{ story.story.title }}" />
-                        </div>
-                    </div>
-                    <!-- Mobile view -->
-                    <div class="visible lg:hidden w-full">
-                        <div class="font-bold"><a href="{{ story.story.get_absolute_url }}">{{ story.story.title }}</a></div>
-                        <div class="text-sm opacity-75"><a href="{{ story.get_absolute_url }}">Chapter: {{ story.position }} {{ story.title }}</a></div>
-                        <div class="text-xs opacity-50">{{ story.released_at|timesince }}</div>
-                    </div>
-                    <!-- Pc View-->
-                    <div class="hidden lg:block">
-                        <div class="font-bold"><a href="{{ story.story.get_absolute_url }}">{{ story.story.title }}</a></div>
-                        <div class="text-sm opacity-75">{{ story.user.name }}</div>
-                        <div class="text-xs opacity-50">{{ story.story.story_type.name }}</div>
-                      </div>
+            {% comment %} {% for faq in faqs %}
+            <div class="collapse collapse-plus bg-mono-50 dark:bg-mono-600 text-mono-800 dark:text-mono-100">
+                <!-- if first marked the checked -->
+                <input type="radio" name="faq" checked="checked" > 
+                <div class="collapse-title text-xl font-medium">
+                  {{ faq.question }}
                 </div>
-            </td>
-            <a href="{{ story.get_absolute_url }}" class="hidden lg:block">
-                <td class="bg-mono-100 dark:bg-mono-700 dark:text-mono-100"> <a href="{{ story.get_absolute_url }}" class="hidden lg:block"> Chapter: {{ story.position }} {{ story.title }}</a></td>
-                <td class="bg-mono-100 dark:bg-mono-700 dark:text-mono-100"> <a href="{{ story.get_absolute_url }}" class="hidden lg:block"> {{ story.released_at|timesince }}</a></td>
-            </a>
-              </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-      </div>
+                <div class="collapse-content"> 
+                  <p>{{ faq.answer }}</p>
+                </div>
+              </div>
+            {% endfor %} {% endcomment %}
+            <div class="collapse collapse-plus bg-mono-50 dark:bg-mono-600 text-mono-800 dark:text-mono-100">
+                <input type="radio" name="faq"> 
+                <div class="collapse-title text-xl font-medium">
+                  Why Takadah
+                </div>
+                <div class="collapse-content"> 
+                  <p>We are the best for a reason</p>
+                </div>
+              </div>
+              <div class="collapse collapse-plus bg-mono-50 dark:bg-mono-600 text-mono-800 dark:text-mono-100">
+                <input type="radio" name="faq"> 
+                <div class="collapse-title text-xl font-medium">
+                  Why Takadah
+                </div>
+                <div class="collapse-content"> 
+                  <p>We are the best for a reason</p>
+                </div>
+              </div>
 </section>
 {% endblock content %}

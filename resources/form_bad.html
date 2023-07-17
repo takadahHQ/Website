@@ -22,7 +22,7 @@
 {{ field|add_class:"mt-1 block w-full rounded-md border-red-300 bg-mono-50 dark:bg-mono-800 dark:border-red-700 dark:text-mono-300 shadow-sm focus:border-red-300 focus:ring focus:border-red-200 focus:ring-opacity-50 dark:bg-mono-500"|attr:"placeholder:" }}
 <!-- RichText -->
 {% elif field|field_type == 'richtextformfield' %}
-{{ field|add_class:"mt-1 block w-full rounded-md border-red-300 bg-mono-50 dark:bg-mono-800 dark:border-red-700 dark:text-mono-300 shadow-sm focus:border-red-300 focus:ring focus:border-red-200 focus:ring-opacity-50 dark:bg-mono-500"|attr:"placeholder:" }}
+{{ field|add_class:"mt-1 block w-full rounded-md border-red-300 bg-mono-50 !dark:bg-mono-800 !dark:border-red-700 !dark:text-mono-300 shadow-sm focus:border-red-300 focus:ring focus:border-red-200 focus:ring-opacity-50 dark:bg-mono-500"|attr:"placeholder:" }}
 <!-- Text -->
 {% elif field|field_type == 'textfield' %}
 {{ field|add_class:"mt-1 block w-full rounded-md border-red-300 bg-mono-50 dark:bg-mono-800 dark:border-red-700 dark:text-mono-300 shadow-sm focus:border-red-300 focus:ring focus:border-red-200 focus:ring-opacity-50 dark:bg-mono-500"|attr:"placeholder:" }}
