@@ -36,13 +36,27 @@ def get_similar_users(user_id):
     return list(similar_users)
 
 
-def get_content_based_recommendations(user_id):
-    # Get the user's reviewed, bookmarked, and read stories
-    input_stories = (
-        get_reviewed_stories(user_id)
-        | get_bookmarked_stories(user_id)
-        | get_historical_stories(user_id)
+def get_collaborative_filtering_recommendations(user_id):
+    similar_users = get_similar_users(user_id)
+    collaborative_filtering_recommendations = (
+        Stories.objects.filter(reviews__user__in=similar_users)
+        .annotate(likes_count=Count("reviews__user"))
+        .order_by("-likes_count")[:10]
     )
+    return collaborative_filtering_recommendations
+
+
+def get_content_based_recommendations(user_id, story_id=None):
+    if user_id:
+        # Get the user's reviewed, bookmarked, and read stories
+        input_stories = (
+            get_reviewed_stories(user_id)
+            | get_bookmarked_stories(user_id)
+            | get_historical_stories(user_id)
+        )
+    elif story_id:
+        # Get the current story based on story_id for context-based recommendations
+        input_stories = Stories.objects.filter(id=story_id)
 
     # Calculate average story length and number of reviews by genre
     genre_avg_length = (
@@ -92,29 +106,27 @@ def get_historical_stories(user_id):
     return historical_stories
 
 
-def tiktok_style_recommendation(user_id):
-    # Step 1: Get collaborative filtering recommendations
-    similar_users = get_similar_users(user_id)
-    favorite_stories = (
-        Stories.objects.filter(reviews__user__in=similar_users)
-        .annotate(likes_count=Count("reviews__user"))
-        .order_by("-likes_count")[:10]
-    )
+def tiktok_style_recommendation(user_id=None, story_id=None):
+    if user_id:
+        # Step 1: Get collaborative filtering recommendations
+        collaborative_filtering_recommendations = (
+            get_collaborative_filtering_recommendations(user_id)
+        )
+        # Step 2: Get content-based recommendations
+        content_based_recommendations = get_content_based_recommendations(user_id)
 
-    # Step 2: Get content-based recommendations
-    content_based_recommendations = get_content_based_recommendations(user_id)
+        # Combine and shuffle the recommendations for final personalized recommendations
+        combined_recommendations = list(collaborative_filtering_recommendations) + list(
+            content_based_recommendations
+        )
+        random.shuffle(combined_recommendations)
 
-    # Step 3: Get personalized recommendations based on bookmarks and history
-    bookmarked_stories = get_bookmarked_stories(user_id)[:3]
-    historical_stories = get_historical_stories(user_id)[:3]
-
-    # Combine and shuffle the recommendations for final personalized recommendations
-    combined_recommendations = (
-        list(favorite_stories)
-        + list(content_based_recommendations)
-        + list(bookmarked_stories)
-        + list(historical_stories)
-    )
-    random.shuffle(combined_recommendations)
-
-    return combined_recommendations[:10]
+        return combined_recommendations[:10]
+    elif story_id:
+        # When not logged in, provide context-based recommendations based on the current story
+        content_based_recommendations = get_content_based_recommendations(
+            user_id=None, story_id=story_id
+        )[:10]
+        return content_based_recommendations
+    else:
+        return []
