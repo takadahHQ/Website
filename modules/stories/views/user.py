@@ -21,6 +21,7 @@ from modules.stories.actions.user import (
     get_story_by_id,
     remove_review,
 )
+from modules.stories.recommend import recommend
 from modules.stories.forms import StoryForm, ChapterForm
 from taggit.models import Tag
 from modules.stories.models import (
@@ -88,9 +89,11 @@ def storyFollow(request, id):
 def showStory(request, type: str, slug: str):
     story = get_story(slug=slug, type=type)
     bookmark = get_story_bookmarks(story=story)
+    user_id = request.user.id if request.user.is_authenticated else None
+    story_id = story.id
     review = ""
-    recommendation = ""
-    context = {"story": story, "bookmark": bookmark}
+    recommendation = recommend(user_id=user_id, story_id=story_id)
+    context = {"story": story, "bookmark": bookmark, "recommendation": recommendation}
     template = "stories/readers/story_detail.html"
     return render(request, template, context)
 

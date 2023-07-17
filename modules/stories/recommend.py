@@ -1,5 +1,17 @@
-from django.db.models import Count, Avg, OuterRef, Q, Subquery
-from modules.stories.models.stories import Stories, Review
+# from django.db.models import Count, Avg, Sum, OuterRef, Q, Subquery
+from django.db.models import (
+    Count,
+    Avg,
+    OuterRef,
+    Subquery,
+    Sum,
+    Case,
+    When,
+    IntegerField,
+    F,
+)
+from modules.stories.models import Stories, Review, Chapter
+from django.utils import timezone
 import random
 
 
@@ -36,17 +48,50 @@ def get_similar_users(user_id):
     return list(similar_users)
 
 
+# def get_word_count(story):
+#     active_chapters = story.chapters.filter(
+#         status="active", released_at__lte=timezone.now()
+#     )
+#     total_word_count = sum(chapter.words for chapter in active_chapters)
+#     return total_word_count
+
+
+def get_word_count_annotation():
+    # Annotate each story with its total word count from active chapters
+    # return Sum(
+    #     Case(
+    #         When(
+    #             chapters__status="active",
+    #             chapters__released_at__lte=timezone.now(),
+    #             then=F("chapters__words"),
+    #         ),
+    #         default=0,
+    #         output_field=IntegerField(),
+    #     )
+    # )
+    # Annotate each story with its total word count from active chapters
+    return Subquery(
+        Chapter.objects.filter(
+            story_id=OuterRef("pk"), status="active", released_at__lte=timezone.now()
+        )
+        .values("story_id")
+        .annotate(total_words=Sum("words"))
+        .values("total_words")
+    )
+
+
 def get_collaborative_filtering_recommendations(user_id):
     similar_users = get_similar_users(user_id)
     collaborative_filtering_recommendations = (
         Stories.objects.filter(reviews__user__in=similar_users)
         .annotate(likes_count=Count("reviews__user"))
+        .distinct()
         .order_by("-likes_count")[:10]
     )
     return collaborative_filtering_recommendations
 
 
-def get_content_based_recommendations(user_id, story_id=None):
+def get_content_based_recommendations(user_id=None, story_id=None):
     if user_id:
         # Get the user's reviewed, bookmarked, and read stories
         input_stories = (
@@ -61,30 +106,46 @@ def get_content_based_recommendations(user_id, story_id=None):
     # Calculate average story length and number of reviews by genre
     genre_avg_length = (
         Stories.objects.values("genre")
-        .annotate(avg_length=Avg("words"))
+        .annotate(avg_length=Avg(get_word_count_annotation()))
         .order_by("genre")
     )
+
     genre_avg_reviews = (
         Stories.objects.values("genre")
         .annotate(avg_reviews=Avg("reviews__user"))
         .order_by("genre")
     )
 
-    # Filter stories based on content-based criteria (length, reviews, !tone)
+    # Annotate stories with the total word count from active chapters
+    annotated_stories = Stories.objects.annotate(
+        total_words=Sum(
+            Case(
+                When(
+                    chapters__status="active",
+                    chapters__released_at__lte=timezone.now(),
+                    then=F("chapters__words"),
+                ),
+                default=0,
+                output_field=IntegerField(),
+            )
+        )
+    )
+    # Filter stories based on content-based criteria (length, reviews)
     content_based_recommendations = (
-        Stories.objects.filter(
+        annotated_stories.filter(
             genre__in=input_stories.values("genre"),
-            words__gte=genre_avg_length.filter(genre=OuterRef("genre")).values(
+            # reviews__user__gte=genre_avg_reviews.filter(genre=OuterRef("genre")).values(
+            #     "avg_reviews"
+            # ),
+            total_words__gte=genre_avg_length.filter(genre=OuterRef("genre")).values(
                 "avg_length"
             )[:1],
-            reviews__user__gte=genre_avg_reviews.filter(genre=OuterRef("genre")).values(
-                "avg_reviews"
-            )[:1],
         )
-        .exclude(reviews__user=user_id)
+        .annotate(total_words=Sum("chapters__words"))
+        .distinct()
+        # .exclude(reviews__user=user_id)
         .order_by("?")[:10]
     )
-
     return content_based_recommendations
 
 
@@ -106,18 +167,21 @@ def get_historical_stories(user_id):
     return historical_stories
 
 
-def tiktok_style_recommendation(user_id=None, story_id=None):
+def recommend(user_id=None, story_id=None):
     if user_id:
         # Step 1: Get collaborative filtering recommendations
         collaborative_filtering_recommendations = (
             get_collaborative_filtering_recommendations(user_id)
         )
         # Step 2: Get content-based recommendations
-        content_based_recommendations = get_content_based_recommendations(user_id)
+        content_based_recommendations = get_content_based_recommendations(
+            user_id, story_id=None
+        )
 
         # Combine and shuffle the recommendations for final personalized recommendations
         combined_recommendations = list(collaborative_filtering_recommendations) + list(
-            content_based_recommendations
+            set(list(content_based_recommendations))
+            - set(list(collaborative_filtering_recommendations))
         )
         random.shuffle(combined_recommendations)
 
