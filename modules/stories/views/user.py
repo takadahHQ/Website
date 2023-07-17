@@ -130,6 +130,12 @@ class ShowChapter(HistoryMixin, DetailView):
         context["packages"] = get_packages(
             story=self.kwargs.get("story"), chapter=self.kwargs.get("slug")
         )
+        user_id = self.request.user.id if self.request.user.is_authenticated else None
+        story_id = context["object"].story.id
+
+        # Get the recommendations based on user login status
+        recommendations = recommend(user_id=user_id, story_id=story_id)
+        context["recommendation"] = recommendations
         return context
 
 
