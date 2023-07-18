@@ -475,6 +475,54 @@ Takadah
     </div>
 </section>
 {% endif %}
+<section id="updated" class="bg-mono-100 dark:bg-mono-700 text-mono-800 dark:text-mono-100 py-10 px-12 mt-2 mb-2 rounded">
+    <h2 class="text-md mb-2 font-bold ">Most Recently Updated</h2>
+    <div class="overflow-x-auto">
+        <table class="table table-xs">
+          {% comment %} <!-- head -->
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Chapter</th>
+              <th>Time</th>
+            </tr>
+          </thead>
+          {% endcomment %}
+          <tbody> 
+            {% for story in updated %}
+            <!-- row 1 -->
+            <tr class="bg-mono-100 dark:bg-mono-700 dark:text-mono-100">
+                <td class="bg-mono-100 dark:bg-mono-700 dark:text-mono-100">
+                <div class="flex items-center space-x-3">
+                    <div class="avatar">
+                        <div class="mask w-12 h-12">
+                        <img src="{{ story.story.get_cover }}" alt="{{ story.story.title }}" />
+                        </div>
+                    </div>
+                    <!-- Mobile view -->
+                    <div class="visible lg:hidden w-full">
+                        <div class="font-bold"><a href="{{ story.story.get_absolute_url }}">{{ story.story.title }}</a></div>
+                        <div class="text-sm opacity-75"><a href="{{ story.get_absolute_url }}">Chapter: {{ story.position }} {{ story.title }}</a></div>
+                        <div class="text-xs opacity-50">{{ story.released_at|timesince }}</div>
+                    </div>
+                    <!-- Pc View-->
+                    <div class="hidden lg:block">
+                        <div class="font-bold"><a href="{{ story.story.get_absolute_url }}">{{ story.story.title }}</a></div>
+                        <div class="text-sm opacity-75">{{ story.user.name }}</div>
+                        <div class="text-xs opacity-50">{{ story.story.story_type.name }}</div>
+                      </div>
+                </div>
+            </td>
+            <a href="{{ story.get_absolute_url }}" class="hidden lg:block">
+                <td class="bg-mono-100 dark:bg-mono-700 dark:text-mono-100"> <a href="{{ story.get_absolute_url }}" class="hidden lg:block"> Chapter: {{ story.position }} {{ story.title }}</a></td>
+                <td class="bg-mono-100 dark:bg-mono-700 dark:text-mono-100"> <a href="{{ story.get_absolute_url }}" class="hidden lg:block"> {{ story.released_at|timesince }}</a></td>
+            </a>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+</section>
 <!-- FAQ -->
 <section id="faq" class="bg-mono-100 dark:bg-mono-700 text-mono-800 dark:text-mono-100 py-10 px-12 mt-2 mb-2 rounded space-x-2 space-y-2">
     <h2 class="text-md mb-2 font-bold ">Questions You Might Have?</h2>
