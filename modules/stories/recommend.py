@@ -146,6 +146,7 @@ def get_content_based_recommendations(user_id=None, story_id=None):
         # .exclude(reviews__user=user_id)
         .order_by("?")[:10]
     )
+    content_based_recommendations = list(dict.fromkeys(content_based_recommendations))
     return content_based_recommendations
 
 
