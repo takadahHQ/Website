@@ -10,6 +10,8 @@ from taggit.managers import TaggableManager
 from modules.stories.converter import h_encode
 from versatileimagefield.fields import VersatileImageField
 from django.utils import timezone
+from django.contrib.contenttypes.fields import GenericRelation
+from modules.stats.models import Service
 
 
 try:
@@ -84,6 +86,7 @@ class Stories(CacheInvalidationMixin, idModel, timeStampModel):
     tags = TaggableManager()
     flags = GenericRelation(Flag)
     status = models.CharField(max_length=100, choices=status_choices, default="draft")
+    service = GenericRelation(Service, related_query_name="story")
 
     objects = CachedQueryManager()
 
@@ -182,35 +185,6 @@ class Stories(CacheInvalidationMixin, idModel, timeStampModel):
         )
         total_word_count = sum(chapter.words for chapter in active_chapters)
         return total_word_count
-
-    @property
-    def prediction(self):
-        predictor = mindsdb.Predictor(name="story_recommendation_predictor")
-        # Use the self object to get the data you need to make the prediction
-        data = {
-            "title": self.title,
-            "slug": self.slug,
-            "summary": self.summary,
-            "story_type": self.story_type,
-            "following": self.following,
-            "likes": self.likes,
-            "dislikes": self.dislikes,
-            "author": self.author,
-            "language": self.language,
-            "genre": self.genre,
-            "rating": self.rating,
-            "tags": self.tags,
-        }
-        return predictor.predict(when=data)
-
-    def recommend_stories(self):
-        prediction = self.prediction()
-        recommended_likes = prediction["likes"]["prediction"]
-        story_type_recommendation = prediction["story_type"]
-        rating_recommendation = prediction["rating"]
-        genre_recommendation = prediction["genre"]
-        recommended_stories = Stories.objects.filter(likes__in=recommended_likes)[:6]
-        return recommended_stories
 
     class Meta:
         verbose_name_plural = "stories"

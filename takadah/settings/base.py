@@ -152,8 +152,8 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "hijack.middleware.HijackUserMiddleware",
     # "djstripe.middleware.SubscriptionPaymentMiddleware",
-    # "modules.stats.middleware.AnalyticsMiddleware",
-    "modules.stats.middleware.ingress_middleware",
+    "modules.stats.middleware.AnalyticsMiddleware",
+    # "modules.stats.middleware.ingress_middleware",
     # 'auditlog.middleware.AuditlogMiddleware',
 ]
 

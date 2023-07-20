@@ -14,7 +14,8 @@ from django.apps import apps
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.db.models.functions import TruncDate, TruncHour
-from ..stories.models import Stories
+from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib.contenttypes.models import ContentType
 
 # How long a session a needs to go without an update to no longer be considered 'active' (i.e., currently online)
 ACTIVE_USER_TIMEDELTA = timezone.timedelta(
@@ -70,18 +71,23 @@ class Service(models.Model):
 
     uuid = models.UUIDField(default=_default_uuid, primary_key=True)
     name = models.TextField(max_length=64, verbose_name=_("Name"))
-    owner = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        verbose_name=_("Owner"),
-        on_delete=models.CASCADE,
-        related_name="analytics",
-    )
-    collaborators = models.ManyToManyField(
-        settings.AUTH_USER_MODEL,
-        verbose_name=_("Collaborators"),
-        related_name="collaborating_services",
-        blank=True,
-    )
+    # Below the mandatory fields for generic relation
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    object_id = models.PositiveIntegerField()
+    # content_object = GenericForeignKey()
+    owner = GenericForeignKey("content_type", "object_id")
+    # owner = models.ForeignKey(
+    #     settings.AUTH_USER_MODEL,
+    #     verbose_name=_("Owner"),
+    #     on_delete=models.CASCADE,
+    #     related_name="analytics",
+    # )
+    # collaborators = models.ManyToManyField(
+    #     settings.AUTH_USER_MODEL,
+    #     verbose_name=_("Collaborators"),
+    #     related_name="collaborating_services",
+    #     blank=True,
+    # )
     created = models.DateTimeField(auto_now_add=True, verbose_name=_("created"))
     link = models.URLField(blank=True, verbose_name=_("link"))
     origins = models.TextField(default="*", verbose_name=_("origins"))
