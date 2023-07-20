@@ -13,13 +13,15 @@ class Sponsors(statusModel):
         "Packages", related_name="sponsor", on_delete=models.CASCADE
     )
     payment_date = models.DateField(auto_now_add=True)
-    expire_at = models.DateField(
-        default=datetime.datetime.today() + datetime.timedelta(days=30), editable=False
-    )
+    expire_at = models.DateField()
     reference = models.CharField(max_length=255, null=True, blank=True)
 
     def __str__(self):
         return self.reference
+
+    def save(self, *args, **kwargs):
+        if not self.pk:  # Check if the instance is being created (not updated)
+            self.expire_at = datetime.datetime.today() + datetime.timedelta(days=30)
 
     class Meta:
         verbose_name = "sponsor"
