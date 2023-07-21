@@ -16,6 +16,7 @@ from django.core.exceptions import ValidationError
 from django.db.models.functions import TruncDate, TruncHour
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
+from django.db.models import Count
 
 # How long a session a needs to go without an update to no longer be considered 'active' (i.e., currently online)
 ACTIVE_USER_TIMEDELTA = timezone.timedelta(
@@ -51,8 +52,8 @@ def _default_api_token():
     return token_urlsafe(32)
 
 
-def _default_uuid():
-    return str(uuid.uuid4())
+# def _default_uuid():
+#     return str(uuid.uuid4())
 
 
 # class User(AbstractUser):
@@ -69,7 +70,7 @@ class Service(models.Model):
     ARCHIVED = "AR"
     SERVICE_STATUSES = [(ACTIVE, _("Active")), (ARCHIVED, _("Archived"))]
 
-    uuid = models.UUIDField(default=_default_uuid, primary_key=True)
+    id = models.BigAutoField(primary_key=True)
     name = models.TextField(max_length=64, verbose_name=_("Name"))
     # Below the mandatory fields for generic relation
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
@@ -120,11 +121,85 @@ class Service(models.Model):
     class Meta:
         verbose_name = _("Service")
         verbose_name_plural = _("Services")
-        ordering = ["name", "uuid"]
+        ordering = ["name", "id"]
         app_label = "stats"
 
     def __str__(self):
         return self.name
+
+    def get_most_active_hour(self):
+        # Get the most active hour for the service
+        active_hour = (
+            self.hit_set.filter(
+                start_time__gte=timezone.now() - timezone.timedelta(days=30)
+            )
+            .annotate(hour=TruncHour("start_time"))
+            .values("hour")
+            .annotate(count=Count("id"))
+            .order_by("-count")
+            .first()
+        )
+
+        return active_hour["hour"] if active_hour else None
+
+    def get_best_locations(self):
+        best_locations = (
+            self.hit_set.values("session__country")
+            .annotate(count=Count("id"))
+            .order_by("-count")[:5]
+        )
+
+        return [
+            {"country": location["session__country"], "count": location["count"]}
+            for location in best_locations
+        ]
+
+    def get_least_active_hour(self):
+        least_active_hour = (
+            self.hit_set.filter(
+                start_time__gte=timezone.now() - timezone.timedelta(days=30)
+            )
+            .annotate(hour=TruncHour("start_time"))
+            .values("hour")
+            .annotate(count=Count("id"))
+            .order_by("count")
+            .first()
+        )
+
+        return least_active_hour["hour"] if least_active_hour else None
+
+    def get_views_by_days(self, days=30):
+        end_time = timezone.now()
+        start_time = end_time - timezone.timedelta(days=days)
+
+        daily_stats = self.get_core_stats(start_time, end_time)
+        return (
+            daily_stats["chart_data"]["sessions"] if "chart_data" in daily_stats else []
+        )
+
+    def get_views_by_device(self):
+        views_by_device = (
+            self.session_set.values("device")
+            .annotate(count=Count("id"))
+            .order_by("-count")
+        )
+
+        return [
+            {"device": device["device"], "count": device["count"]}
+            for device in views_by_device
+        ]
+
+    def get_views_by_location(self):
+        views_by_location = (
+            self.hit_set.values("session__country")
+            .annotate(count=Count("id"))
+            .order_by("-count")
+        )
+
+        return [
+            {"country": location["session__country"], "count": location["count"]}
+            for location in views_by_location
+        ]
 
     def get_ignored_networks(self):
         return _parse_network_list(self.ignored_ips)
@@ -161,8 +236,8 @@ class Service(models.Model):
         return main_data
 
     def get_relative_stats(self, start_time, end_time):
-        Session = apps.get_model("analytics", "Session")
-        Hit = apps.get_model("analytics", "Hit")
+        Session = apps.get_model("stats", "Session")
+        Hit = apps.get_model("stats", "Hit")
 
         tz_now = timezone.now()
 
@@ -292,7 +367,7 @@ class Service(models.Model):
             sessions_per_hour = (
                 sessions.annotate(hour=TruncHour("start_time"))
                 .values("hour")
-                .annotate(count=models.Count("uuid"))
+                .annotate(count=models.Count("id"))
                 .order_by("hour")
             )
             chart_data = {
@@ -322,7 +397,7 @@ class Service(models.Model):
             sessions_per_day = (
                 sessions.annotate(date=TruncDate("start_time"))
                 .values("date")
-                .annotate(count=models.Count("uuid"))
+                .annotate(count=models.Count("id"))
                 .order_by("date")
             )
             chart_data = {
@@ -362,7 +437,7 @@ class Service(models.Model):
 
 
 class Session(models.Model):
-    uuid = models.UUIDField(default=_default_uuid, primary_key=True)
+    id = models.BigAutoField(primary_key=True)
     service = models.ForeignKey(
         Service, verbose_name=_("Service"), on_delete=models.CASCADE, db_index=True
     )
@@ -430,12 +505,12 @@ class Session(models.Model):
         return self.last_seen - self.start_time
 
     def __str__(self):
-        return f"{self.identifier if self.identifier != '' else 'Anonymous'} @ {self.service.name} [{str(self.uuid)[:6]}]"
+        return f"{self.identifier if self.identifier != '' else 'Anonymous'} @ {self.service.name} [{str(self.id)[:6]}]"
 
     def get_absolute_url(self):
         return reverse(
             "dashboard:service_session",
-            kwargs={"pk": self.service.pk, "session_pk": self.uuid},
+            kwargs={"pk": self.service.pk, "session_pk": self.id},
         )
 
     def recalculate_bounce(self):

@@ -10,7 +10,7 @@ class HitInline(admin.TabularInline):
 
 class SessionAdmin(admin.ModelAdmin):
     list_display = (
-        "uuid",
+        "id",
         "service",
         "start_time",
         "last_seen",
@@ -19,7 +19,7 @@ class SessionAdmin(admin.ModelAdmin):
         "asn",
         "country",
     )
-    list_display_links = ("uuid",)
+    list_display_links = ("id",)
     search_fields = (
         "ip",
         "user_agent",

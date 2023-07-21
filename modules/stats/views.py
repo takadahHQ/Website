@@ -23,7 +23,7 @@ from modules.stats.models import Service
 from modules.stats.tasks import ingress_request
 
 
-def ingress(request, service_uuid, identifier, tracker, payload):
+def ingress(request, service_id, identifier, tracker, payload):
     time = timezone.now()
     client_ip, is_routable = get_client_ip(request)
     location = request.META.get("HTTP_REFERER", "").strip()
@@ -34,7 +34,7 @@ def ingress(request, service_uuid, identifier, tracker, payload):
         dnt = True
 
     ingress_request.delay(
-        service_uuid,
+        service_id,
         tracker,
         time,
         payload,
@@ -49,13 +49,13 @@ def ingress(request, service_uuid, identifier, tracker, payload):
 class ValidateServiceOriginsMixin:
     def dispatch(self, request, *args, **kwargs):
         try:
-            service_uuid = self.kwargs.get("service_uuid")
-            origins = cache.get(f"service_origins_{service_uuid}")
+            service_id = self.kwargs.get("service_uuid")
+            origins = cache.get(f"service_origins_{service_id}")
 
             if origins is None:
-                service = Service.objects.get(uuid=service_uuid)
+                service = Service.objects.get(id=service_id)
                 origins = service.origins
-                cache.set(f"service_origins_{service_uuid}", origins, timeout=3600)
+                cache.set(f"service_origins_{service_id}", origins, timeout=3600)
 
             allow_origin = "*"
 
@@ -116,14 +116,14 @@ class ScriptView(ValidateServiceOriginsMixin, View):
             reverse(
                 "ingress:endpoint_script",
                 kwargs={
-                    "service_uuid": self.kwargs.get("service_uuid"),
+                    "service_id": self.kwargs.get("service_uuid"),
                 },
             )
             if self.kwargs.get("identifier") == None
             else reverse(
                 "ingress:endpoint_script_id",
                 kwargs={
-                    "service_uuid": self.kwargs.get("service_uuid"),
+                    "service_id": self.kwargs.get("service_uuid"),
                     "identifier": self.kwargs.get("identifier"),
                 },
             )
@@ -157,10 +157,10 @@ class ScriptView(ValidateServiceOriginsMixin, View):
         )
 
     def get_script_inject(self):
-        service_uuid = self.kwargs.get("service_uuid")
-        script_inject = cache.get(f"script_inject_{service_uuid}")
+        service_id = self.kwargs.get("service_uuid")
+        script_inject = cache.get(f"script_inject_{service_id}")
         if script_inject == None:
-            service = Service.objects.get(uuid=service_uuid)
+            service = Service.objects.get(id=service_id)
             script_inject = service.script_inject
-            cache.set(f"script_inject_{service_uuid}", script_inject, timeout=3600)
+            cache.set(f"script_inject_{service_id}", script_inject, timeout=3600)
         return script_inject
