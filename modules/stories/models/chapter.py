@@ -20,6 +20,10 @@ from modules.stories.models.include import (
 from modules.subscriptions.models import Sponsors, Packages
 from django.urls import reverse
 from django.utils import timezone
+from modules.stats.models import Service, Hit
+from django.contrib.contenttypes.models import ContentType
+from django.db.models import Avg, Count, Max, Min
+from django.db.models.functions import TruncDate, TruncHour
 
 
 class Chapter(CacheInvalidationMixin, idModel, statusModel, timeStampModel):
@@ -159,6 +163,38 @@ class Chapter(CacheInvalidationMixin, idModel, statusModel, timeStampModel):
             text_without_tags = strip_tags(chapter.text)
             chapter.words = len(text_without_tags.split())
             chapter.save()
+
+    def get_chapter_analytics(self):
+        # Get all hits related to this chapter
+        chapter_hits = Hit.objects.filter(
+            session__service__story__chapters=self.id,
+            start_time__gte=self.released_at,
+            start_time__lte=timezone.now(),
+        )
+
+        # Calculate hits per chapter of the story
+        hits_per_chapter = chapter_hits.count()
+
+        # # # Calculate the total hits of the story
+        # # total_hits = self.story.service.hit_set.count()'
+        # chapter_hits = chapter_hits.annotate(hour=TruncHour("start_time"))
+
+        # # Get the location of the hits per chapter
+        # locations_per_chapter = chapter_hits.values("location").annotate(
+        #     count=models.Count("location")
+        # )
+
+        # Get the time of view per chapter
+        time_of_view_per_chapter = chapter_hits.aggregate(avg_time=models.Avg("hour"))[
+            "avg_time"
+        ]
+
+        return {
+            "hits_per_chapter": hits_per_chapter,
+            # "total_hits": 1,
+            # "locations_per_chapter": locations_per_chapter,
+            "time_of_view_per_chapter": time_of_view_per_chapter,
+        }
 
     class Meta:
         verbose_name_plural = "chapters"

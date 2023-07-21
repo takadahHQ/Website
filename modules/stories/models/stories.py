@@ -11,8 +11,18 @@ from modules.stories.converter import h_encode
 from versatileimagefield.fields import VersatileImageField
 from django.utils import timezone
 from django.contrib.contenttypes.fields import GenericRelation
-from modules.stats.models import Service
-
+from modules.stats.models import Service, Hit
+from django.contrib.contenttypes.models import ContentType
+from django.db.models import (
+    Avg,
+    Count,
+    Max,
+    Min,
+    Func,
+    F,
+    DateTimeField,
+    ExpressionWrapper,
+)
 
 try:
     mindsdb = __import__("mindsdb")
@@ -185,6 +195,100 @@ class Stories(CacheInvalidationMixin, idModel, timeStampModel):
         )
         total_word_count = sum(chapter.words for chapter in active_chapters)
         return total_word_count
+
+    def create_service_for_stories(self):
+        # Check if the story has a status of "published"
+        # if self.status == "published":
+        try:
+            # Check if a service is already associated with the story
+            service = self.service.get()
+        except Service.DoesNotExist:
+            # Get the ContentType of the Stories model
+            stories_content_type = ContentType.objects.get_for_model(Stories)
+            # Create a service instance for the story if not already associated
+            service = Service.objects.create(
+                name=self.title,
+                link=self.get_absolute_url(),  # Set the link field using get_absolute_url()
+                content_type=stories_content_type,
+                object_id=self.id,
+                # Set other relevant fields here for the Service model
+                # ...
+            )
+            self.service.add(service)
+
+    def get_chapter_analytics(self):
+        # Get all chapters of the story
+        chapters = self.chapters.all()
+
+        # Initialize data structures to store analytics
+        analytics_data = {
+            "hits_per_chapter": [],
+            "total_hits": 0,
+            "locations_per_chapter": [],
+            "time_of_view_per_chapter": [],
+        }
+
+        # Loop through each chapter to gather analytics data
+        for chapter in chapters:
+            # Get hits for the chapter
+            hits = Hit.objects.filter(
+                session__service__story=self,
+                session__service__story__chapters=chapter,
+            )
+
+            # Calculate hits per chapter
+            hits_count = hits.count()
+            analytics_data["hits_per_chapter"].append(
+                {"chapter": chapter, "hits": hits_count}
+            )
+
+            # Update total hits count
+            analytics_data["total_hits"] += hits_count
+
+            # Get locations of hits for the chapter
+            locations = hits.values("location").annotate(count=models.Count("location"))
+            analytics_data["locations_per_chapter"].append(
+                {"chapter": chapter, "locations": locations}
+            )
+
+            # Calculate time of view per chapter
+            time_of_view = hits.aggregate(total_time=models.Sum("duration"))[
+                "total_time"
+            ]
+            analytics_data["time_of_view_per_chapter"].append(
+                {"chapter": chapter, "time_of_view": time_of_view}
+            )
+
+        return analytics_data
+
+    def get_story_analytics(self):
+        service = self.service.first()
+        # Get the best reading day
+        best_reading_day = service.get_views_by_days()
+
+        # Get the total amount of views
+        total_views = 100
+
+        # Get the views by location
+        views_by_location = service.get_views_by_location()
+
+        # Get the views by devices
+        views_by_devices = service.get_views_by_device()
+
+        # Get the best and worst time for all records
+        best_time = service.get_most_active_hour()
+
+        worst_time = service.get_least_active_hour()
+
+        return {
+            "best_reading_time": best_time,
+            "best_reading_day": best_reading_day,
+            "total_views": total_views,
+            "views_by_location": views_by_location,
+            "views_by_devices": views_by_devices,
+            "best_time": best_time,
+            "worst_time": worst_time,
+        }
 
     class Meta:
         verbose_name_plural = "stories"

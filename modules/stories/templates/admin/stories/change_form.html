@@ -1,0 +1,32 @@
+{% extends "admin/change_form.html" %}
+{% load i18n %}
+
+{% block extrahead %}
+  <!-- Add any additional CSS or JS files here -->
+{% endblock %}
+
+{% block content %}
+  <div>
+    <h2>{{ original.title }} - Analytics</h2>
+    <p>Total Hits: {{ story_analytics.total_views }}</p>
+    <p>Best Reading Time: {{ story_analytics.best_reading_time }}</p>
+    <p>Best Reading Day: {{ story_analytics.best_reading_day }}</p>
+    <!-- Add other story statistics here -->
+    <hr>
+    <h3>Chapter Analytics</h3>
+    {% for chapter_number, chapter_data in story_analytics.chapter_analytics.items %}
+      <h4>Chapter {{ chapter_number }}</h4>
+      <p>Hits: {{ chapter_data.hits }}</p>
+      <p>Locations of Hits:</p>
+      <ul>
+        {% for location in chapter_data.locations %}
+          <li>{{ location.location }}: {{ location.count }}</li>
+        {% endfor %}
+      </ul>
+      <p>Time of View: {{ chapter_data.time_of_view }}</p>
+    {% endfor %}
+  </div>
+  <hr>
+  {{ daily_stats }}
+  {{ block.super }}
+{% endblock %}

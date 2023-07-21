@@ -1,0 +1,22 @@
+{% extends "admin/change_form.html" %}
+{% load i18n %}
+
+{% block extrahead %}
+  <!-- Add any additional CSS or JS files here -->
+{% endblock %}
+
+{% block content %}
+  <div>
+    <h2>{{ original.title }} - Analytics</h2>
+    <p>Hits per Chapter: {{ chapter_analytics.hits_per_chapter }}</p>
+    <p>Total Hits: {{ chapter_analytics.total_hits }}</p>
+    <p>Locations of Hits:</p>
+    <ul>
+      {% for location in chapter_analytics.locations_per_chapter %}
+        <li>{{ location.location }}: {{ location.count }}</li>
+      {% endfor %}
+    </ul>
+    <p>Time of View per Chapter: {{ chapter_analytics.time_of_view_per_chapter }}</p>
+  </div>
+  {{ block.super }}
+{% endblock %}

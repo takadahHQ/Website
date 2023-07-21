@@ -1297,3 +1297,13 @@ def populate_model(request):
 
     # Return a success message.
     return HttpResponse("Model populated successfully.")
+
+
+def create_services_for_stories_view(request):
+    # Get all records in the Stories model
+    all_stories = Stories.objects.all()
+
+    # Iterate through all stories and call the create_service_for_stories method
+    for story in all_stories:
+        story.create_service_for_stories()
+    return HttpResponse("Services created for all stories")
