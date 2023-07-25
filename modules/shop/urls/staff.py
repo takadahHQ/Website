@@ -2,7 +2,7 @@ from django.urls import path
 from modules.stories.views import staff
 
 urls = [
-    # # dashboard
+    # dashboard
     # path(
     #     "",
     #     staff.index,
