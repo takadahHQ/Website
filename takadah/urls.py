@@ -31,6 +31,7 @@ thirdparty = [
     path("__reload__/", include("django_browser_reload.urls")),
     path("accounts/", include("django.contrib.auth.urls")),
     path("", include("user_sessions.urls", "user_sessions")),
+    path("admin/django-ses/", include("django_ses.urls")),
     # path("stripe/", include("djstripe.urls", namespace="djstripe")),
     path("", include(tf_urls)),
 ]
