@@ -1,0 +1,24 @@
+<section class="m-2 w-full align-right p-8">
+  <form action="/anime/search" method="post"
+                        class="flex items-center gap-4 transition-colors duration-300 transform rounded-md w-full">
+                        <div class="relative w-full">
+                            <label class="sr-only" for="search_query"> Search </label>
+
+                            <input
+                                class="w-full h-full pl-4 pr-10 text-sm bg-white border-none rounded-full shadow-sm"
+                                id="search_query" type="search" placeholder="Search Anime..." name="search_query"
+                                value="{{request.GET.search_query }}" />
+
+                            {% csrf_token %}
+                            <button
+                                class="absolute p-2 text-gray-600 rounded-full transition -translate-y-1/2 hover:text-gray-700 bg-gray-50 top-1/2 right-1"
+                                type="button" aria-label="Submit Search">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24"
+                                    stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                </svg>
+                            </button>
+                        </div>
+                    </form>
+</section>

@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Anime
+{% endblock title %}
+
+{% block breadcrumbs %}
+<li><a>Anime</a></li>
+{% endblock %}
+{% block content %}
+{% include 'component/search.html' %}
+ <div class="row">
+  	      	{% if anime_data_page %}
+  	      	  	<div class="grid grid-cols-3 md:grid-cols-5 gap-2">
+  	        	{% for anime in anime_data_page %}
+                  <div>
+                    <div class="card mb-4">
+                      <a href="watch{{anime.latest_episode_url}}/720" target="_blank">
+                        <img class="card-img-top h-64" src="{{ anime.picture_url }}" >
+                      </a>
+                        <a href="{% url 'anime:details' anime.category_url %}" target="_blank">
+                          <h5 class="card-title text-lg break-words hyphens-auto">{{ anime.title }}</h5>
+                        </a>
+                        <p class="card-text">
+                            <a href="watch{{anime.latest_episode_url}}/720" target="_blank">
+                           <small class="badge">Latest Episode {{ anime.latest_episode_int }}</small>
+                        </a>
+                        </p>
+                    </div>
+                  </div>    
+              {% endfor %}
+            {% else %}
+            </div>
+  				    <p>No anime right now</p>
+  			    {% endif %}
+          </div>
+          <section>
+            {% include 'component/footer/pagination.html' with page_obj=anime_data_page %}
+          </section>
+
+<section>
+	<div class="flex flex-col">
+<div class="overflow-x-auto">
+<div class="inline-block min-w-full">
+<div class="overflow-hidden">
+<table class="min-w-full divide-y divide-neutral-200/70">
+<thead>
+<tr class="text-neutral-800">
+<th class="px-5 py-3 text-xs font-medium text-left uppercase">Anime</th>
+<th class="px-5 py-3 text-xs font-medium text-left uppercase">Episode</th>
+<th class="px-5 py-3 text-xs font-medium text-left uppercase">Date</th>
+<th class="px-5 py-3 text-xs font-medium text-left uppercase">Time</th>
+<!-- <th class="px-5 py-3 text-xs font-medium text-right uppercase">Action</th> -->
+</tr>
+</thead>
+<tbody class="divide-y divide-neutral-200/70">
+{% for release in schedule %}
+<tr class="text-neutral-600 bg-neutral-50">
+<td class="px-5 py-4 text-sm whitespace-nowrap">{{ release.name }}</td>
+<td class="px-5 py-4 text-sm whitespace-nowrap">{{ release.episode }}</td>
+<td class="px-5 py-4 text-sm whitespace-nowrap">{{ release.date }}</td>
+<td class="px-5 py-4 text-sm font-medium whitespace-nowrap">{{ release.time }}</td>
+<!-- <td class="px-5 py-4 text-sm font-medium text-right whitespace-nowrap">
+<a class="text-blue-600 hover:text-blue-700" href="#">Edit</a>
+</td> -->
+</tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</section>
+{% endblock content %}

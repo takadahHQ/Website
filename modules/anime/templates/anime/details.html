@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ anime_title }}
+{% endblock title %}
+
+{% block breadcrumbs %}
+<li><a href="{% url 'anime:index'%}">Anime</a></li>
+<li><a href="{% url 'anime:details' anime_watch_url  %}">{{ anime_title }}</a></li>
+{% endblock %}
+{% block content %}
+{% include 'component/search.html' %}
+<div class="media">
+	<div class="flex font-sans">
+		<div class="flex-none w-48 relative">
+			<img class="absolute inset-0 w-full h-full object-cover" src="{{ anime_picture_url }}" alt="{{ anime_title }}">
+		</div>
+		<div class="flex-auto p-6">
+			  <h5 class="flex-auto text-xl font-semibold">{{ anime_title }}</h5>
+              <p>{{ anime_synopsis }}</p>
+              <p class="mb-0">Genre : {{ anime_genres }}</p>
+              <p class="mb-0 badge">Type : {{ anime_season }}</p>
+              <p class="mb-0 badge">Released : {{ anime_released }}</p>
+              <p class="mb-0 badge">Status : {{ anime_status }}</p>
+              <p class="mb-0 badge">Total Episode : {{ total_episode }}</p>
+		</div>
+	</div>
+            <div class="media-body">
+              <div class="grid grid-cols-3 lg:grid-cols-6 gap-2 mt-3">
+                {% for url in list_episodes %}
+                  <div class="row mt-1">
+                    <div class="col mr-1">
+                      <a class="btn btn-sm btn-primary" href="/anime/watch/{{ anime_watch_url }}-episode-{{ forloop.counter }}/720">Watch Episode {{ forloop.counter }}</a>
+                    </div>
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+{% endblock content %}

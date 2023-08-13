@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Watching {{ anime_title }} Episode {{ episode }}
+{% endblock title %}
+
+{% block breadcrumbs %}
+<li><a href="{% url 'anime:index'%}">Anime</a></li>
+<li><a href="{% url 'anime:details' anime_category_url  %}">{{ anime_title }}</a></li>
+<li><a>Episode-{{ episode }}</a></li>
+{% endblock %}
+{% block content %}
+{% include 'component/search.html' %}
+<section class="w-full">
+    <div class="">
+<link href="https://unpkg.com/video.js/dist/video-js.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/videojs-contrib-hls@5.15.0/dist/videojs-contrib-hls.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/videojs-quality-picker@0.2.1/dist/videojs-quality-picker.min.js"></script>
+
+        <div class="flex flex-col md:p-8 mt-2 md:mt-0">
+            <div class="w-full  h-full shadow-md card">
+                <div class="align-center">
+          <div class="embed-responsive embed-responsive-16by9 mx-auto">
+            <video-js id="video-player" class="embed-responsive-item aspect-video" controls preload="auto"  data-setup='{ "playbackRates": [1, 1.5, 2] }'>
+              <source src="{{ video_source }}" type="application/x-mpegURL">
+           </video-js>
+           <!--This is for Video.js by itself -->
+           <script src="https://unpkg.com/video.js/dist/video.js"></script>
+           <!--This is for HLS compatibility with all major browsers-->
+           <script src = "https://unpkg.com/browse/@videojs/http-streaming@1.13.3/dist/videojs-http-streaming.min.js"></script>
+           <script>
+            var player = videojs('video-player');
+            player.qualityPickerPlugin();
+            player.play();
+           </script>
+       </div>
+                </div>
+              </div></div>
+
+           <div class="align-center p-8">
+           	<a class="btn btn-sm btn-primary" href="/anime/watch/{{ anime_category_url }}-episode-{{ episode }}/360">Watch 360p</a>
+           	<a class="btn btn-sm btn-primary" href="/anime/watch/{{ anime_category_url }}-episode-{{ episode }}/480">Watch 480p</a>
+           	<a class="btn btn-sm btn-primary" href="/anime/watch/{{ anime_category_url }}-episode-{{ episode }}/720">Watch 720p</a>
+           	<a class="btn btn-sm btn-primary" href="/anime/watch/{{ anime_category_url }}-episode-{{ episode }}/1080">Watch 1080p</a>
+           </div>
+
+
+        <div class="w-full md:p-8">
+          <div class="join w-full">
+            {% if episode > 1 %}
+        <a class="btn btn-outline  w-1/3 dark:invert join-item" href="/anime/watch/{{ anime_category_url }}-episode-{{ episode|add:"-1" }}/720">Previous</a>
+        {% else %}
+        <div class="btn btn-outline  w-1/3 dark:invert join-item" disabled="disabled">First Episode</div>
+        {% endif %}
+        <div class="btn w-1/3 bg-transparent border-transparent btn-link join-item">
+          <a class="text-sm lg:text-2xl text-center join-item" href="{{ story.story.get_absolute_url }}"><h1 class="text-xs text-2xl card-title object-fill dark:text-mono-100">Episode - {{ episode }} of {{ total_episode }}</h1></a>
+        </div>
+        {% if episode < total_episode %}
+        <a class="btn btn-outline  w-1/3 dark:invert join-item" href="/anime/watch/{{ anime_category_url }}-episode-{{ episode|add:"1" }}/720">Next</a>
+        {% else %}
+        <div class="btn btn-outline  w-1/3 dark:invert join-item" disabled="disabled">Last Episode</div>
+        {% endif %}
+        </div>
+        </div>
+
+        </div>
+</section>
+{% endblock content %}

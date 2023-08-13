@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Anime
+{% endblock title %}
+
+{% block breadcrumbs %}
+<li><a href="{% url 'anime:index'%}">Anime</a></li>
+<li>Search for {{ search_query }}</li>
+{% endblock %}
+{% block content %}
+  	      <div class="row">
+  	      	{% if search_result %}
+  	      	<div class="grid grid-cols-3 md:grid-cols-5 gap-3">
+  	        	{% for anime in search_result %}
+                  <div>
+                    <div class="card mb-4">
+                      <a href="{% url 'anime:details' anime.category_url %}" target="_blank">
+                        <img class="card-img-top h-64" src="{{ anime.picture_url }}" >
+                      </a>
+                                              <a href="{% url 'anime:details' anime.category_url %}" target="_blank">
+                          <h5 class="card-title text-lg">{{ anime.title }}</h5>
+                        </a>
+                    </div>
+                  </div>
+  			    {% endfor %}
+  			</div>
+            {% else %}
+  				{% include 'component/search.html' %}
+  			{% endif %}
+          </div>
+{% endblock content %}
