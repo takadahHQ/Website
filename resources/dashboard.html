@@ -159,16 +159,24 @@
     <script src="{% static 'js/demo.js' %}"></script>
     
     {% block scripts %}
-    <script type="text/javascript">
+<!--     <script type="text/javascript">
       (function () {
     // The DOM element you wish to replace with Tagify
     var input = document.querySelector('input[name=tags]');
     
     // initialize Tagify on the above input node reference
-    new Tagify(input)
+    var tagify = new Tagify(input);
+
+      tagify.on('add', function (e) {
+        input.value = JSON.stringify(tagify.value.map(tag => tag.value));
+      });
+
+      tagify.on('remove', function (e) {
+        input.value = JSON.stringify(tagify.value.map(tag => tag.value));
+      });
       
       })()
-    </script>
+    </script> -->
     {% endblock scripts %}
       <!-- Sidebar Backdrop -->
   <div class="fixed inset-0 z-10 w-screen h-screen bg-black bg-opacity-25 lg:hidden" x-show.transition="sideBar"

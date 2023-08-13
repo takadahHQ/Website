@@ -79,16 +79,3 @@ f.addEventListener("click", () => {
       fetch(e.href, l)
   }
 })();
-let s = document.querySelectorAll(".faq");
-for (let t = 0; t < s.length; t++) {
-  let r = s[t].querySelector(".faq-answer"),
-      o = s[t].querySelector(".arrow-down");
-  s[t].addEventListener("click", () => {
-      for (let c = 0; c < s.length; c++) {
-          let e = s[c].querySelector(".faq-answer"),
-              l = s[c].querySelector(".arrow-down");
-          s[t] != s[c] && (e.style.maxHeight = "0px", l.classList.replace("rotate-180", "rotate-0"))
-      }
-      o.classList.contains("rotate-180") ? (r.style.maxHeight = 0 + "px", o.classList.replace("rotate-180", "rotate-0")) : (r.style.maxHeight = r.scrollHeight + "px", o.classList.replace("rotate-0", "rotate-180"))
-  })
-}

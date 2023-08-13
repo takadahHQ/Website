@@ -65,3 +65,4 @@ django-widget-tweaks>=1.4.12
 django-celery-beat
 redis
 flower
+git+https://github.com/yoshikuniii/pynime.git
