@@ -54,11 +54,19 @@ class Stories(CacheInvalidationMixin, idModel, timeStampModel):
         ("ongoing", "Ongoing"),
         ("draft", "Draft"),
     )
-    title = models.CharField(max_length=255)
+    title = models.CharField(max_length=255, help_text="This is the book title")
     slug = models.SlugField(null=True, unique=True)
-    abbreviation = models.CharField(max_length=15, unique=True)
-    summary = RichTextField("synopsis")
-    cover = VersatileImageField(max_length=255, blank=True, null=True)
+    abbreviation = models.CharField(
+        max_length=15,
+        unique=True,
+        help_text="The abbreviation of the book title, e.g. Lord of the Rings would be LotR",
+    )
+    summary = RichTextField("synopsis", help_text="This is the summary of your book")
+    cover = VersatileImageField(
+        max_length=255,
+        blank=True,
+        null=True,
+    )
     story_type = models.ForeignKey("Type", on_delete=models.CASCADE)
     following = models.ManyToManyField(
         settings.AUTH_USER_MODEL,
@@ -264,21 +272,36 @@ class Stories(CacheInvalidationMixin, idModel, timeStampModel):
     def get_story_analytics(self):
         service = self.service.first()
         # Get the best reading day
-        best_reading_day = service.get_views_by_days()
+        # best_reading_day = (
+        #     if service.get_views_by_days() is not None:
+        #         service.get_views_by_days()
+        #     else:
+        #         "Sunday"
+        # )
 
+        if service:
+            best_reading_day = service.get_views_by_days()
+            # Get the views by location
+            views_by_location = service.get_views_by_location()
+
+            # Get the views by devices
+            views_by_devices = service.get_views_by_device()
+
+            # Get the best and worst time for all records
+            best_time = service.get_most_active_hour()
+
+            worst_time = service.get_least_active_hour()
+        else:
+            best_reading_day = ""
+            # Get the views by location
+            views_by_location = ""
+            # Get the views by devices
+            views_by_devices = ""
+            # Get the best and worst time for all records
+            best_time = ""
+            worst_time = ""
         # Get the total amount of views
         total_views = 100
-
-        # Get the views by location
-        views_by_location = service.get_views_by_location()
-
-        # Get the views by devices
-        views_by_devices = service.get_views_by_device()
-
-        # Get the best and worst time for all records
-        best_time = service.get_most_active_hour()
-
-        worst_time = service.get_least_active_hour()
 
         return {
             "best_reading_time": best_time,

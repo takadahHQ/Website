@@ -1,7 +1,7 @@
   <!-- OG Tags -->{% load static %}
   <meta property="og:title" content="{% block meta_title %}{{ settings.name }}{% endblock %}">
-  <meta property="og:site_name" content="Takadah">
-  <meta property="og:url" content="https://">
-  <meta property="og:description" content="{% block description %}Takadah{% endblock description %}">
-  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="{{ settings.name }}">
+  <meta property="og:url" content="{{ request.scheme }}://{{ request.get_host }}{{ request.get_full_path }}">
+  <meta property="og:description" content="{% block description %}{{ settings.name }}{% endblock %}">
+  <meta property="og:type" content="{% block meta_type %}website{% endblock%}">
   <meta property="og:image" content="{% block meta_image %}{% static 'images/apple-touch-icon.png' %}{% endblock %}">

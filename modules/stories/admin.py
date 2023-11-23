@@ -72,11 +72,13 @@ class StoriesAdmin(admin.ModelAdmin):
         # Get the story analytics
         story_analytics = story.get_story_analytics()
         service = story.service.first()
-        daily_stats = service.get_daily_stats()
+        if service:
+            daily_stats = service.get_daily_stats()
 
         # Include the story analytics in the extra_context
         extra_context["story_analytics"] = story_analytics
-        extra_context["daily_stats"] = daily_stats
+        if daily_stats:
+            extra_context["daily_stats"] = daily_stats
 
         return super().change_view(
             request, object_id, form_url, extra_context=extra_context

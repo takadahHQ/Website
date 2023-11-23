@@ -36,9 +36,13 @@ class Chapter(CacheInvalidationMixin, idModel, statusModel, timeStampModel):
         related_name="chapter_editor",
         on_delete=models.DO_NOTHING,
     )
-    position = models.IntegerField()
+    position = models.IntegerField(
+        help_text="This is the number of the chapter. e.g. 1 for Chapter 1, 2 for Chapter 2"
+    )
     slug = models.SlugField(null=True, unique=True)
-    title = models.CharField(max_length=255)
+    title = models.CharField(
+        max_length=255, help_text="This should be the title of the chapter"
+    )
     text = RichTextUploadingField()
     authors_note = RichTextField(blank=True, null=True)
     words = models.IntegerField(blank=True, null=True)

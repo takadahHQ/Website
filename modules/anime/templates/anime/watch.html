@@ -3,7 +3,17 @@
 {% block title %}
 Watching {{ anime_title }} Episode {{ episode }}
 {% endblock title %}
-
+{% block meta_title %}
+{{ block.super }}
+Watch {{ anime_title }} Episode {{ episode }}
+{% endblock  %}
+{% block meta_image %}
+{{ anime_picture_url }}
+{% endblock %}
+{% block description %}
+Watch {{ anime_title }} Episode {{ episode }} on {{ settings.name }}
+{% endblock %}
+{% block meta_type %}video{% endblock%}
 {% block breadcrumbs %}
 <li><a href="{% url 'anime:index'%}">Anime</a></li>
 <li><a href="{% url 'anime:details' anime_category_url  %}">{{ anime_title }}</a></li>
